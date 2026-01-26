@@ -3,254 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الاستديو الذكي AI</title>
+    <meta name="description" content="منصة نشر تقنية متكاملة تعمل بالذكاء الاصطناعي">
+    <title>Cyberia Publisher | الناشر المعتمد</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root { --yt: #FF0000; --ai: #8e44ad; --dark: #121212; --panel: #1e1e1e; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--dark); color: white; margin: 0; padding: 20px; text-align: center; }
-        .container { background: var(--panel); max-width: 600px; margin: auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); border: 1px solid #333; }
-        
-        h2 { margin-bottom: 20px; font-weight: 300; }
-        
-        input, select, textarea { 
-            width: 100%; margin: 8px 0 15px 0; padding: 12px; 
-            border-radius: 8px; border: 1px solid #444; 
-            background: #121212; color: white; font-size: 16px; outline: none; box-sizing: border-box;
+        :root {
+            --bg: #0f172a;
+            --panel: #1e293b;
+            --primary: #3b82f6; /* أزرق جوجل الرسمي */
+            --accent: #10b981; /* أخضر القبول */
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #334155;
         }
-        input:focus { border-color: var(--yt); }
+
+        * { margin:0; padding:0; box-sizing:border-box; outline:none; font-family:'Tajawal', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        /* الهيكل الرئيسي */
+        .app-container { display: flex; flex: 1; }
         
-        .btn { border: none; padding: 12px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; color: white; }
-        .btn-yt { background: var(--yt); }
-        .btn-ai { background: linear-gradient(45deg, #8e44ad, #3498db); box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4); margin-bottom: 20px; }
-        .btn-ai:hover { transform: scale(1.02); }
+        /* الشريط الجانبي */
+        .sidebar {
+            width: 250px; background: var(--panel); border-left: 1px solid var(--border);
+            padding: 20px; display: flex; flex-direction: column;
+        }
+        .brand { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
+        .brand span { color: var(--primary); }
         
-        .file-box { border: 2px dashed #444; padding: 20px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; color: #aaa; }
-        .file-box:hover { border-color: var(--yt); background: #252525; color: white; }
+        .menu-item {
+            padding: 12px; margin-bottom: 8px; border-radius: 8px; color: var(--text-dim); cursor: pointer;
+            display: flex; align-items: center; gap: 12px; transition: 0.2s; font-size: 14px;
+        }
+        .menu-item:hover, .menu-item.active { background: rgba(59, 130, 246, 0.1); color: var(--primary); }
         
-        .hidden { display: none; }
-        .success-box { background: #1a2e1d; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #2ba640; display: none; }
-        
-        .share-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .share-btn { padding: 8px; font-size: 12px; background: #333; border-radius: 5px; color: white; text-decoration: none; display: block; cursor: pointer; border: none; }
-        .share-btn:hover { background: #444; }
+        /* المنطقة القانونية في القائمة */
+        .legal-menu { margin-top: auto; border-top: 1px solid var(--border); padding-top: 15px; }
+        .legal-item { font-size: 12px; color: #64748b; padding: 8px; cursor: pointer; }
+        .legal-item:hover { color: var(--text); }
+
+        /* المحتوى */
+        .main { flex: 1; padding: 30px; overflow-y: auto; }
+
+        /* نظام البطاقات */
+        .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 25px; margin-bottom: 25px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .card-title { font-size: 18px; font-weight: bold; }
+
+        /* أماكن الإعلانات (AdSense Placeholders) */
+        .ad-unit {
+            width: 100%; height: 100px; background: repeating-linear-gradient(45deg, #1e293b, #1e293b 10px, #253146 10px, #253146 20px);
+            border: 1px dashed #475569; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: #64748b; font-size: 12px; margin-bottom: 20px; text-transform: uppercase;
+        }
+
+        /* المحرر */
+        input[type="text"], textarea {
+            width: 100%; background: #0f172a; border: 1px solid var(--border); padding: 15px; border-radius: 8px;
+            color: var(--text); margin-bottom: 15px; font-family: 'Cairo'; line-height: 1.6;
+        }
+        input:focus, textarea:focus { border-color: var(--primary); }
+        textarea { height: 300px; resize: vertical; }
+
+        /* الأزرار */
+        .btn {
+            padding: 12px 24px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.2s;
+            display: inline-flex; align-items: center; gap: 8px; font-size: 14px;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-success { background: var(--accent); color: white; }
+        .btn-success:hover { background: #059669; }
+
+        /* شريط الكوكيز */
+        .cookie-banner {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid var(--border);
+            padding: 15px; display: flex; justify-content: space-between; align-items: center; z-index: 999;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3); display: none; /* يظهر بالجافاسكربت */
+        }
+        .cookie-text { font-size: 12px; color: var(--text-dim); max-width: 80%; }
+
+        /* الصفحات القانونية (Modal) */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none;
+            align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--panel); width: 600px; max-height: 80vh; overflow-y: auto; padding: 30px;
+            border-radius: 12px; border: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            .sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 10px; border-bottom: 1px solid var(--border); border-left: none; }
+            .main { padding: 15px; }
+            .menu-item span { display: none; }
+            .menu-item i { font-size: 18px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🤖 الاستديو الذكي <span style="color:var(--ai)">AI</span></h2>
-
-    <div id="auth-section">
-        <p style="color:#888;">أدخل المفاتيح مرة واحدة فقط</p>
-        <input type="text" id="client-id-input" placeholder="Google Client ID (لليوتيوب)">
-        <input type="password" id="ai-key-input" placeholder="Gemini API Key (للذكاء الاصطناعي)">
-        <button class="btn btn-yt" onclick="authenticate()">🔗 حفظ ودخول</button>
-        <p style="font-size:11px; color:#555; margin-top:10px;">سيتم حفظ المفاتيح في جهازك فقط بأمان.</p>
-        <p style="font-size:11px; color:#555;">احصل على مفتاح الذكاء من: <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#8e44ad;">Google AI Studio</a></p>
-    </div>
-
-    <div id="dashboard" class="hidden">
+<div class="modal" id="setup-modal" style="display:flex;">
+    <div class="modal-content" style="width: 400px; text-align: center;">
+        <h2 style="margin-bottom:10px; color:var(--primary);">إعداد الناشر المعتمد</h2>
+        <p style="font-size:12px; color:var(--text-dim); margin-bottom:20px;">لضمان قبول AdSense، يرجى إدخال بياناتك</p>
         
-        <div style="background:#2c2c2c; padding:15px; border-radius:10px; margin-bottom:20px; border:1px solid #444;">
-            <h3 style="margin:0 0 10px 0; color: #d1a3ff;">✨ المساعد الذكي</h3>
-            <input type="text" id="topic-input" placeholder="عن ماذا يتحدث الفيديو؟ (مثلاً: فلوق سفر)">
-            <button class="btn btn-ai" onclick="generateAI()">⚡ اكتب لي العنوان والوصف والتاجز</button>
-        </div>
-
-        <hr style="border-color:#333; margin:20px 0;">
-
-        <div class="file-box" onclick="document.getElementById('video-file').click()">
-            📂 اختر ملف الفيديو
-        </div>
-        <input type="file" id="video-file" accept="video/*" style="display:none" onchange="updateUI('video')">
-        <div id="video-name" style="font-size:12px; color:#3ea6ff; text-align:right;"></div>
-
-        <div class="file-box" style="padding:10px;" onclick="document.getElementById('thumb-file').click()">
-            🖼️ اختر صورة مصغرة
-        </div>
-        <input type="file" id="thumb-file" accept="image/*" style="display:none" onchange="updateUI('thumb')">
-        <div id="thumb-name" style="font-size:12px; color:#3ea6ff; text-align:right;"></div>
-
-        <input type="text" id="video-title" placeholder="عنوان الفيديو">
-        <textarea id="video-desc" rows="4" placeholder="وصف الفيديو"></textarea>
-        <input type="text" id="video-tags" placeholder="الكلمات المفتاحية (Tags)">
+        <input type="text" id="site-name" placeholder="اسم الموقع/التطبيق (مثال: تقنية برو)">
+        <input type="email" id="contact-email" placeholder="بريد التواصل (للصفحات القانونية)">
         
-        <select id="video-privacy">
-            <option value="public">🌍 علني</option>
-            <option value="unlisted">🔗 غير مدرج</option>
-            <option value="private">🔒 خاص</option>
-        </select>
-
-        <button id="upload-btn" class="btn btn-yt" onclick="startUpload()">🚀 رفع الفيديو</button>
-        <p id="status-text" style="color:#aaa; font-size:14px; margin-top:10px;"></p>
-
-        <div id="share-panel" class="success-box">
-            <h3 style="margin:0; color:#4caf50;">✅ تم النشر!</h3>
-            <div class="share-grid">
-                <a id="share-fb" target="_blank" class="share-btn">Facebook</a>
-                <a id="share-x" target="_blank" class="share-btn">Platform X</a>
-                <a id="share-wa" target="_blank" class="share-btn">WhatsApp</a>
-            </div>
-            <textarea id="blogger-code" rows="2" style="margin-top:10px; font-size:10px; background:black; color:#0f0; width:100%; box-sizing:border-box;"></textarea>
-            <button onclick="copyBlogger()" class="share-btn" style="width:100%; margin-top:5px;">📋 نسخ كود بلوجر</button>
-        </div>
+        <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;">
+        
+        <input type="text" id="client-id" placeholder="Google Client ID">
+        <input type="password" id="ai-key" placeholder="Gemini API Key">
+        <input type="text" id="blog-id" placeholder="Blog ID">
+        
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="saveSetup()">حفظ وبدء العمل</button>
     </div>
 </div>
 
-<script>
-    let accessToken = "";
-
-    window.onload = function() {
-        if(localStorage.getItem("yt_client_id")) document.getElementById("client-id-input").value = localStorage.getItem("yt_client_id");
-        if(localStorage.getItem("ai_key")) document.getElementById("ai-key-input").value = localStorage.getItem("ai_key");
+<div class="app-container">
+    <div class="sidebar">
+        <div class="brand"><i class="fa-brands fa-google"></i> <span>Publisher</span></div>
+        <div class="menu-item active" onclick="showSection('writer')"><i class="fa-solid fa-pen-nib"></i> <span>محرر المقالات</span></div>
+        <div class="menu-item" onclick="showSection('ads')"><i class="fa-solid fa-dollar-sign"></i> <span>وحدات الإعلان</span></div>
         
+        <div class="legal-menu">
+            <div class="legal-item" style="color:var(--text); font-weight:bold; margin-bottom:5px;">الصفحات القانونية:</div>
+            <div class="legal-item" onclick="generateLegal('privacy')">📄 سياسة الخصوصية</div>
+            <div class="legal-item" onclick="generateLegal('terms')">📜 شروط الاستخدام</div>
+            <div class="legal-item" onclick="generateLegal('contact')">📧 اتصل بنا</div>
+        </div>
+    </div>
+
+    <div class="main">
+        
+        <div class="ad-unit">Top Leaderboard Ad (728x90)</div>
+
+        <div id="writer-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">✍️ كاتب المحتوى المتوافق مع SEO</div>
+                    <div style="font-size:12px; color:var(--accent);"><i class="fa-solid fa-check-circle"></i> AdSense Friendly</div>
+                </div>
+                
+                <input type="text" id="topic" placeholder="عنوان المقال (مثلاً: الربح من التطبيقات 2024)">
+                <button class="btn btn-primary" onclick="generateSafeContent()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> توليد المسودة
+                </button>
+            </div>
+
+            <div class="card" id="editor-card" style="display:none;">
+                <div class="card-header">
+                    <div class="card-title">📝 المراجعة والتحرير</div>
+                    <button class="btn btn-success" onclick="publishToBlogger()">
+                        <i class="fa-brands fa-blogger"></i> نشر نهائي
+                    </button>
+                </div>
+                <p style="font-size:12px; color:var(--text-dim); margin-bottom:10px;">* نصيحة AdSense: قم بقراءة المقال وتعديله قليلاً ليصبح فريداً 100%.</p>
+                <input type="text" id="final-title">
+                <textarea id="final-content"></textarea>
+            </div>
+        </div>
+
+        <div id="legal-display" class="card" style="display:none;">
+            <div class="card-header">
+                <div class="card-title" id="legal-title"></div>
+                <button class="btn btn-primary" onclick="copyLegal()">نسخ الكود</button>
+            </div>
+            <textarea id="legal-content" style="height:400px; font-family:monospace; font-size:12px;"></textarea>
+        </div>
+
+        <div class="ad-unit">Bottom Banner Ad (Responsive)</div>
+    </div>
+</div>
+
+<div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-text">
+        🍪 نستخدم ملفات تعريف الارتباط لضمان أفضل تجربة لك ولتحليل الزيارات وعرض الإعلانات المناسبة.
+    </div>
+    <button class="btn btn-success" onclick="acceptCookies()">موافق</button>
+</div>
+
+<script>
+    let token = "";
+
+    window.onload = () => {
+        // فحص الإعدادات
+        if(localStorage.getItem("cid") && localStorage.getItem("siteName")) {
+            document.getElementById("setup-modal").style.display = "none";
+            document.getElementById("cookie-banner").style.display = "flex"; // إظهار الكوكيز
+            
+            // استرجاع البيانات للحقول المخفية
+            document.getElementById("client-id").value = localStorage.getItem("cid");
+            document.getElementById("ai-key").value = localStorage.getItem("akey");
+            document.getElementById("blog-id").value = localStorage.getItem("blogId");
+        }
+
         const params = new URLSearchParams(window.location.hash.substring(1));
         if (params.has("access_token")) {
-            accessToken = params.get("access_token");
-            document.getElementById("auth-section").classList.add("hidden");
-            document.getElementById("dashboard").classList.remove("hidden");
+            token = params.get("access_token");
+            document.getElementById("setup-modal").style.display = "none";
         }
     };
 
-    function authenticate() {
-        const clientId = document.getElementById("client-id-input").value.trim();
-        const aiKey = document.getElementById("ai-key-input").value.trim();
-        
-        if (!clientId || !aiKey) return alert("الرجاء إدخال المفاتيح!");
-        
-        localStorage.setItem("yt_client_id", clientId);
-        localStorage.setItem("ai_key", aiKey);
-        
-        const redirect = window.location.href.split('?')[0].replace(/\/$/, "");
-        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirect}&response_type=token&scope=https://www.googleapis.com/auth/youtube.upload&include_granted_scopes=true&state=pass`;
+    function saveSetup() {
+        const name = document.getElementById("site-name").value;
+        const email = document.getElementById("contact-email").value;
+        const cid = document.getElementById("client-id").value;
+        const key = document.getElementById("ai-key").value;
+        const bid = document.getElementById("blog-id").value;
+
+        if(name && email && cid && key && bid) {
+            localStorage.setItem("siteName", name);
+            localStorage.setItem("contactEmail", email);
+            localStorage.setItem("cid", cid);
+            localStorage.setItem("akey", key);
+            localStorage.setItem("blogId", bid);
+            authenticate();
+        } else alert("جميع البيانات مطلوبة للقبول في AdSense");
     }
 
-    // وظيفة الذكاء الاصطناعي
-    async function generateAI() {
-        const topic = document.getElementById("topic-input").value;
-        const apiKey = localStorage.getItem("ai_key");
+    function authenticate() {
+        const cid = localStorage.getItem("cid");
+        const redirect = window.location.href.split('?')[0].replace(/\/$/, "");
+        const scope = "https://www.googleapis.com/auth/blogger";
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${cid}&redirect_uri=${redirect}&response_type=token&scope=${scope}&include_granted_scopes=true&state=pass`;
+    }
+
+    function acceptCookies() {
+        document.getElementById("cookie-banner").style.display = "none";
+        localStorage.setItem("cookiesAccepted", "true");
+    }
+
+    // --- توليد الصفحات القانونية (مهم جداً للقبول) ---
+    function generateLegal(type) {
+        document.getElementById("writer-section").style.display = "none";
+        document.getElementById("legal-display").style.display = "block";
         
-        if(!topic) return alert("اكتب موضوع الفيديو أولاً!");
+        const siteName = localStorage.getItem("siteName") || "موقعي";
+        const email = localStorage.getItem("contactEmail") || "email@example.com";
+        const date = new Date().toLocaleDateString('ar-EG');
+        
+        let title = "", content = "";
 
-        const btn = document.querySelector(".btn-ai");
-        const originalText = btn.innerText;
-        btn.innerText = "🤖 جاري التفكير...";
-        btn.disabled = true;
+        if(type === 'privacy') {
+            title = "سياسة الخصوصية";
+            content = `<h1>سياسة الخصوصية لـ ${siteName}</h1>
+<p>تاريخ التحديث: ${date}</p>
+<p>نحن في <strong>${siteName}</strong> نولي اهتماماً كبيراً لخصوصية زوارنا. توجز هذه الوثيقة أنواع المعلومات الشخصية التي نجمعها وكيفية استخدامها.</p>
+<h3>ملفات الدخول (Log Files)</h3>
+<p>مثل الكثير من المواقع على شبكة الانترنت، يستخدم موقعنا ملفات الدخول. المعلومات داخل ملفات الدخول تشمل: بروتوكول الإنترنت (IP)، نوع المتصفح، مزود الخدمة، وتاريخ/وقت الزيارة.</p>
+<h3>ملفات تعريف الارتباط (Cookies) وإعدادات الشبكة</h3>
+<p>نحن نستخدم الكوكيز لتخزين المعلومات عن إعدادات الزوار. جوجل، كطرف ثالث، تستخدم الكوكيز لخدمة الإعلانات على موقعنا.</p>
+<h3>للاتصال بنا</h3>
+<p>إذا كان لديك أي استفسار، يرجى مراسلتنا عبر: ${email}</p>`;
+        } else if (type === 'terms') {
+            title = "شروط الاستخدام";
+            content = `<h1>شروط الاستخدام</h1>
+<p>مرحباً بك في ${siteName}. باستخادمك لهذا الموقع، فإنك توافق على الالتزام بالشروط التالية...</p>`;
+        } else {
+            title = "اتصل بنا";
+            content = `<p>لأي استفسارات إعلانية أو تجارية، يرجى التواصل معنا عبر البريد الإلكتروني:</p><h3>${email}</h3>`;
+        }
 
-        const prompt = `أنت خبير يوتيوب محترف. لدي فيديو عن: "${topic}". 
-        1. اكتب لي عنواناً جذاباً جداً (Clickbait) باللغة العربية.
-        2. اكتب وصفاً طويلاً للفيديو مع هاشتاجات.
-        3. اكتب كلمات مفتاحية (Tags) مفصولة بفواصل.
-        افصل بين الأقسام بـ "|||"`;
+        document.getElementById("legal-title").innerText = title;
+        document.getElementById("legal-content").value = content;
+    }
+
+    function copyLegal() {
+        document.getElementById("legal-content").select();
+        document.execCommand("copy");
+        alert("تم نسخ كود الصفحة! قم بإنشاء صفحة جديدة في بلوجر والصقه.");
+    }
+
+    function showSection(sec) {
+        if(sec === 'writer') {
+            document.getElementById("writer-section").style.display = "block";
+            document.getElementById("legal-display").style.display = "none";
+        }
+    }
+
+    // --- الذكاء الاصطناعي الآمن (AdSense Safe) ---
+    async function generateSafeContent() {
+        const topic = document.getElementById("topic").value;
+        if(!topic) return alert("اكتب العنوان");
+        
+        const btn = document.querySelector(".btn-primary");
+        btn.innerText = "⏳ جاري التوليد...";
+        
+        const key = localStorage.getItem("akey");
+        const prompt = `اكتب مقالاً طويلاً ومفصلاً وحصرياً للمدونة عن: "${topic}".
+        قم بتقسيم المقال إلى فقرات مع عناوين فرعية.
+        اجعل الأسلوب بشرياً وتجنب التكرار.
+        مهم جداً: اكتب بتنسيق نصي عادي (ليس HTML) لكي أستطيع تعديله.`;
 
         try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+                method: "POST", headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
             });
-
-            const data = await response.json();
-            if(data.error) throw new Error(data.error.message);
+            const data = await res.json();
             
-            const text = data.candidates[0].content.parts[0].text;
-            const sections = text.split("|||");
+            document.getElementById("editor-card").style.display = "block";
+            document.getElementById("final-title").value = topic;
+            document.getElementById("final-content").value = data.candidates[0].content.parts[0].text;
             
-            if(sections.length > 0) document.getElementById("video-title").value = sections[0].replace(/\*| العنوان:|عنوان:/g, "").trim();
-            if(sections.length > 1) document.getElementById("video-desc").value = sections[1].replace(/\*| الوصف:|وصف:/g, "").trim();
-            if(sections.length > 2) document.getElementById("video-tags").value = sections[2].replace(/\*| كلمات:|الكلمات:/g, "").trim();
+            btn.innerText = "✨ توليد مرة أخرى";
+            window.scrollTo(0, document.body.scrollHeight);
 
-            btn.innerText = "✅ تم التوليد بنجاح!";
-            setTimeout(() => { btn.innerText = originalText; btn.disabled = false; }, 3000);
-
-        } catch (error) {
-            alert("خطأ في الذكاء الاصطناعي: " + error);
-            btn.innerText = "❌ حاول مرة أخرى";
-            btn.disabled = false;
-        }
+        } catch(e) { alert("Error: " + e.message); }
     }
 
-    function updateUI(type) {
-        const file = document.getElementById(type + "-file").files[0];
-        if(file) document.getElementById(type + "-name").innerText = "✅ " + file.name;
-    }
-
-    async function startUpload() {
-        const file = document.getElementById("video-file").files[0];
-        const title = document.getElementById("video-title").value;
-        const desc = document.getElementById("video-desc").value;
-        const tags = document.getElementById("video-tags").value.split(",");
-        const privacy = document.getElementById("video-privacy").value;
-
-        if (!file || !title) return alert("البيانات ناقصة!");
-
-        document.getElementById("upload-btn").disabled = true;
-        document.getElementById("status-text").innerText = "⏳ جاري الرفع...";
+    // --- النشر النهائي ---
+    async function publishToBlogger() {
+        if(!token) return authenticate();
+        
+        const title = document.getElementById("final-title").value;
+        // تحويل المسافات الجديدة إلى فقرات HTML للنشر
+        const rawContent = document.getElementById("final-content").value;
+        const htmlContent = rawContent.split('\n').map(p => p.trim() ? `<p>${p}</p>` : "").join("");
+        
+        const blogId = localStorage.getItem("blogId");
+        
+        const body = {
+            kind: "blogger#post", blog: { id: blogId },
+            title: title, content: htmlContent
+        };
 
         try {
-            const metadata = { snippet: { title, description: desc, tags: tags }, status: { privacyStatus: privacy } };
-            const videoId = await uploadFile(file, metadata);
-            
-            const thumb = document.getElementById("thumb-file").files[0];
-            if(thumb) {
-                 document.getElementById("status-text").innerText = "⏳ جاري رفع الصورة المصغرة...";
-                 await uploadThumb(videoId, thumb);
-            }
-
-            setupSharePanel(videoId, title, desc);
-
-        } catch (err) {
-            document.getElementById("status-text").innerText = "❌ خطأ: " + err.message;
-            document.getElementById("upload-btn").disabled = false;
-        }
-    }
-
-    function uploadFile(file, metadata) {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status", true);
-            xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.onload = () => {
-                if (xhr.status === 200) {
-                    const uploadUrl = xhr.getResponseHeader("Location");
-                    const uploader = new XMLHttpRequest();
-                    uploader.open("PUT", uploadUrl, true);
-                    uploader.onload = () => {
-                        if (uploader.status === 200 || uploader.status === 201) resolve(JSON.parse(uploader.responseText).id);
-                        else reject(new Error("فشل الرفع"));
-                    };
-                    uploader.send(file);
-                } else reject(new Error("فشل التهيئة"));
-            };
-            xhr.send(JSON.stringify(metadata));
-        });
-    }
-
-    function uploadThumb(videoId, file) {
-        return fetch(`https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=${videoId}`, {
-            method: 'POST', headers: { 'Authorization': 'Bearer ' + accessToken }, body: file
-        });
-    }
-
-    function setupSharePanel(videoId, title, desc) {
-        document.getElementById("status-text").innerText = "✅ تم الرفع بنجاح!";
-        document.getElementById("share-panel").style.display = "block";
-        const url = `https://youtu.be/${videoId}`;
-        const encodedUrl = encodeURIComponent(url);
-        const encodedTitle = encodeURIComponent(title);
-        
-        document.getElementById("share-fb").href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-        document.getElementById("share-x").href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
-        document.getElementById("share-wa").href = `https://api.whatsapp.com/send?text=${encodedTitle} ${encodedUrl}`;
-        
-        document.getElementById("blogger-code").value = `<div style="text-align:center;"><iframe width="100%" height="400" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe></div><h3>${title}</h3><p>${desc}</p>`;
-    }
-
-    function copyBlogger() {
-        const copyText = document.getElementById("blogger-code");
-        copyText.select();
-        document.execCommand("copy");
-        alert("تم نسخ الكود!");
+            const res = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            if(res.ok) alert("✅ تم النشر بنجاح!");
+            else throw new Error("فشل النشر");
+        } catch(e) { alert("خطأ: " + e.message); }
     }
 </script>
 
