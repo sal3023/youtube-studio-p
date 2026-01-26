@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Youtube Studio</title>
+<style>
+  body{font-family:sans-serif;background:#f0f2f5;padding:20px;text-align:center}
+  .card{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,0.1);max-width:500px;margin:auto}
+  input, select{width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:5px}
+  button{width:100%;padding:15px;background:#065fd4;color:white;border:none;border-radius:5px;font-size:16px;cursor:pointer}
+  button:disabled{background:#ccc}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<div id="authPage" class="card">
+  <h2>تسجيل الدخول</h2>
+  <p>أدخل كود العميل (Client ID) للمتابعة</p>
+  <input type="text" id="clientId" placeholder="ضع Client ID هنا">
+  <button onclick="auth()">دخول بحساب جوجل</button>
+</div>
+
+<div id="uploadPage" class="card hidden">
+  <h2>رفع فيديو</h2>
+  <input type="file" id="file" accept="video/*">
+  <input type="text" id="title" placeholder="عنوان الفيديو">
+  <button onclick="upload()" id="btn">رفع الفيديو</button>
+  <p id="status"></p>
+</div>
+
+<script>
+var token = null;
+
+function auth() {
+  var client_id = document.getElementById("clientId").value;
+  if(!client_id) { alert("مطلوب Client ID"); return; }
+  localStorage.setItem("cid", client_id);
+  
+  // تحديد الرابط تلقائياً
+  var redirect = window.location.href.split('#')[0];
+  if(redirect.endsWith("/")) redirect = redirect.slice(0, -1);
+  
+  var scope = "https://www.googleapis.com/auth/youtube.upload";
+  var url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + client_id + "&redirect_uri=" + redirect + "&response_type=token&scope=" + scope + "&include_granted_scopes=true&state=pass-through-value";
+  window.location.href = url;
+}
+
+window.onload = function() {
+  if(localStorage.getItem("cid")) document.getElementById("clientId").value = localStorage.getItem("cid");
+  
+  var hash = window.location.hash;
+  if(hash.indexOf("access_token") > -1) {
+    var params = new URLSearchParams(hash.substring(1));
+    token = params.get("access_token");
+    if(token) {
+      document.getElementById("authPage").className = "hidden";
+      document.getElementById("uploadPage").className = "card";
+      // تنظيف الرابط
+      window.history.replaceState(null, null, window.location.pathname);
+    }
+  }
+};
+
+function upload() {
+  var file = document.getElementById("file").files[0];
+  if(!file) { alert("اختر ملف"); return; }
+  
+  document.getElementById("btn").disabled = true;
+  document.getElementById("status").innerText = "جاري التحضير...";
+
+  var meta = { snippet: { title: document.getElementById("title").value || file.name } };
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet", true);
+  xhr.setRequestHeader("Authorization", "Bearer " + token);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-Upload-Content-Length", file.size);
+  xhr.setRequestHeader("X-Upload-Content-Type", file.type);
+  
+  xhr.onload = function() {
+    if(xhr.status === 200) {
+      var uploadUrl = xhr.getResponseHeader("Location");
+      sendFile(uploadUrl, file);
+    } else {
+      alert("فشل البدء: " + xhr.status);
+      document.getElementById("btn").disabled = false;
+    }
+  };
+  xhr.send(JSON.stringify(meta));
+}
+
+function sendFile(url, file) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("PUT", url, true);
+  xhr.upload.onprogress = function(e) {
+    var p = Math.round((e.loaded / e.total) * 100);
+    document.getElementById("status").innerText = "جاري الرفع: " + p + "%";
+  };
+  xhr.onload = function() {
+    document.getElementById("status").innerText = "تم الرفع بنجاح!";
+    alert("مبروك! تم الرفع.");
+    location.reload();
+  };
+  xhr.send(file);
+}
+</script>
+
+</body>
+</html>
