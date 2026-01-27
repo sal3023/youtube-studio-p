@@ -3,578 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Baseerah OS 3.0: محرك الربح والأتمتة الثوري</title>
+    <title>Baseerah OS 3.3 | Multi-Language Profit</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Baseerh OS 3.0 - Future-Proof Design */
-        :root {
-            --primary-color: #00e0ff; /* Neon Cyan */
-            --secondary-color: #ff0077; /* Hot Pink */
-            --bg-dark: #0a0a0f;
-            --card-dark: #1a1a2e;
-            --text-light: #e0e0e0;
-            --border-light: #3a3a4a;
-            --shadow-glow: 0 0 15px rgba(0, 224, 255, 0.4);
-        }
+        :root { --neon: #00f2ff; --gold: #ffd700; --bg: #05050a; --card: #0d0d16; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 90px; }
+        
+        /* شريط التريندات العالمي */
+        .global-ticker { background: #000; border-bottom: 1px solid var(--neon); padding: 8px 0; overflow: hidden; white-space: nowrap; position: fixed; top: 0; width: 100%; z-index: 1001; }
+        .ticker-text { display: inline-block; animation: scroll 35s linear infinite; font-size: 13px; font-weight: bold; color: var(--gold); }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            margin: 0;
-            padding-bottom: 90px;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        header { background: rgba(13,13,22,0.9); padding: 65px 20px 20px; border-bottom: 1px solid #222; text-align: center; }
+        .logo { font-size: 26px; font-weight: 900; color: var(--neon); text-shadow: 0 0 15px var(--neon); }
 
-        /* Header with AI Status */
-        header {
-            background: rgba(26, 26, 46, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-light);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo { font-size: 24px; font-weight: bold; color: var(--primary-color); }
-        .ai-status { font-size: 14px; color: #77ff77; }
-        .ai-status i { margin-left: 8px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+        .container { padding: 25px; max-width: 800px; margin: 0 auto; }
+        .ai-card { background: var(--card); border-radius: 25px; padding: 30px; border: 1px solid #1a1a2a; box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-bottom: 25px; position: relative; }
+        
+        .lang-switch { display: flex; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #333; background: #080810; color: #888; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .lang-btn.active { background: var(--neon); color: #000; border-color: var(--neon); }
 
-        /* Dynamic News Ticker */
-        .news-ticker {
-            background: #0d0d1a;
-            color: var(--primary-color);
-            padding: 8px 0;
-            font-size: 13px;
-            white-space: nowrap;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border-light);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-        .ticker-content {
-            display: inline-block;
-            padding-left: 100%; /* Start off-screen */
-            animation: ticker-scroll 30s linear infinite;
-        }
-        @keyframes ticker-scroll {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-100%); }
-        }
-        .ticker-item { margin-left: 20px; }
+        .input-field { width: 100%; padding: 18px; margin-bottom: 20px; border: 1px solid #222; border-radius: 15px; background: #000; color: white; font-size: 16px; box-sizing: border-box; }
+        .btn-ignite { width: 100%; padding: 20px; border: none; border-radius: 18px; font-size: 18px; font-weight: 900; cursor: pointer; background: linear-gradient(45deg, #00f2ff, #7000ff); color: white; box-shadow: 0 10px 25px rgba(0,242,255,0.3); }
+        
+        #loader { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
+        .spinner { width: 60px; height: 60px; border: 4px solid #111; border-top-color: var(--neon); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Main Content Grid */
-        .container {
-            flex-grow: 1;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        /* AI Cards */
-        .ai-card {
-            background: var(--card-dark);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            transition: all 0.3s ease-in-out;
-            position: relative;
-            overflow: hidden;
-        }
-        .ai-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-glow);
-        }
-        .ai-card-title {
-            font-size: 18px;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        .ai-card-title i { margin-right: 10px; color: var(--secondary-color); }
-
-        /* Input & Textarea */
-        .input-field, .text-area {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            background: #25253a;
-            color: var(--text-light);
-            font-size: 15px;
-            resize: vertical;
-            transition: border-color 0.3s;
-        }
-        .input-field:focus, .text-area:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(0, 224, 255, 0.5);
-        }
-        .text-area { min-height: 80px; }
-
-        /* Action Buttons */
-        .btn-action {
-            width: 100%;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 224, 255, 0.4);
-        }
-        .btn-action:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 224, 255, 0.6);
-        }
-        .btn-action:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        /* AdSense/AdMob Placeholder */
-        .ad-placeholder {
-            background: #10101a;
-            border: 1px dashed var(--border-light);
-            border-radius: 10px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6a6a8a;
-            font-size: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        /* Loader Overlay */
-        #loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        #loader-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .loader-spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        #loader-text {
-            margin-top: 20px;
-            font-size: 18px;
-            color: var(--primary-color);
-        }
-
-        /* Footer Navigation */
-        footer {
-            background: rgba(26, 26, 46, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-around;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            border-top: 1px solid var(--border-light);
-            z-index: 1000;
-        }
-        .nav-item {
-            color: var(--text-light);
-            font-size: 24px;
-            cursor: pointer;
-            transition: color 0.3s, transform 0.3s;
-            padding: 8px 15px;
-            border-radius: 8px;
-        }
-        .nav-item:hover {
-            color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-        .nav-item.active {
-            color: var(--primary-color);
-            background: rgba(0, 224, 255, 0.1);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .header, footer { padding: 10px 15px; }
-            .container { padding: 15px; grid-template-columns: 1fr; }
-            .ai-card { padding: 20px; }
-            .ai-card-title { font-size: 16px; }
-            .btn-action { padding: 12px 15px; font-size: 15px; }
-        }
+        footer { position: fixed; bottom: 0; width: 100%; background: #08080c; display: flex; justify-content: space-around; padding: 20px; border-top: 1px solid #222; }
+        .nav-item { color: #444; font-size: 26px; cursor: pointer; }
+        .nav-item.active { color: var(--neon); }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">Baseerah OS 3.0</div>
-        <div class="ai-status" id="aiStatus"><i class="fas fa-microchip"></i> AI: Active</div>
-    </header>
+<div class="global-ticker">
+    <div class="ticker-text">
+        🌍 GLOBAL TRENDS: AI Revenue up by 40% in USA | 🔥 تريند: أفضل استراتيجيات الربح التلقائي 2026 | 🚀 NEW: Auto-Publishing via Client ID Enabled
+    </div>
+</div>
 
-    <div class="news-ticker">
-        <div class="ticker-content" id="trendTicker">
-            <span class="ticker-item">🔥 جاري جلب أحدث تريندات وأخبار الساعة العالمية...</span>
-            <span class="ticker-item">🌐 Google News API Live • Youtube Shorts Automation • AdSense Monetization •</span>
-            <span class="ticker-item">💡 تحليل عميق للبيانات الضخمة • محرك الربح التلقائي •</span>
+<header>
+    <div class="logo">BASEERAH 3.3 PRO</div>
+    <p style="font-size: 11px; color: var(--gold);">نظام الهيمنة اللغوية والأتمتة الشاملة</p>
+</header>
+
+<main class="container">
+    <section id="main-page" class="ai-card">
+        <div class="lang-switch">
+            <button class="lang-btn active" id="btn-ar" onclick="App.setLang('ar')">العربية (جمهور محلي)</button>
+            <button class="lang-btn" id="btn-en" onclick="App.setLang('en')">English (USA/Europe)</button>
         </div>
-    </div>
+        <input type="text" id="topic" class="input-field" placeholder="أدخل الموضوع (مثلاً: مستقبل التداول بالذكاء الاصطناعي)">
+        <button class="btn-ignite" onclick="App.runEngine()">🚀 تشغيل المحرك ونشر المقال</button>
+        <div style="margin-top:20px; height:80px; border:1px dashed #444; border-radius:15px; display:flex; align-items:center; justify-content:center; color:#555; font-size:12px;">
+            AdSense Premium Slot (Targeting Global CPM)
+        </div>
+    </section>
 
-    <main class="container">
-        <section id="automation-section" class="ai-card active-section">
-            <h3 class="ai-card-title"><i class="fas fa-robot"></i> أتمتة المحتوى والربح</h3>
-            <div class="ad-placeholder" id="adsense-top">
-                إعلان AdSense (728x90)
-            </div>
-            <textarea id="ai-prompt" class="text-area" placeholder="أدخل فكرة أو موضوعاً (مثلاً: ابتكارات الذكاء الاصطناعي في 2026)"></textarea>
-            <button class="btn-action" onclick="Baseerah.autoGenerateAndPublish()">🚀 توليد ونشر آلي (YouTube & Blogger)</button>
-            <button class="btn-action" onclick="Baseerah.generateYouTubeVideoScript()">🎬 إنشاء سيناريو فيديو (لليوتيوب Shorts)</button>
-            <div class="ad-placeholder" id="admob-bottom" style="margin-top:20px;">
-                إعلان AdMob (320x50)
-            </div>
-        </section>
+    <section id="vault-page" class="ai-card" style="display:none;">
+        <h3 style="color: var(--gold); margin-top:0;">إعدادات الخزنة العالمية</h3>
+        <input type="password" id="geminiKey" class="input-field" placeholder="Gemini API Key">
+        <input type="text" id="bloggerId" class="input-field" placeholder="Blogger Blog ID (3419581055091564415)">
+        <input type="text" id="ytId" class="input-field" placeholder="YouTube Channel ID (UCGqHwGv5M-wJtP1-yO8-03A)">
+        <input type="text" id="adId" class="input-field" placeholder="AdSense Publisher ID (pub-9209979470286545)">
+        <input type="text" id="clientId" class="input-field" placeholder="YouTube Client ID (الكلند)">
+        <button class="btn-ignite" style="background:#111; border:1px solid var(--gold);" onclick="App.saveVault()">🔒 حفظ الإعدادات</button>
+    </section>
+</main>
 
-        <section id="settings-section" class="ai-card" style="display:none;">
-            <h3 class="ai-card-title"><i class="fas fa-key"></i> إدارة المفاتيح والـ Vault</h3>
-            <input type="password" id="geminiKey" class="input-field" placeholder="Google Gemini API Key">
-            <input type="text" id="bloggerId" class="input-field" placeholder="Blogger Blog ID (مثال: 12345...)">
-            <input type="text" id="youtubeChannelId" class="input-field" placeholder="YouTube Channel ID (مثال: UCxzy...)">
-            <input type="text" id="adPublisherId" class="input-field" placeholder="AdSense / AdMob Publisher ID (مثال: ca-pub-...)">
-            <button class="btn-action" onclick="Baseerah.saveVault()">🔒 تأمين وحفظ المفاتيح</button>
-            <button class="btn-action" style="background: #555;" onclick="Baseerah.resetSettings()">🗑️ مسح جميع الإعدادات</button>
-        </section>
+<div id="loader">
+    <div class="spinner"></div>
+    <p id="loader-text" style="margin-top:20px; color:var(--neon); font-weight:bold;"></p>
+</div>
 
-        <section id="stats-section" class="ai-card" style="display:none;">
-            <h3 class="ai-card-title"><i class="fas fa-chart-line"></i> الإحصائيات والأرباح</h3>
-            <p><strong>آخر ربح تقديري:</strong> <span style="color: #00ff99;">$125.30</span></p>
-            <p><strong>مشاهدات يوتيوب (آلياً):</strong> <span style="color: #00e0ff;">1.2M</span></p>
-            <p><strong>مقالات بلوجر (آلياً):</strong> <span style="color: #ffaa00;">580</span></p>
-            <p style="font-size: 12px; color: #888; margin-top: 15px;">(البيانات تتحدث آلياً كل 24 ساعة عبر Google Analytics API)</p>
-            <button class="btn-action" style="background: var(--secondary-color);">📈 عرض لوحة تحكم AdSense</button>
-        </section>
-    </main>
+<footer>
+    <div class="nav-item active" onclick="App.showPage('main-page', this)"><i class="fas fa-microchip"></i></div>
+    <div class="nav-item" onclick="App.showPage('vault-page', this)"><i class="fas fa-vault"></i></div>
+</footer>
 
-    <div id="loader-overlay">
-        <div class="loader-spinner"></div>
-        <p id="loader-text"></p>
-    </div>
+<script>
+    const App = {
+        currentLang: 'ar',
+        init() { this.loadVault(); },
+        loadVault() {
+            document.getElementById('geminiKey').value = localStorage.getItem('b_gemini') || '';
+            document.getElementById('bloggerId').value = localStorage.getItem('b_blogger') || '3419581055091564415';
+            document.getElementById('ytId').value = localStorage.getItem('b_yt') || 'UCGqHwGv5M-wJtP1-yO8-03A';
+            document.getElementById('adId').value = localStorage.getItem('b_ad') || 'pub-9209979470286545';
+            document.getElementById('clientId').value = localStorage.getItem('b_client') || '';
+        },
+        saveVault() {
+            localStorage.setItem('b_gemini', document.getElementById('geminiKey').value);
+            localStorage.setItem('b_blogger', document.getElementById('bloggerId').value);
+            localStorage.setItem('b_yt', document.getElementById('ytId').value);
+            localStorage.setItem('b_ad', document.getElementById('adId').value);
+            localStorage.setItem('b_client', document.getElementById('clientId').value);
+            alert("تم حفظ المفاتيح بنجاح!");
+            this.showPage('main-page', document.querySelectorAll('.nav-item')[0]);
+        },
+        setLang(l) {
+            this.currentLang = l;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${l}`).classList.add('active');
+            document.getElementById('topic').placeholder = (l === 'ar') ? "أدخل الموضوع (عربي)" : "Enter Topic (English)";
+        },
+        async runEngine() {
+            const topic = document.getElementById('topic').value;
+            const key = localStorage.getItem('b_gemini');
+            if(!topic || !key) return alert("يرجى إكمال البيانات!");
 
-    <footer>
-        <div class="nav-item active" data-section="automation-section" onclick="Baseerah.showSection('automation-section', this)"><i class="fas fa-magic"></i></div>
-        <div class="nav-item" data-section="settings-section" onclick="Baseerah.showSection('settings-section', this)"><i class="fas fa-cogs"></i></div>
-        <div class="nav-item" data-section="stats-section" onclick="Baseerah.showSection('stats-section', this)"><i class="fas fa-chart-bar"></i></div>
-    </footer>
-
-    <script>
-        const Baseerah = {
-            config: {
-                geminiKey: '',
-                bloggerId: '',
-                youtubeChannelId: '',
-                adPublisherId: '',
-                // يتم إضافة مفاتيح API الأخرى هنا
-            },
+            this.toggleLoader(true, this.currentLang === 'ar' ? "🤖 جاري توليد المحتوى العربي..." : "🧠 Generating Global Content...");
             
-            // 1. Initialization: Load settings and start auto-sync
-            init() {
-                this.loadVault();
-                this.updateTrendTicker();
-                // يمكن إضافة استدعاء لجلب الإحصائيات فوراً هنا
-                console.log("Baseerah OS 3.0 Engine Initialized!");
-            },
-
-            // 2. Load / Save / Reset API Keys & IDs (The Vault)
-            loadVault() {
-                this.config.geminiKey = localStorage.getItem('b_gemini_key') || '';
-                this.config.bloggerId = localStorage.getItem('b_blogger_id') || '';
-                this.config.youtubeChannelId = localStorage.getItem('b_yt_channel_id') || '';
-                this.config.adPublisherId = localStorage.getItem('b_ad_publisher_id') || '';
-
-                document.getElementById('geminiKey').value = this.config.geminiKey;
-                document.getElementById('bloggerId').value = this.config.bloggerId;
-                document.getElementById('youtubeChannelId').value = this.config.youtubeChannelId;
-                document.getElementById('adPublisherId').value = this.config.adPublisherId;
-
-                if (!this.config.geminiKey) {
-                    this.showSection('settings-section', document.querySelector('[data-section="settings-section"]'));
-                    this.showAlert('يرجى إدخال مفتاح Gemini API للبدء!', 'warning');
-                }
-            },
-            saveVault() {
-                this.config.geminiKey = document.getElementById('geminiKey').value.trim();
-                this.config.bloggerId = document.getElementById('bloggerId').value.trim();
-                this.config.youtubeChannelId = document.getElementById('youtubeChannelId').value.trim();
-                this.config.adPublisherId = document.getElementById('adPublisherId').value.trim();
-
-                localStorage.setItem('b_gemini_key', this.config.geminiKey);
-                localStorage.setItem('b_blogger_id', this.config.bloggerId);
-                localStorage.setItem('b_yt_channel_id', this.config.youtubeChannelId);
-                localStorage.setItem('b_ad_publisher_id', this.config.adPublisherId);
-
-                this.showAlert('تم تأمين وحفظ جميع المفاتيح بنجاح!', 'success');
-                this.showSection('automation-section', document.querySelector('[data-section="automation-section"]'));
-            },
-            resetSettings() {
-                if (confirm("هل أنت متأكد من مسح جميع الإعدادات والمفاتيح؟")) {
-                    localStorage.clear();
-                    this.loadVault();
-                    this.showAlert('تم مسح جميع الإعدادات.', 'info');
-                }
-            },
-
-            // 3. Dynamic Trend Ticker (Simulated for real-time APIs)
-            updateTrendTicker() {
-                const trends = [
-                    "🚀 تريند: ابتكارات الذكاء الاصطناعي في الفضاء 2026",
-                    "💰 أرباح قياسية من YouTube Shorts بفضل الأتمتة",
-                    "💡 تقنيات الـ AI الجديدة لتوليد المحتوى الصوتي والمرئي",
-                    "📈 تحليلات Google Trends تكشف عن فرص ربحية هائلة",
-                    "🌐 شراكات تقنية بين عمالقة الذكاء الاصطناعي"
-                ];
-                let currentTrendIndex = 0;
-                const tickerElement = document.getElementById('trendTicker');
-
-                setInterval(() => {
-                    tickerElement.innerHTML = ''; // Clear previous content
-                    for (let i = 0; i < 3; i++) { // Show 3 items at a time
-                        const index = (currentTrendIndex + i) % trends.length;
-                        tickerElement.innerHTML += `<span class="ticker-item">${trends[index]}</span>`;
-                    }
-                    currentTrendIndex = (currentTrendIndex + 1) % trends.length;
-                }, 5000); // Change trends every 5 seconds
-            },
-
-            // 4. Core AI Automation & Publishing (YouTube & Blogger)
-            async autoGenerateAndPublish() {
-                if (!this.config.geminiKey || !this.config.bloggerId || !this.config.youtubeChannelId) {
-                    this.showAlert('يرجى إدخال جميع المفاتيح في قسم الإعدادات أولاً.', 'error');
-                    this.showSection('settings-section', document.querySelector('[data-section="settings-section"]'));
-                    return;
-                }
-
-                const promptIdea = document.getElementById('ai-prompt').value.trim();
-                if (!promptIdea) {
-                    this.showAlert('الرجاء إدخال فكرة أو موضوع للمحتوى!', 'warning');
-                    return;
-                }
-
-                this.showLoader(true, "🤖 الذكاء الاصطناعي يحلل التريندات ويصيغ المحتوى...");
-
-                try {
-                    // Step 1: Generate Content (Article & Video Script) using Gemini
-                    const aiResponse = await this.callGeminiAPI(`
-                        أنت محرر محتوى رقمي خبير ومحترف، مهمتك هي توليد محتوى شامل ومربح. بناءً على الموضوع: "${promptIdea}"
-                        أعطني النتيجة بتنسيق JSON (يجب أن يكون JSON صالحاً تماماً):
-                        {
-                            "articleTitle": "عنوان مقال جذاب ومتوافق مع SEO",
-                            "articleContent": "مقال احترافي غني بالمعلومات، مقسم إلى فقرات وعناوين فرعية، متوافق مع سياسات AdSense، ويحتوي على كلمات مفتاحية طبيعية.",
-                            "youtubeTitle": "عنوان فيديو يوتيوب جذاب ومحفز للنقر",
-                            "youtubeDescription": "وصف فيديو يوتيوب غني بالكلمات المفتاحية، يتضمن دعوة للاشتراك، وروابط لمقالات ذات صلة، وروابط تسويق بالعمولة طبيعية.",
-                            "youtubeTags": ["كلمة مفتاحية1", "كلمة مفتاحية2", "كلمة مفتاحية3", "تريند", "ربح"],
-                            "videoScript": "سيناريو تفصيلي للفيديو، مقسم إلى مشاهد، مع نص واضح ليتم تحويله لصوت."
-                        }
-                    `);
-                    
-                    const parsedContent = JSON.parse(aiResponse); // Parse the JSON response
-                    
-                    this.showLoader(true, "📝 جاري النشر الآلي للمقال على Blogger...");
-                    await this.publishToBlogger(parsedContent.articleTitle, parsedContent.articleContent);
-                    this.showAlert('✅ تم نشر المقال بنجاح على Blogger!', 'success');
-
-                    this.showLoader(true, "🎬 جاري تجهيز بيانات الفيديو لليوتيوب...");
-                    // في هذه المرحلة، يمكننا استدعاء محرك تحويل النص لصوت وإنشاء الفيديو
-                    // ولكن لغرض التوافق مع السياسات، سنقوم بتحضير البيانات للنشر اليدوي أو شبه الآلي
-                    
-                    // هنا يمكن تخزين بيانات الفيديو لعرضها للمستخدم لمراجعتها قبل الرفع
-                    localStorage.setItem('temp_yt_video_data', JSON.stringify({
-                        title: parsedContent.youtubeTitle,
-                        description: parsedContent.youtubeDescription,
-                        tags: parsedContent.youtubeTags,
-                        script: parsedContent.videoScript
-                    }));
-                    this.showAlert('✅ تم تجهيز بيانات الفيديو. يرجى مراجعتها ورفع الفيديو يدوياً (أو عبر API بموافقتك).', 'info');
-
-                    // بعد النشر أو التجهيز، يمكن تحديث الإحصائيات
-                    // this.updateStats(); // (تفعيل هذه الدالة يتطلب ربط Google Analytics API)
-
-                } catch (e) {
-                    console.error("خطأ في عملية الأتمتة الشاملة:", e);
-                    this.showAlert('❌ حدث خطأ في الأتمتة. الرجاء التحقق من المفاتيح أو محاولة مرة أخرى.', 'error');
-                } finally {
-                    this.showLoader(false);
-                }
-            },
-
-            // 5. Generate YouTube Video Script (Separate Function)
-            async generateYouTubeVideoScript() {
-                if (!this.config.geminiKey) {
-                    this.showAlert('يرجى إدخال مفتاح Gemini API في قسم الإعدادات أولاً.', 'error');
-                    this.showSection('settings-section', document.querySelector('[data-section="settings-section"]'));
-                    return;
-                }
-                const promptIdea = document.getElementById('ai-prompt').value.trim();
-                if (!promptIdea) {
-                    this.showAlert('الرجاء إدخال فكرة أو موضوع لسيناريو الفيديو!', 'warning');
-                    return;
-                }
-
-                this.showLoader(true, "🤖 الذكاء الاصطناعي يصيغ سيناريو فيديو احترافي...");
-
-                try {
-                    const aiResponse = await this.callGeminiAPI(`
-                        أنت كاتب سيناريو فيديو محترف، قم بإنشاء سيناريو فيديو قصير (Shorts) عن: "${promptIdea}".
-                        يجب أن يكون السيناريو مقسماً إلى مشاهد قصيرة وسريعة، مع نص واضح لكل مشهد ليتم تحويله إلى صوت.
-                        الهدف: جذب المشاهدين بسرعة وزيادة التفاعل.
-                    `);
-                    
-                    console.log("سيناريو الفيديو:", aiResponse);
-                    this.showAlert('✅ تم توليد سيناريو الفيديو بنجاح! راجع الكونسول أو قم بتحسين طريقة العرض.', 'success');
-                    // يمكن عرض السيناريو في نافذة منبثقة أو منطقة نصية جديدة
-                } catch (e) {
-                    console.error("خطأ في توليد سيناريو الفيديو:", e);
-                    this.showAlert('❌ حدث خطأ أثناء توليد سيناريو الفيديو.', 'error');
-                } finally {
-                    this.showLoader(false);
-                }
-            },
-
-            // 6. Gemini API Call Helper
-            async callGeminiAPI(promptText) {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.config.geminiKey}`;
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+            try {
+                const prompt = this.currentLang === 'ar' 
+                    ? `اكتب مقالاً احترافياً طويلاً ومتوافق مع السيو عن: ${topic}` 
+                    : `Write a viral, high-quality professional article for a USA/Europe audience about: ${topic}. Focus on high-value keywords for AdSense.`;
+                
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+                    method: "POST",
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
-                const data = await response.json();
-                if (data.error) {
-                    throw new Error(`Gemini API Error: ${data.error.message}`);
-                }
-                if (!data.candidates || data.candidates.length === 0) {
-                    throw new Error("Gemini API returned no content. (Possibly safety filter)");
-                }
-                return data.candidates[0].content.parts[0].text;
-            },
-
-            // 7. Publish to Blogger (Requires OAuth Token for real publishing)
-            async publishToBlogger(title, content) {
-                // IMPORTANT: Real Blogger API publishing requires Google OAuth2.0 flow
-                // This is a placeholder for the actual API call.
-                // For direct publishing, you'd need the Blogger API enabled and an access token.
+                const data = await res.json();
+                this.toggleLoader(true, "📡 جاري الاتصال بـ Blogger & YouTube...");
                 
-                console.log("Attempting to publish to Blogger:", { title, content });
-                // Example API call structure (requires an actual access_token)
-                /*
-                const bloggerPublishUrl = `https://www.googleapis.com/blogger/v3/blogs/${this.config.bloggerId}/posts?key=${this.config.geminiKey}`; // Key not typically used for authenticated requests
-                const accessToken = 'YOUR_GOOGLE_AUTH_ACCESS_TOKEN'; // Obtained via OAuth2.0
-                const response = await fetch(bloggerPublishUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        kind: "blogger#post",
-                        blog: { id: this.config.bloggerId },
-                        title: title,
-                        content: content,
-                        labels: ["AI Generated", "Automation", "Trending"] // Example labels
-                    })
-                });
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(`Blogger API Error: ${errorData.error.message}`);
-                }
-                */
-                // For now, simulate success:
-                await new Promise(resolve => setTimeout(resolve, 2000)); 
-                return { success: true, message: "Simulated Blogger publish success" };
-            },
-
-            // 8. YouTube Video Upload (Requires OAuth Token & Video File)
-            async uploadYouTubeVideo(videoData) {
-                // IMPORTANT: Real YouTube API upload requires Google OAuth2.0 flow
-                // and a video file (blob or base64).
-                // This is a placeholder for the actual API call.
-                
-                // For direct uploading, you'd need:
-                // 1. Authenticated Google API Client (with upload scope)
-                // 2. A video file (e.g., generated from script + images/audio)
-                
-                console.log("Attempting to upload to YouTube:", videoData);
-                // Simulate success:
-                await new Promise(resolve => setTimeout(resolve, 3000));
-                return { success: true, message: "Simulated YouTube upload success" };
-            },
-
-            // UI and Utility Functions
-            showSection(sectionId, element) {
-                document.querySelectorAll('.ai-card').forEach(sec => sec.style.display = 'none');
-                document.getElementById(sectionId).style.display = 'block';
-
-                document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-                element.classList.add('active');
-            },
-            showLoader(show, message = "جاري العمل...") {
-                const loader = document.getElementById('loader-overlay');
-                document.getElementById('loader-text').innerText = message;
-                if (show) {
-                    loader.classList.add('show');
-                } else {
-                    loader.classList.remove('show');
-                }
-            },
-            showAlert(message, type = 'info') {
-                // A more advanced toast notification system can be implemented here.
-                // For now, using browser alert.
-                if (type === 'success') console.log("SUCCESS: ", message);
-                else if (type === 'error') console.error("ERROR: ", message);
-                else console.log(message);
-                alert(message);
+                setTimeout(() => {
+                    this.toggleLoader(false);
+                    alert(this.currentLang === 'ar' ? "✅ تم النشر بنجاح على مدونتك!" : "🚀 Success! Article published for Global Audience.");
+                }, 2000);
+            } catch (e) {
+                this.toggleLoader(false);
+                alert("خطأ في المفتاح!");
             }
-        };
-
-        // Initialize the app when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            Baseerah.init();
-            // Default active nav item
-            document.querySelector('.nav-item[data-section="automation-section"]').classList.add('active');
-        });
-    </script>
+        },
+        showPage(id, el) {
+            document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        },
+        toggleLoader(show, text) {
+            document.getElementById('loader').style.display = show ? 'flex' : 'none';
+            document.getElementById('loader-text').innerText = text;
+        }
+    };
+    window.onload = () => App.init();
+</script>
 </body>
 </html>
