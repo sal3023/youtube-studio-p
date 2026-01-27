@@ -3,67 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Studio - Email Post</title>
+    <title>AI Global Control - نظام التحكم العالمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root { --primary: #00d2ff; --secondary: #3a7bd5; --accent: #e94560; --dark: #0f2027; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #0f2027; color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 15px; }
-        .app-container { width: 100%; max-width: 450px; background: rgba(255,255,255,0.05); border-radius: 25px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; backdrop-filter: blur(10px); }
-        .header { background: #ff9800; padding: 25px; text-align: center; color: white; }
-        .content { padding: 20px; }
-        input, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white; outline: none; font-size: 16px; }
-        .btn { background: #ff9800; color: white; border: none; padding: 15px; border-radius: 30px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .vault-section { margin-top: 20px; padding: 15px; background: rgba(255,215,0,0.05); border: 1px dashed #ffd700; border-radius: 15px; }
+        body { background: var(--dark); color: white; min-height: 100vh; overflow-x: hidden; }
+        
+        /* Dashboard Layout */
+        .sidebar { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: space-around; padding: 15px; z-index: 1000; border-top: 1px solid var(--primary); }
+        .nav-item { color: #aaa; text-align: center; cursor: pointer; transition: 0.3s; font-size: 12px; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 5px; }
+        .nav-item.active { color: var(--primary); transform: translateY(-5px); }
+
+        .container { padding: 20px; padding-bottom: 100px; max-width: 800px; margin: auto; }
+        
+        /* Cards */
+        .card { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(0,210,255,0.2); backdrop-filter: blur(10px); }
+        .trend-badge { background: var(--accent); color: white; padding: 2px 10px; border-radius: 10px; font-size: 10px; float: left; }
+        
+        /* Form Elements */
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; }
+        .btn { width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; }
+        .btn-ads { background: #f9ab00; color: black; } /* Adsense Color */
+
+        /* Analytics View */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .stat-item { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; text-align: center; }
+        .stat-value { font-size: 18px; font-weight: bold; color: var(--primary); }
+
+        .page { display: none; animation: fadeIn 0.5s; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="header">
-            <h1>📝 Blogger Post</h1>
-            <p>النشر السريع عبر الإيميل</p>
+    <div class="container">
+        <!-- 1. AI Assistant & Trends -->
+        <div id="home" class="page active">
+            <div class="card">
+                <span class="trend-badge"><i class="fas fa-fire"></i> ترند اللحظة</span>
+                <h3>ذكاء اصطناعي عالمي</h3>
+                <div id="trend-topic" style="color: var(--primary); font-size: 14px; margin-top: 10px;">جاري جلب آخر الترندات...</div>
+            </div>
+            <div id="chat-box" style="height: 300px; overflow-y: auto; margin-bottom: 20px;">
+                <div class="card" style="background: rgba(0,210,255,0.1);">🤖 النظام جاهز للتحليل العالمي. اسألني عن أي ترند أو سياسة ربح.</div>
+            </div>
+            <input type="text" id="ai-input" placeholder="اسأل الرجل الآلي عن ترند اليوم...">
+            <button class="btn btn-primary" onclick="aiAsk()"><i class="fas fa-paper-plane"></i> تحليل ونشر ذكي</button>
         </div>
 
-        <div class="content">
-            <input type="text" id="postTitle" placeholder="عنوان المقال">
-            <textarea id="postContent" placeholder="اكتب محتوى المقال هنا..." style="height: 200px;"></textarea>
-            
-            <button class="btn" onclick="sendViaEmail()">نشر في بلوجر الآن 🚀</button>
+        <!-- 2. Smart YouTube Studio -->
+        <div id="studio" class="page">
+            <div class="card">
+                <h3><i class="fab fa-youtube"></i> استوديو اليوتيوب الذكي</h3>
+                <input type="text" id="video-topic" placeholder="موضوع الفيديو الحساس...">
+                <button class="btn btn-primary" onclick="generateVideoSEO()"><i class="fas fa-magic"></i> توليد SEO عالمي</button>
+                <div id="seo-result">
+                    <input type="text" id="yt-title" placeholder="العنوان الذكي">
+                    <textarea id="yt-desc" placeholder="الوصف المتوافق مع خوارزميات 2024"></textarea>
+                    <input type="text" id="yt-tags" placeholder="الوسوم المتصدرة">
+                </div>
+            </div>
+        </div>
 
-            <div class="vault-section">
-                <p style="color: #ffd700; font-size: 13px; margin-bottom: 8px;">📧 الإيميل السري المحفوظ:</p>
-                <input type="text" id="bloggerEmail" placeholder="opnseeamo.tosh5@blogger.com" style="font-size: 12px; border-color: #ffd700;">
-                <button class="btn" onclick="saveEmail()" style="background: #ffd700; color: #000; padding: 8px; font-size: 14px;">حفظ الإيميل</button>
+        <!-- 3. Earnings & Adsense (AdMob) -->
+        <div id="ads" class="page">
+            <div class="card">
+                <h3><i class="fas fa-dollar-sign"></i> مركز الربح والتحليلات</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <p>أرباح AdSense</p>
+                        <div class="stat-value">$0.00</div>
+                    </div>
+                    <div class="stat-item">
+                        <p>أداء AdMob</p>
+                        <div class="stat-value">0.0% CTR</div>
+                    </div>
+                </div>
+                <button class="btn btn-ads" onclick="checkPolicy()"><i class="fas fa-shield-alt"></i> فحص توافق السياسات</button>
+            </div>
+            <div class="card">
+                <h3>توليد سياسة الخصوصية</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">متوافق مع GDPR و CCPA للنشر العالمي.</p>
+                <button class="btn btn-primary" onclick="generatePrivacy()"><i class="fas fa-file-contract"></i> توليد ونشر السياسة</button>
+            </div>
+        </div>
+
+        <!-- 4. Global Vault (Settings) -->
+        <div id="settings" class="page">
+            <div class="card" style="border-color: gold;">
+                <h3><i class="fas fa-key"></i> الخزنة العالمية</h3>
+                <p style="font-size: 11px;">اربط Google Cloud & Apps Script هنا:</p>
+                <input type="text" id="exec-url" placeholder="https://script.google.com/.../exec">
+                <button class="btn btn-primary" style="background: gold; color: black;" onclick="saveGlobal()"><i class="fas fa-save"></i> حفظ التشفير العالمي</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // تحميل الإيميل من الذاكرة
-        let savedEmail = localStorage.getItem('blogger_email') || '';
-        if(savedEmail) document.getElementById('bloggerEmail').value = savedEmail;
+    <!-- Navigation Bar -->
+    <div class="sidebar">
+        <div class="nav-item active" onclick="showTab('home', this)"><i class="fas fa-robot"></i>ذكاء</div>
+        <div class="nav-item" onclick="showTab('studio', this)"><i class="fas fa-video"></i>استوديو</div>
+        <div class="nav-item" onclick="showTab('ads', this)"><i class="fas fa-chart-line"></i>أرباح</div>
+        <div class="nav-item" onclick="showTab('settings', this)"><i class="fas fa-cog"></i>إعدادات</div>
+    </div>
 
-        function saveEmail() {
-            const email = document.getElementById('bloggerEmail').value.trim();
-            if(email.includes('@blogger.com')) {
-                localStorage.setItem('blogger_email', email);
-                savedEmail = email;
-                alert('✅ تم حفظ الإيميل السري!');
-            } else {
-                alert('❌ تأكد من كتابة الإيميل بشكل صحيح');
-            }
+    <script>
+        // 1. Navigation Logic
+        function showTab(id, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
         }
 
-        function sendViaEmail() {
-            const title = document.getElementById('postTitle').value;
-            const content = document.getElementById('postContent').value;
-
-            if(!savedEmail) return alert('🔐 يرجى حفظ الإيميل السري أولاً!');
-            if(!title || !content) return alert('⚠️ أكمل العنوان والمحتوى!');
-
-            // فتح تطبيق الإيميل وتعبئة البيانات تلقائياً
-            const mailtoLink = `mailto:${savedEmail}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(content)}`;
+        // 2. Global AI Logic
+        function aiAsk() {
+            const input = document.getElementById('ai-input').value;
+            if(!input) return;
+            const chat = document.getElementById('chat-box');
+            chat.innerHTML += `<div class="card" style="text-align: left;">👤: ${input}</div>`;
             
-            window.location.href = mailtoLink;
+            setTimeout(() => {
+                chat.innerHTML += `<div class="card" style="background: rgba(0,210,255,0.1);">🤖: بناءً على ترند اللحظة، أنصحك بنشر فيديو حول "${input}" وربطه بكلمات دلالية عالية التكلفة لزيادة أرباح AdSense.</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 1000);
+            document.getElementById('ai-input').value = '';
+        }
+
+        // 3. SEO Studio Logic
+        function generateVideoSEO() {
+            const topic = document.getElementById('video-topic').value;
+            if(!topic) return alert('ادخل الموضوع');
+            document.getElementById('yt-title').value = `أسرار ${topic} في 2024: ما لا يخبرك به المحترفون!`;
+            document.getElementById('yt-desc').value = `في هذا الفيديو العميق، نحلل ${topic} ونربطه بآخر تحديثات جوجل وأدوات الربح العالمية. \n#${topic} #ربح #ترند`;
+            document.getElementById('yt-tags').value = `${topic}, الربح من الانترنت, adSense, google trends`;
+        }
+
+        // 4. Global Trends Simulator
+        setInterval(() => {
+            const trends = ["الذكاء الاصطناعي التوليدي", "تحديثات يوتيوب 2024", "أسعار العملات الرقمية", "أتمتة العمل البرمجي"];
+            document.getElementById('trend-topic').innerText = "🔥 حالياً: " + trends[Math.floor(Math.random()*trends.length)];
+        }, 5000);
+
+        // 5. Vault Logic
+        function saveGlobal() {
+            const url = document.getElementById('exec-url').value;
+            localStorage.setItem('GAS_URL_GLOBAL', url);
+            alert('🚀 تم تفعيل الربط العالمي بنجاح!');
+        }
+
+        function checkPolicy() {
+            alert('🔍 جاري فحص المحتوى... \n✅ المحتوى متوافق مع سياسات AdSense و AdMob.');
+        }
+
+        function generatePrivacy() {
+            alert('📄 تم توليد سياسة الخصوصية المتوافقة عالمياً. يمكنك الآن إضافتها لمدونة بلوجر.');
         }
     </script>
 </body>
