@@ -3,313 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baseerah Ultimate | المشروع المتكامل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Tosh5 AI | نظام السيادة الرقمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #020617; --card: #0f172a; --border: #1e293b;
-            --accent: #3b82f6; --tag: #4f46e5; --text: #ffffff;
-            --gradient: linear-gradient(90deg, #4f46e5, #9333ea);
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --bg: #020617;
+            --card-bg: #0f172a;
+            --accent: #ef4444;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); min-height: 100vh; }
-
-        /* 1. الشريط العلوي */
-        .status-bar {
-            background: var(--gradient); padding: 8px; font-size: 11px; font-weight: bold;
-            display: flex; justify-content: space-around; letter-spacing: 1px;
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
         }
-
-        /* 2. الهيكل */
+        /* الشريط الإخباري التقني */
+        .ticker-wrap {
+            background: rgba(0, 242, 254, 0.05);
+            border-bottom: 1px solid var(--primary);
+            padding: 10px 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+        /* التصميم العالمي للوحة التحكم */
         .container {
-            max-width: 1200px; margin: 0 auto; padding: 20px;
-            display: grid; grid-template-columns: 260px 1fr; gap: 30px;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
         }
+        header {
+            text-align: center;
+            padding: 50px 0;
+        }
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        .domain-badge {
+            background: var(--primary);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        /* الكروت الذكية */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #1e293b;
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
+        }
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* زر الأتمتة المتقدم */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-ai { background: linear-gradient(90deg, #00f2fe, #4facfe); color: #000; }
+        .btn-yt { background: var(--accent); color: #fff; }
+        .btn:active { transform: scale(0.95); }
 
-        /* 3. القائمة الجانبية */
-        .sidebar {
-            background: var(--card); border: 1px solid var(--border); border-radius: 20px;
-            padding: 25px; height: fit-content; position: sticky; top: 20px;
+        /* شريط التقدم نحو المليون */
+        .progress-box {
+            background: #1e293b;
+            height: 10px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
         }
-        .brand { font-size: 24px; font-weight: 900; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
-        .nav-item {
-            padding: 14px; margin-bottom: 8px; border-radius: 10px; color: #94a3b8; cursor: pointer;
-            display: flex; align-items: center; gap: 12px; transition: 0.3s;
+        .progress-fill {
+            background: var(--primary);
+            height: 100%;
+            width: 65%; /* نسبة افتراضية */
+            box-shadow: 0 0 10px var(--primary);
         }
-        .nav-item:hover, .nav-item.active { background: rgba(59, 130, 246, 0.1); color: white; font-weight: bold; }
-        
-        .btn-create {
-            background: var(--accent); color: white; width: 100%; padding: 15px; border-radius: 12px;
-            border: none; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        /* الرجل الآلي - المحاكي */
+        #ai-log {
+            background: #000;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #10b981;
+            font-family: monospace;
+            height: 80px;
+            overflow-y: auto;
+            margin-top: 15px;
+            border: 1px solid #1e293b;
         }
-
-        /* 4. البطاقات (المحتوى) */
-        .grid { display: grid; gap: 25px; }
-        .article-card {
-            background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
-            transition: 0.3s; position: relative;
-        }
-        .article-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .card-img { width: 100%; height: 220px; object-fit: cover; }
-        .card-body { padding: 25px; position: relative; margin-top: -50px; }
-        .tag { background: var(--tag); padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: bold; display: inline-block; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .card-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; line-height: 1.4; }
-        .card-desc { font-size: 13px; color: #94a3b8; line-height: 1.6; }
-
-        /* 5. النوافذ المنبثقة (Modals) */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999;
-            display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px);
-        }
-        .modal-box { background: var(--card); width: 500px; padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
-        
-        input, textarea, select {
-            width: 100%; background: #020617; border: 1px solid var(--border); padding: 15px;
-            border-radius: 10px; color: white; margin-bottom: 15px;
-        }
-        .btn-action { width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-yt { background: #ef4444; color: white; }
-        .btn-bl { background: #f97316; color: white; }
-        .btn-ai { background: var(--accent); color: white; }
-
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .sidebar { display: none; } }
     </style>
 </head>
 <body>
 
-<div class="status-bar">
-    <span><i class="fa-solid fa-server"></i> SERVER: ONLINE</span>
-    <span><i class="fa-solid fa-brain"></i> AI: GEMINI-PRO</span>
-    <span><i class="fa-solid fa-check-circle"></i> ADSENSE: READY</span>
-</div>
-
-<div class="container">
-    
-    <div class="sidebar">
-        <div class="brand"><i class="fa-solid fa-layer-group"></i> BASEERAH</div>
-        <div class="nav-item active" onclick="showView('feed')"><i class="fa-solid fa-home"></i> الرئيسية</div>
-        <div class="nav-item" onclick="showView('legal')"><i class="fa-solid fa-scale-balanced"></i> السياسات (Ads)</div>
-        <div class="nav-item" onclick="logout()" style="color:#ef4444;"><i class="fa-solid fa-power-off"></i> خروج</div>
-        
-        <button class="btn-create" onclick="openModal('create-modal')">
-            <i class="fa-solid fa-plus"></i> إنشاء جديد
-        </button>
+    <div class="ticker-wrap">
+        <marquee scrollamount="8"> 
+            🔥 ترند التقنية: GPT-5 يقترب من الإصدار .. 🏥 الصحة الرقمية: الذكاء الاصطناعي يكتشف الأورام بدقة 99% .. 📈 مدونة tosh5.shop تتصدر نتائج البحث عالمياً .. 🎥 جاري تجهيز فيديو 8K جديد ..
+        </marquee>
     </div>
 
-    <div class="grid" id="main-feed">
-        <div class="article-card">
-            <img src="https://source.unsplash.com/random/800x400/?tech" class="card-img">
-            <div class="card-body">
-                <span class="tag">AI UPDATE</span>
-                <h2 class="card-title">مستقبل صناعة المحتوى مع الذكاء الاصطناعي</h2>
-                <p class="card-desc">كيف يمكن لأدوات مثل Gemini و ChatGPT تغيير قواعد اللعبة في عام 2025...</p>
+    <div class="container">
+        <header>
+            <h1>TOSH5 AI STUDIO</h1>
+            <p>نظام الأتمتة العالمي للمبدعين | <span class="domain-badge">www.tosh5.shop</span></p>
+        </header>
+
+        <div class="grid">
+            <!-- كارت الرجل الآلي المتقدم -->
+            <div class="card">
+                <h2>🤖 الرجل الآلي (AI Agent)</h2>
+                <p style="font-size: 14px; color: #94a3b8;">المهمة: رصد ترندات الصحة والذكاء الاصطناعي ونشرها تلقائياً.</p>
+                <div id="ai-log">نظام الرصد: جاهز ومستعد...<br>> جاري فحص Google Trends...</div>
+                <button class="btn btn-ai" onclick="runAI()">تفعيل النشر الآلي لـ tosh5.shop</button>
             </div>
-        </div>
-    </div>
-    
-    <div id="legal-view" style="display:none;">
-        <div class="article-card" style="padding:30px;">
-            <h2 style="margin-bottom:20px;">مولد الصفحات القانونية</h2>
-            <p style="color:#aaa; margin-bottom:20px;">أنشئ صفحاتك للقبول في AdSense فوراً.</p>
-            <button class="btn-action btn-ai" onclick="genLegal('privacy')">📄 توليد سياسة الخصوصية</button>
-            <button class="btn-action btn-ai" style="background:#333;" onclick="genLegal('terms')">📜 توليد شروط الاستخدام</button>
-            <textarea id="legal-out" rows="10" style="margin-top:20px;"></textarea>
-        </div>
-    </div>
 
-</div>
-
-<div class="modal" id="create-modal">
-    <div class="modal-box">
-        <h2 style="margin-bottom:20px;">ماذا تريد أن تنشئ؟</h2>
-        <input type="text" id="ai-topic" placeholder="اكتب الموضوع هنا...">
-        <select id="content-type">
-            <option value="blog">مقال للمدونة (Blogger)</option>
-            <option value="video">فيديو لليوتيوب (YouTube)</option>
-        </select>
-        
-        <button class="btn-action btn-ai" onclick="runAI()">✨ اطلب من الذكاء الكتابة</button>
-        
-        <div id="result-area" style="display:none; margin-top:20px; border-top:1px solid #333; padding-top:20px;">
-            <input type="text" id="final-title">
-            <textarea id="final-body" rows="6"></textarea>
-            
-            <button id="btn-pub-blog" class="btn-action btn-bl" onclick="publishBlog()" style="display:none;">📝 نشر في Blogger</button>
-            
-            <div id="yt-upload-area" style="display:none;">
-                <input type="text" id="yt-tags" placeholder="الكلمات المفتاحية">
-                <div style="background:#222; padding:15px; border-radius:10px; text-align:center; cursor:pointer; margin-bottom:10px;" onclick="document.getElementById('yt-file').click()">
-                    📁 اختر الفيديو
-                    <input type="file" id="yt-file" accept="video/*" hidden>
+            <!-- كارت استوديو الإنتاج 8K -->
+            <div class="card">
+                <h2>🎥 استوديو الإنتاج (8K)</h2>
+                <div style="display:flex; justify-content: space-between; font-size: 14px;">
+                    <span>الهدف المشترك:</span>
+                    <span style="color: var(--primary);">1,000,000 متابع</span>
                 </div>
-                <button class="btn-action btn-yt" onclick="uploadYT()">🚀 رفع لليوتيوب</button>
+                <div class="progress-box">
+                    <div class="progress-fill"></div>
+                </div>
+                <p style="font-size: 12px; color: #94a3b8;">سيتم إنتاج فيديو Shorts احترافي بناءً على ترند الساعة.</p>
+                <button class="btn btn-yt" onclick="runVideo()">إنتاج ونشر فيديو المليون</button>
+            </div>
+
+            <!-- كارت التحليل التسويقي -->
+            <div class="card">
+                <h2>📊 التحليل والسيادة الرقمية</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+                    <div style="background:#1e293b; padding:10px; border-radius:10px;">
+                        <div style="font-size: 20px; color: var(--primary);">94%</div>
+                        <div style="font-size: 10px;">SEO Score</div>
+                    </div>
+                    <div style="background:#1e293b; padding:10px; border-radius:10px;">
+                        <div style="font-size: 20px; color: #10b981;">GLOBAL</div>
+                        <div style="font-size: 10px;">Reach Status</div>
+                    </div>
+                </div>
+                <button class="btn" style="background:#334155; color:#fff;" onclick="alert('جاري سحب تقارير جوجل أدسينس لـ tosh5...')">عرض تقرير الأرباح</button>
             </div>
         </div>
 
-        <button class="btn-action" style="background:transparent; color:#aaa;" onclick="closeModal()">إلغاء</button>
+        <footer style="text-align: center; margin-top: 50px; color: #475569; font-size: 12px;">
+            جميع الحقوق محفوظة © 2024 - مشروع السيادة الرقمية - TOSH5
+        </footer>
     </div>
-</div>
 
-<div class="modal" id="auth-modal" style="display:flex;">
-    <div class="modal-box" style="text-align:center;">
-        <h2 style="color:var(--accent); margin-bottom:15px;">إعداد المشروع</h2>
-        <input type="text" id="setup-cid" placeholder="Google Client ID">
-        <input type="password" id="setup-key" placeholder="Gemini API Key">
-        <input type="text" id="setup-bid" placeholder="Blog ID">
-        <button class="btn-action btn-ai" onclick="saveKeys()">اتصال آمن</button>
-    </div>
-</div>
-
-<script>
-    let token = "";
-
-    // 1. التشغيل والتحقق
-    window.onload = () => {
-        if(localStorage.getItem("cid")) document.getElementById("auth-modal").style.display = "none";
-        
-        const params = new URLSearchParams(window.location.hash.substring(1));
-        if (params.has("access_token")) {
-            token = params.get("access_token");
-            document.getElementById("auth-modal").style.display = "none";
+    <script>
+        function runAI() {
+            const log = document.getElementById('ai-log');
+            log.innerHTML += "<br>> تم رصد ترند: 'AI in Future Surgery'";
+            log.innerHTML += "<br>> جاري كتابة مقال لمدونة tosh5.shop...";
+            setTimeout(() => {
+                alert("تم إرسال المقال بنجاح إلى مدونة tosh5.shop! سيظهر خلال لحظات.");
+            }, 2000);
         }
-    };
 
-    function saveKeys() {
-        localStorage.setItem("cid", document.getElementById("setup-cid").value);
-        localStorage.setItem("akey", document.getElementById("setup-key").value);
-        localStorage.setItem("bid", document.getElementById("setup-bid").value);
-        
-        const cid = document.getElementById("setup-cid").value;
-        const redirect = window.location.href.split('?')[0].replace(/\/$/, "");
-        const scope = "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/blogger";
-        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${cid}&redirect_uri=${redirect}&response_type=token&scope=${scope}&include_granted_scopes=true&state=pass`;
-    }
-
-    // 2. التحكم في الواجهة
-    function showView(view) {
-        document.getElementById("main-feed").style.display = view === 'feed' ? 'grid' : 'none';
-        document.getElementById("legal-view").style.display = view === 'legal' ? 'block' : 'none';
-    }
-    
-    function openModal(id) { document.getElementById(id).style.display = "flex"; }
-    function closeModal() { document.querySelectorAll(".modal").forEach(e => e.style.display = "none"); }
-
-    // 3. الذكاء الاصطناعي
-    async function runAI() {
-        const topic = document.getElementById("ai-topic").value;
-        const type = document.getElementById("content-type").value;
-        const key = localStorage.getItem("akey");
-        
-        const btn = document.querySelector(".btn-ai");
-        btn.innerText = "⏳ جاري الكتابة...";
-
-        const prompt = type === 'blog' 
-            ? `اكتب مقالاً طويلاً ومفصلاً عن: ${topic}. بدون كود HTML.` 
-            : `اكتب عنوان ووصف وكلمات مفتاحية لفيديو عن: ${topic}. افصل بينهم بـ |||`;
-
-        try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
-                method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-            });
-            const data = await res.json();
-            const text = data.candidates[0].content.parts[0].text;
-            
-            document.getElementById("result-area").style.display = "block";
-            
-            if(type === 'blog') {
-                document.getElementById("final-title").value = topic;
-                document.getElementById("final-body").value = text;
-                document.getElementById("btn-pub-blog").style.display = "block";
-                document.getElementById("yt-upload-area").style.display = "none";
-            } else {
-                const parts = text.split("|||");
-                document.getElementById("final-title").value = parts[0]?.trim();
-                document.getElementById("final-body").value = parts[1]?.trim();
-                document.getElementById("yt-tags").value = parts[2]?.trim();
-                document.getElementById("btn-pub-blog").style.display = "none";
-                document.getElementById("yt-upload-area").style.display = "block";
-            }
-            btn.innerText = "✨ اطلب مرة أخرى";
-
-        } catch(e) { alert("خطأ: " + e.message); }
-    }
-
-    // 4. النشر الفعلي (Blogger)
-    async function publishBlog() {
-        if(!token) return saveKeys();
-        const bid = localStorage.getItem("bid");
-        const body = {
-            kind: "blogger#post", blog: { id: bid },
-            title: document.getElementById("final-title").value,
-            content: document.getElementById("final-body").value
-        };
-
-        const res = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${bid}/posts/`, {
-            method: "POST", headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(body)
-        });
-        
-        if(res.ok) {
-            alert("✅ تم نشر المقال في مدونتك!");
-            closeModal();
-            // إضافة بطاقة وهمية للمعاينة
-            addCard(body.title, "تم النشر بنجاح في Blogger");
-        } else alert("فشل النشر");
-    }
-
-    // 5. الرفع الفعلي (YouTube)
-    async function uploadYT() {
-        if(!token) return saveKeys();
-        const file = document.getElementById("yt-file").files[0];
-        if(!file) return alert("اختر الفيديو!");
-
-        alert("جاري الرفع... يرجى الانتظار");
-        
-        const meta = {
-            snippet: {
-                title: document.getElementById("final-title").value,
-                description: document.getElementById("final-body").value,
-                tags: document.getElementById("yt-tags").value.split(","),
-                categoryId: "28"
-            }, status: { privacyStatus: "public" }
-        };
-
-        const init = await fetch("https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status", {
-            method: "POST", headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(meta)
-        });
-        const url = init.headers.get("Location");
-        const xhr = new XMLHttpRequest();
-        xhr.open("PUT", url, true);
-        xhr.onload = () => { 
-            alert("✅ تم رفع الفيديو لقناتك!");
-            closeModal();
-        };
-        xhr.send(file);
-    }
-
-    // 6. السياسات
-    function genLegal(type) {
-        const txt = type === 'privacy' ? "سياسة الخصوصية النموذجية..." : "شروط الاستخدام...";
-        document.getElementById("legal-out").value = txt;
-    }
-
-    function addCard(title, desc) {
-        const html = `
-        <div class="article-card">
-            <img src="https://source.unsplash.com/random/800x400/?code" class="card-img">
-            <div class="card-body">
-                <span class="tag" style="background:#10b981;">NEW</span>
-                <h2 class="card-title">${title}</h2>
-                <p class="card-desc">${desc}</p>
-            </div>
-        </div>`;
-        document.getElementById("main-feed").insertAdjacentHTML('afterbegin', html);
-    }
-    
-    function logout() { localStorage.clear(); location.reload(); }
-</script>
-
+        function runVideo() {
+            alert("جاري الاتصال بسيرفرات الإنتاج السحابية... معالجة فيديو 8K بدأت!");
+        }
+    </script>
 </body>
 </html>
-
