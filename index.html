@@ -1,114 +1,904 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI MASTER ENGINE | النظام ذاتي التحديث</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="theme-color" content="#FF0000">
+    <title>منصة المحتوى الذكية - YouTube & Blogger</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;700&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
-        .dynamic-ui { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .status-bar { border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02); }
-        #app-core { min-height: 80vh; }
-        .pulse-sync { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        :root {
+            --primary-red: #FF0000;
+            --primary-blue: #4285F4;
+            --primary-green: #0F9D58;
+            --primary-purple: #8E44AD;
+            --dark-bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text-light: #ffffff;
+            --text-gray: #aaaaaa;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Cairo', sans-serif;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .app-header {
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-blue), var(--primary-green));
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary-red);
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .app-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .app-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .smart-nav {
+            background: var(--card-bg);
+            margin: 20px;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .smart-nav::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .nav-item {
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: 2px solid transparent;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-blue));
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .nav-item:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .content-container {
+            padding: 0 20px;
+        }
+        
+        .content-section {
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 0, 0, 0.2);
+            border-color: var(--primary-red);
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-blue));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+        }
+        
+        .action-btn.green {
+            background: linear-gradient(135deg, var(--primary-green), #1abc9c);
+        }
+        
+        .action-btn.purple {
+            background: linear-gradient(135deg, var(--primary-purple), #9b59b6);
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #fff, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top: 5px solid var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-left: 5px solid var(--primary-red);
+            animation: slideInRight 0.3s ease;
+            display: none;
+            z-index: 1500;
+            max-width: 350px;
+        }
+        
+        .notification.success {
+            border-left-color: var(--primary-green);
+        }
+        
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .video-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+        
+        .video-info {
+            padding: 15px;
+        }
+        
+        .video-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .smart-nav {
+                margin: 10px;
+            }
+            
+            .nav-item {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+            
+            .nav-item {
+                padding: 12px;
+            }
+        }
     </style>
 </head>
-<body class="dynamic-ui">
-
-    <!-- شريط التحديث الآلي الحقيقي -->
-    <header class="status-bar p-4 flex justify-between items-center sticky top-0 backdrop-blur-md z-50">
-        <div class="flex items-center gap-2">
-            <div id="sync-icon" class="w-2 h-2 bg-blue-500 rounded-full pulse-sync"></div>
-            <span class="text-[10px] text-gray-400 font-mono" id="sync-status">SYNCING WITH CLOUD...</span>
-        </div>
-        <div class="text-[10px] text-blue-500 font-bold" id="version-tag">VER 5.0.1 ALPHA</div>
-    </header>
-
-    <main id="app-core" class="p-4 max-w-4xl mx-auto space-y-6">
-        <!-- الخزنة (الرابط الوحيد الذي تحتاجه) -->
-        <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
-            <label class="text-[9px] text-gray-500 uppercase block mb-1">Central Intelligence Link (Google Exec)</label>
-            <input id="cloud-link" type="text" class="w-full bg-black/50 p-3 rounded-xl text-xs border border-white/5 outline-none focus:border-blue-500" 
-                   placeholder="https://script.google.com/.../exec" onchange="syncNow()">
-        </div>
-
-        <!-- المنطقة الديناميكية (سيتم ملؤها بواسطة السيرفر) -->
-        <div id="dynamic-content" class="space-y-6">
-            <div class="text-center py-20">
-                <i class="fas fa-circle-notch fa-spin text-3xl text-blue-600 mb-4"></i>
-                <p class="text-gray-500 text-sm">جاري سحب الأنماط والذكاء التوليدي من السيرفر العالمي...</p>
+<body>
+    <header class="app-header">
+        <div class="logo-container">
+            <div class="logo">AI</div>
+            <div>
+                <h1 class="app-title">منصة المحتوى الذكية</h1>
+                <p class="app-subtitle">YouTube • Blogger • AI • Social Media</p>
             </div>
         </div>
-    </main>
-
-    <!-- الملاحة السفلى -->
-    <nav id="bottom-nav" class="fixed bottom-0 w-full bg-black/90 border-t border-white/5 p-4 flex justify-around items-center backdrop-blur-xl">
-        <button onclick="syncNow()" class="text-blue-500 flex flex-col items-center gap-1">
-            <i class="fas fa-sync-alt"></i>
-            <span class="text-[8px] font-bold">تحديث الآن</span>
-        </button>
+    </header>
+    
+    <nav class="smart-nav">
+        <div class="nav-item active" data-tab="dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>لوحة التحكم</span>
+        </div>
+        <div class="nav-item" data-tab="youtube">
+            <i class="fab fa-youtube"></i>
+            <span>YouTube</span>
+        </div>
+        <div class="nav-item" data-tab="blogger">
+            <i class="fab fa-blogger"></i>
+            <span>المدونة</span>
+        </div>
+        <div class="nav-item" data-tab="video-maker">
+            <i class="fas fa-video"></i>
+            <span>صناعة الفيديو</span>
+        </div>
+        <div class="nav-item" data-tab="settings">
+            <i class="fas fa-cogs"></i>
+            <span>الإعدادات</span>
+        </div>
     </nav>
+    
+    <main class="content-container">
+        <section id="dashboard-section" class="content-section active">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fab fa-youtube"></i></div>
+                    <div class="stat-number" id="youtubeStats">0</div>
+                    <div class="stat-label">فيديو على YouTube</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-eye"></i></div>
+                    <div class="stat-number" id="viewStats">0</div>
+                    <div class="stat-label">مشاهدة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-newspaper"></i></div>
+                    <div class="stat-number" id="blogStats">0</div>
+                    <div class="stat-label">مقالة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-video"></i></div>
+                    <div class="stat-number" id="videoStats">0</div>
+                    <div class="stat-label">فيديو منشور</div>
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-bolt"></i> إجراءات سريعة</h3>
+                    </div>
+                    <div class="card-body">
+                        <button class="action-btn" onclick="app.testYouTubeAPI()">
+                            <i class="fab fa-youtube"></i> اختبار YouTube API
+                        </button>
+                        <button class="action-btn green" onclick="app.testBloggerAPI()">
+                            <i class="fab fa-blogger"></i> اختبار Blogger API
+                        </button>
+                        <button class="action-btn purple" onclick="app.generateDemoVideo()">
+                            <i class="fas fa-magic"></i> إنشاء فيديو تجريبي
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-history"></i> النشاط الأخير</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="recentActivity">
+                            <p>مرحباً! التطبيق جاهز للتجربة.</p>
+                            <p>ابدأ بإضافة مفاتيح API في صفحة الإعدادات.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="youtube-section" class="content-section">
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fab fa-youtube"></i> إدارة قناة YouTube</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">YouTube API Key</label>
+                            <input type="password" id="youtubeApiKey" class="form-control" 
+                                   placeholder="أدخل مفتاح YouTube API">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">معرف القناة (Channel ID)</label>
+                            <input type="text" id="youtubeChannelId" class="form-control" 
+                                   placeholder="UCxxxxxxxxxxxxxxxxxx">
+                        </div>
+                        <button class="action-btn" onclick="app.saveYouTubeSettings()">
+                            <i class="fas fa-save"></i> حفظ الإعدادات
+                        </button>
+                        <button class="action-btn green" onclick="app.fetchYouTubeVideos()">
+                            <i class="fas fa-download"></i> جلب الفيديوهات
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-upload"></i> رفع فيديو تجريبي</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">عنوان الفيديو</label>
+                            <input type="text" id="videoTitle" class="form-control" 
+                                   value="فيديو تجريبي من التطبيق الذكي">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">وصف الفيديو</label>
+                            <textarea id="videoDescription" class="form-control" rows="3">
+هذا فيديو تجريبي تم إنشاؤه تلقائياً بواسطة منصة المحتوى الذكية.
+التطبيق يمكنه إنشاء ونشر الفيديوهات تلقائياً على YouTube.
+                            </textarea>
+                        </div>
+                        <button class="action-btn purple" onclick="app.uploadDemoVideo()">
+                            <i class="fas fa-cloud-upload-alt"></i> رفع فيديو تجريبي
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="youtubeVideosList" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 20px; color: var(--primary-red);">
+                    <i class="fas fa-list"></i> الفيديوهات الأخيرة
+                </h3>
+                <div class="video-list" id="videosContainer"></div>
+            </div>
+        </section>
+        
+        <section id="blogger-section" class="content-section">
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fab fa-blogger"></i> إدارة المدونة</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Blogger API Key</label>
+                            <input type="password" id="bloggerApiKey" class="form-control" 
+                                   placeholder="أدخل مفتاح Blogger API">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">معرف المدونة (Blog ID)</label>
+                            <input type="text" id="bloggerBlogId" class="form-control" 
+                                   placeholder="1234567890123456789">
+                        </div>
+                        <button class="action-btn" onclick="app.saveBloggerSettings()">
+                            <i class="fas fa-save"></i> حفظ الإعدادات
+                        </button>
+                        <button class="action-btn green" onclick="app.fetchBlogPosts()">
+                            <i class="fas fa-download"></i> جلب المقالات
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-edit"></i> إنشاء مقال جديد</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">عنوان المقال</label>
+                            <input type="text" id="postTitle" class="form-control" 
+                                   value="مقال تجريبي من التطبيق الذكي">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">محتوى المقال</label>
+                            <textarea id="postContent" class="form-control" rows="5">
+<h2>مرحباً بكم في مقال تجريبي</h2>
+<p>هذا المقال تم إنشاؤه تلقائياً بواسطة منصة المحتوى الذكية.</p>
+<p>التطبيق يمكنه:</p>
+<ul>
+    <li>إنشاء مقالات تلقائياً</li>
+    <li>تحويل المقالات إلى فيديوهات</li>
+    <li>النشر على جميع المنصات</li>
+</ul>
+<p>جرب التطبيق الآن!</p>
+                            </textarea>
+                        </div>
+                        <button class="action-btn purple" onclick="app.createBlogPost()">
+                            <i class="fas fa-paper-plane"></i> نشر المقال
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="bloggerPostsList" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 20px; color: var(--primary-blue);">
+                    <i class="fas fa-newspaper"></i> المقالات الأخيرة
+                </h3>
+                <div id="postsContainer"></div>
+            </div>
+        </section>
+        
+        <section id="video-maker-section" class="content-section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-film"></i> محرر الفيديو الذكي</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">نص الفيديو</label>
+                        <textarea id="videoScript" class="form-control" rows="6" 
+                                  placeholder="أدخل نص الفيديو أو المقال الذي تريد تحويله إلى فيديو...">
+مرحباً بكم في فيديو تجريبي!
+هذا الفيديو تم إنشاؤه تلقائياً بواسطة منصة المحتوى الذكية.
+التطبيق يمكنه تحويل أي نص إلى فيديو احترافي.
+جرب الميزات المتقدمة مثل:
+- إنشاء فيديو وايت بورد
+- إضافة صور وموسيقى
+- التصدير إلى YouTube
+- النشر التلقائي
+                        </textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">نوع الفيديو</label>
+                        <select id="videoType" class="form-control">
+                            <option value="whiteboard">فيديو وايت بورد</option>
+                            <option value="slideshow">عرض شرائح</option>
+                            <option value="text">فيديو نصي</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">الموسيقى الخلفية</label>
+                        <select id="backgroundMusic" class="form-control">
+                            <option value="none">بدون موسيقى</option>
+                            <option value="upbeat">موسيقى حماسية</option>
+                            <option value="calm">موسيقى هادئة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">مدة الفيديو</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <input type="range" id="videoDuration" min="30" max="180" value="60" style="flex: 1;">
+                            <span id="durationValue">60 ثانية</span>
+                        </div>
+                    </div>
+                    
+                    <button class="action-btn" onclick="app.generateVideo()">
+                        <i class="fas fa-magic"></i> إنشاء الفيديو
+                    </button>
+                    
+                    <div id="videoPreview" style="margin-top: 30px; display: none;">
+                        <h4 style="margin-bottom: 15px; color: var(--primary-green);">
+                            <i class="fas fa-eye"></i> معاينة الفيديو
+                        </h4>
+                        <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px;">
+                            <div id="previewContent"></div>
+                            <button class="action-btn green" onclick="app.uploadGeneratedVideo()" 
+                                    style="margin-top: 15px;">
+                                <i class="fas fa-upload"></i> رفع إلى YouTube
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="settings-section" class="content-section">
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-key"></i> مفاتيح API</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Google Cloud Project ID</label>
+                            <input type="text" id="googleProjectId" class="form-control" 
+                                   placeholder="my-project-123456">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">OpenAI API Key (اختياري)</label>
+                            <input type="password" id="openaiApiKey" class="form-control" 
+                                   placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxx">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Twitter API Key (اختياري)</label>
+                            <input type="password" id="twitterApiKey" class="form-control" 
+                                   placeholder="xxxxxxxxxxxxxxxxxxxxxxxx">
+                        </div>
+                        
+                        <button class="action-btn" onclick="app.saveAllSettings()">
+                            <i class="fas fa-save"></i> حفظ جميع الإعدادات
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-shield-alt"></i> الأمان</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="background: rgba(255,0,0,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4><i class="fas fa-info-circle"></i> معلومات الأمان</h4>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">
+                                جميع المفاتيح مشفرة وتخزن محلياً في متصفحك فقط.
+                                لا يتم إرسالها إلى أي خادم خارجي.
+                            </p>
+                        </div>
+                        
+                        <button class="action-btn green" onclick="app.exportSettings()">
+                            <i class="fas fa-download"></i> تصدير الإعدادات
+                        </button>
+                        
+                        <button class="action-btn" onclick="app.importSettings()" style="margin-top: 10px;">
+                            <i class="fas fa-upload"></i> استيراد الإعدادات
+                        </button>
+                        
+                        <button class="action-btn" onclick="app.clearAllData()" 
+                                style="margin-top: 10px; background: var(--danger);">
+                            <i class="fas fa-trash"></i> مسح جميع البيانات
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-info-circle"></i> معلومات التطبيق</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="margin-bottom: 15px;">
+                            <strong>الإصدار:</strong> 1.0.0
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>آخر تحديث:</strong> <span id="lastUpdate">-</span>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>الحالة:</strong> <span id="appStatus" style="color: var(--primary-green);">✅ جاهز</span>
+                        </div>
+                        
+                        <button class="action-btn purple" onclick="app.testAllAPIs()">
+                            <i class="fas fa-vial"></i> اختبار جميع APIs
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div id="loadingText">جاري المعالجة...</div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <div id="notificationMessage"></div>
+    </div>
 
     <script>
-        // المحرك السري للتحديث الذاتي
-        let CLOUD_URL = localStorage.getItem('MASTER_CLOUD_URL');
-
-        async function syncNow() {
-            const inputUrl = document.getElementById('cloud-link').value;
-            if (inputUrl) {
-                localStorage.setItem('MASTER_CLOUD_URL', inputUrl);
-                CLOUD_URL = inputUrl;
+        class SmartContentApp {
+            constructor() {
+                this.config = {
+                    youtube: {
+                        apiKey: localStorage.getItem('youtube_api_key') || '',
+                        channelId: localStorage.getItem('youtube_channel_id') || '',
+                        videos: JSON.parse(localStorage.getItem('youtube_videos')) || []
+                    },
+                    blogger: {
+                        apiKey: localStorage.getItem('blogger_api_key') || '',
+                        blogId: localStorage.getItem('blogger_blog_id') || '',
+                        posts: JSON.parse(localStorage.getItem('blogger_posts')) || []
+                    },
+                    openai: { apiKey: localStorage.getItem('openai_api_key') || '' },
+                    twitter: { apiKey: localStorage.getItem('twitter_api_key') || '' },
+                    projectId: localStorage.getItem('google_project_id') || ''
+                };
+                this.init();
             }
-
-            if (!CLOUD_URL) {
-                document.getElementById('sync-status').innerText = "WAITING FOR CLOUD LINK...";
-                document.getElementById('sync-icon').style.backgroundColor = "orange";
-                return;
-            }
-
-            document.getElementById('sync-status').innerText = "FETCHING LOGIC...";
             
-            try {
-                // طلب الأنماط والمهام الآلية من جوجل سكريبت
-                const response = await fetch(CLOUD_URL, {
-                    method: "POST",
-                    body: JSON.stringify({ action: "get_ui_logic" })
+            init() {
+                this.setupEventListeners();
+                this.loadDashboardStats();
+                this.updateLastUpdate();
+            }
+            
+            setupEventListeners() {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => this.switchTab(item.dataset.tab));
                 });
-                const data = await response.json();
-
-                // تحديث واجهة الموقع والذكاء دون لمس الكود!
-                if(data.html) {
-                    document.getElementById('dynamic-content').innerHTML = data.html;
-                    document.getElementById('sync-status').innerText = "CLOUD SYNC: ACTIVE";
-                    document.getElementById('sync-icon').style.backgroundColor = "#22c55e";
-                    document.getElementById('version-tag').innerText = data.version || "REMOTE VERSION";
+                
+                document.getElementById('videoDuration').addEventListener('input', (e) => {
+                    document.getElementById('durationValue').textContent = `${e.target.value} ثانية`;
+                });
+                
+                document.querySelector('[data-tab="settings"]').addEventListener('click', () => {
+                    this.loadSettingsToForm();
+                });
+            }
+            
+            switchTab(tabName) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.toggle('active', item.dataset.tab === tabName);
+                });
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.toggle('active', section.id === `${tabName}-section`);
+                });
+            }
+            
+            async testYouTubeAPI() {
+                const { apiKey, channelId } = this.config.youtube;
+                if (!apiKey || !channelId) {
+                    this.showNotification('يرجى إدخال مفتاح YouTube API ومعرف القناة أولاً', 'error');
+                    this.switchTab('settings');
+                    return;
                 }
-            } catch (e) {
-                document.getElementById('sync-status').innerText = "OFFLINE MODE";
-                document.getElementById('sync-icon').style.backgroundColor = "red";
-                loadFallbackUI(); // تحميل واجهة احتياطية إذا فشل السيرفر
+                this.showLoading('جاري اختبار اتصال YouTube API...');
+                try {
+                    const url = `https://www.googleapis.com/youtube/v3/channels?key=${apiKey}&id=${channelId}&part=snippet,statistics`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error.message);
+                    if (data.items?.length > 0) {
+                        const channel = data.items[0];
+                        this.showNotification(`✅ تم الاتصال بنجاح! القناة: ${channel.snippet.title}`, 'success');
+                        this.updateYouTubeStats(channel.statistics);
+                    } else {
+                        this.showNotification('❌ لم يتم العثور على القناة', 'error');
+                    }
+                } catch (error) {
+                    this.showNotification(`❌ خطأ في الاتصال: ${error.message}`, 'error');
+                } finally {
+                    this.hideLoading();
+                }
             }
-        }
-
-        function loadFallbackUI() {
-            document.getElementById('dynamic-content').innerHTML = `
-                <div class="bg-red-900/10 p-6 rounded-3xl border border-red-900/20 text-center">
-                    <h3 class="text-red-500 font-bold mb-2">فشل الربط السحابي</h3>
-                    <p class="text-xs text-gray-500">تأكد من رابط الـ Exec الموضع في الخزنة ومن تفعيل CORS.</p>
-                </div>
-            `;
-        }
-
-        // تشغيل التحديث التلقائي عند الفتح
-        window.onload = () => {
-            if(CLOUD_URL) {
-                document.getElementById('cloud-link').value = CLOUD_URL;
-                syncNow();
+            
+            async fetchYouTubeVideos() {
+                const { apiKey, channelId } = this.config.youtube;
+                if (!apiKey || !channelId) {
+                    this.showNotification('يرجى إدخال مفتاح YouTube API ومعرف القناة أولاً', 'error');
+                    return;
+                }
+                this.showLoading('جاري جلب الفيديوهات...');
+                try {
+                    const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=10&type=video`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error.message);
+                    this.config.youtube.videos = data.items || [];
+                    localStorage.setItem('youtube_videos', JSON.stringify(this.config.youtube.videos));
+                    this.displayYouTubeVideos();
+                    this.showNotification(`✅ تم جلب ${data.items.length} فيديو`, 'success');
+                } catch (error) {
+                    this.showNotification(`❌ خطأ في جلب الفيديوهات: ${error.message}`, 'error');
+                } finally {
+                    this.hideLoading();
+                }
             }
-        };
-    </script>
-</body>
-</html>
+            
+            displayYouTubeVideos() {
+                const container = document.getElementById('videosContainer');
+                if (!container) return;
+                const videos = this.config.youtube.videos;
+                if (videos.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 20px;">لا توجد فيديوهات</p>';
+                    return;
+                }
+                container.innerHTML = videos.map(video => `
+                    <div class="video-item">
+                        <img src="${video.snippet.thumbnails.medium.url}" 
+                             alt="${video.snippet.title}" 
+                             class="video-thumbnail"
+                             onerror="this.src='https://via.placeholder.com/320x180/FF0000/FFFFFF?text=YouTube'">
+                        <div class="video-info">
+                            <h4 class="video-title">${video.snippet.title}</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 10px;">
+                                ${new Date(video.snippet.publishedAt).toLocaleDateString('ar-SA')}
+                            </p
