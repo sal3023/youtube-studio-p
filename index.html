@@ -1,117 +1,164 @@
+// app.js - الإصدار المتكامل والمتوافق
+require('dotenv').config();
+const express = require('express');
+const crypto = require('crypto');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const { OpenAI } = require('openai');
+const { GoogleAuth } = require('google-auth-library');
+const { TwitterApi } = require('twitter-api-v2');
+const next = require('next');
+
+// تهيئة التطبيق
+const dev = process.env.NODE_ENV !== 'production';
+const nextApp = next({ dev });
+const handle = nextApp.getRequestHandler();
+const app = express();
+
+// إعدادات الأمان للتوافق مع AdMob/AdSense
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'", 
+        "'unsafe-inline'", 
+        "https://pagead2.googlesyndication.com",
+        "https://www.googletagmanager.com",
+        "https://www.google-analytics.com"
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https://www.google-analytics.com"],
+      connectSrc: ["'self'"],
+      frameSrc: ["https://googleads.g.doubleclick.net"],
+      fontSrc: ["'self'", "data:"]
+    }
+  },
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+}));
+
+// معدل الطلبات للتوافق مع سياسات الإعلانات
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 دقيقة
+  max: 100 // 100 طلب لكل IP
+});
+app.use(limiter);
+
+// نظام التشفير الآمن
+const encrypt = (text) => {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(process.env.ENCRYPTION_KEY), iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return `${iv.toString('hex')}:${encrypted}`;
+};
+
+const decrypt = (text) => {
+  const [ivHex, encrypted] = text.split(':');
+  const iv = Buffer.from(ivHex, 'hex');
+  const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(process.env.ENCRYPTION_KEY), iv);
+  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+};
+
+// تخزين المفاتيح المشفرة
+let apiKeys = {
+  openai: process.env.OPENAI_KEY ? encrypt(process.env.OPENAI_KEY) : null,
+  google: process.env.GOOGLE_KEY ? encrypt(process.env.GOOGLE_KEY) : null,
+  twitter: process.env.TWITTER_KEY ? encrypt(process.env.TWITTER_KEY) : null
+};
+
+// واجهات API الآمنة
+app.post('/api/keys', express.json(), (req, res) => {
+  try {
+    apiKeys = {
+      openai: encrypt(req.body.openai),
+      google: encrypt(req.body.google),
+      twitter: encrypt(req.body.twitter)
+    };
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'فشل في تخزين المفاتيح' });
+  }
+});
+
+app.post('/api/generate', express.json(), async (req, res) => {
+  try {
+    const openai = new OpenAI({ apiKey: decrypt(apiKeys.openai) });
+    const content = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        { role: "system", content: "Generate advertiser-friendly content." },
+        { role: "user", content: req.body.prompt }
+      ],
+      max_tokens: 1000
+    });
+    res.json({ content: content.choices[0].message.content });
+  } catch (error) {
+    res.status(500).json({ error: 'فشل في إنشاء المحتوى' });
+  }
+});
+
+// تهيئة Next.js
+nextApp.prepare().then(() => {
+  app.all('*', (req, res) => handle(req, res));
+  
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`الخادم يعمل على http://localhost:${PORT}`);
+  });
+});
+
+// صفحة HTML الأساسية مع متطلبات AdSense
+const htmlTemplate = `
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOSH5 | CLOUD SERVER OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@300;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --p: #00f2fe; --g: #f59e0b; --bg: #020205; --s: #22c55e; }
-        body { background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
-
-        /* HUD Navigation - تغليف عالي المستوى */
-        .server-side { width: 340px; background: #000; border-left: 1px solid #111; padding: 25px; display: flex; flex-direction: column; overflow-y: auto; }
-        .server-status { background: rgba(34, 197, 94, 0.1); border: 1px solid var(--s); padding: 10px; border-radius: 12px; font-size: 11px; color: var(--s); text-align: center; margin-bottom: 20px; font-family: 'Orbitron'; }
-
-        /* منطقة العمل والمحرر */
-        .main-viewport { flex-grow: 1; padding: 30px; background: radial-gradient(circle at center, #0d0d15, #020205); overflow-y: auto; }
-        .panel { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 25px; padding: 25px; backdrop-filter: blur(20px); margin-bottom: 25px; }
-
-        /* مدخلات السيرفر */
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 12px; color: var(--p); margin-bottom: 5px; }
-        .input-box { width: 100%; background: #000; border: 1px solid #222; border-radius: 10px; color: #fff; padding: 12px; font-family: 'Cairo'; }
-
-        /* رادار الأرباح والترند */
-        .stat-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .stat-node { background: rgba(255,255,255,0.02); border: 1px solid #111; padding: 15px; border-radius: 15px; text-align: center; }
-        .stat-node span { display: block; font-family: 'Orbitron'; font-size: 20px; color: var(--g); }
-
-        /* زر النشر السحابي */
-        .btn-server { background: linear-gradient(90deg, var(--p), #00b4d8); color: #000; border: none; padding: 18px; border-radius: 12px; width: 100%; font-family: 'Orbitron'; font-weight: 900; cursor: pointer; box-shadow: 0 5px 20px rgba(0, 242, 254, 0.3); }
-        
-        /* تيرمينال السيرفر */
-        .terminal { background: #000; border: 1px solid #111; padding: 15px; border-radius: 15px; font-family: monospace; font-size: 11px; color: var(--s); height: 100px; overflow-y: auto; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام إدارة المحتوى</title>
+  <meta name="description" content="منصة متكاملة لإدارة المحتوى مع دعم الإعلانات">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-XXXXXXXXXXXXXXXX",
+      enable_page_level_ads: true
+    });
+  </script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .ad-container { margin: 20px 0; text-align: center; }
+    @media (max-width: 768px) {
+      .container { padding: 10px; }
+    }
+  </style>
 </head>
 <body>
-
-    <!-- الجانب: إعدادات السيرفر والمفاتيح -->
-    <aside class="server-side">
-        <div style="font-family: 'Orbitron'; color: var(--p); font-size: 20px; text-align: center; margin-bottom: 20px; letter-spacing: 5px;">TOSH5 SERVER</div>
-        
-        <div class="server-status">SERVER ID: T5-NODE-8K // STATUS: ONLINE ✅</div>
-
-        <div class="panel" style="padding: 15px;">
-            <div class="input-group">
-                <label>🔐 GOOGLE AD-TOKEN</label>
-                <input type="password" id="adToken" class="input-box" placeholder="Access Token...">
-            </div>
-            <div class="input-group">
-                <label>🏦 CRYPTO WALLET (USDT)</label>
-                <input type="text" id="wallet" class="input-box" placeholder="T... TRC20 Address">
-            </div>
-            <button onclick="saveServer()" style="background:transparent; border:1px solid var(--p); color:var(--p); width:100%; padding:8px; border-radius:8px; cursor:pointer; font-size:11px;">تحديث بيانات السيرفر</button>
-        </div>
-
-        <div style="margin-top: auto; text-align: center;">
-            <div style="font-size: 10px; color: #444;">SERVER REGION: NORTH AMERICA (FASTEST)</div>
-            <div style="font-family: 'Orbitron'; color: var(--g); font-size: 24px; margin-top: 5px;">$1,240.50</div>
-        </div>
-    </aside>
-
-    <!-- منطقة العمل: الداشبورد الاحترافي -->
-    <main class="main-viewport">
-        <!-- شريط الإحصائيات -->
-        <div class="stat-bar">
-            <div class="stat-node"><small>ADSENSE</small><span>$450.20</span></div>
-            <div class="stat-node"><small>ADMOB</small><span>$280.15</span></div>
-            <div class="stat-node"><small>VISITORS</small><span>125k</span></div>
-        </div>
-
-        <!-- محرك إنتاج الصفحات -->
-        <div class="panel">
-            <div style="color: var(--p); font-family: 'Orbitron'; font-size: 13px; margin-bottom: 15px;">🚀 AI CLOUD PRODUCTION</div>
-            <div class="input-group">
-                <input type="text" id="title" class="input-box" placeholder="عنوان المقال الترند اليوم (Target: USA/EU)...">
-            </div>
-            <div class="input-group">
-                <textarea id="body" class="input-box" style="height: 150px; resize: none;" placeholder="اكتب محتواك.. السيرفر سيقوم بتحويله لصفحة ربحية ونشره عالمياً..."></textarea>
-            </div>
-            <button class="btn-server" onclick="runCloud()">نشر واجتياح الترند العالمي 🌐</button>
-        </div>
-
-        <!-- تيرمينال السيرفر -->
-        <div class="terminal" id="log">
-            > TOSH5-SERVER INITIALIZED...<br>
-            > CONNECTED TO GOOGLE CLOUD...<br>
-            > SCANNING GLOBAL TRENDS (NY/LONDON/RIYADH)...
-        </div>
-    </main>
-
-    <script>
-        function saveServer() {
-            const token = document.getElementById('adToken').value;
-            const wallet = document.getElementById('wallet').value;
-            if(token && wallet) {
-                localStorage.setItem('t5_server_data', btoa(token + "|" + wallet));
-                alert("تم تحديث بيانات السيرفر بنجاح ✅");
-            }
-        }
-
-        function runCloud() {
-            const log = document.getElementById('log');
-            log.innerHTML += "<br>> جاري تحليل الترند عبر خوارزمية السيرفر...";
-            setTimeout(() => {
-                log.innerHTML += "<br>> تم توليد الصفحة الربحية وتوزيع الإعلانات.";
-                log.innerHTML += "<br>> جاري النشر في tosh5.shop وقناة يوتيوب...";
-                alert("سيدي، السيرفر أتم المهمة بنجاح! \nالمحتوى الآن منتشر في 5 دول عالمية.");
-            }, 2000);
-        }
-
-        window.onload = function() {
-            if(localStorage.getItem('t5_server_data')) document.getElementById('adToken').value = "••••••••••••";
-        }
-    </script>
+  <div class="container">
+    <div id="root"></div>
+    <div class="ad-container">
+      <!-- نموذج إعلان AdSense -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="XXXXXXXXXX"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    </div>
+  </div>
 </body>
 </html>
+`;
+
+// ملف .env المطلوب
+/*
+ENCRYPTION_KEY=your_32_byte_encryption_key_here
+OPENAI_KEY=your_openai_api_key
+GOOGLE_KEY=your_google_api_key
+TWITTER_KEY=your_twitter_bearer_token
+NODE_ENV=production
+PORT=3000
+*/
