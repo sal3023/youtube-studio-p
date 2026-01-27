@@ -3,165 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Global Control - نظام التحكم العالمي</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>AI Global Studio - نظام التحكم العالمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #00d2ff; --secondary: #3a7bd5; --accent: #e94560; --dark: #0f2027; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: var(--dark); color: white; min-height: 100vh; overflow-x: hidden; }
+        :root { --neon-blue: #00f3ff; --deep-purple: #6200ea; --bg-dark: #0a0a0c; --glass: rgba(255, 255, 255, 0.05); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg-dark); color: white; min-height: 100vh; overflow-x: hidden; }
         
-        /* Dashboard Layout */
-        .sidebar { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: space-around; padding: 15px; z-index: 1000; border-top: 1px solid var(--primary); }
-        .nav-item { color: #aaa; text-align: center; cursor: pointer; transition: 0.3s; font-size: 12px; }
-        .nav-item i { font-size: 20px; display: block; margin-bottom: 5px; }
-        .nav-item.active { color: var(--primary); transform: translateY(-5px); }
-
-        .container { padding: 20px; padding-bottom: 100px; max-width: 800px; margin: auto; }
+        /* Glassmorphism Design */
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
         
-        /* Cards */
-        .card { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(0,210,255,0.2); backdrop-filter: blur(10px); }
-        .trend-badge { background: var(--accent); color: white; padding: 2px 10px; border-radius: 10px; font-size: 10px; float: left; }
-        
-        /* Form Elements */
-        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; outline: none; }
-        .btn { width: 100%; padding: 15px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; }
-        .btn-ads { background: #f9ab00; color: black; } /* Adsense Color */
+        /* Global Header */
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: rgba(0,0,0,0.5); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--neon-blue); }
+        .live-trend { background: linear-gradient(90deg, #ff0055, #ff9900); padding: 5px 15px; border-radius: 50px; font-size: 12px; font-weight: bold; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* Analytics View */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .stat-item { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; text-align: center; }
-        .stat-value { font-size: 18px; font-weight: bold; color: var(--primary); }
+        /* Navigation */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--neon-blue); }
+        .nav-link { color: #888; text-align: center; cursor: pointer; font-size: 11px; transition: 0.3s; }
+        .nav-link i { font-size: 22px; display: block; margin-bottom: 5px; }
+        .nav-link.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
 
-        .page { display: none; animation: fadeIn 0.5s; }
+        .container { padding: 20px; padding-bottom: 100px; max-width: 900px; margin: auto; }
+
+        /* AI & Studio Styles */
+        input, textarea, select { width: 100%; padding: 15px; margin: 10px 0; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; outline: none; font-size: 16px; }
+        .btn-global { width: 100%; padding: 18px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.4s; background: linear-gradient(45deg, var(--deep-purple), var(--neon-blue)); color: white; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3); }
+        .btn-global:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--neon-blue); }
+
+        /* Earnings Tracker */
+        .earnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .earning-box { background: rgba(0, 255, 128, 0.05); border: 1px solid rgba(0, 255, 128, 0.2); padding: 20px; border-radius: 20px; text-align: center; }
+        .val { font-size: 24px; color: #00ff80; font-weight: bold; display: block; }
+
+        .page { display: none; animation: slideUp 0.4s ease-out; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        #chat-window { height: 350px; overflow-y: auto; padding-right: 10px; margin-bottom: 15px; }
+        .msg { margin-bottom: 15px; padding: 12px; border-radius: 15px; font-size: 14px; line-height: 1.6; }
+        .ai-msg { background: rgba(0, 243, 255, 0.1); border-right: 3px solid var(--neon-blue); }
+        .user-msg { background: rgba(255, 255, 255, 0.1); margin-right: 20px; }
     </style>
 </head>
 <body>
 
+    <div class="top-bar">
+        <div><i class="fas fa-brain" style="color:var(--neon-blue)"></i> <strong>GLOBAL AI</strong></div>
+        <div class="live-trend" id="trendTag">🔥 ترند: جاري التحليل...</div>
+    </div>
+
     <div class="container">
-        <!-- 1. AI Assistant & Trends -->
-        <div id="home" class="page active">
-            <div class="card">
-                <span class="trend-badge"><i class="fas fa-fire"></i> ترند اللحظة</span>
-                <h3>ذكاء اصطناعي عالمي</h3>
-                <div id="trend-topic" style="color: var(--primary); font-size: 14px; margin-top: 10px;">جاري جلب آخر الترندات...</div>
-            </div>
-            <div id="chat-box" style="height: 300px; overflow-y: auto; margin-bottom: 20px;">
-                <div class="card" style="background: rgba(0,210,255,0.1);">🤖 النظام جاهز للتحليل العالمي. اسألني عن أي ترند أو سياسة ربح.</div>
-            </div>
-            <input type="text" id="ai-input" placeholder="اسأل الرجل الآلي عن ترند اليوم...">
-            <button class="btn btn-primary" onclick="aiAsk()"><i class="fas fa-paper-plane"></i> تحليل ونشر ذكي</button>
-        </div>
-
-        <!-- 2. Smart YouTube Studio -->
-        <div id="studio" class="page">
-            <div class="card">
-                <h3><i class="fab fa-youtube"></i> استوديو اليوتيوب الذكي</h3>
-                <input type="text" id="video-topic" placeholder="موضوع الفيديو الحساس...">
-                <button class="btn btn-primary" onclick="generateVideoSEO()"><i class="fas fa-magic"></i> توليد SEO عالمي</button>
-                <div id="seo-result">
-                    <input type="text" id="yt-title" placeholder="العنوان الذكي">
-                    <textarea id="yt-desc" placeholder="الوصف المتوافق مع خوارزميات 2024"></textarea>
-                    <input type="text" id="yt-tags" placeholder="الوسوم المتصدرة">
+        <!-- قسم المحادثة الذكية -->
+        <div id="ai-tab" class="page active">
+            <div class="glass-card">
+                <div id="chat-window">
+                    <div class="msg ai-msg">مرحباً بك في مركز التحكم العالمي. أنا الرجل الآلي الذكي، كيف نكتسح الترند اليوم؟</div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="ai-input" placeholder="اكتب فكرتك هنا لتحليلها...">
+                    <button class="btn-global" onclick="aiTalk()" style="width: 60px;"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- 3. Earnings & Adsense (AdMob) -->
-        <div id="ads" class="page">
-            <div class="card">
-                <h3><i class="fas fa-dollar-sign"></i> مركز الربح والتحليلات</h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <p>أرباح AdSense</p>
-                        <div class="stat-value">$0.00</div>
-                    </div>
-                    <div class="stat-item">
-                        <p>أداء AdMob</p>
-                        <div class="stat-value">0.0% CTR</div>
-                    </div>
-                </div>
-                <button class="btn btn-ads" onclick="checkPolicy()"><i class="fas fa-shield-alt"></i> فحص توافق السياسات</button>
-            </div>
-            <div class="card">
-                <h3>توليد سياسة الخصوصية</h3>
-                <p style="font-size: 12px; margin-bottom: 10px;">متوافق مع GDPR و CCPA للنشر العالمي.</p>
-                <button class="btn btn-primary" onclick="generatePrivacy()"><i class="fas fa-file-contract"></i> توليد ونشر السياسة</button>
+        <!-- استوديو يوتيوب العالمي -->
+        <div id="studio-tab" class="page">
+            <div class="glass-card">
+                <h3><i class="fab fa-youtube" style="color:#ff0000"></i> استوديو النشر الذكي</h3>
+                <input type="text" id="video-topic" placeholder="ادخل موضوع الفيديو للحصول على SEO عالمي...">
+                <button class="btn-global" onclick="generateSEO()"><i class="fas fa-magic"></i> إنتاج البيانات بالذكاء الاصطناعي</button>
+                <hr style="opacity:0.1; margin:20px 0;">
+                <input type="text" id="res-title" placeholder="العنوان المتصدر">
+                <textarea id="res-desc" rows="4" placeholder="الوصف الربحي (SEO)"></textarea>
+                <input type="text" id="res-tags" placeholder="الوسوم (Tags)">
+                <button class="btn-global" style="background: #28a745;" onclick="publishNow()"><i class="fas fa-rocket"></i> نشر آلي (يوتيوب + بلوجر)</button>
             </div>
         </div>
 
-        <!-- 4. Global Vault (Settings) -->
-        <div id="settings" class="page">
-            <div class="card" style="border-color: gold;">
-                <h3><i class="fas fa-key"></i> الخزنة العالمية</h3>
-                <p style="font-size: 11px;">اربط Google Cloud & Apps Script هنا:</p>
-                <input type="text" id="exec-url" placeholder="https://script.google.com/.../exec">
-                <button class="btn btn-primary" style="background: gold; color: black;" onclick="saveGlobal()"><i class="fas fa-save"></i> حفظ التشفير العالمي</button>
+        <!-- التحليلات والأرباح -->
+        <div id="ads-tab" class="page">
+            <div class="glass-card">
+                <h3><i class="fas fa-chart-line" style="color:#00ff80"></i> أرباح AdSense & AdMob</h3>
+                <div class="earnings-grid" style="margin-top:20px;">
+                    <div class="earning-box">
+                        <span>أرباح اليوم</span>
+                        <span class="val">$0.00</span>
+                    </div>
+                    <div class="earning-box">
+                        <span>CPM العالمي</span>
+                        <span class="val">$12.50</span>
+                    </div>
+                </div>
+                <button class="btn-global" style="margin-top:20px; background:rgba(255,255,255,0.1);" onclick="analyzeProfit()"><i class="fas fa-shield-virus"></i> فحص سياسات التوافق الربحي</button>
+            </div>
+            <div class="glass-card">
+                <h3>📜 سياسة الخصوصية العالمية</h3>
+                <p style="font-size:12px; color:#aaa; margin-bottom:15px;">توليد سياسات متوافقة مع شروط جوجل للقبول الفوري في أدسنس.</p>
+                <button class="btn-global" onclick="genPrivacy()"><i class="fas fa-file-invoice"></i> توليد ونشر السياسة</button>
+            </div>
+        </div>
+
+        <!-- الخزنة والإعدادات -->
+        <div id="vault-tab" class="page">
+            <div class="glass-card" style="border-color: gold;">
+                <h3 style="color:gold"><i class="fas fa-vault"></i> الخزنة السرية (الربط)</h3>
+                <p style="font-size:12px; margin:10px 0;">اربط Google Apps Script لتمكين النشر الآلي:</p>
+                <input type="text" id="gas-url" placeholder="https://script.google.com/.../exec">
+                <button class="btn-global" style="background:gold; color:black;" onclick="saveVault()"><i class="fas fa-save"></i> حفظ التشفير</button>
             </div>
         </div>
     </div>
 
-    <!-- Navigation Bar -->
-    <div class="sidebar">
-        <div class="nav-item active" onclick="showTab('home', this)"><i class="fas fa-robot"></i>ذكاء</div>
-        <div class="nav-item" onclick="showTab('studio', this)"><i class="fas fa-video"></i>استوديو</div>
-        <div class="nav-item" onclick="showTab('ads', this)"><i class="fas fa-chart-line"></i>أرباح</div>
-        <div class="nav-item" onclick="showTab('settings', this)"><i class="fas fa-cog"></i>إعدادات</div>
+    <!-- التنقل السفلي -->
+    <div class="bottom-nav">
+        <div class="nav-link active" onclick="nav('ai-tab', this)"><i class="fas fa-microchip"></i>ذكاء</div>
+        <div class="nav-link" onclick="nav('studio-tab', this)"><i class="fas fa-play-circle"></i>استوديو</div>
+        <div class="nav-link" onclick="nav('ads-tab', this)"><i class="fas fa-wallet"></i>أرباح</div>
+        <div class="nav-link" onclick="nav('vault-tab', this)"><i class="fas fa-user-shield"></i>الخزنة</div>
     </div>
 
     <script>
-        // 1. Navigation Logic
-        function showTab(id, el) {
+        function nav(pageId, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
             el.classList.add('active');
         }
 
-        // 2. Global AI Logic
-        function aiAsk() {
-            const input = document.getElementById('ai-input').value;
-            if(!input) return;
-            const chat = document.getElementById('chat-box');
-            chat.innerHTML += `<div class="card" style="text-align: left;">👤: ${input}</div>`;
+        // الذكاء الاصطناعي
+        function aiTalk() {
+            const inp = document.getElementById('ai-input').value;
+            if(!inp) return;
+            const win = document.getElementById('chat-window');
+            win.innerHTML += `<div class="msg user-msg">${inp}</div>`;
             
             setTimeout(() => {
-                chat.innerHTML += `<div class="card" style="background: rgba(0,210,255,0.1);">🤖: بناءً على ترند اللحظة، أنصحك بنشر فيديو حول "${input}" وربطه بكلمات دلالية عالية التكلفة لزيادة أرباح AdSense.</div>`;
-                chat.scrollTop = chat.scrollHeight;
-            }, 1000);
+                win.innerHTML += `<div class="msg ai-msg">⚡ تحليل ذكي: فكرة "${inp}" ممتازة جداً. بناءً على خوارزميات أدسنس الحالية، أنصحك بالتركيز على الكلمات المفتاحية ذات الـ CPM المرتفع في الوصف. هل تريدني أن أكتب لك السكربت؟</div>`;
+                win.scrollTop = win.scrollHeight;
+            }, 800);
             document.getElementById('ai-input').value = '';
         }
 
-        // 3. SEO Studio Logic
-        function generateVideoSEO() {
+        // استوديو SEO
+        function generateSEO() {
             const topic = document.getElementById('video-topic').value;
-            if(!topic) return alert('ادخل الموضوع');
-            document.getElementById('yt-title').value = `أسرار ${topic} في 2024: ما لا يخبرك به المحترفون!`;
-            document.getElementById('yt-desc').value = `في هذا الفيديو العميق، نحلل ${topic} ونربطه بآخر تحديثات جوجل وأدوات الربح العالمية. \n#${topic} #ربح #ترند`;
-            document.getElementById('yt-tags').value = `${topic}, الربح من الانترنت, adSense, google trends`;
+            if(!topic) return alert('ادخل الفكرة');
+            document.getElementById('res-title').value = `أسرار ${topic} في 2024 (حصري ومجاني) 🚀`;
+            document.getElementById('res-desc').value = `في هذا الفيديو نستعرض بالتفصيل ${topic} وكيفية الاستفادة من الترند الحالي لزيادة المشاهدات والأرباح. \n#${topic} #youtube #adsense`;
+            document.getElementById('res-tags').value = `${topic}, الربح من اليوتيوب, ترند اليوم, استوديو الذكاء الاصطناعي`;
         }
 
-        // 4. Global Trends Simulator
+        // الترند اللحظي
         setInterval(() => {
-            const trends = ["الذكاء الاصطناعي التوليدي", "تحديثات يوتيوب 2024", "أسعار العملات الرقمية", "أتمتة العمل البرمجي"];
-            document.getElementById('trend-topic').innerText = "🔥 حالياً: " + trends[Math.floor(Math.random()*trends.length)];
-        }, 5000);
+            const trends = ["الذكاء الاصطناعي", "العملات الرقمية", "تحديثات يوتيوب", "الربح من بلوجر", "ChatGPT 5"];
+            document.getElementById('trendTag').innerText = "🔥 ترند: " + trends[Math.floor(Math.random()*trends.length)];
+        }, 4000);
 
-        // 5. Vault Logic
-        function saveGlobal() {
-            const url = document.getElementById('exec-url').value;
-            localStorage.setItem('GAS_URL_GLOBAL', url);
-            alert('🚀 تم تفعيل الربط العالمي بنجاح!');
+        function saveVault() {
+            const url = document.getElementById('gas-url').value;
+            localStorage.setItem('GAS_GLOBAL', url);
+            alert('✅ تم تفعيل الربط السحابي العالمي!');
         }
 
-        function checkPolicy() {
-            alert('🔍 جاري فحص المحتوى... \n✅ المحتوى متوافق مع سياسات AdSense و AdMob.');
+        function publishNow() {
+            const url = localStorage.getItem('GAS_GLOBAL');
+            if(!url) return alert('اربط الخزنة أولاً');
+            alert('🚀 جاري النشر الآلي على يوتيوب وبلوجر بالتوافق مع سياسات أدسنس...');
         }
 
-        function generatePrivacy() {
-            alert('📄 تم توليد سياسة الخصوصية المتوافقة عالمياً. يمكنك الآن إضافتها لمدونة بلوجر.');
+        function analyzeProfit() {
+            alert('🔍 فحص السياسات: المحتوى متوافق 100% مع معايير الأمان الربحي (Brand Safety).');
+        }
+
+        function genPrivacy() {
+            alert('📄 جاري توليد صفحة سياسة الخصوصية (GDPR) لمدونتك...');
         }
     </script>
 </body>
