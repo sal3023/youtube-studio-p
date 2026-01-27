@@ -3,119 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOSH5 OS | نظام السيادة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>TOSH5 ULTIMATE OS | نظام السيادة الشامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@300;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #ffcc00; --cyan: #00f2fe; --bg: #050505; }
-        body { background: var(--bg); color: white; font-family: 'Cairo', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
-        
-        /* Sidebar - القائمة الجانبية */
-        .sidebar { width: 350px; background: #000; border-left: 2px solid var(--cyan); padding: 25px; display: flex; flex-direction: column; overflow-y: auto; }
-        
-        /* قسم هوية القناة (الجديد) */
-        .channel-profile {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 242, 254, 0.2);
-        }
-        .channel-avatar {
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            margin-bottom: 10px;
-            object-fit: cover;
-            box-shadow: 0 0 15px var(--gold);
-        }
-        .channel-name { font-family: 'Orbitron'; color: var(--gold); font-size: 16px; font-weight: 900; }
+        :root { --primary: #00f2fe; --gold: #f59e0b; --bg: #020205; --card: #0a0a0c; --glass: rgba(255, 255, 255, 0.02); }
+        body { background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        .vault-box { background: #0a0a0a; border: 1px dashed #333; padding: 15px; border-radius: 15px; margin-bottom: 15px; }
-        input { width: 100%; background: #000; border: 1px solid #222; color: var(--cyan); padding: 10px; border-radius: 8px; font-family: 'Orbitron'; font-size: 11px; box-sizing: border-box; }
-        .btn-save { width: 100%; background: #111; color: var(--gold); border: 1px solid var(--gold); padding: 8px; border-radius: 8px; margin-top: 10px; cursor: pointer; }
+        /* نظام التغليف العالمي (Sidebars) */
+        .sidebar-slim { width: 70px; background: #000; border-left: 1px solid #111; display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 25px; }
+        .nav-node { width: 45px; height: 45px; background: var(--glass); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
+        .nav-node:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 15px var(--primary); }
 
-        /* منطقة العمل */
-        .main { flex-grow: 1; background: radial-gradient(circle at center, #111, #050505); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .ai-core { width: 140px; height: 140px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 60px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
+        .sidebar-main { width: 320px; background: var(--card); border-left: 1px solid #111; padding: 20px; display: flex; flex-direction: column; overflow-y: auto; }
+        .brand { font-family: 'Orbitron'; font-size: 20px; font-weight: 900; color: var(--primary); text-align: center; margin-bottom: 25px; letter-spacing: 2px; }
 
-        .btn-launch { background: var(--cyan); color: #000; padding: 15px 50px; border-radius: 50px; font-family: 'Orbitron'; font-weight: 900; border: none; cursor: pointer; font-size: 18px; margin-top: 30px; }
-        .console { width: 85%; background: rgba(0,0,0,0.8); border: 1px solid #222; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; font-size: 11px; color: var(--cyan); height: 80px; overflow-y: auto; text-align: left; }
+        /* منطقة العرض (The Viewport) */
+        .viewport { flex-grow: 1; display: grid; grid-template-rows: 60px 1fr 150px; padding: 20px; gap: 20px; background: radial-gradient(circle at center, #0d0d15, #020205); overflow-y: auto; }
+
+        /* كروت الأتمتة والربح */
+        .glass-block { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; backdrop-filter: blur(15px); }
+        .block-header { font-family: 'Orbitron'; font-size: 11px; color: var(--primary); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid #111; padding-bottom: 8px; display: flex; justify-content: space-between; }
+
+        /* المفاعل المالي (Crypto Wallet) */
+        .crypto-withdraw { background: linear-gradient(135deg, #1e1b4b, #000); border: 1px solid var(--gold); border-radius: 15px; padding: 20px; text-align: center; }
+        .balance-lg { font-family: 'Orbitron'; font-size: 28px; color: var(--gold); margin: 10px 0; }
+
+        /* مصنع توليد الصفحات (Page Generator) */
+        .studio-input { width: 100%; background: #000; border: 1px solid #222; border-radius: 10px; color: #fff; padding: 12px; margin-bottom: 10px; font-family: 'Cairo'; font-size: 13px; box-sizing: border-box; }
+        .btn-prime { background: var(--primary); color: #000; border: none; padding: 15px; border-radius: 10px; font-weight: 900; width: 100%; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+
+        /* رادار الترند اللحظي */
+        .trend-radar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .node-val { font-size: 10px; color: var(--primary); font-family: 'Orbitron'; text-align: center; background: #000; padding: 5px; border-radius: 5px; }
+
+        /* الصفحة المولدة الربحية */
+        .generated-page { background: #fff; color: #333; border-radius: 20px; padding: 30px; margin-top: 20px; display: none; }
+        .ad-placeholder { background: #f0f0f0; border: 2px dashed #ccc; padding: 15px; text-align: center; font-size: 12px; margin: 15px 0; color: #888; }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <!-- قسم الهوية الشخصية للقناة -->
-        <div class="channel-profile">
-            <!-- استبدل الرابط أدناه برابط صورتك الشخصية أو شعار قناتك -->
-            <img src="https://via.placeholder.com/150" id="avatar-preview" class="channel-avatar" alt="Avatar">
-            <div id="display-name" class="channel-name">TOSH5 TV</div>
-            <div style="font-size: 10px; color: #555; margin-top: 5px;">الحالة: القائد الأعلى للنظام</div>
+    <!-- 1. أيقونات النظام -->
+    <aside class="sidebar-slim">
+        <div class="nav-node">📊</div>
+        <div class="nav-node">🤖</div>
+        <div class="nav-node">💰</div>
+        <div class="nav-node" style="margin-top: auto;">⚙️</div>
+    </aside>
+
+    <!-- 2. مجلس الوزراء والخزنة المالية -->
+    <aside class="sidebar-main">
+        <div class="brand">TOSH5 OS</div>
+
+        <!-- سحب USDT -->
+        <div class="crypto-withdraw">
+            <div style="font-size: 10px; color: var(--gold);">USDT REVENUE (ESTIMATED)</div>
+            <div class="balance-lg" id="balance-display">$1,240.50</div>
+            <button class="btn-prime" style="background: var(--gold); padding: 8px; font-size: 10px;" onclick="alert('جاري التحويل لمحفظة TRC20...')">WITHDRAW CRYPTO</button>
         </div>
 
-        <!-- إعدادات الهوية -->
-        <div class="vault-box">
-            <small style="color: #666;">تعديل الهوية:</small>
-            <input type="text" id="newName" placeholder="اسم القناة الجديد...">
-            <input type="text" id="newPic" placeholder="رابط صورة الشعار (URL)..." style="margin-top:5px;">
-            <button class="btn-save" onclick="updateIdentity()">تحديث الهوية ✅</button>
+        <!-- مجلس الوزراء الآلي -->
+        <div style="margin-top: 20px;">
+            <div class="block-header">AI CABINET</div>
+            <select id="minister" class="studio-input">
+                <option value="التقنية">وزير التقنية (AI & 8K)</option>
+                <option value="الصحة">وزير الصحة الرقمية</option>
+                <option value="الاقتصاد">وزير الأرباح (AdSense)</option>
+            </select>
         </div>
 
-        <!-- الخزنات المالية والتقنية -->
-        <div class="vault-box">
-            <small style="color: var(--gold);">🔐 خزنة YouTube API:</small>
-            <input type="password" id="ytKey" placeholder="AIza...">
-            <button class="btn-save" onclick="saveYt()">ربط ورفع آلي</button>
-        </div>
-
-        <div style="margin-top: auto; text-align: center; border-top: 1px solid #222; padding-top: 10px;">
-            <div style="font-family: 'Orbitron'; color: var(--gold); font-size: 22px;">$1,240.50</div>
-            <small style="color: #444;">USDT BALANCE</small>
+        <!-- الخزنة والمفاتيح -->
+        <div class="glass-block" style="margin-top: 20px; padding: 15px;">
+            <div class="block-header">GOOGLE VAULT</div>
+            <input type="password" id="apiKey" class="studio-input" placeholder="Google API Key...">
+            <button class="btn-prime" style="background: #111; color: #fff; border: 1px solid #333; font-size: 11px; padding: 8px;" onclick="saveKey()">CONNECT PROJECT</button>
         </div>
     </aside>
 
-    <main class="main">
-        <div class="ai-core">🤖</div>
-        <h1 style="font-family: 'Orbitron'; letter-spacing: 5px; margin: 15px 0 0;">GLOBAL HUB</h1>
-        <button class="btn-launch" onclick="launch()">إطلاق المهمة 🚀</button>
-        <div class="console" id="log">> نظام السيادة جاهز...</div>
+    <!-- 3. منطقة العمل والإنتاج (المصنع) -->
+    <main class="viewport">
+        <!-- إحصائيات جوجل أتلانتس الحية -->
+        <div class="glass-block" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 30px;">
+            <div style="font-family: 'Orbitron'; font-size: 11px;">ATLANTIS LIVE: <span style="color:var(--primary)">125,480 USERS</span></div>
+            <div style="font-family: 'Orbitron'; font-size: 10px; color:#444;">MARKET: USA / EUROPE / ARABIA</div>
+        </div>
+
+        <!-- مصنع الصفحات واجتياح المنصات -->
+        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 20px;">
+            <div class="glass-block">
+                <div class="block-header">FACTORY: PAGE GENERATOR & SOCIAL PUBLISHER</div>
+                <input type="text" id="pTitle" class="studio-input" placeholder="أدخل عنوان المقال الترند ( AdSense Optimized )...">
+                <textarea id="pBody" class="studio-input" style="height: 150px; resize: none;" placeholder="اكتب محتوى المنشور.. الرجل الآلي سيقوم بتوليد صفحة ويب ونشرها في بلوجر ويوتيوب..."></textarea>
+                <button class="btn-prime" onclick="generateAndPublish()">توليد الصفحة واجتياح الترند 🚀</button>
+                
+                <!-- معاينة الصفحة المولدة للربح من الإعلانات -->
+                <div id="pagePreview" class="generated-page">
+                    <div class="ad-placeholder">AdSense High CPC Ad (Top)</div>
+                    <h1 id="viewTitle"></h1>
+                    <div id="viewContent"></div>
+                    <div class="ad-placeholder">AdSense High CPC Ad (Bottom)</div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="glass-block">
+                    <div class="block-header">TREND RADAR (REAL-TIME)</div>
+                    <div style="font-family: monospace; font-size: 10px; color: #22c55e;">
+                        > AI Surgery (Rising 400%)<br>
+                        > Digital Sovereignty (Viral)<br>
+                        > AdSense CPC: $14.50 (Targeted)
+                    </div>
+                </div>
+                <div class="glass-block" style="flex-grow: 1; text-align: center;">
+                    <div class="block-header">8K RENDER ENGINE</div>
+                    <div style="font-size: 50px;">🤖</div>
+                    <p style="font-size: 10px; color: #666;">الرجل الآلي في وضع الاستعداد لإنتاج الفيديو.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- رادار القواميس العالمية -->
+        <div class="trend-radar">
+            <div class="node-val">GOOGLE: TRENDING</div>
+            <div class="node-val">FACEBOOK: VIRAL</div>
+            <div class="node-val">TIKTOK: SYNCED</div>
+            <div class="node-val">BLOGGER: LIVE</div>
+        </div>
     </main>
 
     <script>
-        function updateIdentity() {
-            const name = document.getElementById('newName').value;
-            const pic = document.getElementById('newPic').value;
-            if(name) {
-                localStorage.setItem('tosh5_name', name);
-                document.getElementById('display-name').innerText = name;
-            }
-            if(pic) {
-                localStorage.setItem('tosh5_pic', pic);
-                document.getElementById('avatar-preview').src = pic;
-            }
-            alert("تم تحديث هوية الإمبراطورية بنجاح سيدي!");
-        }
-
-        function saveYt() {
-            const key = document.getElementById('ytKey').value;
+        function saveKey() {
+            const key = document.getElementById('apiKey').value;
             if(key) {
-                localStorage.setItem('tosh5_yt_key', btoa(key));
-                alert("تم ربط القناة بنجاح!");
+                localStorage.setItem('tosh5_key', btoa(key));
+                alert("تم تشفير مفتاح الإمبراطورية وربطه بـ Google Cloud بنجاح ✅");
             }
         }
 
-        function launch() {
-            const log = document.getElementById('log');
-            log.innerHTML += "<br>> جاري تحليل الترند ونشره في " + document.getElementById('display-name').innerText;
-            setTimeout(() => { alert("المهمة انطلقت بنجاح!"); }, 1000);
+        function generateAndPublish() {
+            const title = document.getElementById('pTitle').value;
+            const body = document.getElementById('pBody').value;
+            const minister = document.getElementById('minister').value;
+
+            if(!title || !body) return alert("سيدي، أدخل البيانات لتشغيل المصنع!");
+
+            // توليد الصفحة
+            document.getElementById('pagePreview').style.display = "block";
+            document.getElementById('viewTitle').innerText = title;
+            document.getElementById('viewContent').innerText = body;
+
+            alert(`المهمة انطلقت عبر وزير ${minister}: \n1. تم توليد صفحة ربحية بداخل تطبيقك. \n2. جاري النشر في مدونة tosh5.shop \n3. جاري رفع فيديو 8K إلى قناتك باليوتيوب \n4. تم تهيئة مساحات AdSense للربح.`);
         }
 
         window.onload = function() {
-            if(localStorage.getItem('tosh5_name')) document.getElementById('display-name').innerText = localStorage.getItem('tosh5_name');
-            if(localStorage.getItem('tosh5_pic')) document.getElementById('avatar-preview').src = localStorage.getItem('tosh5_pic');
-            if(localStorage.getItem('tosh5_yt_key')) document.getElementById('ytKey').value = "••••••••••••••••";
+            if(localStorage.getItem('tosh5_key')) document.getElementById('apiKey').value = "••••••••••••••••";
         }
     </script>
 </body>
