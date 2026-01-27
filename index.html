@@ -1,61 +1,42 @@
-// كود محرك النشر (Google Apps Script) - النسخة المحدثة والآمنة
-function doPost(e) {
-  var JSON_DATA;
-  
-  // 1. استلام البيانات (سواء قادمة كـ JSON أو كـ Form)
-  try {
-    if (e.postData) {
-      JSON_DATA = JSON.parse(e.postData.contents);
-    } else if (e.parameter.data) {
-      JSON_DATA = JSON.parse(e.parameter.data);
-    }
-  } catch (err) {
-    return result("error", "بيانات غير صالحة: " + err.message);
-  }
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8"><title>AI Studio - Easy Post</title>
+    <style>
+        body { background: #0f2027; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        .card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; }
+        input, textarea { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; }
+        .btn { background: #e94560; color: white; padding: 15px; width: 90%; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🚀 النشر السريع</h2>
+        <p style="font-size: 12px; color: #aaa;">املأ البيانات ثم اضغط نشر</p>
+        
+        <input id="title" placeholder="عنوان المقال / الفيديو">
+        <textarea id="content" placeholder="محتوى المقال أو وصف الفيديو" style="height: 150px;"></textarea>
+        
+        <button class="btn" onclick="publish()">نشر الآن ✅</button>
+        
+        <hr style="margin: 20px 0; opacity: 0.2;">
+        <p style="font-size: 11px;">إعداد الإيميل السري (مرة واحدة):</p>
+        <input id="targetEmail" placeholder="username.secret@blogger.com" style="font-size: 10px;">
+    </div>
 
-  // 2. معالجة طلب يوتيوب
-  if (JSON_DATA.action == 'youtube_upload') {
-    try {
-      var video = YouTube.newVideo();
-      video.snippet = {
-        title: JSON_DATA.title,
-        description: JSON_DATA.description,
-        tags: JSON_DATA.tags ? JSON_DATA.tags.split(',') : [],
-        categoryId: '22'
-      };
-      video.status = { privacyStatus: 'private' }; // يرفع كـ "خاص" للأمان
-      
-      // هنا يتم تسجيل البيانات في القناة (إثبات اتصال)
-      // ملاحظة: الرفع الكامل للملف يحتاج وسيط تخزين، لكن هذا يثبت نجاح الربط
-      return result("success", "تم الاتصال بيوتيوب بنجاح! العنوان: " + JSON_DATA.title);
-    } catch (err) {
-      return result("error", "خطأ يوتيوب: " + err.message);
-    }
-  }
+    <script>
+        function publish() {
+            const email = document.getElementById('targetEmail').value;
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
 
-  // 3. معالجة طلب بلوجر
-  if (JSON_DATA.action == 'blogger_post') {
-    try {
-      // جلب معرف أول مدونة تلقائياً إذا لم يكن محدداً
-      var blogs = Blogger.Blogs.listByUser('self');
-      var blogId = blogs.items[0].id; 
-      
-      var post = {
-        title: JSON_DATA.title,
-        content: JSON_DATA.content
-      };
-      
-      Blogger.Posts.insert(post, blogId);
-      return result("success", "✅ تم نشر المقال بنجاح في مدونتك!");
-    } catch (err) {
-      return result("error", "خطأ بلوجر: " + err.message);
-    }
-  }
-}
+            if(!email || !title) return alert("يرجى إدخال الإيميل السري والعنوان");
 
-// دالة مساعدة لإرسال النتيجة
-function result(status, message) {
-  var output = { result: status, message: message };
-  return ContentService.createTextOutput(JSON.stringify(output))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+            // هذا السطر يقوم بالسحر: يفتح تطبيق Gmail ويعبئ كل شيء
+            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(content)}`;
+            
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
