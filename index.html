@@ -1,39 +1,67 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8"><title>AI Studio - Easy Post</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Studio - Email Post</title>
     <style>
-        body { background: #0f2027; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
-        .card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; }
-        input, textarea { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; }
-        .btn { background: #e94560; color: white; padding: 15px; width: 90%; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #0f2027; color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 15px; }
+        .app-container { width: 100%; max-width: 450px; background: rgba(255,255,255,0.05); border-radius: 25px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; backdrop-filter: blur(10px); }
+        .header { background: #ff9800; padding: 25px; text-align: center; color: white; }
+        .content { padding: 20px; }
+        input, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white; outline: none; font-size: 16px; }
+        .btn { background: #ff9800; color: white; border: none; padding: 15px; border-radius: 30px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .vault-section { margin-top: 20px; padding: 15px; background: rgba(255,215,0,0.05); border: 1px dashed #ffd700; border-radius: 15px; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>🚀 النشر السريع</h2>
-        <p style="font-size: 12px; color: #aaa;">املأ البيانات ثم اضغط نشر</p>
-        
-        <input id="title" placeholder="عنوان المقال / الفيديو">
-        <textarea id="content" placeholder="محتوى المقال أو وصف الفيديو" style="height: 150px;"></textarea>
-        
-        <button class="btn" onclick="publish()">نشر الآن ✅</button>
-        
-        <hr style="margin: 20px 0; opacity: 0.2;">
-        <p style="font-size: 11px;">إعداد الإيميل السري (مرة واحدة):</p>
-        <input id="targetEmail" placeholder="username.secret@blogger.com" style="font-size: 10px;">
+
+    <div class="app-container">
+        <div class="header">
+            <h1>📝 Blogger Post</h1>
+            <p>النشر السريع عبر الإيميل</p>
+        </div>
+
+        <div class="content">
+            <input type="text" id="postTitle" placeholder="عنوان المقال">
+            <textarea id="postContent" placeholder="اكتب محتوى المقال هنا..." style="height: 200px;"></textarea>
+            
+            <button class="btn" onclick="sendViaEmail()">نشر في بلوجر الآن 🚀</button>
+
+            <div class="vault-section">
+                <p style="color: #ffd700; font-size: 13px; margin-bottom: 8px;">📧 الإيميل السري المحفوظ:</p>
+                <input type="text" id="bloggerEmail" placeholder="opnseeamo.tosh5@blogger.com" style="font-size: 12px; border-color: #ffd700;">
+                <button class="btn" onclick="saveEmail()" style="background: #ffd700; color: #000; padding: 8px; font-size: 14px;">حفظ الإيميل</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        function publish() {
-            const email = document.getElementById('targetEmail').value;
-            const title = document.getElementById('title').value;
-            const content = document.getElementById('content').value;
+        // تحميل الإيميل من الذاكرة
+        let savedEmail = localStorage.getItem('blogger_email') || '';
+        if(savedEmail) document.getElementById('bloggerEmail').value = savedEmail;
 
-            if(!email || !title) return alert("يرجى إدخال الإيميل السري والعنوان");
+        function saveEmail() {
+            const email = document.getElementById('bloggerEmail').value.trim();
+            if(email.includes('@blogger.com')) {
+                localStorage.setItem('blogger_email', email);
+                savedEmail = email;
+                alert('✅ تم حفظ الإيميل السري!');
+            } else {
+                alert('❌ تأكد من كتابة الإيميل بشكل صحيح');
+            }
+        }
 
-            // هذا السطر يقوم بالسحر: يفتح تطبيق Gmail ويعبئ كل شيء
-            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(content)}`;
+        function sendViaEmail() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+
+            if(!savedEmail) return alert('🔐 يرجى حفظ الإيميل السري أولاً!');
+            if(!title || !content) return alert('⚠️ أكمل العنوان والمحتوى!');
+
+            // فتح تطبيق الإيميل وتعبئة البيانات تلقائياً
+            const mailtoLink = `mailto:${savedEmail}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(content)}`;
             
             window.location.href = mailtoLink;
         }
