@@ -3,326 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baseerah OS | النظام الشامل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Baseerah Ultimate | المشروع المتكامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg: #09090b; --sidebar: #121217; --card: #1c1c24;
-            --primary: #6366f1; --accent: #ec4899; --success: #10b981; --warning: #f59e0b; --text: #ffffff;
-            --border: rgba(255,255,255,0.08);
-            --gradient: linear-gradient(135deg, var(--primary), var(--accent));
+            --bg: #020617; --card: #0f172a; --border: #1e293b;
+            --accent: #3b82f6; --tag: #4f46e5; --text: #ffffff;
+            --gradient: linear-gradient(90deg, #4f46e5, #9333ea);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* 1. الشريط العلوي */
+        .status-bar {
+            background: var(--gradient); padding: 8px; font-size: 11px; font-weight: bold;
+            display: flex; justify-content: space-around; letter-spacing: 1px;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; outline:none; font-family:'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; }
+        /* 2. الهيكل */
+        .container {
+            max-width: 1200px; margin: 0 auto; padding: 20px;
+            display: grid; grid-template-columns: 260px 1fr; gap: 30px;
+        }
 
-        /* Sidebar */
+        /* 3. القائمة الجانبية */
         .sidebar {
-            width: 260px; background: var(--sidebar); border-left: 1px solid var(--border);
-            display: flex; flex-direction: column; padding: 20px; z-index: 100; overflow-y: auto;
+            background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 25px; height: fit-content; position: sticky; top: 20px;
         }
-        .logo { font-size: 22px; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
-        
-        .nav-category { font-size: 11px; color: #52525b; margin: 15px 0 5px 0; font-weight: bold; letter-spacing: 1px; }
-        
-        .nav-btn {
-            padding: 14px; margin-bottom: 5px; border-radius: 10px; color: #a1a1aa; cursor: pointer;
-            display: flex; align-items: center; gap: 12px; transition: 0.3s; font-weight: 500; font-size: 14px;
+        .brand { font-size: 24px; font-weight: 900; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        .nav-item {
+            padding: 14px; margin-bottom: 8px; border-radius: 10px; color: #94a3b8; cursor: pointer;
+            display: flex; align-items: center; gap: 12px; transition: 0.3s;
         }
-        .nav-btn:hover, .nav-btn.active { background: rgba(99, 102, 241, 0.1); color: white; border-right: 3px solid var(--primary); }
-        .nav-btn i { width: 20px; text-align: center; }
-
-        /* Content */
-        .main-content { flex: 1; padding: 30px; overflow-y: auto; position: relative; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .page-title { font-size: 26px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-
-        /* UI Elements */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 20px; position: relative; }
+        .nav-item:hover, .nav-item.active { background: rgba(59, 130, 246, 0.1); color: white; font-weight: bold; }
         
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 8px; color: #a1a1aa; font-size: 12px; }
+        .btn-create {
+            background: var(--accent); color: white; width: 100%; padding: 15px; border-radius: 12px;
+            border: none; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* 4. البطاقات (المحتوى) */
+        .grid { display: grid; gap: 25px; }
+        .article-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+            transition: 0.3s; position: relative;
+        }
+        .article-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .card-img { width: 100%; height: 220px; object-fit: cover; }
+        .card-body { padding: 25px; position: relative; margin-top: -50px; }
+        .tag { background: var(--tag); padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: bold; display: inline-block; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .card-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; line-height: 1.4; }
+        .card-desc { font-size: 13px; color: #94a3b8; line-height: 1.6; }
+
+        /* 5. النوافذ المنبثقة (Modals) */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999;
+            display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px);
+        }
+        .modal-box { background: var(--card); width: 500px; padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
+        
         input, textarea, select {
-            width: 100%; background: #09090b; border: 1px solid var(--border); padding: 14px;
-            border-radius: 10px; color: white; font-size: 14px; transition: 0.3s;
+            width: 100%; background: #020617; border: 1px solid var(--border); padding: 15px;
+            border-radius: 10px; color: white; margin-bottom: 15px;
         }
-        input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+        .btn-action { width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-yt { background: #ef4444; color: white; }
+        .btn-bl { background: #f97316; color: white; }
+        .btn-ai { background: var(--accent); color: white; }
 
-        .btn {
-            width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;
-            font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s;
-        }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-marketing { background: linear-gradient(45deg, #f59e0b, #ea580c); color: white; }
-        .btn-tech { background: linear-gradient(45deg, #0ea5e9, #2563eb); color: white; }
-        
-        /* Sections Logic */
-        .section { display: none; animation: fadeIn 0.4s ease; }
-        .section.active { display: block; }
-        
-        /* Result Box */
-        .result-box { background: #111; padding: 15px; border-radius: 10px; border: 1px dashed var(--border); margin-top: 15px; font-size: 13px; line-height: 1.6; color: #ddd; white-space: pre-line; display: none; }
-
-        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-        
-        /* Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-box { background: var(--card); width: 400px; padding: 30px; border-radius: 20px; border: 1px solid var(--border); text-align: center; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .sidebar { display: none; } }
     </style>
 </head>
 <body>
 
-<div class="modal" id="setup-modal">
+<div class="status-bar">
+    <span><i class="fa-solid fa-server"></i> SERVER: ONLINE</span>
+    <span><i class="fa-solid fa-brain"></i> AI: GEMINI-PRO</span>
+    <span><i class="fa-solid fa-check-circle"></i> ADSENSE: READY</span>
+</div>
+
+<div class="container">
+    
+    <div class="sidebar">
+        <div class="brand"><i class="fa-solid fa-layer-group"></i> BASEERAH</div>
+        <div class="nav-item active" onclick="showView('feed')"><i class="fa-solid fa-home"></i> الرئيسية</div>
+        <div class="nav-item" onclick="showView('legal')"><i class="fa-solid fa-scale-balanced"></i> السياسات (Ads)</div>
+        <div class="nav-item" onclick="logout()" style="color:#ef4444;"><i class="fa-solid fa-power-off"></i> خروج</div>
+        
+        <button class="btn-create" onclick="openModal('create-modal')">
+            <i class="fa-solid fa-plus"></i> إنشاء جديد
+        </button>
+    </div>
+
+    <div class="grid" id="main-feed">
+        <div class="article-card">
+            <img src="https://source.unsplash.com/random/800x400/?tech" class="card-img">
+            <div class="card-body">
+                <span class="tag">AI UPDATE</span>
+                <h2 class="card-title">مستقبل صناعة المحتوى مع الذكاء الاصطناعي</h2>
+                <p class="card-desc">كيف يمكن لأدوات مثل Gemini و ChatGPT تغيير قواعد اللعبة في عام 2025...</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="legal-view" style="display:none;">
+        <div class="article-card" style="padding:30px;">
+            <h2 style="margin-bottom:20px;">مولد الصفحات القانونية</h2>
+            <p style="color:#aaa; margin-bottom:20px;">أنشئ صفحاتك للقبول في AdSense فوراً.</p>
+            <button class="btn-action btn-ai" onclick="genLegal('privacy')">📄 توليد سياسة الخصوصية</button>
+            <button class="btn-action btn-ai" style="background:#333;" onclick="genLegal('terms')">📜 توليد شروط الاستخدام</button>
+            <textarea id="legal-out" rows="10" style="margin-top:20px;"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="create-modal">
     <div class="modal-box">
-        <h2 style="margin-bottom:15px; color:var(--primary);">تفعيل بصيرة OS</h2>
-        <input type="text" id="setup-cid" placeholder="Google Client ID" style="margin-bottom:10px;">
-        <input type="password" id="setup-key" placeholder="Gemini API Key" style="margin-bottom:10px;">
-        <input type="text" id="setup-bid" placeholder="Blog ID" style="margin-bottom:20px;">
-        <button class="btn btn-primary" onclick="saveSystemKeys()">ربط النظام</button>
+        <h2 style="margin-bottom:20px;">ماذا تريد أن تنشئ؟</h2>
+        <input type="text" id="ai-topic" placeholder="اكتب الموضوع هنا...">
+        <select id="content-type">
+            <option value="blog">مقال للمدونة (Blogger)</option>
+            <option value="video">فيديو لليوتيوب (YouTube)</option>
+        </select>
+        
+        <button class="btn-action btn-ai" onclick="runAI()">✨ اطلب من الذكاء الكتابة</button>
+        
+        <div id="result-area" style="display:none; margin-top:20px; border-top:1px solid #333; padding-top:20px;">
+            <input type="text" id="final-title">
+            <textarea id="final-body" rows="6"></textarea>
+            
+            <button id="btn-pub-blog" class="btn-action btn-bl" onclick="publishBlog()" style="display:none;">📝 نشر في Blogger</button>
+            
+            <div id="yt-upload-area" style="display:none;">
+                <input type="text" id="yt-tags" placeholder="الكلمات المفتاحية">
+                <div style="background:#222; padding:15px; border-radius:10px; text-align:center; cursor:pointer; margin-bottom:10px;" onclick="document.getElementById('yt-file').click()">
+                    📁 اختر الفيديو
+                    <input type="file" id="yt-file" accept="video/*" hidden>
+                </div>
+                <button class="btn-action btn-yt" onclick="uploadYT()">🚀 رفع لليوتيوب</button>
+            </div>
+        </div>
+
+        <button class="btn-action" style="background:transparent; color:#aaa;" onclick="closeModal()">إلغاء</button>
     </div>
 </div>
 
-<div class="sidebar">
-    <div class="logo"><i class="fa-solid fa-layer-group"></i> Baseerah.OS</div>
-    
-    <div class="nav-category">الرئيسية</div>
-    <div class="nav-btn active" onclick="nav('dashboard')"><i class="fa-solid fa-chart-pie"></i> لوحة القيادة</div>
-    <div class="nav-btn" onclick="nav('trends')"><i class="fa-solid fa-fire"></i> رادار الترند</div>
-
-    <div class="nav-category">الأقسام الجديدة</div>
-    <div class="nav-btn" onclick="nav('marketing')"><i class="fa-solid fa-bullhorn"></i> المسوق الرقمي</div>
-    <div class="nav-btn" onclick="nav('tech')"><i class="fa-solid fa-microchip"></i> المنصة التقنية</div>
-
-    <div class="nav-category">النشر</div>
-    <div class="nav-btn" onclick="nav('youtube')"><i class="fa-brands fa-youtube"></i> استديو يوتيوب</div>
-    <div class="nav-btn" onclick="nav('legal')"><i class="fa-solid fa-gavel"></i> السياسات (Ads)</div>
-    
-    <div style="margin-top:auto;">
-        <div class="nav-btn" onclick="location.reload()" style="color:#ef4444;"><i class="fa-solid fa-power-off"></i> خروج</div>
+<div class="modal" id="auth-modal" style="display:flex;">
+    <div class="modal-box" style="text-align:center;">
+        <h2 style="color:var(--accent); margin-bottom:15px;">إعداد المشروع</h2>
+        <input type="text" id="setup-cid" placeholder="Google Client ID">
+        <input type="password" id="setup-key" placeholder="Gemini API Key">
+        <input type="text" id="setup-bid" placeholder="Blog ID">
+        <button class="btn-action btn-ai" onclick="saveKeys()">اتصال آمن</button>
     </div>
-</div>
-
-<div class="main-content">
-    
-    <div id="dashboard" class="section active">
-        <div class="header"><div class="page-title">مرحباً بك في غرفة التحكم</div></div>
-        <div class="grid-2">
-            <div class="card">
-                <h3 style="color:var(--primary); margin-bottom:10px;">🚀 الحالة العامة</h3>
-                <p style="color:#aaa; font-size:13px;">جميع الأنظمة (يوتيوب، بلوجر، الذكاء الاصطناعي) تعمل بكفاءة.</p>
-            </div>
-            <div class="card">
-                <h3 style="color:var(--accent); margin-bottom:10px;">📢 نصيحة اليوم</h3>
-                <p style="color:#aaa; font-size:13px;">استخدم قسم "المسوق الرقمي" لكتابة وصف للفيديو قبل رفعه لزيادة الظهور.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="marketing" class="section">
-        <div class="header"><div class="page-title" style="color:#f59e0b;"><i class="fa-solid fa-bullhorn"></i> المسوق الذكي</div></div>
-        
-        <div class="grid-2">
-            <div class="card">
-                <h3 style="margin-bottom:15px;">📊 استراتيجية الحملات</h3>
-                <div class="input-group">
-                    <label>المنتج أو الخدمة</label>
-                    <input type="text" id="mkt-product" placeholder="مثلاً: تطبيق توصيل، دورة برمجة...">
-                </div>
-                <div class="input-group">
-                    <label>المنصة المستهدفة</label>
-                    <select id="mkt-platform">
-                        <option value="Facebook & Instagram">فيسبوك وإنستجرام</option>
-                        <option value="TikTok">تيك توك (سريع الانتشار)</option>
-                        <option value="SEO Article">مقال متوافق مع SEO</option>
-                        <option value="Email Marketing">بريد إلكتروني تسويقي</option>
-                    </select>
-                </div>
-                <button class="btn btn-marketing" onclick="runMarketingAI()">💡 توليد الخطة التسويقية</button>
-            </div>
-
-            <div class="card">
-                <h3 style="margin-bottom:15px;">📝 المخرج الإبداعي</h3>
-                <div id="mkt-result" class="result-box" style="display:block; height:250px; overflow-y:auto; color:#aaa;">
-                    النتيجة ستظهر هنا...
-                </div>
-                <button class="btn" style="background:#333; margin-top:10px;" onclick="copyText('mkt-result')">نسخ النص</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="tech" class="section">
-        <div class="header"><div class="page-title" style="color:#0ea5e9;"><i class="fa-solid fa-shield-halved"></i> المنصة التقنية</div></div>
-        
-        <div class="card">
-            <h3 style="margin-bottom:20px;">🤖 محرر الأخبار التقنية & الأمنية</h3>
-            <div class="input-group">
-                <label>نوع المحتوى</label>
-                <select id="tech-type">
-                    <option value="Cyber Security Alert">🚨 تحذير أمني / ثغرة جديدة</option>
-                    <option value="Tech Review">📱 مراجعة جهاز / تقنية</option>
-                    <option value="Programming Tutorial">💻 شرح برمجي / كود</option>
-                    <option value="AI News">🤖 أخبار الذكاء الاصطناعي</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>موضوع الخبر / الجهاز</label>
-                <input type="text" id="tech-topic" placeholder="مثلاً: iPhone 16 Pro Max أو ثغرة في ويندوز">
-            </div>
-            
-            <button class="btn btn-tech" onclick="runTechAI()">⚡ كتابة تقرير تقني احترافي</button>
-            
-            <div id="tech-result" class="result-box" style="margin-top:20px;"></div>
-            
-            <div class="grid-2" style="margin-top:15px;">
-                <button class="btn btn-primary" onclick="postToFeed('tech-result')">نشر في التطبيق</button>
-                <button class="btn" style="background:#ff5722;" onclick="copyText('tech-result')">نسخ لبلوجر</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="youtube" class="section">
-        <div class="header"><div class="page-title">استديو يوتيوب</div></div>
-        <div class="card">
-            <div class="input-group">
-                <label>عنوان الفيديو</label>
-                <input type="text" id="yt-title">
-            </div>
-            <div class="input-group">
-                <label>الوصف</label>
-                <textarea id="yt-desc" rows="4"></textarea>
-            </div>
-            <div style="border:2px dashed var(--border); padding:30px; text-align:center; border-radius:10px; cursor:pointer;" onclick="document.getElementById('yt-file').click()">
-                <i class="fa-solid fa-cloud-arrow-up"></i> اختر الفيديو
-                <input type="file" id="yt-file" accept="video/*" hidden>
-            </div>
-            <button class="btn btn-primary" style="margin-top:20px;" onclick="uploadYT()">🚀 رفع الفيديو</button>
-        </div>
-    </div>
-
-    <div id="trends" class="section">
-        <div class="header"><div class="page-title">رادار الترند</div></div>
-        <div class="card">
-            <button class="btn btn-primary" onclick="scanTrends()">🔍 فحص الترندات الحالية</button>
-            <div id="trend-result" class="result-box"></div>
-        </div>
-    </div>
-
-    <div id="legal" class="section">
-        <div class="header"><div class="page-title">السياسات القانونية</div></div>
-        <div class="card">
-            <button class="btn" style="border:1px solid #555; margin-bottom:10px;" onclick="genLegal('privacy')">📄 توليد سياسة الخصوصية</button>
-            <textarea id="legal-output" rows="6"></textarea>
-        </div>
-    </div>
-
 </div>
 
 <script>
     let token = "";
 
+    // 1. التشغيل والتحقق
     window.onload = () => {
-        if(localStorage.getItem("cid")) document.getElementById("setup-modal").style.display = "none";
+        if(localStorage.getItem("cid")) document.getElementById("auth-modal").style.display = "none";
         
         const params = new URLSearchParams(window.location.hash.substring(1));
         if (params.has("access_token")) {
             token = params.get("access_token");
-            document.getElementById("setup-modal").style.display = "none";
+            document.getElementById("auth-modal").style.display = "none";
         }
     };
 
-    function nav(id) {
-        document.querySelectorAll('.section').forEach(e => e.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.querySelectorAll('.nav-btn').forEach(e => e.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-    }
-
-    function saveSystemKeys() {
+    function saveKeys() {
         localStorage.setItem("cid", document.getElementById("setup-cid").value);
         localStorage.setItem("akey", document.getElementById("setup-key").value);
         localStorage.setItem("bid", document.getElementById("setup-bid").value);
-        authenticate();
-    }
-
-    function authenticate() {
-        const cid = localStorage.getItem("cid");
+        
+        const cid = document.getElementById("setup-cid").value;
         const redirect = window.location.href.split('?')[0].replace(/\/$/, "");
         const scope = "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/blogger";
         window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${cid}&redirect_uri=${redirect}&response_type=token&scope=${scope}&include_granted_scopes=true&state=pass`;
     }
 
-    async function callAI(prompt) {
+    // 2. التحكم في الواجهة
+    function showView(view) {
+        document.getElementById("main-feed").style.display = view === 'feed' ? 'grid' : 'none';
+        document.getElementById("legal-view").style.display = view === 'legal' ? 'block' : 'none';
+    }
+    
+    function openModal(id) { document.getElementById(id).style.display = "flex"; }
+    function closeModal() { document.querySelectorAll(".modal").forEach(e => e.style.display = "none"); }
+
+    // 3. الذكاء الاصطناعي
+    async function runAI() {
+        const topic = document.getElementById("ai-topic").value;
+        const type = document.getElementById("content-type").value;
         const key = localStorage.getItem("akey");
+        
+        const btn = document.querySelector(".btn-ai");
+        btn.innerText = "⏳ جاري الكتابة...";
+
+        const prompt = type === 'blog' 
+            ? `اكتب مقالاً طويلاً ومفصلاً عن: ${topic}. بدون كود HTML.` 
+            : `اكتب عنوان ووصف وكلمات مفتاحية لفيديو عن: ${topic}. افصل بينهم بـ |||`;
+
         try {
             const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
                 method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
             });
             const data = await res.json();
-            return data.candidates[0].content.parts[0].text;
-        } catch(e) { return "خطأ في الذكاء الاصطناعي"; }
+            const text = data.candidates[0].content.parts[0].text;
+            
+            document.getElementById("result-area").style.display = "block";
+            
+            if(type === 'blog') {
+                document.getElementById("final-title").value = topic;
+                document.getElementById("final-body").value = text;
+                document.getElementById("btn-pub-blog").style.display = "block";
+                document.getElementById("yt-upload-area").style.display = "none";
+            } else {
+                const parts = text.split("|||");
+                document.getElementById("final-title").value = parts[0]?.trim();
+                document.getElementById("final-body").value = parts[1]?.trim();
+                document.getElementById("yt-tags").value = parts[2]?.trim();
+                document.getElementById("btn-pub-blog").style.display = "none";
+                document.getElementById("yt-upload-area").style.display = "block";
+            }
+            btn.innerText = "✨ اطلب مرة أخرى";
+
+        } catch(e) { alert("خطأ: " + e.message); }
     }
 
-    // --- وظائف المسوق الرقمي ---
-    async function runMarketingAI() {
-        const prod = document.getElementById("mkt-product").value;
-        const plat = document.getElementById("mkt-platform").value;
-        document.getElementById("mkt-result").innerText = "⏳ جاري رسم الخطة التسويقية...";
+    // 4. النشر الفعلي (Blogger)
+    async function publishBlog() {
+        if(!token) return saveKeys();
+        const bid = localStorage.getItem("bid");
+        const body = {
+            kind: "blogger#post", blog: { id: bid },
+            title: document.getElementById("final-title").value,
+            content: document.getElementById("final-body").value
+        };
+
+        const res = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${bid}/posts/`, {
+            method: "POST", headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(body)
+        });
         
-        const prompt = `بصفتك خبير تسويق رقمي، اكتب لي خطة لـ: "${prod}" على منصة "${plat}".
-        1. اكتب صيغة إعلانية جذابة (Copywriting).
-        2. حدد الجمهور المستهدف بدقة.
-        3. اقترح 5 هاشتاجات قوية.`;
-        
-        const res = await callAI(prompt);
-        document.getElementById("mkt-result").innerText = res;
+        if(res.ok) {
+            alert("✅ تم نشر المقال في مدونتك!");
+            closeModal();
+            // إضافة بطاقة وهمية للمعاينة
+            addCard(body.title, "تم النشر بنجاح في Blogger");
+        } else alert("فشل النشر");
     }
 
-    // --- وظائف المنصة التقنية ---
-    async function runTechAI() {
-        const type = document.getElementById("tech-type").value;
-        const topic = document.getElementById("tech-topic").value;
-        document.getElementById("tech-result").style.display = "block";
-        document.getElementById("tech-result").innerText = "⏳ جاري تحليل البيانات التقنية والكتابة...";
-        
-        const prompt = `اكتب مقالاً تقنياً احترافياً بصيغة "${type}" عن: "${topic}".
-        استخدم لغة تقنية دقيقة، اذكر المواصفات أو التفاصيل الأمنية، واجعل الأسلوب مشوقاً للقراءة.`;
-        
-        const res = await callAI(prompt);
-        document.getElementById("tech-result").innerText = res;
-    }
-
-    // --- وظائف مساعدة ---
-    function copyText(id) {
-        const text = document.getElementById(id).innerText || document.getElementById(id).value;
-        navigator.clipboard.writeText(text);
-        alert("تم النسخ!");
-    }
-
-    function postToFeed(id) {
-        alert("تم إرسال المحتوى إلى الصفحة الرئيسية للتطبيق!");
-    }
-
-    // --- وظائف اليوتيوب والترند (موجودة سابقاً) ---
+    // 5. الرفع الفعلي (YouTube)
     async function uploadYT() {
-        if(!token) return authenticate();
-        alert("جاري الرفع... (تأكد من اختيار ملف)");
-        // كود الرفع الكامل موجود في النسخ السابقة وتم تبسيطه هنا للتركيز على الأقسام الجديدة
+        if(!token) return saveKeys();
+        const file = document.getElementById("yt-file").files[0];
+        if(!file) return alert("اختر الفيديو!");
+
+        alert("جاري الرفع... يرجى الانتظار");
+        
+        const meta = {
+            snippet: {
+                title: document.getElementById("final-title").value,
+                description: document.getElementById("final-body").value,
+                tags: document.getElementById("yt-tags").value.split(","),
+                categoryId: "28"
+            }, status: { privacyStatus: "public" }
+        };
+
+        const init = await fetch("https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status", {
+            method: "POST", headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(meta)
+        });
+        const url = init.headers.get("Location");
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", url, true);
+        xhr.onload = () => { 
+            alert("✅ تم رفع الفيديو لقناتك!");
+            closeModal();
+        };
+        xhr.send(file);
     }
 
-    async function scanTrends() {
-        const res = await callAI("ما هي أهم 5 ترندات تقنية اليوم؟");
-        document.getElementById("trend-result").style.display = "block";
-        document.getElementById("trend-result").innerText = res;
-    }
-    
+    // 6. السياسات
     function genLegal(type) {
         const txt = type === 'privacy' ? "سياسة الخصوصية النموذجية..." : "شروط الاستخدام...";
-        document.getElementById("legal-output").value = txt;
+        document.getElementById("legal-out").value = txt;
     }
+
+    function addCard(title, desc) {
+        const html = `
+        <div class="article-card">
+            <img src="https://source.unsplash.com/random/800x400/?code" class="card-img">
+            <div class="card-body">
+                <span class="tag" style="background:#10b981;">NEW</span>
+                <h2 class="card-title">${title}</h2>
+                <p class="card-desc">${desc}</p>
+            </div>
+        </div>`;
+        document.getElementById("main-feed").insertAdjacentHTML('afterbegin', html);
+    }
+    
+    function logout() { localStorage.clear(); location.reload(); }
 </script>
 
 </body>
 </html>
+
