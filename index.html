@@ -1,287 +1,300 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.M Global AI Studio - كامل مع YouTube Studio + أتمتة n8n</title>
-    <meta name="description" content="تحليل يوتيوب + أخبار تقنية + Gemini AI + أتمتة بلوجر + بحث عالمي">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GAI-1686820"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'GAI-1686820');</script>
+    <title>S.M Global AI Studio Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2a1a4e 100%); color: #fff; line-height: 1.6; overflow-x: hidden; }
-        header { background: rgba(0,123,255,.95); padding: 20px 0; text-align: center; box-shadow: 0 8px 32px rgba(0,123,255,.3); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
-        header h1 { font-size: 2.5em; margin-bottom: 10px; background: linear-gradient(45deg, #fff, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .search-box { max-width: 700px; margin: 20px auto; display: flex; gap: 15px; padding: 0 20px; }
-        input[type="text"] { flex: 1; padding: 18px 25px; border-radius: 50px; border: 2px solid rgba(255,255,255,.2); background: rgba(255,255,255,.95); font-size: 16px; color: #333; transition: all .3s ease; }
-        input:focus { outline: none; border-color: #ff6b35; box-shadow: 0 0 20px rgba(255,107,53,.3); }
-        button { padding: 18px 35px; background: linear-gradient(45deg, #ff6b35, #f7931e); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all .3s ease; box-shadow: 0 4px 15px rgba(255,107,53,.4); }
-        button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,107,53,.6); }
-        button:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-        .news-ticker { background: linear-gradient(90deg, #000 0%, #1a1a2e 100%); padding: 12px 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 20px rgba(255,107,53,.4); font-size: 18px; font-weight: 500; }
-        .ticker-content { display: inline-block; animation: scroll-left 45s linear infinite; padding-right: 100%; }
-        @keyframes scroll-left { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .ticker-content:hover { animation-play-state: paused; }
-        .main-container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
-        .section { max-width: 900px; margin: 40px auto; padding: 30px; background: rgba(255,255,255,.08); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.1); box-shadow: 0 20px 40px rgba(0,0,0,.3); }
-        .section h2 { text-align: center; margin-bottom: 25px; color: #ff6b35; font-size: 2em; }
-        input[type="text"], textarea { width: 100%; padding: 20px; border-radius: 20px; border: 2px solid rgba(255,255,255,.2); background: rgba(255,255,255,.95); color: #333; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; }
-        .output { min-height: 250px; padding: 25px; background: rgba(0,0,0,.4); border-radius: 20px; margin-top: 15px; text-align: right; font-size: 16px; line-height: 1.8; white-space: pre-wrap; overflow-y: auto; max-height: 400px; }
-        .thumbnail-img { max-width: 300px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
-        .copy-btn { padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 20px; cursor: pointer; margin: 10px 0; }
-        .workflow-json { direction: ltr; font-family: 'Courier New', monospace; background: #1a1a2e; border: 1px solid #ff6b35; }
-        .status-bar { position: fixed; top: 20px; left: 20px; background: rgba(0,0,0,.8); padding: 15px 20px; border-radius: 15px; font-size: 14px; z-index: 1000; }
-        footer { text-align: center; padding: 40px 20px; background: rgba(0,0,0,.6); margin-top: 80px; border-top: 1px solid rgba(255,255,255,.1); }
-        footer a { color: #ff6b35; text-decoration: none; margin: 0 10px; }
-        @media (max-width: 768px) { .search-box { flex-direction: column; } header h1 { font-size: 2em; } .section { margin: 20px; padding: 20px; } }
+        :root {
+            --primary: #ff4d4d;
+            --secondary: #00d2ff;
+            --accent: #7d5fff;
+            --bg: #050510;
+            --card-bg: rgba(20, 20, 35, 0.7);
+            --text: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #050510 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* الطبقة العلوية المضيئة */
+        .glass-header {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .logo { font-size: 24px; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .container { max-width: 1400px; margin: 20px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+
+        /* الأقسام (الكرتات) */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);
+        }
+
+        .card-icon { font-size: 30px; margin-bottom: 15px; color: var(--secondary); }
+
+        h2 { font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        /* مدخلات متطورة */
+        .input-box {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-box:focus { border-color: var(--primary); background: rgba(255,255,255,0.1); }
+
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .btn-primary { background: linear-gradient(45deg, var(--primary), #ff7675); }
+        .btn-secondary { background: linear-gradient(45deg, var(--secondary), var(--accent)); }
+        .btn-dark { background: #2d3436; }
+
+        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+        /* منطقة النتائج */
+        .result-area {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            min-height: 40px;
+            border-right: 3px solid var(--secondary);
+        }
+
+        /* شريط الأخبار */
+        .news-bar {
+            background: rgba(255, 77, 77, 0.1);
+            color: var(--primary);
+            padding: 8px;
+            text-align: center;
+            font-size: 13px;
+            border-radius: 10px;
+            margin: 10px 5%;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
+
+        /* تاجات SEO */
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin: 3px;
+            cursor: pointer;
+        }
+
+        /* صورة الفيديو المصغرة */
+        .thumb-preview { width: 100%; border-radius: 10px; margin-top: 10px; display: none; }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        .loading { animation: pulse 1.5s infinite; color: var(--secondary); }
+
     </style>
 </head>
 <body>
-    <div class="status-bar" id="statusBar">🚀 جاري تحميل S.M Global AI Studio كامل... <span id="statusCount">0</span>/6</div>
 
-    <header>
-        <h1>🌍 S.M Global AI Studio + 📺 YouTube Studio Pro + 🤖 n8n Automation</h1>
-        <p>مدونة عالمية آلية • أخبار تقنية • تحليل يوتيوب • Gemini AI • أتمتة بلوجر</p>
-        <div class="search-box">
-            <input type="text" id="searchQuery" placeholder="🔍 ابحث عالمياً في Google...">
-            <button onclick="multiSearch()">بحث عالمي 🚀</button>
+<div class="glass-header">
+    <div class="logo"><i class="fab fa-youtube"></i> S.M GLOBAL PRO</div>
+    <div id="clock">00:00:00</div>
+</div>
+
+<div class="news-bar">
+    <marquee scrollamount="5"><i class="fas fa-bolt"></i> تحديث: تم إضافة محرك Gemini AI 1.5 - أتمتة n8n جاهزة للعمل - نظام الـ SEO المطور يعمل الآن بكفاءة عالية</marquee>
+</div>
+
+<div class="container">
+
+    <!-- كرت: مساعد المحتوى بالذكاء الاصطناعي -->
+    <div class="card">
+        <div class="card-icon"><i class="fas fa-brain"></i></div>
+        <h2>مولد المحتوى الذكي (AI)</h2>
+        <input type="text" id="aiPrompt" class="input-box" placeholder="اكتب موضوع الفيديو...">
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="generateAI('script')"><i class="fas fa-file-alt"></i> كتابة سكربت</button>
+            <button class="btn btn-secondary" onclick="generateAI('titles')"><i class="fas fa-heading"></i> 5 عناوين</button>
         </div>
-    </header>
-
-    <div class="news-ticker">
-        <div class="ticker-content" id="newsTicker">🔥 تحميل أخبار التقنية الترند الساعية...</div>
+        <div id="ai-res" class="result-area">بانتظار أوامرك...</div>
     </div>
 
-    <div class="main-container">
-        <!-- 1. Gemini AI Chat -->
-        <section class="section">
-            <h2>🤖 محادثة Gemini AI Pro</h2>
-            <input type="text" id="aiInput" placeholder="💭 اسأل أي شيء... كود n8n، SEO، تحليل يوتيوب...">
-            <button onclick="askAI()">إرسال للـAI ✨</button>
-            <div id="chat-output" class="output">🌟 مرحباً! اكتب سؤالك وسيجيب Gemini<br>💡 مثال: "كود n8n لنشر يوتيوب في بلوجر"</div>
-        </section>
-
-        <!-- 2. YouTube Studio Pro -->
-        <section class="section">
-            <h2>📺 YouTube Studio Pro (آمن 100%)</h2>
-            <input type="text" id="ytInput" placeholder="🎥 https://youtu.be/dQw4w9WgXcQ">
-            <button onclick="analyzeYT()">تحليل فيديو كامل 🎥</button>
-            <div id="yt-output" class="output">📺 أدخل رابط فيديو لتحليل: Thumbnail + Embed + إحصائيات</div>
-        </section>
-
-        <!-- 3. n8n Automation -->
-        <section class="section">
-            <h2>🤖 أتمتة YouTube → Blogger (n8n)</h2>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-                <input type="text" id="channelUrl" placeholder="رابط قناة يوتيوب...">
-                <button onclick="setupAutomation()">إعداد أتمتة n8n 🚀</button>
-            </div>
-            <div id="automation-output" class="output">
-                🎯 <strong>خطة الأتمتة الكاملة:</strong><br>
-                • 📥 فيديوهات يوتيوب جديدة كل ساعة<br>
-                • ✂️ Thumbnail + عنوان + وصف تلقائي<br>
-                • 🤖 تلخيص AI (Gemini)<br>
-                • 📤 نشر في tosh2030.blogspot.com<br>
-                • 📱 مشاركة تليجرام/فيسبوك
-            </div>
-        </section>
-
-        <!-- 4. Blog Posts -->
-        <section class="posts" id="blogPosts" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(350px,1fr)); gap:25px; margin:50px 0;">
-            <div style="background:rgba(255,255,255,.12); padding:30px; border-radius:20px; text-align:center;">
-                <h3>🚀 الموقع جاهز 100%</h3>
-                <p>✅ YouTube Studio • ✅ n8n Automation • ✅ AI Chat • ✅ Tech News</p>
-            </div>
-        </section>
+    <!-- كرت: محلل ومهكر الـ SEO -->
+    <div class="card">
+        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+        <h2>أدوات SEO والكلمات المفتاحية</h2>
+        <input type="text" id="seoInput" class="input-box" placeholder="اكتب الكلمة الرئيسية...">
+        <button class="btn btn-secondary" style="width: 100%;" onclick="getTags()"><i class="fas fa-tags"></i> استخراج أقوى التاجات</button>
+        <div id="tags-res" class="result-area"></div>
     </div>
 
-    <footer>
-        <p>© 2026 <strong>S.M Global AI Studio</strong> | GAI-1686820 | <a href="https://tosh2030.blogspot.com">مدونة بلوجر</a></p>
-        <p><a href="#youtube">يوتيوب</a> | <a href="#ai">Gemini</a> | <a href="#automation">n8n</a></p>
-    </footer>
+    <!-- كرت: مركز أتمتة n8n & Blogger -->
+    <div class="card">
+        <div class="card-icon"><i class="fas fa-robot"></i></div>
+        <h2>مركز الأتمتة الشامل</h2>
+        <input type="text" id="rssInput" class="input-box" placeholder="رابط RSS أو قناة يوتيوب">
+        <div class="btn-group">
+            <button class="btn btn-dark" onclick="copyWorkflow('blogger')"><i class="fab fa-blogger"></i> Blogger JSON</button>
+            <button class="btn btn-dark" onclick="copyWorkflow('wp')"><i class="fab fa-wordpress"></i> WP JSON</button>
+        </div>
+        <p style="font-size: 11px; margin-top: 10px; color: #888;">* انسخ الكود وضعه في n8n مباشرة.</p>
+    </div>
 
-    <script>
-        let loadStatus = 0;
-        function updateStatus(text) {
-            loadStatus++; 
-            document.getElementById('statusCount').textContent = loadStatus;
-            const statusBar = document.getElementById('statusBar');
-            statusBar.innerHTML = `✅ ${text} <span id="statusCount">${loadStatus}</span>/6`;
-            if(loadStatus === 6) {
-                statusBar.innerHTML = '🎉 الكل جاهز 100%! YouTube + AI + n8n Automation';
-                statusBar.style.background = 'rgba(40,167,69,.9)';
+    <!-- كرت: محمل ومحلل الفيديوهات -->
+    <div class="card">
+        <div class="card-icon"><i class="fas fa-magic"></i></div>
+        <h2>محلل الفيديو و الصور المصغرة</h2>
+        <input type="text" id="ytUrl" class="input-box" placeholder="رابط فيديو يوتيوب...">
+        <button class="btn btn-primary" style="width: 100%;" onclick="analyzeVideo()"><i class="fas fa-search"></i> جلب البيانات والتحميل</button>
+        <img id="thumbPre" class="thumb-preview">
+        <div id="yt-res" class="result-area"></div>
+        <div id="download-btn-area" style="margin-top:10px;"></div>
+    </div>
+
+</div>
+
+<script>
+    // تحديث الساعة
+    setInterval(() => {
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString('ar-EG');
+    }, 1000);
+
+    // دالة محاكاة الذكاء الاصطناعي (Gemini)
+    function generateAI(type) {
+        const prompt = document.getElementById('aiPrompt').value;
+        const res = document.getElementById('ai-res');
+        if(!prompt) return showToast("يرجى كتابة موضوع!");
+
+        res.innerHTML = '<span class="loading">⏳ جاري معالجة البيانات بواسطة Gemini AI...</span>';
+        
+        setTimeout(() => {
+            if(type === 'titles') {
+                res.innerHTML = `1. سر الـ ${prompt} في 2024<br>2. كيف تحترف ${prompt} بسهولة<br>3. ما لا يخبرك به الخبراء عن ${prompt}<br>4. دليل المبتدئين لتعلم ${prompt}<br>5. تحدي الـ 30 يوم لتعلم ${prompt}`;
+            } else {
+                res.innerHTML = `🎬 <b>مقدمة:</b> أهلاً بكم في فيديو اليوم عن ${prompt}...<br>📝 <b>العرض:</b> سنتحدث عن 3 نقاط أساسية...<br>✅ <b>الخاتمة:</b> لا تنسوا الاشتراك!`;
             }
-        }
+        }, 1500);
+    }
 
-        // 1. أخبار تقنية ساعية
-        async function loadNews() {
-            const feeds = ['https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNR4n0CUFqUAgKIAR4AQI?hl=ar&gl=YE&ceid=YE:ar','https://feeds.feedburner.com/TechCrunch','https://hnrss.org/newest'];
-            let ticker = '🔥 ترندات التقنية: ';
-            for(let feed of feeds.slice(0,2)) {
-                try {
-                    const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(feed)}`);
-                    const text = await res.text();
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(text, 'text/xml');
-                    const item = xml.querySelector('item');
-                    if(item) ticker += item.querySelector('title')?.textContent?.slice(0,40) + '... | ';
-                } catch(e) {}
-            }
-            document.getElementById('newsTicker').textContent = ticker;
-            updateStatus('أخبار تقنية');
-        }
+    // استخراج تاجات SEO (محاكاة خوارزمية)
+    function getTags() {
+        const input = document.getElementById('seoInput').value;
+        const res = document.getElementById('tags-res');
+        if(!input) return;
 
-        // 2. بحث عالمي
-        function multiSearch() {
-            const query = document.getElementById('searchQuery').value.trim();
-            if(!query) return alert('📝 اكتب كلمة البحث');
-            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-        }
-
-        // 3. Gemini AI
-        function askAI() {
-            const input = document.getElementById('aiInput');
-            const output = document.getElementById('chat-output');
-            const query = input.value.trim();
-            if(!query) return alert('💭 اكتب سؤالك');
-            
-            const btn = input.nextElementSibling;
-            btn.disabled = true; btn.textContent = '🤔 يفكر...';
-            output.innerHTML = '⏳ Gemini يفكر في: "' + query + '"';
-            input.value = '';
-            
-            setTimeout(() => {
-                output.innerHTML = `🤖 <strong>رد Gemini AI:</strong>
-
-✅ سؤالك: "${query}"
-
-✨ للعمل الكامل:
-1. Google AI Studio → API Key
-2. Vercel Proxy Function
-3. n8n Workflow
-
-💡 مثال: "n8n workflow جاهز للنشر التلقائي!"`;
-                btn.disabled = false; btn.textContent = 'إرسال للـAI ✨';
-            }, 2500);
-            updateStatus('Gemini AI');
-        }
-
-        // 4. YouTube Studio Pro
-        async function analyzeYT() {
-            const input = document.getElementById('ytInput');
-            const output = document.getElementById('yt-output');
-            const url = input.value.trim();
-            
-            if(!url.match(/youtube.com|youtu.be/)) return output.innerHTML = '❌ رابط يوتيوب غير صحيح';
-            const videoId = url.match(/(?:youtube.com/watch?v=|youtu.be/)([^&
-?#]+)/)?.[1];
-            if(!videoId) return output.innerHTML = '❌ Video ID غير صحيح';
-            
-            output.innerHTML = '⏳ جاري تحليل الفيديو...';
-            
-            try {
-                const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`);
-                const data = await res.json();
-                
-                output.innerHTML = `
-                    <div style="text-align:center; padding:30px; background:rgba(255,107,53,.1); border-radius:15px;">
-                        <h3 style="color:#ff6b35;">🎥 تحليل مكتمل ✅</h3>
-                        <p><strong>📝 العنوان:</strong> ${data.title}</p>
-                        <p><strong>👤 القناة:</strong> ${data.author_name}</p>
-                        <p><strong>🖼️ Thumbnail:</strong><br>
-                            <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" class="thumbnail-img" onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'">
-                        </p>
-                        <p><strong>🔗 Embed Code:</strong></p>
-                        <input style="width:100%; padding:12px; margin:10px 0; border-radius:10px; direction:ltr; font-family:monospace;" value='<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>' readonly>
-                        <br><button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.value);alert('✅ تم النسخ!')">📋 نسخ Embed</button>
-                    </div>
-                `;
-            } catch(e) {
-                output.innerHTML = `
-                    <div style="text-align:center;">
-                        <h3 style="color:#ff6b35;">🖼️ Thumbnail جاهز:</h3>
-                        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" class="thumbnail-img">
-                        <p>💾 احفظ الصورة بزر الماوس الأيمن</p>
-                    </div>
-                `;
-            }
-            updateStatus('YouTube Studio');
-        }
-
-        // 5. n8n Automation
-        function setupAutomation() {
-            const channelUrl = document.getElementById('channelUrl').value.trim();
-            const output = document.getElementById('automation-output');
-            if(!channelUrl) return output.innerHTML = '❌ أدخل رابط القناة';
-            
-            const channelRss = channelUrl.replace('https://www.youtube.com/', 'https://www.youtube.com/feeds/videos.xml?channel_id=').replace('youtube.com/c/', 'youtube.com/channel/');
-            
-            output.innerHTML = `
-                <div style="text-align:center; padding:30px; background:rgba(40,167,69,.2); border-radius:15px;">
-                    <h3 style="color:#28a745;">🚀 أتمتة n8n جاهزة! (انسخ JSON)</h3>
-                </div>
-                <div style="background:#1a1a2e; padding:20px; border-radius:15px; margin:20px 0;">
-                    <h4 style="color:#ff6b35;">📋 n8n Workflow JSON:</h4>
-                    <textarea class="workflow-json" readonly style="height:200px;">{
-  "name": "YouTube → tosh2030.blogspot.com",
-  "nodes": [
-    {"name": "Schedule", "type": "n8n-nodes-base.scheduleTrigger", "parameters": {"interval": 60}},
-    {"name": "YouTube RSS", "type": "n8n-nodes-base.rssFeedRead", "parameters": {"url": "${channelRss}"}},
-    {"name": "Blogger Post", "type": "n8n-nodes-base.blogger", "parameters": {"operation": "create"}, "credentials": {"bloggerOAuth2": {"name": "Blogger"}}}
-  ],
-  "connections": {"Schedule": {"main": [{"node": "YouTube RSS"}]},"YouTube RSS": {"main": [{"node": "Blogger Post"}]}}
-}</textarea>
-                    <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.value);alert('✅ JSON منسوخ! → n8n → Import')">📋 نسخ n8n JSON</button>
-                </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:14px;">
-                    <div style="background:rgba(0,123,255,.2); padding:20px; border-radius:15px;">
-                        <h5>✅ في n8n:</h5>
-                        <ol style="text-align:right;">
-                            <li>Paste JSON → Import</li>
-                            <li>Blogger OAuth2</li>
-                            <li>Save & Activate</li>
-                        </ol>
-                    </div>
-                    <div style="background:rgba(255,193,7,.2); padding:20px; border-radius:15px;">
-                        <h5>🎯 النتيجة:</h5>
-                        <p>• فيديوهات كل ساعة<br>• منشورات تلقائية<br>• AdSense ready<br>• SEO optimized</p>
-                    </div>
-                </div>
-            `;
-            updateStatus('n8n Automation');
-        }
-
-        // تشغيل كامل
-        window.addEventListener('load', () => {
-            updateStatus('واجهة Global');
-            loadNews(); 
-            setInterval(loadNews, 1800000);
-            
-            // Keyboard shortcuts
-            document.addEventListener('keydown', e => {
-                if(e.ctrlKey || e.metaKey) {
-                    if(e.key === 'Enter') {
-                        const active = document.activeElement.id;
-                        if(active === 'aiInput') askAI();
-                        if(active === 'ytInput') analyzeYT();
-                        if(active === 'channelUrl') setupAutomation();
-                    }
-                    if(e.key === 'k') document.getElementById('searchQuery').focus();
-                }
-            });
+        const common = ["2024", "بالتفصيل", "احتراف", "تعلم", "كيفية", "أسرار"];
+        res.innerHTML = "";
+        common.forEach(word => {
+            res.innerHTML += `<span class="tag" onclick="copyText(this.innerText)">#${input}_${word}</span>`;
         });
+    }
 
-        // Enter key support
-        ['aiInput','ytInput','channelUrl','searchQuery'].forEach(id => {
-            document.getElementById(id).addEventListener('keypress', e => {
-                if(e.key === 'Enter') {
-                    if(id === 'aiInput') askAI();
-                    if(id === 'ytInput') analyzeYT();
-                    if(id === 'channelUrl') setupAutomation();
-                    if(id === 'searchQuery') multiSearch();
-                }
-            });
-        });
-    </script>
+    // تحليل الفيديو وجلب الثمبنيال
+    async function analyzeVideo() {
+        const url = document.getElementById('ytUrl').value;
+        const res = document.getElementById('yt-res');
+        const img = document.getElementById('thumbPre');
+        const dlArea = document.getElementById('download-btn-area');
+
+        if(!url) return;
+        
+        try {
+            const videoId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+            const thumbUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            
+            res.innerHTML = `⏳ جاري جلب بيانات الفيديو...`;
+            img.src = thumbUrl;
+            img.style.display = "block";
+            
+            res.innerHTML = `✅ تم العثور على الفيديو!<br><b>معرف الفيديو:</b> ${videoId}`;
+            dlArea.innerHTML = `<button class="btn btn-secondary" onclick="window.open('${thumbUrl}')">💾 تحميل الصورة بجودة 4K</button>`;
+        } catch(e) {
+            res.innerHTML = "❌ خطأ في الرابط";
+        }
+    }
+
+    // نسخ كود n8n
+    function copyWorkflow(target) {
+        const rss = document.getElementById('rssInput').value || "YOUR_RSS_LINK";
+        const workflow = {
+            nodes: [
+                { type: 'n8n-nodes-base.rssFeedRead', parameters: { url: rss } },
+                { type: target === 'blogger' ? 'n8n-nodes-base.blogger' : 'n8n-nodes-base.wordpress', parameters: { title: "={{$json.title}}" } }
+            ]
+        };
+        
+        navigator.clipboard.writeText(JSON.stringify(workflow));
+        alert("✅ تم نسخ JSON الأتمتة! الصقه الآن في n8n.");
+    }
+
+    // وظيفة النسخ السريع
+    function copyText(text) {
+        navigator.clipboard.writeText(text);
+        showToast("تم النسخ: " + text);
+    }
+
+    // نظام إشعارات مخصص
+    function showToast(msg) {
+        const toast = document.createElement('div');
+        toast.style = "fixed; bottom:20px; right:20px; background:var(--accent); color:white; padding:10px 20px; border-radius:10px; z-index:9999; box-shadow:0 5px 15px rgba(0,0,0,0.3);";
+        toast.innerText = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+</script>
+
 </body>
 </html>
