@@ -1,383 +1,153 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATLANTIS | Global Publishing Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Saleh AI Studio</title>
     <style>
-        /* --- ATLANTIS THEME --- */
-        :root {
-            --primary: #00f2ff; /* Cyan Future */
-            --secondary: #7000ff; /* Deep Purple */
-            --accent: #ff0055; /* Radical Red */
-            --bg-deep: #030014;
-            --glass: rgba(10, 10, 30, 0.6);
-            --border: rgba(255, 255, 255, 0.1);
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #121212; 
+            color: #e0e0e0; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
         }
-        
-        body {
-            background-color: var(--bg-deep);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(112, 0, 255, 0.15), transparent 25%), 
-                radial-gradient(circle at 85% 30%, rgba(0, 242, 255, 0.15), transparent 25%);
-            color: white;
-            font-family: 'Tajawal', sans-serif; /* Default AR */
-            overflow-x: hidden;
+        header {
+            padding: 15px;
+            background-color: #1f1f1f;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4da6ff;
         }
-
-        /* --- UI COMPONENTS --- */
-        .glass-panel {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        #chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        .glass-panel:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
-        }
-
-        .nav-item {
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
             position: relative;
-            color: #94a3b8;
-            transition: 0.3s;
+        }
+        .user-msg {
+            align-self: flex-end;
+            background-color: #005c99;
+            color: white;
+            border-bottom-left-radius: 2px;
+        }
+        .ai-msg {
+            align-self: flex-start;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border-bottom-right-radius: 2px;
+        }
+        .input-area {
+            padding: 15px;
+            background-color: #1f1f1f;
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 25px;
+            border: 1px solid #444;
+            background-color: #2c2c2c;
+            color: white;
+            outline: none;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 25px;
+            border-radius: 25px;
+            border: none;
+            background-color: #4da6ff;
+            color: #000;
+            font-weight: bold;
             cursor: pointer;
+            transition: 0.2s;
         }
-        .nav-item:hover, .nav-item.active {
-            color: var(--primary);
-        }
-        .nav-item.active::after {
-            content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
-            width: 5px; height: 5px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary);
-        }
-
-        /* --- TICKER ANIMATION --- */
-        .ticker-wrap {
-            width: 100%; overflow: hidden; white-space: nowrap; background: rgba(0,0,0,0.8); border-bottom: 1px solid var(--border);
-        }
-        .ticker {
-            display: inline-block; animation: marquee 30s linear infinite; padding-left: 100%;
-        }
-        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-
-        /* --- PAGE TRANSITIONS --- */
-        .page-section { display: none; animation: fadeIn 0.5s ease forwards; padding-bottom: 100px; }
-        .page-section.active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- English Font Support --- */
-        body.lang-en { font-family: 'Inter', sans-serif; direction: ltr; }
+        button:disabled { background-color: #555; color: #888; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
-    <header class="fixed top-0 w-full z-50 glass-panel !rounded-none !border-t-0 !border-x-0">
-        <div class="ticker-wrap py-1">
-            <div class="ticker text-xs font-mono text-cyan-400" id="global-ticker">
-                Loading Global Market Data...
-            </div>
-        </div>
-        
-        <div class="container mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <i class="fas fa-globe-americas text-2xl text-cyan-500 animate-pulse"></i>
-                <div>
-                    <h1 class="font-black text-lg tracking-wider" id="logo-text">ATLANTIS</h1>
-                    <span class="text-[9px] text-gray-400 tracking-[0.3em]">GLOBAL NETWORK</span>
-                </div>
-            </div>
+    <header>Google AI Studio - صالح</header>
 
-            <button onclick="toggleLanguage()" class="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/10 hover:border-cyan-500 transition">
-                <img src="https://flagcdn.com/w20/us.png" id="lang-flag" class="w-4 h-3 rounded-sm">
-                <span class="text-xs font-bold" id="lang-code">EN</span>
-            </button>
-        </div>
-    </header>
+    <div id="chat-container">
+        <div class="message ai-msg">مرحباً! أنا جاهز للمساعدة.</div>
+    </div>
 
-    <nav class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] max-w-md glass-panel h-16 flex justify-around items-center z-50 shadow-2xl">
-        <div class="nav-item active" onclick="navTo('home')"><i class="fas fa-home text-lg"></i></div>
-        <div class="nav-item" onclick="navTo('trends')"><i class="fas fa-chart-line text-lg"></i></div>
-        <div class="nav-item" onclick="navTo('ai-studio')">
-            <div class="w-12 h-12 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full flex items-center justify-center -mt-8 shadow-lg shadow-cyan-500/40 border-4 border-[#030014]">
-                <i class="fas fa-robot text-white text-xl"></i>
-            </div>
-        </div>
-        <div class="nav-item" onclick="navTo('blog')"><i class="fas fa-newspaper text-lg"></i></div>
-        <div class="nav-item" onclick="navTo('elite')"><i class="fas fa-crown text-lg"></i></div>
-    </nav>
-
-    <div class="container mx-auto mt-32 px-4 min-h-screen">
-
-        <section id="home" class="page-section active-page">
-            <div class="glass-panel p-8 text-center mb-6 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10"></div>
-                <h2 class="text-3xl font-black mb-2" data-i18n="welcome">Welcome to Atlantis</h2>
-                <p class="text-sm text-gray-400 mb-6" data-i18n="subtitle">Advanced AI Publishing Ecosystem</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-black/30 p-4 rounded-xl border border-white/5">
-                        <div class="text-2xl font-bold text-cyan-400">842K</div>
-                        <div class="text-[10px] text-gray-500 uppercase">Live Traffic</div>
-                    </div>
-                    <div class="bg-black/30 p-4 rounded-xl border border-white/5">
-                        <div class="text-2xl font-bold text-green-400">$1.4K</div>
-                        <div class="text-[10px] text-gray-500 uppercase">Revenue</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-4">
-                <div onclick="navTo('ai-studio')" class="glass-panel p-5 flex items-center justify-between cursor-pointer group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fas fa-pen-nib text-purple-400"></i></div>
-                        <div>
-                            <h3 class="font-bold text-sm" data-i18n="new_article">Create New Article</h3>
-                            <p class="text-[10px] text-gray-500">AI Powered Generator</p>
-                        </div>
-                    </div>
-                    <i class="fas fa-arrow-right text-gray-600 group-hover:text-purple-400 transition transform group-hover:translate-x-1"></i>
-                </div>
-                
-                <div onclick="navTo('trends')" class="glass-panel p-5 flex items-center justify-between cursor-pointer group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center"><i class="fas fa-fire text-red-400"></i></div>
-                        <div>
-                            <h3 class="font-bold text-sm" data-i18n="hot_trends">Global Trends</h3>
-                            <p class="text-[10px] text-gray-500">USA & Europe Targeting</p>
-                        </div>
-                    </div>
-                    <i class="fas fa-arrow-right text-gray-600 group-hover:text-red-400 transition transform group-hover:translate-x-1"></i>
-                </div>
-            </div>
-        </section>
-
-        <section id="trends" class="page-section">
-            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fas fa-globe text-cyan-500"></i> <span data-i18n="global_radar">Global Radar</span></h2>
-            <div class="glass-panel p-4 mb-4">
-                <div class="flex justify-between items-center mb-4 pb-2 border-b border-white/5">
-                    <span class="text-xs font-bold text-gray-400">TARGET: USA / EU</span>
-                    <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-1 rounded">LIVE</span>
-                </div>
-                <div class="space-y-4">
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1"><span>AI Technology</span><span class="text-green-400">+12%</span></div>
-                        <div class="w-full bg-gray-700 h-1.5 rounded-full"><div class="bg-cyan-500 h-1.5 rounded-full" style="width: 85%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1"><span>Crypto Markets</span><span class="text-red-400">-3%</span></div>
-                        <div class="w-full bg-gray-700 h-1.5 rounded-full"><div class="bg-red-500 h-1.5 rounded-full" style="width: 45%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1"><span>Sustainable Energy</span><span class="text-green-400">+8%</span></div>
-                        <div class="w-full bg-gray-700 h-1.5 rounded-full"><div class="bg-green-500 h-1.5 rounded-full" style="width: 65%"></div></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="ai-studio" class="page-section">
-            <div class="glass-panel p-6 border-cyan-500/30 shadow-[0_0_50px_rgba(0,242,255,0.1)]">
-                <h2 class="text-xl font-bold mb-6 text-center" data-i18n="ai_studio_title">Quantum AI Writer</h2>
-                
-                <div class="mb-6">
-                    <label class="text-xs text-cyan-400 font-bold mb-2 block" data-i18n="topic_label">ENTER TOPIC</label>
-                    <input type="text" id="ai-topic" class="w-full bg-[#030014] border border-gray-700 rounded-xl p-4 text-sm focus:border-cyan-500 outline-none transition text-white" placeholder="e.g., The Future of AI in 2030...">
-                </div>
-
-                <div id="processing-ui" class="hidden mb-6">
-                    <div class="w-full bg-gray-800 h-1 rounded-full mb-2 overflow-hidden">
-                        <div id="prog-bar" class="bg-cyan-500 h-1 rounded-full w-0 transition-all duration-[3000ms]"></div>
-                    </div>
-                    <p id="prog-text" class="text-[10px] text-cyan-400 font-mono text-center">CONNECTING TO GLOBAL NODES...</p>
-                </div>
-
-                <button onclick="generateContent()" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 py-4 rounded-xl font-bold text-sm hover:scale-[1.02] transition shadow-lg shadow-cyan-500/20">
-                    <i class="fas fa-bolt mr-2"></i> <span data-i18n="generate_btn">GENERATE & PUBLISH</span>
-                </button>
-            </div>
-        </section>
-
-        <section id="blog" class="page-section">
-            <div class="flex justify-between items-end mb-6">
-                <h2 class="text-2xl font-bold" data-i18n="blog_title">Global Chronicle</h2>
-                <div class="text-[10px] text-gray-500 border border-gray-700 px-2 py-1 rounded">FEED: WORLDWIDE</div>
-            </div>
-            
-            <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                </div>
-        </section>
-
-        <section id="elite" class="page-section">
-            <div class="glass-panel p-8 text-center border-yellow-500/20">
-                <i class="fas fa-crown text-4xl text-yellow-500 mb-4 animate-bounce"></i>
-                <h2 class="text-2xl font-bold text-white mb-2">Elite Partner Program</h2>
-                <p class="text-sm text-gray-400 mb-6">Exclusive High-Ticket Offers for USA Traffic</p>
-                <button class="bg-yellow-600 text-black font-bold px-8 py-3 rounded-full hover:bg-yellow-500 transition">Access Dashboard</button>
-            </div>
-        </section>
-
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="اكتب هنا..." />
+        <button onclick="sendToGemini()" id="sendBtn">إرسال</button>
     </div>
 
     <script>
-        // --- 1. CONFIGURATION & STATE ---
-        const state = {
-            lang: 'ar',
-            currentPage: 'home',
-            news: [
-                "NASDAQ: Tech stocks surge 2.5% on AI news...",
-                "GOOGLE: New Algorithm update targets high-quality content...",
-                "YANDEX: Crypto interest peaks in Eastern Europe...",
-                "Global Energy Crisis: Sustainable solutions trending...",
-                "APPLE: AR Glasses launch set for Q4 2026..."
-            ]
-        };
+        async function sendToGemini() {
+            const inputField = document.getElementById('userInput');
+            const chatContainer = document.getElementById('chat-container');
+            const sendButton = document.getElementById('sendBtn');
+            const userText = inputField.value.trim();
 
-        const i18n = {
-            en: {
-                welcome: "Welcome to Atlantis",
-                subtitle: "Advanced AI Publishing Ecosystem",
-                new_article: "Create New Article",
-                hot_trends: "Global Trends",
-                global_radar: "Global Radar",
-                ai_studio_title: "Quantum AI Writer",
-                topic_label: "ENTER TOPIC",
-                generate_btn: "GENERATE & PUBLISH",
-                blog_title: "Global Chronicle"
-            },
-            ar: {
-                welcome: "مرحباً بك في أتلانتس",
-                subtitle: "منظومة النشر الذكي المتقدمة",
-                new_article: "إنشاء مقال جديد",
-                hot_trends: "ترندات عالمية",
-                global_radar: "الرادار العالمي",
-                ai_studio_title: "كاتب الذكاء الكمي",
-                topic_label: "أدخل الموضوع",
-                generate_btn: "توليد ونشر فوري",
-                blog_title: "المدونة العالمية"
-            }
-        };
+            if (!userText) return;
 
-        // --- 2. NAVIGATION SYSTEM (SPA Logic) ---
-        function navTo(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active-page'));
-            // Show target page
-            document.getElementById(pageId).classList.add('active-page');
-            
-            // Update Nav Icons
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            // This is a simple logic, in a real app we match IDs to indexes.
-            if(pageId === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
-            if(pageId === 'trends') document.querySelectorAll('.nav-item')[1].classList.add('active');
-            if(pageId === 'ai-studio') document.querySelectorAll('.nav-item')[2].classList.add('active');
-            if(pageId === 'blog') {
-                document.querySelectorAll('.nav-item')[3].classList.add('active');
-                loadBlog(); // Refresh blog when visited
-            }
-            if(pageId === 'elite') document.querySelectorAll('.nav-item')[4].classList.add('active');
-            
-            window.scrollTo(0,0);
-        }
+            appendMessage(userText, 'user-msg');
+            inputField.value = '';
+            sendButton.disabled = true;
+            sendButton.innerText = '...';
 
-        // --- 3. LANGUAGE ENGINE ---
-        function toggleLanguage() {
-            state.lang = state.lang === 'ar' ? 'en' : 'ar';
-            
-            // Update Body Class for Font/Direction
-            if(state.lang === 'en') {
-                document.body.classList.add('lang-en');
-                document.body.dir = "ltr";
-                document.getElementById('lang-code').innerText = "AR";
-                document.getElementById('lang-flag').src = "https://flagcdn.com/w20/sa.png";
-            } else {
-                document.body.classList.remove('lang-en');
-                document.body.dir = "rtl";
-                document.getElementById('lang-code').innerText = "EN";
-                document.getElementById('lang-flag').src = "https://flagcdn.com/w20/us.png";
-            }
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: userText }] }]
+                    })
+                });
 
-            // Update Text
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if(i18n[state.lang][key]) {
-                    el.innerText = i18n[state.lang][key];
+                const data = await response.json();
+                
+                if (data.error) {
+                    appendMessage("خطأ: " + data.error.message, 'ai-msg');
+                } else {
+                    const aiText = data.candidates[0].content.parts[0].text;
+                    appendMessage(aiText, 'ai-msg');
                 }
-            });
-        }
 
-        // --- 4. REAL-TIME TICKER SIMULATION ---
-        function startTicker() {
-            const ticker = document.getElementById('global-ticker');
-            let content = "";
-            state.news.forEach(item => {
-                content += `<span class="mx-4 text-cyan-300">⚡ ${item}</span>`;
-            });
-            ticker.innerHTML = content;
-        }
-
-        // --- 5. AI GENERATION & PUBLISHING CORE ---
-        function generateContent() {
-            const topic = document.getElementById('ai-topic').value;
-            if(!topic) return alert(state.lang === 'ar' ? "الرجاء إدخال عنوان" : "Please enter a topic");
-
-            // UI Feedback
-            const ui = document.getElementById('processing-ui');
-            const bar = document.getElementById('prog-bar');
-            const txt = document.getElementById('prog-text');
-            
-            ui.classList.remove('hidden');
-            bar.style.width = "0%";
-            
-            // Simulation Steps
-            setTimeout(() => { bar.style.width = "40%"; txt.innerText = "ANALYZING GOOGLE TRENDS..."; }, 500);
-            setTimeout(() => { bar.style.width = "70%"; txt.innerText = "OPTIMIZING FOR USA/EU SEO..."; }, 1500);
-            setTimeout(() => { bar.style.width = "100%"; txt.innerText = "PUBLISHING TO GLOBAL NODE..."; }, 2500);
-
-            setTimeout(() => {
-                // Create Article Object
-                const article = {
-                    id: Date.now(),
-                    title: topic,
-                    image: `https://source.unsplash.com/800x600/?${encodeURIComponent(topic)},technology`,
-                    date: new Date().toLocaleDateString(),
-                    views: Math.floor(Math.random() * 5000) + 500,
-                    lang: state.lang,
-                    desc: state.lang === 'ar' 
-                        ? `تحليل شامل ومفصل حول ${topic} وتأثيره على الأسواق العالمية.` 
-                        : `Comprehensive analysis on ${topic} and its impact on global markets.`
-                };
-
-                // Save to Storage
-                let posts = JSON.parse(localStorage.getItem('atlantis_posts') || "[]");
-                posts.unshift(article);
-                localStorage.setItem('atlantis_posts', JSON.stringify(posts));
-
-                // Reset and Redirect
-                document.getElementById('ai-topic').value = "";
-                ui.classList.add('hidden');
-                navTo('blog'); // Go to separate blog page
-            }, 3500);
-        }
-
-        // --- 6. BLOG RENDERER ---
-        function loadBlog() {
-            const container = document.getElementById('blog-grid');
-            const posts = JSON.parse(localStorage.getItem('atlantis_posts') || "[]");
-            
-            if(posts.length === 0) {
-                container.innerHTML = `<div class="col-span-2 text-center text-gray-500 py-10">No Global Data Yet. Use AI Studio to Publish.</div>`;
-                return;
+            } catch (error) {
+                appendMessage("خطأ في الاتصال", 'ai-msg');
             }
 
-            container.innerHTML = posts.map(post => `
-                <article class="glass-panel overflow-hidden group hover:-translate-y-2 transition duration-500">
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-80">
-                        <div class="absolute top-2 right-2 bg-black/70 text-cyan-400 text-[10px] px-2 py-1 rounded border border-cyan-500/30">
-                            ${post.lang === 'ar' ? 'تحليل AI' : 'AI ANALYSIS'}
-                        </div>
-                    </div>
-       
+            sendButton.disabled = false;
+            sendButton.innerText = 'إرسال';
+        }
+
+        function appendMessage(text, className) {
+            const chatContainer = document.getElementById('chat-container');
+            const div = document.createElement('div');
+            div.className = `message ${className}`;
+            div.innerHTML = text.replace(/\n/g, '<br>'); 
+            chatContainer.appendChild(div);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // ==========================================================
+        // 👇 المفتاح تم وضعه هنا 👇
+        
+        const API_KEY = "AIzaSyAS2h2uJy0teKv_ni4EEtRuhAONBAhOYsI";
+
+        // ==========================================================
+    </script>
+</body>
+</html>
