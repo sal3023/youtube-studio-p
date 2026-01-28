@@ -3,223 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta Tags للربط مع Search Console و Atlantis -->
-    <meta name="description" content="TOSH5 GLOBAL EMPIRE - المنصة الإعلامية المتكاملة المدعومة بالذكاء الاصطناعي">
-    <title>TOSH5 EMPIRE | الإمبراطورية الإعلامية</title>
+    <meta name="description" content="TOSH5 GLOBAL EMPIRE - منصة الأتمتة الإعلامية الشاملة لمدونة tosh5.shop">
+    <title>TOSH5 EMPIRE | الإمبراطورية العالمية</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary: #00d2ff; --secondary: #ff4d4d; --gold: #ffca28;
-            --bg: #050510; --side: #0a0a20; --card: rgba(20, 20, 45, 0.9);
+            --bg: #050510; --side: #0a0a20; --card: rgba(20, 20, 45, 0.95);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        
         body { background: var(--bg); color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-        /* 1. شريط أخبار جوجل المباشر (علوي) */
+        /* شريط الأخبار العلوي الثابت */
         .top-ticker {
-            background: #000; color: #fff; height: 45px; display: flex; align-items: center;
-            border-bottom: 2px solid var(--primary); z-index: 1000; font-size: 13px;
+            background: #000; color: #fff; height: 40px; display: flex; align-items: center;
+            border-bottom: 1px solid var(--primary); z-index: 2000; font-size: 12px; position: fixed; top: 0; width: 100%;
         }
-        .live-label { background: var(--secondary); padding: 0 15px; height: 100%; display: flex; align-items: center; font-weight: bold; animation: blink 1.5s infinite; }
+        .live-label { background: var(--secondary); padding: 0 12px; height: 100%; display: flex; align-items: center; font-weight: 900; animation: pulse 1.5s infinite; }
+        .ticker-wrap { flex: 1; overflow: hidden; white-space: nowrap; }
+        #news-marquee { display: inline-block; animation: marquee 60s linear infinite; }
 
-        /* الهيكل العام */
-        .wrapper { display: flex; flex: 1; overflow: hidden; }
+        /* الهيكل الرئيسي */
+        .wrapper { display: flex; flex: 1; overflow: hidden; margin-top: 40px; margin-bottom: 60px; }
 
-        /* 2. القائمة الجانبية (Sidebar) - الصفحات المتعددة */
+        /* القائمة الجانبية (للكمبيوتر فقط) */
         .sidebar {
-            width: 280px; background: var(--side); border-left: 2px solid #1a1a3a;
-            display: flex; flex-direction: column; padding: 25px; transition: 0.3s;
+            width: 260px; background: var(--side); border-left: 1px solid #1a1a3a;
+            display: flex; flex-direction: column; padding: 20px; transition: 0.3s;
         }
-        .logo { font-size: 24px; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; text-align: center; }
+        .logo { font-size: 22px; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; text-align: center; }
         
         .nav-item {
-            padding: 15px 20px; border-radius: 15px; cursor: pointer; transition: 0.3s;
-            margin-bottom: 8px; display: flex; align-items: center; gap: 15px; color: #888; text-decoration: none;
+            padding: 12px 15px; border-radius: 12px; cursor: pointer; transition: 0.3s;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 12px; color: #888; font-size: 14px;
         }
-        .nav-item:hover, .nav-item.active { background: rgba(0, 210, 255, 0.1); color: var(--primary); border-right: 4px solid var(--primary); }
+        .nav-item:hover, .nav-item.active { background: rgba(0, 210, 255, 0.1); color: var(--primary); border-right: 3px solid var(--primary); }
 
-        /* 3. منطقة المحتوى (الديناميكي) */
-        .main-content { flex: 1; overflow-y: auto; padding: 30px; scroll-behavior: smooth; }
-        .page { display: none; animation: slideIn 0.5s ease-out; }
+        /* شريط التنقل السفلي (للجوال فقط) */
+        .mobile-nav {
+            display: none; position: fixed; bottom: 0; width: 100%; background: var(--side);
+            border-top: 1px solid #1a1a3a; height: 65px; justify-content: space-around; align-items: center; z-index: 2000;
+        }
+        .mobile-nav i { font-size: 20px; color: #888; transition: 0.3s; }
+        .mobile-nav div.active i { color: var(--primary); }
+
+        /* منطقة المحتوى الرئيسي */
+        .main-content { flex: 1; overflow-y: auto; padding: 20px; scroll-behavior: smooth; position: relative; }
+        .page { display: none; animation: fadeIn 0.4s ease; max-width: 1200px; margin: auto; }
         .page.active { display: block; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes blink { 50% { opacity: 0.3; } }
-
-        /* الكروت والجماليات */
-        .card { background: var(--card); border-radius: 25px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
-        .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        /* الكروت والشبكات المتجاوبة */
+        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px; }
         
-        .stat-card { background: #000; padding: 25px; border-radius: 20px; border-bottom: 4px solid var(--primary); text-align: center; }
-        .stat-val { font-size: 32px; font-weight: 900; color: var(--primary); margin: 10px 0; }
+        .stat-box { background: #000; padding: 20px; border-radius: 15px; border-bottom: 3px solid var(--primary); text-align: center; }
+        .stat-val { font-size: 28px; font-weight: 900; color: var(--primary); margin: 5px 0; }
 
-        /* 4. خانات الإعلانات (AdSense / AdMob) */
-        .ad-slot { background: rgba(255,255,255,0.02); border: 1px dashed #444; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 11px; margin: 20px 0; min-height: 100px; }
+        /* الإعلانات المتجاوبة */
+        .ad-space { background: rgba(255,255,255,0.02); border: 1px dashed #444; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 10px; margin: 15px 0; min-height: 90px; width: 100%; }
 
-        /* أدوات الإنتاج */
-        input, textarea { width: 100%; padding: 18px; background: #000; border: 1px solid #333; border-radius: 15px; color: #fff; margin-bottom: 15px; outline: none; font-size: 16px; }
-        .btn { padding: 18px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; }
-        .btn-p { background: linear-gradient(45deg, var(--primary), #0095ff); color: #000; }
-        .btn-s { background: linear-gradient(45deg, var(--secondary), #cc0000); color: #fff; }
+        /* الميديا AI */
+        input, textarea { width: 100%; padding: 15px; background: #000; border: 1px solid #333; border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; }
+        .btn { padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; width: 100%; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .btn-p { background: var(--primary); color: #000; }
+        .btn-s { background: var(--secondary); color: #fff; }
 
-        /* معرض الصور AI */
-        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .gallery-item { border-radius: 20px; overflow: hidden; border: 3px solid #1a1a3a; aspect-ratio: 16/9; position: relative; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .gallery-item:hover img { transform: scale(1.1); }
+        .ai-img-res { width: 100%; border-radius: 20px; border: 3px solid var(--primary); margin-bottom: 20px; }
+        .audio-bar { background: rgba(255, 202, 40, 0.1); border: 1px solid var(--gold); padding: 15px; border-radius: 50px; display: flex; align-items: center; gap: 15px; margin: 15px 0; }
 
-        /* مشغل الصوت */
-        .audio-bar { background: rgba(255, 202, 40, 0.1); padding: 20px; border-radius: 50px; display: flex; align-items: center; gap: 20px; margin: 20px 0; border: 1px solid var(--gold); }
+        /* الاستجابة للأجهزة (Media Queries) */
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .mobile-nav { display: flex; }
+            .wrapper { margin-bottom: 65px; }
+            .main-content { padding: 15px; }
+            .logo-mobile { display: block; text-align: center; padding: 10px; font-weight: 900; color: var(--primary); border-bottom: 1px solid #111; }
+            .grid-3 { grid-template-columns: 1fr; }
+            h2 { font-size: 1.5rem; }
+        }
 
-        #post-res-img { width: 100%; border-radius: 25px; display: none; margin-bottom: 25px; border: 4px solid var(--primary); box-shadow: 0 0 30px var(--primary); }
-
-        /* وسائل التواصل */
-        .social-grid { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
-        .social-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #111; font-size: 20px; cursor: pointer; transition: 0.3s; }
-        .social-icon:hover { transform: translateY(-5px); background: var(--primary); color: #000; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+        @keyframes pulse { 50% {opacity: 0.5;} }
     </style>
 </head>
 <body>
 
     <!-- شريط أخبار جوجل المباشر -->
     <div class="top-ticker">
-        <div class="live-label"><i class="fas fa-satellite-dish"></i> بث مباشر</div>
-        <marquee id="news-marquee" scrollamount="6">جاري الاتصال بوكالة أخبار جوجل... جاري تحديث ترند الساعة لمدونة tosh5.shop...</marquee>
+        <div class="live-label"><i class="fas fa-satellite-dish"></i> مباشر</div>
+        <div class="ticker-wrap"><div id="news-marquee">جاري الاتصال بسيرفرات أخبار جوجل العالمية لمدونة tosh5.shop...</div></div>
     </div>
 
     <div class="wrapper">
-        <!-- القائمة الجانبية (نظام الصفحات المتعددة) -->
+        <!-- القائمة الجانبية (للكومبيوتر) -->
         <aside class="sidebar">
             <div class="logo">TOSH5 EMPIRE</div>
+            <div class="nav-item active" onclick="showPage('home')"><i class="fas fa-chart-pie"></i> الإحصائيات</div>
+            <div class="nav-item" onclick="showPage('create')"><i class="fas fa-robot"></i> محرك الأتمتة AI</div>
+            <div class="nav-item" onclick="showPage('news')"><i class="fas fa-rss"></i> رادار الأخبار</div>
+            <div class="nav-item" onclick="showPage('ads')"><i class="fas fa-dollar-sign"></i> مركز الأرباح</div>
+            <div class="nav-item" onclick="showPage('settings')"><i class="fas fa-tools"></i> الإعدادات</div>
             
-            <div class="nav-item active" onclick="showPage('home')"><i class="fas fa-th-large"></i> لوحة الإحصائيات</div>
-            <div class="nav-item" onclick="showPage('publisher')"><i class="fas fa-robot"></i> محرك الأتمتة الذكي</div>
-            <div class="nav-item" onclick="showPage('news-hub')"><i class="fas fa-newspaper"></i> رادار الأخبار الحية</div>
-            <div class="nav-item" onclick="showPage('gallery-ai')"><i class="fas fa-photo-video"></i> معرض الميديا AI</div>
-            <div class="nav-item" onclick="showPage('revenue')"><i class="fas fa-dollar-sign"></i> مركز الأرباح</div>
-            <div class="nav-item" onclick="showPage('settings-page')"><i class="fas fa-tools"></i> الإعدادات العالمية</div>
-
-            <div class="ad-slot" style="margin-top: auto; min-height: 200px;">إعلان AdMob / AdSense</div>
-            
-            <div class="social-grid">
-                <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
-                <div class="social-icon"><i class="fab fa-youtube"></i></div>
-                <div class="social-icon"><i class="fab fa-telegram-plane"></i></div>
-            </div>
+            <div class="ad-space" style="margin-top: auto; min-height: 200px;">إعلان جانبي</div>
         </aside>
 
-        <!-- منطقة الصفحات الديناميكية -->
+        <!-- منطقة المحتوى -->
         <main class="main-content">
             
-            <!-- صفحة 1: لوحة الإحصائيات (Home) -->
+            <!-- الصفحة 1: الإحصائيات -->
             <section id="home" class="page active">
-                <h2 style="font-size: 2rem; margin-bottom: 10px;">أهلاً بك يا إمبراطور 👑</h2>
-                <p style="color: #666; margin-bottom: 30px;">تقرير حالة منصة tosh5.shop اليوم</p>
-                
-                <div class="grid-stats">
-                    <div class="stat-card"><h3>زوار Atlantis الآن</h3><div class="stat-val" id="visitor-live">2,841</div><p style="font-size: 11px; color:#444">تحديث لحظي</p></div>
-                    <div class="stat-card"><h3>مرات ظهور AdSense</h3><div class="stat-val">84.2K</div><p style="font-size: 11px; color:#444">آخر 24 ساعة</p></div>
-                    <div class="stat-card"><h3>قوة الـ SEO</h3><div class="stat-val" style="color:var(--gold)">98%</div><p style="font-size: 11px; color:#444">Search Console</p></div>
+                <h2 style="margin-bottom: 10px;">لوحة البيانات الإمبراطورية 👑</h2>
+                <div class="grid-3">
+                    <div class="stat-box"><div>الزوار الآن</div><div class="stat-val" id="visitor-count">2,481</div></div>
+                    <div class="stat-box"><div>أرباح اليوم</div><div class="stat-val" style="color:var(--gold)">$84.12</div></div>
+                    <div class="stat-box"><div>قوة SEO</div><div class="stat-val" style="color:#4caf50">99.2%</div></div>
                 </div>
-
                 <div class="card">
-                    <h3><i class="fas fa-fire" style="color:var(--secondary)"></i> ترند الساعة في جوجل</h3>
-                    <div id="trend-list" style="margin-top: 20px;">
-                        <div style="padding: 12px; border-bottom: 1px solid #111; display:flex; justify-content:space-between;">ذكاء اصطناعي 2025 <span>+450%</span></div>
-                        <div style="padding: 12px; border-bottom: 1px solid #111; display:flex; justify-content:space-between;">أتمتة يوتيوب Tosh5 <span>+320%</span></div>
+                    <h3><i class="fas fa-fire" style="color:var(--secondary)"></i> ترند الساعة</h3>
+                    <div id="trend-data" style="margin-top: 15px; font-size: 14px;">
+                        <div style="padding:10px 0; border-bottom:1px solid #222;">أتمتة يوتيوب Tosh5 <span style="float:left; color:var(--primary)">+500%</span></div>
+                        <div style="padding:10px 0; border-bottom:1px solid #222;">ذكاء اصطناعي 2025 <span style="float:left; color:var(--primary)">+320%</span></div>
                     </div>
                 </div>
             </section>
 
-            <!-- صفحة 2: محرك الأتمتة (Publisher) -->
-            <section id="publisher" class="page">
-                <h2><i class="fas fa-brain"></i> محرك صناعة المحتوى الإمبراطوري</h2>
+            <!-- الصفحة 2: محرك الإنشاء -->
+            <section id="create" class="page">
+                <h2><i class="fas fa-robot"></i> صانع المحتوى العالمي</h2>
                 <div class="card">
-                    <input type="text" id="topicInput" placeholder="اكتب موضوعك (تقني، رياضي، عام)...">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <button class="btn btn-p" onclick="generateEmpireContent('blog')"><i class="fas fa-file-audio"></i> إنشاء مقال مسموع + صورة</button>
-                        <button class="btn btn-s" onclick="generateEmpireContent('yt')"><i class="fas fa-film"></i> توليد سكربت يوتيوب كامل</button>
+                    <input type="text" id="topicInput" placeholder="اكتب الموضوع (تقني، رياضي، عام)...">
+                    <div class="grid-3" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <button class="btn btn-p" onclick="generateMegaContent('blog')"><i class="fas fa-pen-fancy"></i> مقال + صورة</button>
+                        <button class="btn btn-s" onclick="generateMegaContent('yt')"><i class="fas fa-play"></i> سكربت فيديو</button>
                     </div>
                 </div>
-
-                <div id="ai-result-area" style="display: none;">
-                    <img id="post-res-img" src="">
+                <div id="ai-result" style="display: none;">
+                    <img id="ai-img" src="" class="ai-img-res">
                     <div class="audio-bar">
-                        <button onclick="speakArticle()" style="background:var(--gold); border:none; width:50px; height:50px; border-radius:50%; cursor:pointer;"><i class="fas fa-play"></i></button>
-                        <span>انقر للاستماع للمقال (المدونة المسموعة)</span>
+                        <button onclick="speakText()" style="background:var(--gold); border:none; width:45px; height:45px; border-radius:50%; cursor:pointer;"><i class="fas fa-play"></i></button>
+                        <span style="font-size: 13px;">استمع للمقال (المدونة المسموعة)</span>
                     </div>
-                    <div class="card" id="ai-text-output" style="white-space: pre-wrap; line-height: 1.9; font-size: 18px; text-align: justify;"></div>
-                    <button class="btn btn-p" onclick="copyContent()">📋 نسخ المحتوى بالكامل</button>
+                    <div class="card" id="ai-text" style="white-space: pre-wrap; line-height: 1.8; text-align: justify; font-size: 16px;"></div>
                 </div>
             </section>
 
-            <!-- صفحة 3: رادار الأخبار (News Hub) -->
-            <section id="news-hub" class="page">
-                <h2><i class="fas fa-rss"></i> رادار أخبار جوجل المباشر</h2>
-                <div class="ad-slot">إعلان AdSense (متوافق مع الأخبار)</div>
-                <div id="news-container" class="grid-stats" style="grid-template-columns: 1fr;">
-                    <!-- الأخبار ستظهر هنا آلياً -->
+            <!-- الصفحة 3: رادار الأخبار -->
+            <section id="news" class="page">
+                <h2><i class="fas fa-newspaper"></i> رادار أخبار جوجل المباشر</h2>
+                <div id="news-grid" class="grid-3">
+                    <!-- الأخبار ستظهر هنا -->
                 </div>
             </section>
 
-            <!-- صفحة 4: مركز الأرباح (Revenue) -->
-            <section id="revenue" class="page">
-                <h2><i class="fas fa-wallet"></i> مركز أرباح الإعلانات</h2>
-                <div class="grid-stats">
-                    <div class="card" style="text-align: center;">
-                        <i class="fas fa-ad fa-3x" style="color:var(--primary); margin-bottom:15px;"></i>
-                        <h3>AdSense Slots</h3>
-                        <p style="font-size: 13px; color:#666; margin-top:10px;">أماكن جاهزة لوضع شفرات الإعلانات</p>
-                    </div>
-                    <div class="card" style="text-align: center;">
-                        <i class="fas fa-mobile-alt fa-3x" style="color:var(--secondary); margin-bottom:15px;"></i>
-                        <h3>AdMob Integration</h3>
-                        <p style="font-size: 13px; color:#666; margin-top:10px;">متوافق مع تطبيقات الجوال</p>
-                    </div>
-                </div>
-                <div class="ad-slot" style="height: 300px;">مساحة إعلانية عمودية (SkyScraper)</div>
-            </section>
-
-            <!-- صفحة 5: الإعدادات -->
-            <section id="settings-page" class="page">
-                <h2>⚙️ إعدادات المنصة العالمية</h2>
+            <!-- الصفحة 4: الإعدادات -->
+            <section id="settings" class="page">
+                <h2>⚙️ إعدادات المنصة</h2>
                 <div class="card">
                     <label>مفتاح Groq (gsk_...):</label>
                     <input type="password" id="groqKey" placeholder="ضع مفتاحك هنا لمرة واحدة...">
-                    <button class="btn btn-p" onclick="saveGlobalSettings()">حفظ وتفعيل الإمبراطورية ✅</button>
+                    <button class="btn btn-p" onclick="saveSettings()">حفظ وتفعيل الإمبراطورية ✅</button>
                 </div>
             </section>
 
         </main>
     </div>
 
+    <!-- شريط التنقل السفلي (للجوال) -->
+    <nav class="mobile-nav">
+        <div onclick="showPage('home')" class="active"><i class="fas fa-chart-pie"></i></div>
+        <div onclick="showPage('create')"><i class="fas fa-robot"></i></div>
+        <div onclick="showPage('news')"><i class="fas fa-rss"></i></div>
+        <div onclick="showPage('settings')"><i class="fas fa-tools"></i></div>
+    </nav>
+
     <script>
-        // نظام التنقل الاحترافي بين الصفحات
+        // التنقل بين الصفحات
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.nav-item, .mobile-nav div').forEach(n => n.classList.remove('active'));
+            
             document.getElementById(pageId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            // تفعيل الزر المناسب في الكمبيوتر والجوال
+            const navItems = document.querySelectorAll(`[onclick="showPage('${pageId}')"]`);
+            navItems.forEach(item => item.classList.add('active'));
         }
 
-        // حفظ الإعدادات
-        function saveGlobalSettings() {
+        // حفظ المفتاح
+        function saveSettings() {
             const k = document.getElementById('groqKey').value;
             localStorage.setItem('groq_key', k);
-            alert("تم الحفظ! المحرك العالمي جاهز.");
+            alert("تم الحفظ! موقعك الآن متصل بذكاء Llama 3.3");
         }
 
         window.onload = () => {
             const k = localStorage.getItem('groq_key');
             if(k) document.getElementById('groqKey').value = k;
-            fetchLiveGoogleNews();
+            fetchGoogleNews();
         }
 
-        // محرك أخبار جوجل المباشر
-        async function fetchLiveGoogleNews() {
-            const marquee = document.getElementById('news-marquee');
-            const container = document.getElementById('news-container');
+        // جلب أخبار جوجل
+        async function fetchGoogleNews() {
             try {
                 const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://news.google.com/rss/search?q=technology&hl=ar&gl=EG&ceid=EG:ar')}`);
                 const data = await res.json();
@@ -228,46 +217,36 @@
                 const items = xml.querySelectorAll("item");
                 
                 let ticker = "";
-                let cards = "";
-                
+                let grid = "";
                 items.forEach((item, i) => {
                     const title = item.querySelector("title").innerHTML;
-                    const link = item.querySelector("link").innerHTML;
                     if(i < 10) ticker += " • " + title;
-                    if(i < 6) {
-                        cards += `<div class="card" style="padding:15px;">
-                                    <h4 style="color:var(--primary); font-size:14px;">${title}</h4>
-                                    <a href="${link}" target="_blank" style="color:#555; font-size:11px;">اقرأ الخبر كاملاً من جوجل</a>
-                                  </div>`;
-                    }
+                    if(i < 6) grid += `<div class="card" style="font-size:13px;"><b>${title}</b><br><small style="color:#555">جوجل نيوز</small></div>`;
                 });
-                marquee.innerHTML = ticker;
-                container.innerHTML = cards;
+                document.getElementById('news-marquee').innerHTML = ticker;
+                document.getElementById('news-grid').innerHTML = grid;
             } catch (e) { console.log("News Error"); }
         }
 
-        // محرك الأتمتة الإمبراطوري (نص + صورة)
-        async function generateEmpireContent(type) {
+        // توليد المحتوى
+        async function generateMegaContent(type) {
             const topic = document.getElementById('topicInput').value;
             const key = localStorage.getItem('groq_key');
             
-            if(!topic || !key) return alert("الموضوع والمفتاح أولاً!");
+            if(!topic || !key) return alert("الموضوع والمفتاح مطلوبين!");
 
-            const area = document.getElementById('ai-result-area');
-            const output = document.getElementById('ai-text-output');
-            const img = document.getElementById('post-res-img');
+            const area = document.getElementById('ai-result');
+            const textOut = document.getElementById('ai-text');
+            const imgOut = document.getElementById('ai-img');
 
             area.style.display = "block";
-            output.innerHTML = "⏳ جاري استدعاء الذكاء الاصطناعي وصناعة الميديا...";
-
+            textOut.innerHTML = "⏳ جاري استحضار الذكاء الاصطناعي...";
+            
             // توليد الصورة
-            const imgUrl = `https://pollinations.ai/p/${encodeURIComponent(topic + " cinematic digital art high quality")}?width=1280&height=720&seed=${Math.random()}`;
-            img.src = imgUrl;
-            img.style.display = "block";
+            imgOut.src = `https://pollinations.ai/p/${encodeURIComponent(topic + " cinematic tech")}?width=800&height=450&seed=${Math.random()}`;
 
-            // طلب النص من Groq
             const prompt = type === 'blog' 
-                ? `اكتب مقالاً طويلاً جداً (أكثر من 1000 كلمة) لمدونة tosh5.shop عن ${topic}. استخدم عناوين، نقاط، وسيو.` 
+                ? `اكتب مقالاً طويلاً جداً واحترافياً لمدونة tosh5.shop عن ${topic}. استخدم عناوين ونقاط وسيو.` 
                 : `اكتب سكربت فيديو يوتيوب كامل عن ${topic}. مقدمة وعرض وخاتمة.`;
 
             try {
@@ -277,31 +256,23 @@
                     body: JSON.stringify({ "model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}] })
                 });
                 const data = await response.json();
-                output.innerText = data.choices[0].message.content;
-            } catch (e) { output.innerHTML = "❌ خطأ في الاتصال بالسيرفر."; }
+                textOut.innerText = data.choices[0].message.content;
+            } catch (e) { textOut.innerHTML = "❌ خطأ في السيرفر العالمي."; }
         }
 
         // المدونة المسموعة
-        function speakArticle() {
-            const text = document.getElementById('ai-text-output').innerText;
-            const synth = window.speechSynthesis;
+        function speakText() {
+            const text = document.getElementById('ai-text').innerText;
             const utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'ar-SA';
-            utter.rate = 1.0;
-            synth.speak(utter);
-        }
-
-        function copyContent() {
-            navigator.clipboard.writeText(document.getElementById('ai-text-output').innerText);
-            alert("✅ تم نسخ المقال الإمبراطوري!");
+            window.speechSynthesis.speak(utter);
         }
 
         // عداد زوار وهمي ذكي
         setInterval(() => {
-            const current = parseInt(document.getElementById('visitor-live').innerText.replace(',',''));
-            const change = Math.floor(Math.random() * 11) - 5;
-            document.getElementById('visitor-live').innerText = (current + change).toLocaleString();
-        }, 4000);
+            const count = 2400 + Math.floor(Math.random() * 200);
+            document.getElementById('visitor-count').innerText = count.toLocaleString();
+        }, 3000);
     </script>
 </body>
 </html>
