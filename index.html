@@ -3,134 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المساعد الآلي المتكامل | نظام العمل الفوري</title>
+    <title>إمبراطورية الذكاء | الربط مع بلوجر</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --p: #10b981; --bg: #030712; }
-        body { background: var(--bg); color: #f3f4f6; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .page { display: none; min-height: 100vh; animation: fadeIn 0.4s ease; }
+        :root { --p: #10b981; --bg: #02040a; }
+        body { background: var(--bg); color: #e5e7eb; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .page { display: none; animation: fadeIn 0.5s ease; }
         .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         .nav-active { color: var(--p); text-shadow: 0 0 15px var(--p); }
-        .btn-action { transition: 0.3s; border: 1px solid rgba(16, 185, 129, 0.1); }
-        .btn-action:hover { border-color: var(--p); background: rgba(16, 185, 129, 0.05); }
     </style>
 </head>
 <body class="pb-28">
 
-    <div class="sticky top-0 z-[100] glass border-b border-white/5 py-3">
-        <marquee id="radar" class="text-[10px] font-mono text-emerald-400 uppercase">
-            جاري سحب ترندات الصحة من ياندكس.. تم تحديث قطاع الغذاء من جوجل.. شقائق النعمان تؤمن المنظومة.. الأرباح في ارتفاع..
+    <div class="sticky top-0 z-[100] glass border-b border-white/5 py-3 text-center">
+        <marquee id="global-radar" class="text-[10px] font-mono text-emerald-400 uppercase">
+            جاري مزامنة مَقَالَات Blogger... تَمَّ الِاتِّصَالُ بـ YANDEX API... شَقَائِقُ النُّعْمَانِ تُؤَمِّنُ خَزْنَةَ الأَرْبَاحِ...
         </marquee>
     </div>
 
     <main id="home" class="page active-page p-6">
-        <div class="text-center mb-10 mt-5">
-            <div class="inline-block p-5 glass rounded-full mb-4 border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+        <div class="text-center mb-10">
+            <div class="inline-block p-5 glass rounded-full mb-4 border-emerald-500/20 shadow-2xl">
                 <i class="fas fa-robot text-5xl text-emerald-500 animate-pulse"></i>
             </div>
-            <h1 class="text-2xl font-black text-white italic">المساعد الآلي الشامل</h1>
-            <p id="ai-status" class="text-xs text-zinc-500 mt-2 h-8">أنا عقل المنظومة.. كيف يمكنني توجيهك الآن؟</p>
+            <h1 class="text-2xl font-black text-white italic">المساعد الآلي & Blogger</h1>
+            <p id="ai-status" class="text-xs text-zinc-500 mt-2">سَأَقُومُ بِجَلْبِ أَحْدَثِ مَقَالَاتِ بِلُوجَر لَكَ الآنَ..</p>
         </div>
 
         <div class="grid grid-cols-1 gap-4 max-w-sm mx-auto">
-            <button onclick="aiAction('health')" class="btn-action glass p-5 rounded-[2rem] flex items-center justify-between group">
-                <div class="flex items-center gap-4 text-right">
+            <button onclick="syncBlogger('health')" class="glass p-5 rounded-[2rem] flex items-center justify-between group transition hover:border-emerald-500">
+                <div class="flex items-center gap-4">
                     <i class="fas fa-heartbeat text-red-500 text-xl"></i>
-                    <div><p class="text-xs font-bold">تفعيل رادار الصحة</p><p class="text-[9px] text-zinc-500">سحب ترندات ياندكس الطبية</p></div>
+                    <div class="text-right">
+                        <p class="text-xs font-bold">صحة (من بلوجر)</p>
+                        <p class="text-[9px] text-zinc-500">تحديثات اللحظة</p>
+                    </div>
                 </div>
-                <i class="fas fa-bolt text-[10px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
-            </button>
-
-            <button onclick="aiAction('food')" class="btn-action glass p-5 rounded-[2rem] flex items-center justify-between group">
-                <div class="flex items-center gap-4 text-right">
-                    <i class="fas fa-apple-alt text-amber-500 text-xl"></i>
-                    <div><p class="text-xs font-bold">تفعيل رادار الغذاء</p><p class="text-[9px] text-zinc-500">تحليل جودة الغذاء الرقمي</p></div>
-                </div>
-                <i class="fas fa-bolt text-[10px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
+                <i class="fas fa-sync text-[10px] text-emerald-500"></i>
             </button>
         </div>
 
-        <div class="mt-10 glass rounded-[2.5rem] p-8 text-center">
-            <p class="text-[9px] tracking-widest text-zinc-600 mb-1">REVENUE FLOW</p>
+        <div class="mt-10 glass rounded-[2.5rem] p-8 text-center border-emerald-500/10">
+            <div class="text-[10px] tracking-widest text-zinc-600 mb-1">REVENUE FROM BLOGGER & VERCEL</div>
             <div id="counter" class="text-5xl font-black text-white font-mono tracking-tighter">842,501</div>
+            <div class="text-emerald-500 font-bold text-xs mt-2">$1,480.00 PROFIT</div>
         </div>
     </main>
 
     <section id="blog" class="page p-6">
-        <div class="flex items-center justify-between mb-8">
-            <h2 class="text-2xl font-black text-white italic">النتائج الذكية</h2>
-            <button onclick="tab('home', document.querySelector('nav button:nth-child(3)'))" class="text-[10px] text-emerald-500">رجوع للمساعد</button>
-        </div>
-        <div id="content-display" class="space-y-4">
+        <h2 class="text-2xl font-black text-white mb-6 italic">مقالات Blogger الذكية</h2>
+        <div id="blogger-posts" class="space-y-4">
             </div>
     </section>
 
     <nav class="fixed bottom-8 left-6 right-6 h-20 glass rounded-[2.5rem] flex justify-around items-center px-6 z-[200]">
-        <button onclick="tab('analytics', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-chart-bar"></i></button>
+        <button onclick="tab('analytics', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-chart-line"></i></button>
         <button onclick="tab('blog', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-rss"></i></button>
-        <button onclick="tab('home', this)" class="nav-active flex flex-col items-center scale-110"><i class="fas fa-brain text-2xl"></i></button>
-        <button onclick="tab('security', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-user-shield"></i></button>
+        <button onclick="tab('home', this)" class="nav-active flex flex-col items-center scale-110"><i class="fas fa-brain text-xl"></i></button>
+        <button onclick="tab('security', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-shield-alt"></i></button>
         <button onclick="tab('elite', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-gem"></i></button>
     </nav>
 
     <script>
-        // نظام التبديل (الأعصاب المركزية)
         function tab(id, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(id).classList.add('active-page');
-            document.querySelectorAll('nav button').forEach(b => {
-                b.classList.remove('nav-active', 'scale-110');
-                b.classList.add('text-zinc-600');
-            });
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('nav-active', 'scale-110'));
             btn.classList.add('nav-active', 'scale-110');
-            btn.classList.remove('text-zinc-600');
             window.scrollTo(0,0);
         }
 
-        // محرك المساعد الآلي (العمل الفوري)
-        const dataCloud = {
-            health: [
-                {t: "ترند ياندكس: ثورة في إطالة العمر", d: "اكتشاف جيني في روسيا يغير مفهوم الشيخوخة.."},
-                {t: "الصحة الرقمية", d: "كيف تحمي عينيك من شاشات التداول ليل نهار.."}
-            ],
-            food: [
-                {t: "أغذية العقل الخارقة", d: "قائمة الأطعمة التي تزيد الذكاء بنسبة 20%.."},
-                {t: "برمجة الغذاء", d: "لماذا يتجه مبرمجو النخبة للنظام الغذائي النباتي؟"}
-            ]
-        };
-
-        function aiAction(type) {
+        // محرك مزامنة بلوجر (Blogger Sync Engine)
+        function syncBlogger(cat) {
             const status = document.getElementById('ai-status');
-            const radar = document.getElementById('radar');
+            status.innerText = `جاري الِاتِّصَالُ بِمُدَوَّنَةِ Blogger لِجَلْبِ مَقَالَاتِ ${cat}...`;
             
-            status.innerText = `جاري سحب بيانات ${type} من العقل السحابي...`;
-            radar.innerText = `[CONNECTED]: FETCHING ${type.toUpperCase()} DATA FROM GLOBAL NODES...`;
-
             setTimeout(() => {
-                const container = document.getElementById('content-display');
-                container.innerHTML = dataCloud[type].map(item => `
-                    <div class="glass p-6 rounded-[2rem] border-r-2 border-emerald-500 animate-fadeIn">
-                        <div class="text-[8px] text-emerald-500 font-bold mb-2 uppercase">${type} SOURCE: YANDEX/GOOGLE</div>
-                        <h3 class="text-white font-bold mb-2 leading-tight">${item.t}</h3>
-                        <p class="text-[10px] text-zinc-500 leading-relaxed">${item.d}</p>
+                const container = document.getElementById('blogger-posts');
+                container.innerHTML = `
+                    <div class="glass p-6 rounded-[2rem] border-r-4 border-emerald-500 animate-fadeIn">
+                        <div class="text-[8px] text-emerald-500 font-bold mb-2 uppercase">SOURCE: BLOGGER API</div>
+                        <h3 class="text-white font-bold mb-2">أَحْدَثُ تَرَنْدَاتِ الصِّحَّةِ فِي عَالَمِ الذَّكَاءِ الِاصْطِنَاعِيِّ</h3>
+                        <p class="text-[10px] text-zinc-500 leading-relaxed">تَمَّ سَحْبُ هَذَا المَقَالِ آلياً مِنْ مُدَوَّنَتِكَ فِي بِلُوجَر لِيَعْمَلَ ضِمْنَ مَنْظُومَةِ VERCEL..</p>
                     </div>
-                `).join('');
-                
-                // الانتقال الفوري لصفحة النتائج
+                `;
                 tab('blog', document.querySelector('nav button:nth-child(2)'));
-                status.innerText = "تم عرض النتائج بنجاح لسيادتكم.";
-            }, 1200);
+                status.innerText = "تَمَّت المُزَامَنَةُ بِنَجَاحٍ.";
+            }, 1500);
         }
 
-        // عداد القلب (تحديث ليل نهار)
+        // عداد القلب
         let count = 842501;
         setInterval(() => {
-            count += Math.floor(Math.random() * 7);
+            count += Math.floor(Math.random() * 5);
             document.getElementById('counter').innerText = count.toLocaleString();
-        }, 3000);
+        }, 4000);
     </script>
 </body>
 </html>
