@@ -3,186 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM OVERRIDE | REVENUE PROTOCOL</title>
+    <title>BLAZE STUDIO | إمبراطورية النشر</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --neon-blue: #00f3ff; --neon-pink: #bc13fe; --neon-green: #0aff0a; --dark-bg: #050505; --grid-color: rgba(0, 243, 255, 0.1); }
-        body { background-color: var(--dark-bg); color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; overflow-x: hidden; }
-        
-        /* الخلفية الشبكية */
-        .cyber-grid {
-            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 30px 30px; position: fixed; inset: 0; z-index: -1;
-            mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+        /* --- 1. ألوان الشعلة (The Blaze Palette) --- */
+        :root { 
+            --orange-main: #FF6B00; 
+            --orange-glow: #FF8800; 
+            --dark-deep: #050200; 
+            --panel-bg: rgba(255, 107, 0, 0.03);
         }
-
-        /* شاشة الإقلاع */
-        #boot-screen { position: fixed; inset: 0; background: black; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; }
-
-        /* البطاقات الهولوغرامية */
-        .holo-card {
-            background: rgba(0, 20, 40, 0.7);
-            border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.15), inset 0 0 20px rgba(0, 243, 255, 0.05);
-            backdrop-filter: blur(8px); position: relative; overflow: hidden; transition: 0.3s;
+        body { 
+            background: radial-gradient(circle at top center, #2a0f00, #000000); 
+            color: #fff; 
+            font-family: 'Tajawal', sans-serif; 
+            overflow-x: hidden; 
+            min-height: 100vh;
         }
         
-        /* وحدات الإعلانات الذكية (Ad Units) */
-        .ad-module {
-            border: 1px dashed var(--neon-green);
-            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.5), rgba(0,0,0,0.5) 10px, rgba(10, 255, 10, 0.05) 10px, rgba(10, 255, 10, 0.05) 20px);
-            position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
-            min-height: 100px; margin-bottom: 1rem; cursor: pointer;
-        }
-        .ad-module::before { content: '>>> SPONSORED_DATA_LINK <<<'; position: absolute; top: 2px; right: 2px; font-size: 8px; color: var(--neon-green); background: black; padding: 2px 4px; }
-        .ad-module:hover { box-shadow: 0 0 20px var(--neon-green); border-style: solid; }
-        .ad-content { text-align: center; z-index: 10; }
-
-        /* النصوص */
-        .glitch-text:hover { animation: glitch 0.3s infinite; color: var(--neon-pink); }
-        @keyframes glitch { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 100% { transform: translate(0); } }
+        /* --- 2. المؤثرات البصرية --- */
+        .blaze-text { background: linear-gradient(to right, #FF6B00, #FFD200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
         
-        .hidden-page { display: none; }
-        .fade-in { animation: fadeIn 0.5s forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .panel { 
+            background: var(--panel-bg); 
+            border-radius: 24px; 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 107, 0, 0.15);
+            transition: 0.3s;
+        }
+        .panel:hover { border-color: var(--orange-main); box-shadow: 0 0 40px rgba(255, 107, 0, 0.15); transform: translateY(-2px); }
+
+        /* الأزرار النارية */
+        .btn-blaze { 
+            background: linear-gradient(135deg, #FF6B00, #FF4500); 
+            color: white; font-weight: bold; border: none; 
+            box-shadow: 0 4px 20px rgba(255, 69, 0, 0.3); transition: 0.3s;
+        }
+        .btn-blaze:hover { transform: scale(1.02); box-shadow: 0 0 35px rgba(255, 107, 0, 0.5); }
+        
+        .btn-outline { 
+            border: 1px solid var(--orange-main); color: var(--orange-main); background: transparent; transition: 0.3s; 
+        }
+        .btn-outline:hover { background: var(--orange-main); color: white; box-shadow: 0 0 20px var(--orange-main); }
+
+        /* تأثير الكتابة الآلية */
+        .typing::after { content: '🔥'; animation: blink 0.8s infinite; font-size: 12px; margin-right: 2px; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* أنيميشن الظهور */
+        .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="pb-24">
+<body class="pb-32">
 
-    <div id="boot-screen">
-        <div class="text-neon-blue text-xs md:text-sm text-left w-64">
-            <p id="boot-text" class="typing-text">> INITIALIZING REVENUE ENGINE...</p>
-        </div>
-        <div class="w-64 h-1 bg-gray-900 mt-4 rounded overflow-hidden">
-            <div id="boot-bar" class="h-full bg-neon-green w-0 transition-all duration-[1500ms]"></div>
-        </div>
-    </div>
-
-    <div class="cyber-grid"></div>
-
-    <header class="fixed top-0 w-full z-50 bg-black/90 border-b border-neon-blue/30 backdrop-blur-md">
-        <div class="flex justify-between items-center p-2 px-4">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-satellite-dish text-neon-green animate-pulse"></i>
-                <span class="font-bold text-xs text-white tracking-widest" style="font-family: 'Orbitron'">PROFIT_HUB</span>
+    <header class="fixed top-0 w-full z-50 bg-[#0a0400]/95 border-b border-orange-500/20 backdrop-blur-xl">
+        <div class="flex justify-between items-center p-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-orange-600/10 rounded-full flex items-center justify-center border border-orange-500/30 shadow-[0_0_15px_rgba(255,107,0,0.2)]">
+                    <i class="fas fa-fire-alt text-orange-500 text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg blaze-text tracking-wider">BLAZE STUDIO</h1>
+                    <p class="text-[9px] text-zinc-500 font-bold tracking-[0.2em]">AI PUBLISHING CORE</p>
+                </div>
             </div>
-            <div class="text-[9px] font-mono text-neon-blue">
-                $$ FLOW: <span id="money-flow" class="text-neon-green font-bold">STABLE</span>
+            <div class="flex items-center gap-2 bg-orange-900/20 px-3 py-1 rounded-full border border-orange-500/10">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-bold text-orange-400">ONLINE</span>
             </div>
-        </div>
-        <div class="bg-neon-blue/5 py-1">
-            <marquee class="text-[10px] text-neon-blue tracking-widest font-bold">
-                >>> SYSTEM ALERT: NEW REVENUE STREAM DETECTED /// AFFILIATE LINKS ACTIVE /// AD_OPTIMIZER: RUNNING ///
-            </marquee>
         </div>
     </header>
 
-    <div class="container mx-auto mt-24 px-4">
-        
-        <main id="home" class="page-content fade-in">
-            <div class="holo-card p-6 rounded-3xl mb-6 text-center border-t-4 border-t-neon-green">
-                <div class="absolute top-2 right-2 text-[8px] border border-neon-green px-1 text-neon-green">REAL_TIME</div>
-                <h1 class="text-5xl font-black text-white mb-2 glitch-text" style="font-family: 'Orbitron'">842,501</h1>
-                <p class="text-xs text-neon-green tracking-[0.3em] uppercase mb-4">Target Audience Reach</p>
-                <div class="flex justify-center gap-4 text-[10px]">
-                    <span class="text-zinc-400">EST. EARNINGS: <b class="text-white">$1,485.50</b></span>
+    <div class="container mx-auto mt-28 px-4 space-y-8">
+
+        <section class="panel p-6 relative overflow-hidden group fade-up" style="animation-delay: 0.1s;">
+            <div class="absolute -right-12 -top-12 w-40 h-40 bg-orange-600/10 rounded-full blur-[50px] group-hover:bg-orange-600/20 transition duration-700"></div>
+            
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">
+                <i class="fas fa-brain text-orange-500"></i>
+                <span>صانع المحتوى الذكي</span>
+            </h2>
+            
+            <div class="mb-6">
+                <label class="text-[10px] text-zinc-500 mb-2 block font-bold">موضوع المقال:</label>
+                <div class="relative">
+                    <input type="text" id="topic-input" placeholder="مثال: مستقبل العملات الرقمية..." 
+                        class="w-full bg-[#150a05] border border-orange-900/40 rounded-2xl p-4 pl-10 text-sm focus:border-orange-500 focus:shadow-[0_0_20px_rgba(255,107,0,0.15)] outline-none transition text-white placeholder-zinc-600">
+                    <i class="fas fa-pen absolute left-4 top-4 text-zinc-600"></i>
                 </div>
             </div>
 
-            <div class="ad-module rounded-xl" onclick="alert('سيتم فتح رابط الإعلان أو المنتج هنا')">
-                <div class="ad-content">
-                    <i class="fas fa-rocket text-3xl text-neon-green mb-2"></i>
-                    <h3 class="text-white font-bold text-sm">LAUNCH YOUR STARTUP</h3>
-                    <p class="text-[9px] text-zinc-400">Exclusive AI Tools for Elite Users</p>
-                    <span class="text-[8px] bg-neon-green text-black px-2 rounded mt-1 inline-block">ACCESS NOW</span>
+            <div id="ai-screen" class="bg-black/60 rounded-2xl p-5 min-h-[120px] mb-6 border border-orange-500/20 hidden shadow-inner">
+                <div class="flex justify-between items-center mb-3 border-b border-white/5 pb-2">
+                    <span class="text-[9px] text-orange-500 font-bold uppercase tracking-widest animate-pulse">Generating Content...</span>
+                    <i class="fas fa-robot text-orange-500/50 text-xs"></i>
                 </div>
+                <p id="generated-text" class="text-sm text-zinc-200 leading-relaxed font-mono typing text-right"></p>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 mt-6">
-                <button onclick="activateProtocol('health')" class="holo-card p-4 rounded-2xl flex flex-col items-center justify-center hover:bg-neon-blue/10 transition group">
-                    <i class="fas fa-heartbeat text-2xl text-neon-blue mb-2 group-hover:scale-110 transition"></i>
-                    <span class="text-xs font-bold text-white">HEALTH</span>
+            <div class="flex gap-3">
+                <button onclick="generateArticle()" class="btn-blaze flex-1 py-4 rounded-2xl text-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-magic"></i> توليد الآن
                 </button>
-                <button onclick="activateProtocol('money')" class="holo-card p-4 rounded-2xl flex flex-col items-center justify-center hover:bg-neon-green/10 transition group" style="border-color: var(--neon-green)">
-                    <i class="fas fa-sack-dollar text-2xl text-neon-green mb-2 group-hover:scale-110 transition"></i>
-                    <span class="text-xs font-bold text-white">MAKE $$$</span>
+                <button onclick="publishArticle()" id="pub-btn" class="btn-outline flex-1 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 hidden">
+                    <i class="fas fa-cloud-upload-alt"></i> نشر في المدونة
                 </button>
             </div>
-        </main>
+        </section>
 
-        <section id="data-stream" class="page-content hidden-page fade-in">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl text-white font-bold" style="font-family: 'Orbitron'">DATA_LOGS</h2>
-                <button onclick="showPage('home')" class="text-[10px] text-neon-blue border border-neon-blue px-3 py-1 rounded hover:bg-neon-blue hover:text-black transition">RETURN</button>
+        <section id="blog-feed" class="fade-up" style="animation-delay: 0.3s;">
+            <div class="flex justify-between items-end mb-6 px-2">
+                <h3 class="text-xl font-bold text-white relative">
+                    المدونة الحية
+                    <span class="absolute -bottom-2 right-0 w-1/2 h-1 bg-orange-500 rounded-full"></span>
+                </h3>
+                <button onclick="clearMemory()" class="text-[10px] text-zinc-600 hover:text-red-500 transition">مسح الأرشيف</button>
             </div>
             
-            <div id="console-output" class="space-y-4">
+            <div id="posts-container" class="space-y-5 pb-10">
                 </div>
-
-            <div class="ad-module rounded-xl mt-6 border-neon-pink" onclick="alert('مساحة إعلانية ثانية جاهزة')">
-                <div class="ad-content">
-                    <i class="fas fa-gem text-3xl text-neon-pink mb-2"></i>
-                    <h3 class="text-white font-bold text-sm">PREMIUM MEMBERSHIP</h3>
-                    <p class="text-[9px] text-zinc-400">Unlock Hidden Revenue Streams</p>
-                </div>
-            </div>
         </section>
 
     </div>
 
-    <nav class="fixed bottom-0 w-full bg-black h-16 border-t border-neon-blue/50 flex justify-around items-center z-50 shadow-[0_-5px_20px_rgba(0,243,255,0.1)]">
-        <button onclick="showPage('data-stream')" class="text-zinc-500 hover:text-neon-blue"><i class="fas fa-chart-bar text-xl"></i></button>
-        <button onclick="showPage('home')" class="w-16 h-16 bg-black border-2 border-neon-green rounded-full flex items-center justify-center -mt-8 shadow-[0_0_15px_var(--neon-green)] text-white hover:scale-105 transition">
-            <i class="fas fa-fingerprint text-2xl"></i>
+    <nav class="fixed bottom-6 left-6 right-6 h-16 bg-[#120500]/95 backdrop-blur-2xl border border-orange-500/20 rounded-full flex justify-around items-center z-50 shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="text-zinc-500 hover:text-orange-500 transition flex flex-col items-center gap-1">
+            <i class="fas fa-home text-lg"></i>
         </button>
-        <button onclick="alert('جاري تفعيل درع الحماية..')" class="text-zinc-500 hover:text-neon-pink"><i class="fas fa-shield-alt text-xl"></i></button>
+        
+        <div class="relative -top-6">
+            <button onclick="generateArticle()" class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(255,69,0,0.5)] border-4 border-[#120500] hover:scale-110 transition active:scale-95">
+                <i class="fas fa-plus text-white text-xl"></i>
+            </button>
+        </div>
+
+        <button onclick="document.getElementById('blog-feed').scrollIntoView({behavior:'smooth'})" class="text-zinc-500 hover:text-orange-500 transition flex flex-col items-center gap-1">
+            <i class="fas fa-newspaper text-lg"></i>
+        </button>
     </nav>
 
     <script>
-        // إقلاع النظام
-        window.onload = function() {
-            const bar = document.getElementById('boot-bar');
-            setTimeout(() => { bar.style.width = "100%"; }, 100);
-            setTimeout(() => {
-                document.getElementById('boot-screen').style.opacity = "0";
-                setTimeout(() => document.getElementById('boot-screen').remove(), 500);
-            }, 1500);
-        };
+        /* --- المحرك الذكي (The Brain) --- */
+        
+        // قوالب المحتوى
+        const templates = [
+            "في خطوة غير مسبوقة، كشفت التقارير الحديثة أن {topic} سيغير قواعد اللعبة في 2026. الخبراء ينصحون بالبدء فوراً للاستفادة من هذه الطفرة الرقمية الهائلة...",
+            "هل تبحث عن الثراء الرقمي؟ الإجابة تكمن في {topic}. تشير البيانات من ياندكس وجوجل أن هذا المجال يشهد نمواً بنسبة 300% شهرياً...",
+            "الدليل الشامل لـ {topic}: كيف تحول هذا المفهوم البسيط إلى مصدر دخل سلبي (Passive Income) يدر عليك آلاف الدولارات وأنت نائم؟ إليك التفاصيل...",
+            "تحذير هام: تجاهل {topic} قد يكلفك الكثير من الفرص الضائعة. اكتشف لماذا يتجه كبار المستثمرين ورواد الأعمال إلى هذا القطاع الآن..."
+        ];
 
-        // التنقل
-        function showPage(id) {
-            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden-page'));
-            document.getElementById(id).classList.remove('hidden-page');
-        }
+        let currentDraft = "";
+        let currentTitle = "";
 
-        // بروتوكولات الذكاء
-        function activateProtocol(type) {
-            showPage('data-stream');
-            const output = document.getElementById('console-output');
-            output.innerHTML = `<div class="text-neon-green text-xs mb-4 animate-pulse">> FETCHING ${type.toUpperCase()}_DATA...</div>`;
+        // 1. وظيفة التوليد (Generate)
+        function generateArticle() {
+            const topic = document.getElementById('topic-input').value;
+            if(!topic) {
+                alert("الرجاء كتابة عنوان للمقال أولاً!");
+                return;
+            }
+
+            // إعداد الواجهة
+            const screen = document.getElementById('ai-screen');
+            const textBox = document.getElementById('generated-text');
+            const pubBtn = document.getElementById('pub-btn');
             
-            setTimeout(() => {
-                if(type === 'money') {
-                    output.innerHTML += `
-                        <div class="holo-card p-4 rounded-xl border-l-4 border-l-neon-green">
-                            <div class="flex justify-between mb-2"><span class="text-[8px] text-neon-green">SOURCE: ELITE_AFFILIATE</span><i class="fas fa-check text-neon-green text-[10px]"></i></div>
-                            <h3 class="text-white font-bold text-sm">TOP 5 AI TOOLS TO RESELL</h3>
-                            <p class="text-[10px] text-zinc-400 mt-1">Discover the highest paying affiliate programs in 2026. Click to load links...</p>
-                        </div>
-                    `;
+            screen.classList.remove('hidden');
+            pubBtn.classList.add('hidden');
+            textBox.innerHTML = "";
+            
+            // اختيار قالب
+            const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+            currentDraft = randomTemplate.replace("{topic}", topic);
+            currentTitle = topic;
+
+            // تأثير الكتابة (Typewriter)
+            let i = 0;
+            const speed = 30; // سرعة الكتابة
+            
+            function typeWriter() {
+                if (i < currentDraft.length) {
+                    textBox.innerHTML += currentDraft.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
                 } else {
-                    output.innerHTML += `
-                        <div class="holo-card p-4 rounded-xl border-l-4 border-l-neon-blue">
-                            <div class="flex justify-between mb-2"><span class="text-[8px] text-neon-blue">SOURCE: YANDEX_HEALTH</span><i class="fas fa-check text-neon-blue text-[10px]"></i></div>
-                            <h3 class="text-white font-bold text-sm">BIO-HACKING SECRETS</h3>
-                            <p class="text-[10px] text-zinc-400 mt-1">New study reveals how deep sleep optimizes coding performance.</p>
-                        </div>
-                    `;
+                    // عند الانتهاء
+                    pubBtn.classList.remove('hidden');
+                    pubBtn.classList.add('fade-up');
                 }
-            }, 1000);
+            }
+            typeWriter();
         }
+
+        // 2. وظيفة النشر (Publish)
+        function publishArticle() {
+            if(!currentDraft) return;
+
+            const container = document.getElementById('posts-container');
+            const now = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            
+            const html = `
+                <article class="panel p-5 border border-orange-500/20 blog-post fade-up">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                            <span class="text-[10px] text-orange-400 font-bold">AI GENERATED</span>
+                        </div>
+                        <span class="text-[10px] text-zinc-600 font-mono">${now}</span>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-2 leading-tight">${currentTitle}</h4>
+                    <p class="text-sm text-zinc-300 leading-relaxed opacity-90">${currentDraft}</p>
+                    <div class="mt-4 pt-3 border-t border-white/5 flex gap-4">
+                        <button class="text-[10px] text-zinc-500 hover:text-orange-500 flex items-center gap-1 transition"><i class="fas fa-share-alt"></i> مشاركة</button>
+                        <button class="text-[10px] text-zinc-500 hover:text-red-500 flex items-center gap-1 transition"><i class="fas fa-heart"></i> إعجاب</button>
+                    </div>
+                </article>
+            `;
+
+            container.insertAdjacentHTML('afterbegin', html);
+
+            // تنظيف وحفظ
+            document.getElementById('topic-input').value = "";
+            document.getElementById('ai-screen').classList.add('hidden');
+            document.getElementById('pub-btn').classList.add('hidden');
+            
+            saveToMemory(currentTitle, currentDraft, now);
+            
+            // سكرول للمقال الجديد
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 3. نظام الذاكرة (LocalStorage)
+        function saveToMemory(title, body, time) {
+            let posts = JSON.parse(localStorage.getItem('blaze_blog_posts') || "[]");
+            posts.unshift({ title, body, time });
+            localStorage.setItem('blaze_blog_posts', JSON.stringify(posts));
+        }
+
+        function loadMemory() {
+            let posts = JSON.parse(localStorage.getItem('blaze_blog_posts') || "[]");
+            const container = document.getElementById('posts-container');
+            
+            if(posts.length === 0) {
+                container.innerHTML = `<div class="text-center text-zinc-600 text-xs py-10">لا توجد مقالات منشورة بعد. ابدأ الكتابة الآن! 🔥</div>`;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <article class="panel p-5 border border-orange-500/10 mb-4">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-[9px] text-zinc-500 bg-zinc-900/50 px-2 py-1 rounded">محفوظ</span>
+                        <span class="text-[10px] text-zinc-600 font-mono">${post.time}</span>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-2">${post.title}</h4>
+                    <p class="text-sm text-zinc-300 leading-relaxed">${post.body}</p>
+                </article>
+            `).join('');
+        }
+
+        function clearMemory() {
+            if(confirm("هل أنت متأكد من مسح جميع المقالات؟")) {
+                localStorage.removeItem('blaze_blog_posts');
+                loadMemory();
+            }
+        }
+
+        // تشغيل عند البدء
+        window.onload = loadMemory;
     </script>
 </body>
 </html>
