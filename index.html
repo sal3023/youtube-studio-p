@@ -3,56 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLAZE STUDIO | إمبراطورية النشر</title>
+    <title>BLAZE PRO | منصة النشر الاحترافية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 1. ألوان الشعلة (The Blaze Palette) --- */
+        /* --- 1. ألوان الشعلة الاحترافية --- */
         :root { 
             --orange-main: #FF6B00; 
             --orange-glow: #FF8800; 
             --dark-deep: #050200; 
-            --panel-bg: rgba(255, 107, 0, 0.03);
+            --panel-bg: rgba(255, 107, 0, 0.04);
         }
         body { 
-            background: radial-gradient(circle at top center, #2a0f00, #000000); 
-            color: #fff; 
-            font-family: 'Tajawal', sans-serif; 
-            overflow-x: hidden; 
-            min-height: 100vh;
+            background: radial-gradient(circle at top center, #1a0900, #000000); 
+            color: #fff; font-family: 'Tajawal', sans-serif; overflow-x: hidden; min-height: 100vh;
         }
         
-        /* --- 2. المؤثرات البصرية --- */
+        /* --- 2. تحسينات بصرية --- */
         .blaze-text { background: linear-gradient(to right, #FF6B00, #FFD200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
         
         .panel { 
-            background: var(--panel-bg); 
-            border-radius: 24px; 
-            backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 107, 0, 0.15);
-            transition: 0.3s;
+            background: var(--panel-bg); border-radius: 24px; backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 107, 0, 0.15); transition: 0.3s;
         }
-        .panel:hover { border-color: var(--orange-main); box-shadow: 0 0 40px rgba(255, 107, 0, 0.15); transform: translateY(-2px); }
+        .panel:hover { border-color: var(--orange-main); box-shadow: 0 5px 40px rgba(255, 107, 0, 0.15); transform: translateY(-3px); }
 
-        /* الأزرار النارية */
         .btn-blaze { 
-            background: linear-gradient(135deg, #FF6B00, #FF4500); 
-            color: white; font-weight: bold; border: none; 
+            background: linear-gradient(135deg, #FF6B00, #FF4500); color: white; font-weight: bold; border: none; 
             box-shadow: 0 4px 20px rgba(255, 69, 0, 0.3); transition: 0.3s;
         }
         .btn-blaze:hover { transform: scale(1.02); box-shadow: 0 0 35px rgba(255, 107, 0, 0.5); }
         
-        .btn-outline { 
-            border: 1px solid var(--orange-main); color: var(--orange-main); background: transparent; transition: 0.3s; 
-        }
+        .btn-outline { border: 1px solid var(--orange-main); color: var(--orange-main); background: transparent; transition: 0.3s; }
         .btn-outline:hover { background: var(--orange-main); color: white; box-shadow: 0 0 20px var(--orange-main); }
 
-        /* تأثير الكتابة الآلية */
-        .typing::after { content: '🔥'; animation: blink 0.8s infinite; font-size: 12px; margin-right: 2px; }
-        @keyframes blink { 50% { opacity: 0; } }
+        /* تنسيق المقالات الاحترافي */
+        .pro-article h2 { font-size: 1.25rem; font-weight: bold; color: #fff; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .pro-article p { margin-bottom: 1rem; line-height: 1.7; color: #d4d4d8; }
+        .article-image { position: relative; overflow: hidden; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid rgba(255,107,0,0.2); }
+        .article-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); }
 
-        /* أنيميشن الظهور */
+        .typing::after { content: '...'; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -63,16 +56,16 @@
         <div class="flex justify-between items-center p-4">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-orange-600/10 rounded-full flex items-center justify-center border border-orange-500/30 shadow-[0_0_15px_rgba(255,107,0,0.2)]">
-                    <i class="fas fa-fire-alt text-orange-500 text-lg"></i>
+                    <i class="fas fa-fire-alt text-orange-500 text-lg animate-pulse"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg blaze-text tracking-wider">BLAZE STUDIO</h1>
-                    <p class="text-[9px] text-zinc-500 font-bold tracking-[0.2em]">AI PUBLISHING CORE</p>
+                    <h1 class="text-lg blaze-text tracking-wider">BLAZE PRO</h1>
+                    <p class="text-[9px] text-zinc-500 font-bold tracking-[0.2em]">ADVANCED AI PUBLISHING</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 bg-orange-900/20 px-3 py-1 rounded-full border border-orange-500/10">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-[10px] font-bold text-orange-400">ONLINE</span>
+                <i class="fas fa-satellite-dish text-orange-500 text-xs"></i>
+                <span class="text-[10px] font-bold text-orange-400">SYSTEM READY</span>
             </div>
         </div>
     </header>
@@ -80,50 +73,54 @@
     <div class="container mx-auto mt-28 px-4 space-y-8">
 
         <section class="panel p-6 relative overflow-hidden group fade-up" style="animation-delay: 0.1s;">
-            <div class="absolute -right-12 -top-12 w-40 h-40 bg-orange-600/10 rounded-full blur-[50px] group-hover:bg-orange-600/20 transition duration-700"></div>
+            <div class="absolute -right-20 -top-20 w-56 h-56 bg-orange-600/5 rounded-full blur-[60px] group-hover:bg-orange-600/15 transition duration-700"></div>
             
             <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">
                 <i class="fas fa-brain text-orange-500"></i>
-                <span>صانع المحتوى الذكي</span>
+                <span>محرك المقالات الاحترافي (صوَر + نصوص)</span>
             </h2>
             
             <div class="mb-6">
-                <label class="text-[10px] text-zinc-500 mb-2 block font-bold">موضوع المقال:</label>
-                <div class="relative">
-                    <input type="text" id="topic-input" placeholder="مثال: مستقبل العملات الرقمية..." 
-                        class="w-full bg-[#150a05] border border-orange-900/40 rounded-2xl p-4 pl-10 text-sm focus:border-orange-500 focus:shadow-[0_0_20px_rgba(255,107,0,0.15)] outline-none transition text-white placeholder-zinc-600">
-                    <i class="fas fa-pen absolute left-4 top-4 text-zinc-600"></i>
+                <label class="text-[10px] text-zinc-500 mb-2 block font-bold">عنوان المقال المستهدف:</label>
+                <div class="relative group/input">
+                    <input type="text" id="topic-input" placeholder="مثال: استراتيجيات الاستثمار في الذكاء الاصطناعي 2026..." 
+                        class="w-full bg-[#150a05] border border-orange-900/40 rounded-2xl p-4 pl-10 text-sm focus:border-orange-500 focus:shadow-[0_0_25px_rgba(255,107,0,0.2)] outline-none transition text-white placeholder-zinc-600 group-hover/input:border-orange-500/50">
+                    <i class="fas fa-heading absolute left-4 top-4 text-zinc-600 group-focus-within/input:text-orange-500 transition"></i>
                 </div>
             </div>
 
-            <div id="ai-screen" class="bg-black/60 rounded-2xl p-5 min-h-[120px] mb-6 border border-orange-500/20 hidden shadow-inner">
-                <div class="flex justify-between items-center mb-3 border-b border-white/5 pb-2">
-                    <span class="text-[9px] text-orange-500 font-bold uppercase tracking-widest animate-pulse">Generating Content...</span>
-                    <i class="fas fa-robot text-orange-500/50 text-xs"></i>
+            <div id="ai-screen" class="bg-black/60 rounded-2xl p-5 min-h-[100px] mb-6 border border-orange-500/20 hidden shadow-inner relative overflow-hidden">
+                <div class="absolute top-0 left-0 h-1 bg-orange-500 w-0 transition-all duration-[3000ms]" id="progress-bar"></div>
+                <div class="flex items-center gap-3 h-full">
+                     <i class="fas fa-cog fa-spin text-orange-500 text-2xl opacity-80"></i>
+                     <div>
+                         <h4 class="text-white font-bold text-sm mb-1">جاري معالجة الطلب...</h4>
+                         <p id="ai-status-text" class="text-xs text-zinc-400 font-mono typing">تحليل الكلمات المفتاحية</p>
+                     </div>
                 </div>
-                <p id="generated-text" class="text-sm text-zinc-200 leading-relaxed font-mono typing text-right"></p>
             </div>
 
             <div class="flex gap-3">
-                <button onclick="generateArticle()" class="btn-blaze flex-1 py-4 rounded-2xl text-sm flex items-center justify-center gap-2">
-                    <i class="fas fa-magic"></i> توليد الآن
+                <button onclick="startGeneration()" class="btn-blaze flex-1 py-4 rounded-2xl text-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-wand-magic-sparkles"></i> توليد المقال والصور
                 </button>
-                <button onclick="publishArticle()" id="pub-btn" class="btn-outline flex-1 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 hidden">
-                    <i class="fas fa-cloud-upload-alt"></i> نشر في المدونة
+                <button onclick="publishArticle()" id="pub-btn" class="btn-outline flex-1 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 hidden animate-bounce">
+                    <i class="fas fa-rocket"></i> نشر النتيجة النهائية
                 </button>
             </div>
         </section>
 
         <section id="blog-feed" class="fade-up" style="animation-delay: 0.3s;">
             <div class="flex justify-between items-end mb-6 px-2">
-                <h3 class="text-xl font-bold text-white relative">
-                    المدونة الحية
-                    <span class="absolute -bottom-2 right-0 w-1/2 h-1 bg-orange-500 rounded-full"></span>
+                <h3 class="text-xl font-bold text-white relative pl-3 border-l-4 border-orange-500">
+                    أحدث المنشورات
                 </h3>
-                <button onclick="clearMemory()" class="text-[10px] text-zinc-600 hover:text-red-500 transition">مسح الأرشيف</button>
+                <button onclick="clearMemory()" class="text-[10px] bg-red-500/10 text-red-500 px-3 py-1 rounded-full hover:bg-red-500 hover:text-white transition flex items-center gap-1">
+                    <i class="fas fa-trash-alt"></i> مسح الأرشيف
+                </button>
             </div>
             
-            <div id="posts-container" class="space-y-5 pb-10">
+            <div id="posts-container" class="space-y-8 pb-10">
                 </div>
         </section>
 
@@ -135,91 +132,146 @@
         </button>
         
         <div class="relative -top-6">
-            <button onclick="generateArticle()" class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(255,69,0,0.5)] border-4 border-[#120500] hover:scale-110 transition active:scale-95">
+            <button onclick="document.getElementById('topic-input').focus()" class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(255,69,0,0.6)] border-4 border-[#120500] hover:scale-110 transition active:scale-95">
                 <i class="fas fa-plus text-white text-xl"></i>
             </button>
         </div>
 
         <button onclick="document.getElementById('blog-feed').scrollIntoView({behavior:'smooth'})" class="text-zinc-500 hover:text-orange-500 transition flex flex-col items-center gap-1">
-            <i class="fas fa-newspaper text-lg"></i>
+            <i class="fas fa-layer-group text-lg"></i>
         </button>
     </nav>
 
     <script>
-        /* --- المحرك الذكي (The Brain) --- */
+        /* --- المخ العقل الإلكتروني (Pro AI Core) --- */
         
-        // قوالب المحتوى
-        const templates = [
-            "في خطوة غير مسبوقة، كشفت التقارير الحديثة أن {topic} سيغير قواعد اللعبة في 2026. الخبراء ينصحون بالبدء فوراً للاستفادة من هذه الطفرة الرقمية الهائلة...",
-            "هل تبحث عن الثراء الرقمي؟ الإجابة تكمن في {topic}. تشير البيانات من ياندكس وجوجل أن هذا المجال يشهد نمواً بنسبة 300% شهرياً...",
-            "الدليل الشامل لـ {topic}: كيف تحول هذا المفهوم البسيط إلى مصدر دخل سلبي (Passive Income) يدر عليك آلاف الدولارات وأنت نائم؟ إليك التفاصيل...",
-            "تحذير هام: تجاهل {topic} قد يكلفك الكثير من الفرص الضائعة. اكتشف لماذا يتجه كبار المستثمرين ورواد الأعمال إلى هذا القطاع الآن..."
+        // 1. مكتبة الصور الاحترافية (Tech & Business)
+        const proImages = [
+            "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop", // فضاء وتكنولوجيا
+            "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop", // دوائر إلكترونية
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop", // كود وبرمجة
+            "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop", // روبوت مستقبلي
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"  // تحليل بيانات
         ];
 
-        let currentDraft = "";
-        let currentTitle = "";
+        // 2. هياكل المقالات الطويلة (Long-Form Templates)
+        // نستخدم HTML داخل النص لمحاكاة تنسيق المقال الحقيقي
+        const articleStructures = [
+            `
+            <p class="lead font-bold text-white mb-4">مقدمة: في عصر التحول الرقمي المتسارع، أصبح {topic} هو المحور الأساسي للنقاشات التقنية والاقتصادية. هذا المقال يستعرض الأبعاد الخفية لهذا الموضوع.</p>
+            <h2>التأثير المباشر على السوق</h2>
+            <p>تشير أحدث الدراسات من مراكز الأبحاث العالمية (مثل Gartner و Forrester) إلى أن الشركات التي تتبنى استراتيجيات {topic} بفعالية تحقق نمواً في الإيرادات يفوق منافسيها بنسبة 45%. الأمر لم يعد خياراً بل ضرورة للبقاء.</p>
+            <p>البيانات الضخمة التي يتم تحليلها اليوم تؤكد أن المستهلكين يميلون أكثر للخدمات التي تعتمد على هذا المفهوم، مما يخلق فرصاً هائلة لرواد الأعمال الجدد.</p>
+            <h2>التحديات والفرص المستقبلية</h2>
+            <p>رغم الإيجابيات، هناك تحديات تقنية وأخلاقية تواجه تطبيق {topic}. أهمها حماية الخصوصية وتكامل الأنظمة القديمة. لكن، كل تحدٍ يخلق فرصة سوقية جديدة للحلول المبتكرة.</p>
+            <h2>الخلاصة</h2>
+            <p>الاستثمار في فهم وتطبيق {topic} هو الاستثمار الأذكى لعام 2026 وما بعده. ابدأ الآن قبل أن تصبح المنافسة مستحيلة.</p>
+            `,
+            `
+            <p class="lead font-bold text-white mb-4">هل نحن مستعدون لثورة {topic}؟ هذا السؤال يطرح نفسه بقوة اليوم. دعونا نتعمق في التفاصيل التي يغفل عنها الكثيرون.</p>
+            <h2>لماذا الآن؟</h2>
+            <p>تزامن تطور {topic} مع زيادة القوة الحوسبية وانتشار شبكات الجيل الخامس (5G) خلق البيئة المثالية للانفجار الحالي. ما كان خيالاً علمياً قبل سنوات أصبح واقعاً ملموساً.</p>
+            <h2>أدوات عملية للبدء</h2>
+            <p>للاستفادة القصوى من {topic}، يجب الاعتماد على مجموعة من الأدوات الحديثة. منصات الذكاء الاصطناعي وتحليل البيانات السحابية هي ركائز أساسية لا غنى عنها في هذا المسار.</p>
+            <p>الناجحون في هذا المجال هم من يدمجون بين المعرفة التقنية والرؤية الاستراتيجية طويلة المدى.</p>
+            <h2>نظرة مستقبلية</h2>
+            <p>نتوقع أن يندمج {topic} مع قطاعات حيوية مثل الصحة والتعليم بشكل كامل بحلول عام 2030، مما سيغير شكل حياتنا اليومية جذرياً.</p>
+            `
+        ];
 
-        // 1. وظيفة التوليد (Generate)
-        function generateArticle() {
+        let pendingArticle = null; // لتخزين المقال الجاهز قبل النشر
+
+        // --- دالة بدء التوليد (Start Generation Process) ---
+        function startGeneration() {
             const topic = document.getElementById('topic-input').value;
-            if(!topic) {
-                alert("الرجاء كتابة عنوان للمقال أولاً!");
-                return;
-            }
+            if(!topic) { alert("الرجاء كتابة عنوان أولاً!"); return; }
 
             // إعداد الواجهة
             const screen = document.getElementById('ai-screen');
-            const textBox = document.getElementById('generated-text');
+            const statusText = document.getElementById('ai-status-text');
+            const progressBar = document.getElementById('progress-bar');
             const pubBtn = document.getElementById('pub-btn');
             
             screen.classList.remove('hidden');
             pubBtn.classList.add('hidden');
-            textBox.innerHTML = "";
+            progressBar.style.width = "0%";
             
-            // اختيار قالب
-            const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-            currentDraft = randomTemplate.replace("{topic}", topic);
-            currentTitle = topic;
+            // محاكاة خطوات الذكاء الاصطناعي (AI Simulation Steps)
+            const steps = [
+                { text: "تحليل الكلمات المفتاحية للموضوع...", progress: "30%" },
+                { text: "البحث في قاعدة البيانات العالمية...", progress: "60%" },
+                { text: "اختيار أنسب الصور الاحترافية...", progress: "80%" },
+                { text: "صياغة الهيكل النهائي للمقال...", progress: "100%" }
+            ];
 
-            // تأثير الكتابة (Typewriter)
-            let i = 0;
-            const speed = 30; // سرعة الكتابة
-            
-            function typeWriter() {
-                if (i < currentDraft.length) {
-                    textBox.innerHTML += currentDraft.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, speed);
+            let stepIndex = 0;
+            const interval = setInterval(() => {
+                if (stepIndex < steps.length) {
+                    statusText.innerText = steps[stepIndex].text;
+                    progressBar.style.width = steps[stepIndex].progress;
+                    stepIndex++;
                 } else {
-                    // عند الانتهاء
-                    pubBtn.classList.remove('hidden');
-                    pubBtn.classList.add('fade-up');
+                    clearInterval(interval);
+                    finishGeneration(topic);
                 }
-            }
-            typeWriter();
+            }, 800); // وقت كل خطوة
         }
 
-        // 2. وظيفة النشر (Publish)
+        // --- دالة إنهاء التوليد وتجهيز المقال (Finalize) ---
+        function finishGeneration(topic) {
+            // اختيار قالب وصورة عشوائياً
+            const randomStructure = articleStructures[Math.floor(Math.random() * articleStructures.length)];
+            const randomImage = proImages[Math.floor(Math.random() * proImages.length)];
+            
+            // تجهيز محتوى المقال
+            const articleBody = randomStructure.replace(/{topic}/g, `<span class="text-orange-400">${topic}</span>`);
+            
+            // تخزين البيانات للنشر
+            pendingArticle = {
+                title: topic,
+                body: articleBody,
+                image: randomImage,
+                time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            // تحديث الواجهة
+            document.getElementById('ai-status-text').innerText = "✅ تم توليد المقال والصور بنجاح! جاهز للنشر.";
+            document.getElementById('pub-btn').classList.remove('hidden');
+        }
+
+        // --- دالة النشر الاحترافي (Pro Publish) ---
         function publishArticle() {
-            if(!currentDraft) return;
+            if(!pendingArticle) return;
 
             const container = document.getElementById('posts-container');
-            const now = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
             
+            // هيكل المقال الاحترافي (HTML Structure)
             const html = `
-                <article class="panel p-5 border border-orange-500/20 blog-post fade-up">
-                    <div class="flex justify-between items-center mb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-                            <span class="text-[10px] text-orange-400 font-bold">AI GENERATED</span>
+                <article class="panel p-6 border border-orange-500/20 fade-up">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
+                            <i class="fas fa-robot text-orange-500"></i>
+                            <span class="text-[10px] text-orange-400 font-bold">AI PRO CONTENT</span>
                         </div>
-                        <span class="text-[10px] text-zinc-600 font-mono">${now}</span>
+                        <span class="text-[10px] text-zinc-600 font-mono">${pendingArticle.time}</span>
                     </div>
-                    <h4 class="font-bold text-white text-lg mb-2 leading-tight">${currentTitle}</h4>
-                    <p class="text-sm text-zinc-300 leading-relaxed opacity-90">${currentDraft}</p>
-                    <div class="mt-4 pt-3 border-t border-white/5 flex gap-4">
-                        <button class="text-[10px] text-zinc-500 hover:text-orange-500 flex items-center gap-1 transition"><i class="fas fa-share-alt"></i> مشاركة</button>
-                        <button class="text-[10px] text-zinc-500 hover:text-red-500 flex items-center gap-1 transition"><i class="fas fa-heart"></i> إعجاب</button>
+
+                    <div class="article-image h-64 w-full shadow-2xl">
+                        <img src="${pendingArticle.image}" alt="Cover Image" class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                    </div>
+                    
+                    <h3 class="font-black text-2xl text-white mb-4 leading-tight">${pendingArticle.title}</h3>
+                    
+                    <div class="pro-article text-sm text-zinc-300 leading-relaxed">
+                        ${pendingArticle.body}
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center">
+                        <div class="flex gap-4">
+                             <button class="text-xs text-zinc-500 hover:text-orange-500 flex items-center gap-1 transition"><i class="fas fa-share-nodes"></i> مشاركة</button>
+                             <button class="text-xs text-zinc-500 hover:text-red-500 flex items-center gap-1 transition"><i class="far fa-heart"></i> إعجاب (24)</button>
+                        </div>
+                        <span class="text-[9px] text-zinc-600">قراءة: 3 دقائق</span>
                     </div>
                 </article>
             `;
@@ -231,43 +283,50 @@
             document.getElementById('ai-screen').classList.add('hidden');
             document.getElementById('pub-btn').classList.add('hidden');
             
-            saveToMemory(currentTitle, currentDraft, now);
+            saveToMemory(pendingArticle);
+            pendingArticle = null;
             
             // سكرول للمقال الجديد
             container.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // 3. نظام الذاكرة (LocalStorage)
-        function saveToMemory(title, body, time) {
-            let posts = JSON.parse(localStorage.getItem('blaze_blog_posts') || "[]");
-            posts.unshift({ title, body, time });
-            localStorage.setItem('blaze_blog_posts', JSON.stringify(posts));
+        // --- نظام الذاكرة (LocalStorage) ---
+        function saveToMemory(article) {
+            let posts = JSON.parse(localStorage.getItem('blaze_pro_posts') || "[]");
+            posts.unshift(article);
+            localStorage.setItem('blaze_pro_posts', JSON.stringify(posts));
         }
 
         function loadMemory() {
-            let posts = JSON.parse(localStorage.getItem('blaze_blog_posts') || "[]");
+            let posts = JSON.parse(localStorage.getItem('blaze_pro_posts') || "[]");
             const container = document.getElementById('posts-container');
             
             if(posts.length === 0) {
-                container.innerHTML = `<div class="text-center text-zinc-600 text-xs py-10">لا توجد مقالات منشورة بعد. ابدأ الكتابة الآن! 🔥</div>`;
+                container.innerHTML = `<div class="text-center text-zinc-600 text-xs py-10 opacity-50">ابدأ في بناء إمبراطورية المحتوى الخاصة بك الآن... 🚀</div>`;
                 return;
             }
 
+            // إعادة بناء المقالات المحفوظة بنفس التصميم الاحترافي
             container.innerHTML = posts.map(post => `
-                <article class="panel p-5 border border-orange-500/10 mb-4">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-[9px] text-zinc-500 bg-zinc-900/50 px-2 py-1 rounded">محفوظ</span>
+                <article class="panel p-6 border border-orange-500/10 mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[9px] text-zinc-500 bg-zinc-900/50 px-2 py-1 rounded">ارشيف</span>
                         <span class="text-[10px] text-zinc-600 font-mono">${post.time}</span>
                     </div>
-                    <h4 class="font-bold text-white text-lg mb-2">${post.title}</h4>
-                    <p class="text-sm text-zinc-300 leading-relaxed">${post.body}</p>
+                    <div class="article-image h-64 w-full mb-4 shadow-lg opacity-90">
+                        <img src="${post.image}" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-black text-2xl text-white mb-4">${post.title}</h3>
+                    <div class="pro-article text-sm text-zinc-300 leading-relaxed">
+                        ${post.body}
+                    </div>
                 </article>
             `).join('');
         }
 
         function clearMemory() {
-            if(confirm("هل أنت متأكد من مسح جميع المقالات؟")) {
-                localStorage.removeItem('blaze_blog_posts');
+            if(confirm("تحذير: سيتم حذف جميع المقالات والصور من الأرشيف. هل أنت متأكد؟")) {
+                localStorage.removeItem('blaze_pro_posts');
                 loadMemory();
             }
         }
