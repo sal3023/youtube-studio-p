@@ -3,216 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.M Studio - المطور</title>
+    <title>فحص المشكلة النهائي</title>
     <style>
-        :root { --main-color: #007bff; --bg-color: #121212; --panel-bg: #1e1e1e; --text-color: #e0e0e0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        
-        /* الرأس */
-        header { background: #000; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--main-color); }
-        h1 { margin: 0; font-size: 1.1rem; color: #fff; }
-        .settings-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #fff; }
-
-        /* نافذة الإعدادات */
-        #vaultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
-        .vault-box { background: #222; padding: 25px; border-radius: 10px; width: 85%; border: 2px solid var(--main-color); text-align: center; }
-        .vault-input, .vault-select { width: 90%; padding: 10px; background: #333; color: #fff; border: 1px solid #555; border-radius: 5px; margin: 10px 0; font-size: 14px; }
-        
-        /* القوائم */
-        .nav-tabs { display: flex; justify-content: space-around; background: #222; padding: 5px; }
-        .nav-btn { background: none; border: none; color: #888; padding: 10px; font-weight: bold; cursor: pointer; flex: 1; border-bottom: 3px solid transparent; }
-        .nav-btn.active { color: var(--main-color); border-bottom-color: var(--main-color); }
-
-        /* المحتوى */
-        .content-area { flex: 1; overflow-y: auto; padding: 20px; display: none; }
-        .content-area.active { display: block; animation: fadeIn 0.5s; }
-        .card { background: var(--panel-bg); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 10px; background: #2c2c2c; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
-        button.action-btn { width: 100%; padding: 15px; background: var(--main-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .result-box { background: #252525; padding: 15px; border-radius: 5px; margin-top: 15px; border-left: 4px solid var(--main-color); white-space: pre-wrap; line-height: 1.6; min-height: 50px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { background: black; color: white; font-family: sans-serif; padding: 20px; text-align: center; }
+        button { background: red; color: white; padding: 20px; font-size: 20px; border: none; border-radius: 10px; width: 100%; cursor: pointer; }
+        #status { margin-top: 20px; padding: 15px; border: 1px solid white; text-align: right; background: #222; }
     </style>
 </head>
 <body>
 
-    <div id="vaultModal">
-        <div class="vault-box">
-            <h3>⚙️ الإعدادات</h3>
-            
-            <label style="display:block; text-align:right; font-size:0.9rem; color:#aaa;">1. مفتاح API:</label>
-            <input type="password" id="apiKeyInput" class="vault-input" placeholder="AIzaSy...">
-            
-            <label style="display:block; text-align:right; font-size:0.9rem; color:#aaa;">2. نوع الموديل (جرب تغيير هذا إذا لم يعمل):</label>
-            <select id="modelSelect" class="vault-select">
-                <option value="gemini-1.5-flash">Gemini 1.5 Flash (سريع)</option>
-                <option value="gemini-1.5-pro">Gemini 1.5 Pro (ذكي جداً)</option>
-                <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash (جديد)</option>
-                <option value="gemini-1.0-pro">Gemini 1.0 Pro (قديم ومستقر)</option>
-            </select>
+    <h1>فحص الاتصال النهائي</h1>
+    <p>اضغط الزر الأحمر لنتأكد أين المشكلة بالضبط</p>
 
-            <button class="action-btn" onclick="saveSettings()">حفظ الإعدادات</button>
-            <button onclick="closeVault()" style="background:none; border:none; color:#f00; margin-top:10px;">إغلاق</button>
-        </div>
-    </div>
+    <button onclick="testNow()">🔴 اضغط هنا للفحص</button>
 
-    <header>
-        <h1>S.M Studio Pro</h1>
-        <button class="settings-btn" onclick="openVault()">⚙️</button>
-    </header>
-
-    <div class="nav-tabs">
-        <button class="nav-btn active" onclick="showTab('blog')">مقال</button>
-        <button class="nav-btn" onclick="showTab('trend')">ترند</button>
-        <button class="nav-btn" onclick="showTab('ads')">إعلان</button>
-        <button class="nav-btn" onclick="showTab('chat')">شات</button>
-    </div>
-
-    <div id="blog" class="content-area active">
-        <div class="card">
-            <input type="text" id="blogTopic" placeholder="عنوان المقال...">
-            <button class="action-btn" onclick="generateBlog()">✍️ كتابة المقال</button>
-            <div id="blogResult" class="result-box">النتيجة...</div>
-        </div>
-    </div>
-
-    <div id="trend" class="content-area">
-        <div class="card">
-            <input type="text" id="trendTopic" placeholder="المجال (مثل: التجارة)...">
-            <button class="action-btn" onclick="analyzeTrend()">📊 تحليل الترند</button>
-            <div id="trendResult" class="result-box">النتيجة...</div>
-        </div>
-    </div>
-
-    <div id="ads" class="content-area">
-        <div class="card">
-            <input type="text" id="adProduct" placeholder="اسم المنتج...">
-            <button class="action-btn" onclick="generateAd()">📢 إنشاء إعلان</button>
-            <div id="adResult" class="result-box">النتيجة...</div>
-        </div>
-    </div>
-
-    <div id="chat" class="content-area">
-        <div class="card">
-            <div id="chatBox" class="result-box" style="height: 300px; overflow-y: scroll; margin-bottom: 10px;">مرحباً بك.</div>
-            <div style="display: flex; gap: 5px;">
-                <input type="text" id="chatInput" placeholder="اكتب..." style="margin: 0;">
-                <button class="action-btn" style="width: 80px;" onclick="sendChat()">إرسال</button>
-            </div>
-        </div>
-    </div>
+    <div id="status">النتيجة ستظهر هنا...</div>
 
     <script>
-        // دوال الإعدادات
-        function getApiKey() { return localStorage.getItem("my_secret_key"); }
-        function getModel() { return localStorage.getItem("my_model") || "gemini-1.5-flash"; }
-        
-        function openVault() { 
-            document.getElementById('vaultModal').style.display = 'flex'; 
-            if(getApiKey()) document.getElementById('apiKeyInput').value = getApiKey();
-            document.getElementById('modelSelect').value = getModel();
-        }
-        
-        function closeVault() { document.getElementById('vaultModal').style.display = 'none'; }
-        
-        function saveSettings() {
-            const key = document.getElementById('apiKeyInput').value.trim();
-            const model = document.getElementById('modelSelect').value;
-            
-            if(key.length > 10) { 
-                localStorage.setItem("my_secret_key", key); 
-                localStorage.setItem("my_model", model);
-                alert("✅ تم الحفظ! الموديل الحالي: " + model); 
-                closeVault(); 
-            } else { 
-                alert("❌ المفتاح يبدو غير صحيح"); 
-            }
-        }
+        // مفتاحك مدمج هنا لكي لا تتعب في نسخه
+        const API_KEY = "AIzaSyAS2h2uJyOteKv_ni4EEtRuhAONBAhOYsI";
 
-        window.onload = function() { 
-            if(!getApiKey()) setTimeout(openVault, 1000); 
-        };
-
-        function showTab(tabId) {
-            document.querySelectorAll('.content-area').forEach(div => div.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        // دالة الاتصال الرئيسية
-        async function callGemini(prompt, resultElementId) {
-            const resultBox = document.getElementById(resultElementId);
-            const key = getApiKey();
-            const model = getModel();
-
-            if (!key) { openVault(); return; }
-
-            resultBox.innerText = `⏳ جاري الاتصال باستخدام ${model}...`;
+        async function testNow() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = "1. جاري محاولة الاتصال بسيرفرات جوجل...<br>";
 
             try {
-                // استخدام v1beta وهو الأكثر توافقاً حالياً
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: "هل أنت تعمل؟" }] }] })
                 });
 
-                const data = await response.json();
-                
-                if (data.error) {
-                    resultBox.innerText = `❌ خطأ في الموديل (${model}):\n` + data.error.message + "\n\n💡 الحل: اضغط على الترس ⚙️ واختر موديلاً آخر من القائمة.";
+                statusDiv.innerHTML += "2. تم الاتصال بالسيرفر (Response Received)...<br>";
+
+                if (!response.ok) {
+                    const errData = await response.json();
+                    statusDiv.innerHTML += `<b style="color:red">❌ فشل! المشكلة من جوجل.</b><br>رسالة الخطأ: ${errData.error.message}`;
                 } else {
-                    resultBox.innerHTML = data.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+                    const data = await response.json();
+                    const reply = data.candidates[0].content.parts[0].text;
+                    statusDiv.innerHTML += `<b style="color:green">✅ نجح!! التطبيق يعمل.</b><br>الرد: ${reply}`;
                 }
+
             } catch (error) {
-                resultBox.innerText = "❌ خطأ في الاتصال! تأكد من الإنترنت.";
-            }
-        }
-
-        function generateBlog() {
-            const topic = document.getElementById('blogTopic').value;
-            if(topic) callGemini(`اكتب مقالاً طويلاً (SEO) عن: ${topic}`, 'blogResult');
-        }
-
-        function analyzeTrend() {
-            const topic = document.getElementById('trendTopic').value;
-            if(topic) callGemini(`أعطني تحليل ترند وأفكار فيديوهات عن: ${topic}`, 'trendResult');
-        }
-
-        function generateAd() {
-            const product = document.getElementById('adProduct').value;
-            if(product) callGemini(`اكتب إعلاناً تسويقياً جذاباً لمنتج: ${product}`, 'adResult');
-        }
-
-        async function sendChat() {
-            const input = document.getElementById('chatInput');
-            const text = input.value;
-            if (!text) return;
-            const chatBox = document.getElementById('chatBox');
-            chatBox.innerHTML += `<br><b>أنت:</b> ${text}`;
-            input.value = '';
-            
-            const key = getApiKey();
-            const model = getModel();
-            if(!key) { openVault(); return; }
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: text }] }] })
-                });
-                const data = await response.json();
-                
-                if(data.error) {
-                    chatBox.innerHTML += `<br><b style="color:red">خطأ: ${data.error.message}</b><br>غير الموديل من الإعدادات ⚙️`;
-                } else {
-                    const aiReply = data.candidates[0].content.parts[0].text;
-                    chatBox.innerHTML += `<br><b>Bot:</b> ${aiReply}<hr>`;
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }
-            } catch (e) {
-                chatBox.innerHTML += `<br><b style="color:red">خطأ في الاتصال</b>`;
+                // هذا هو الخطأ المتوقع في اليمن
+                statusDiv.innerHTML += `<br><b style="color:red">❌❌ فشل تام في الاتصال (Network Error) ❌❌</b><br>
+                السبب: جهازك لا يستطيع الوصول لسيرفر جوجل.<br>
+                <b>الحل الوحيد:</b> شغل VPN (كاسر حجب) ثم حاول مرة أخرى.`;
             }
         }
     </script>
