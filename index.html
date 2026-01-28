@@ -3,208 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- الربط مع Search Console و Atlantis -->
-    <meta name="description" content="Tosh5 Global Media - المنصة الإعلامية المتكاملة للأخبار والذكاء الاصطناعي">
-    <meta name="keywords" content="tosh5, أخبار التقنية, أتمتة يوتيوب, ذكاء اصطناعي, مدونة مسموعة">
-    <title>S.M GLOBAL EMPIRE | الإمبراطورية الإعلامية</title>
-    
+    <!-- Meta Tags للربط مع Search Console و Atlantis -->
+    <meta name="description" content="TOSH5 GLOBAL EMPIRE - المنصة الإعلامية المتكاملة المدعومة بالذكاء الاصطناعي">
+    <title>TOSH5 EMPIRE | الإمبراطورية الإعلامية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
             --primary: #00d2ff; --secondary: #ff4d4d; --gold: #ffca28;
-            --bg: #050510; --card-bg: rgba(15, 15, 35, 0.98);
+            --bg: #050510; --side: #0a0a20; --card: rgba(20, 20, 45, 0.9);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; padding-top: 50px; }
+        body { background: var(--bg); color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-        /* 1. شريط أخبار جوجل المباشر */
-        .live-ticker {
+        /* 1. شريط أخبار جوجل المباشر (علوي) */
+        .top-ticker {
             background: #000; color: #fff; height: 45px; display: flex; align-items: center;
-            border-bottom: 2px solid var(--primary); position: fixed; top: 0; width: 100%; z-index: 2000;
+            border-bottom: 2px solid var(--primary); z-index: 1000; font-size: 13px;
         }
-        .live-label {
-            background: var(--secondary); padding: 0 15px; height: 100%; display: flex;
-            align-items: center; font-weight: bold; animation: pulse 1.5s infinite;
+        .live-label { background: var(--secondary); padding: 0 15px; height: 100%; display: flex; align-items: center; font-weight: bold; animation: blink 1.5s infinite; }
+
+        /* الهيكل العام */
+        .wrapper { display: flex; flex: 1; overflow: hidden; }
+
+        /* 2. القائمة الجانبية (Sidebar) - الصفحات المتعددة */
+        .sidebar {
+            width: 280px; background: var(--side); border-left: 2px solid #1a1a3a;
+            display: flex; flex-direction: column; padding: 25px; transition: 0.3s;
         }
-        .ticker-text { flex: 1; overflow: hidden; white-space: nowrap; }
-        #google-news-stream { display: inline-block; animation: marquee 60s linear infinite; font-size: 14px; }
-        #google-news-stream span { margin-left: 40px; }
-
-        header { padding: 80px 5% 40px; text-align: center; background: radial-gradient(circle at top, rgba(0,210,255,0.1), transparent); }
-
-        .layout { display: grid; grid-template-columns: 1fr 340px; gap: 25px; max-width: 1450px; margin: auto; padding: 20px; }
-
-        /* 2. خانات AdSense و AdMob */
-        .ad-unit {
-            background: rgba(255,255,255,0.03); border: 1px dashed #444; border-radius: 15px;
-            display: flex; align-items: center; justify-content: center; color: #666; font-size: 12px; margin: 20px 0;
-        }
-
-        .card { background: var(--card-bg); border-radius: 25px; padding: 30px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 25px; }
-
-        .input-group input {
-            width: 100%; padding: 18px; background: #000; border: 1px solid #333; border-radius: 15px;
-            color: #fff; font-size: 18px; margin-bottom: 15px; outline: none; transition: 0.3s;
-        }
-        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0,210,255,0.3); }
-
-        .btn-main {
-            padding: 18px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer;
-            width: 100%; font-size: 16px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-        .btn-blog { background: linear-gradient(45deg, var(--primary), #0095ff); color: #000; }
-        .btn-yt { background: linear-gradient(45deg, var(--secondary), #cc0000); color: #fff; margin-top: 10px; }
-
-        /* 3. منطقة المحال الإمبراطوري */
-        #article-container { display: none; margin-top: 30px; }
-        .article-image { width: 100%; border-radius: 25px; border: 4px solid var(--primary); margin-bottom: 25px; box-shadow: 0 15px 40px rgba(0,210,255,0.2); }
+        .logo { font-size: 24px; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; text-align: center; }
         
-        .audio-player-ui {
-            background: rgba(255, 202, 40, 0.1); border: 1px solid var(--gold); padding: 20px;
-            border-radius: 50px; display: flex; align-items: center; gap: 20px; margin-bottom: 25px;
+        .nav-item {
+            padding: 15px 20px; border-radius: 15px; cursor: pointer; transition: 0.3s;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 15px; color: #888; text-decoration: none;
         }
-        .play-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--gold); border: none; cursor: pointer; font-size: 20px; }
+        .nav-item:hover, .nav-item.active { background: rgba(0, 210, 255, 0.1); color: var(--primary); border-right: 4px solid var(--primary); }
 
-        .article-body { font-size: 19px; line-height: 1.9; color: #ddd; text-align: justify; }
+        /* 3. منطقة المحتوى (الديناميكي) */
+        .main-content { flex: 1; overflow-y: auto; padding: 30px; scroll-behavior: smooth; }
+        .page { display: none; animation: slideIn 0.5s ease-out; }
+        .page.active { display: block; }
 
-        /* 4. السايد بار وإحصائيات Atlantis */
-        .side-card { background: #0a0a1f; padding: 25px; border-radius: 20px; border: 1px solid #222; margin-bottom: 20px; }
-        .visitor-count { font-size: 35px; font-weight: 900; color: var(--primary); text-shadow: 0 0 15px var(--primary); }
-        .trend-tag { display: block; padding: 8px 0; border-bottom: 1px solid #222; font-size: 13px; color: #aaa; }
-        .trend-tag span { color: var(--gold); float: left; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes blink { 50% { opacity: 0.3; } }
 
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        @keyframes pulse { 50% { opacity: 0.7; } }
+        /* الكروت والجماليات */
+        .card { background: var(--card); border-radius: 25px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+        .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        
+        .stat-card { background: #000; padding: 25px; border-radius: 20px; border-bottom: 4px solid var(--primary); text-align: center; }
+        .stat-val { font-size: 32px; font-weight: 900; color: var(--primary); margin: 10px 0; }
 
-        @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+        /* 4. خانات الإعلانات (AdSense / AdMob) */
+        .ad-slot { background: rgba(255,255,255,0.02); border: 1px dashed #444; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 11px; margin: 20px 0; min-height: 100px; }
+
+        /* أدوات الإنتاج */
+        input, textarea { width: 100%; padding: 18px; background: #000; border: 1px solid #333; border-radius: 15px; color: #fff; margin-bottom: 15px; outline: none; font-size: 16px; }
+        .btn { padding: 18px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; }
+        .btn-p { background: linear-gradient(45deg, var(--primary), #0095ff); color: #000; }
+        .btn-s { background: linear-gradient(45deg, var(--secondary), #cc0000); color: #fff; }
+
+        /* معرض الصور AI */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .gallery-item { border-radius: 20px; overflow: hidden; border: 3px solid #1a1a3a; aspect-ratio: 16/9; position: relative; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* مشغل الصوت */
+        .audio-bar { background: rgba(255, 202, 40, 0.1); padding: 20px; border-radius: 50px; display: flex; align-items: center; gap: 20px; margin: 20px 0; border: 1px solid var(--gold); }
+
+        #post-res-img { width: 100%; border-radius: 25px; display: none; margin-bottom: 25px; border: 4px solid var(--primary); box-shadow: 0 0 30px var(--primary); }
+
+        /* وسائل التواصل */
+        .social-grid { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
+        .social-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #111; font-size: 20px; cursor: pointer; transition: 0.3s; }
+        .social-icon:hover { transform: translateY(-5px); background: var(--primary); color: #000; }
     </style>
 </head>
 <body>
 
-    <!-- 1. شريط أخبار جوجل المباشر -->
-    <div class="live-ticker">
-        <div class="live-label"><i class="fas fa-satellite-dish"></i> مباشر</div>
-        <div class="ticker-text"><div id="google-news-stream">جاري الاتصال بوكالة أنباء جوجل العالمية...</div></div>
+    <!-- شريط أخبار جوجل المباشر -->
+    <div class="top-ticker">
+        <div class="live-label"><i class="fas fa-satellite-dish"></i> بث مباشر</div>
+        <marquee id="news-marquee" scrollamount="6">جاري الاتصال بوكالة أخبار جوجل... جاري تحديث ترند الساعة لمدونة tosh5.shop...</marquee>
     </div>
 
-    <header>
-        <h1 style="font-size: 3.5rem; font-weight: 900;">TOSH5 <span style="color:var(--primary)">EMPIRE</span></h1>
-        <p style="color: #666; font-size: 20px;">المنصة الإعلامية الذكية لمدونة <a href="https://www.tosh5.shop" style="color:var(--gold); text-decoration:none;">tosh5.shop</a></p>
-    </header>
+    <div class="wrapper">
+        <!-- القائمة الجانبية (نظام الصفحات المتعددة) -->
+        <aside class="sidebar">
+            <div class="logo">TOSH5 EMPIRE</div>
+            
+            <div class="nav-item active" onclick="showPage('home')"><i class="fas fa-th-large"></i> لوحة الإحصائيات</div>
+            <div class="nav-item" onclick="showPage('publisher')"><i class="fas fa-robot"></i> محرك الأتمتة الذكي</div>
+            <div class="nav-item" onclick="showPage('news-hub')"><i class="fas fa-newspaper"></i> رادار الأخبار الحية</div>
+            <div class="nav-item" onclick="showPage('gallery-ai')"><i class="fas fa-photo-video"></i> معرض الميديا AI</div>
+            <div class="nav-item" onclick="showPage('revenue')"><i class="fas fa-dollar-sign"></i> مركز الأرباح</div>
+            <div class="nav-item" onclick="showPage('settings-page')"><i class="fas fa-tools"></i> الإعدادات العالمية</div>
 
-    <div class="layout">
-        
-        <!-- العمود الرئيسي -->
-        <div class="main-content">
-            <div class="ad-unit" style="height: 90px;">إعلان AdSense (رأس الصفحة)</div>
-
-            <div class="card">
-                <h2><i class="fas fa-brain" style="color:var(--primary)"></i> مركز الأتمتة الإمبراطوري</h2>
-                <div class="input-group">
-                    <input type="text" id="mainTopic" placeholder="ما هو الموضوع الذي تريد أتمتته اليوم؟">
-                    <input type="password" id="groqKey" style="font-size: 12px;" placeholder="أدخل مفتاح Groq الخاص بك (gsk_...)">
-                </div>
-                <button class="btn-main btn-blog" onclick="generateEmpireContent('blog')"><i class="fas fa-newspaper"></i> إنشاء مقال كامل (مسموع + صورة AI)</button>
-                <button class="btn-main btn-yt" onclick="generateEmpireContent('yt')"><i class="fas fa-film"></i> توليد سكربت يوتيوب عالمي</button>
+            <div class="ad-slot" style="margin-top: auto; min-height: 200px;">إعلان AdMob / AdSense</div>
+            
+            <div class="social-grid">
+                <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+                <div class="social-icon"><i class="fab fa-youtube"></i></div>
+                <div class="social-icon"><i class="fab fa-telegram-plane"></i></div>
             </div>
+        </aside>
 
-            <div id="article-container">
-                <img id="ai-image" src="" class="article-image">
+        <!-- منطقة الصفحات الديناميكية -->
+        <main class="main-content">
+            
+            <!-- صفحة 1: لوحة الإحصائيات (Home) -->
+            <section id="home" class="page active">
+                <h2 style="font-size: 2rem; margin-bottom: 10px;">أهلاً بك يا إمبراطور 👑</h2>
+                <p style="color: #666; margin-bottom: 30px;">تقرير حالة منصة tosh5.shop اليوم</p>
                 
-                <div class="audio-player-ui">
-                    <button class="play-btn" onclick="speakArticle()"><i class="fas fa-play"></i></button>
-                    <div>
-                        <div style="font-weight:bold; color:var(--gold)">تشغيل المدونة المسموعة</div>
-                        <div style="font-size:12px; color:#888">بذكاء TOSH5 الصوتي</div>
-                    </div>
+                <div class="grid-stats">
+                    <div class="stat-card"><h3>زوار Atlantis الآن</h3><div class="stat-val" id="visitor-live">2,841</div><p style="font-size: 11px; color:#444">تحديث لحظي</p></div>
+                    <div class="stat-card"><h3>مرات ظهور AdSense</h3><div class="stat-val">84.2K</div><p style="font-size: 11px; color:#444">آخر 24 ساعة</p></div>
+                    <div class="stat-card"><h3>قوة الـ SEO</h3><div class="stat-val" style="color:var(--gold)">98%</div><p style="font-size: 11px; color:#444">Search Console</p></div>
                 </div>
 
                 <div class="card">
-                    <div id="ai-content" class="article-body"></div>
+                    <h3><i class="fas fa-fire" style="color:var(--secondary)"></i> ترند الساعة في جوجل</h3>
+                    <div id="trend-list" style="margin-top: 20px;">
+                        <div style="padding: 12px; border-bottom: 1px solid #111; display:flex; justify-content:space-between;">ذكاء اصطناعي 2025 <span>+450%</span></div>
+                        <div style="padding: 12px; border-bottom: 1px solid #111; display:flex; justify-content:space-between;">أتمتة يوتيوب Tosh5 <span>+320%</span></div>
+                    </div>
                 </div>
-                
-                <div class="ad-unit" style="height: 250px;">إعلان AdSense (داخل المحتوى)</div>
-            </div>
-        </div>
+            </section>
 
-        <!-- السايد بار -->
-        <div class="sidebar">
-            <div class="side-card">
-                <h3><i class="fas fa-chart-line"></i> عداد زوار Atlantis</h3>
-                <div class="visitor-count" id="live-visitors">2,145</div>
-                <p style="font-size: 11px; color:#555">زائر حقيقي يتصفح الموقع الآن</p>
-            </div>
-
-            <div class="side-card">
-                <h3 style="color:var(--gold); margin-bottom:15px;"><i class="fas fa-bolt"></i> ترند جوجل الساعة</h3>
-                <div id="trend-box">
-                    <div class="trend-tag">ذكاء اصطناعي 2025 <span>99%</span></div>
-                    <div class="trend-tag">أتمتة مدونة Tosh5 <span>95%</span></div>
-                    <div class="trend-tag">أسعار العملات الرقمية <span>88%</span></div>
-                    <div class="trend-tag">تحديثات جوجل سيرش <span>82%</span></div>
+            <!-- صفحة 2: محرك الأتمتة (Publisher) -->
+            <section id="publisher" class="page">
+                <h2><i class="fas fa-brain"></i> محرك صناعة المحتوى الإمبراطوري</h2>
+                <div class="card">
+                    <input type="text" id="topicInput" placeholder="اكتب موضوعك (تقني، رياضي، عام)...">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <button class="btn btn-p" onclick="generateEmpireContent('blog')"><i class="fas fa-file-audio"></i> إنشاء مقال مسموع + صورة</button>
+                        <button class="btn btn-s" onclick="generateEmpireContent('yt')"><i class="fas fa-film"></i> توليد سكربت يوتيوب كامل</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="side-card">
-                <h3><i class="fas fa-share-nodes"></i> تواصل اجتماعي</h3>
-                <div style="display:flex; justify-content:space-around; margin-top:20px;">
-                    <i class="fab fa-facebook fa-2x" style="color:#1877f2; cursor:pointer"></i>
-                    <i class="fab fa-youtube fa-2x" style="color:#ff0000; cursor:pointer"></i>
-                    <i class="fab fa-telegram fa-2x" style="color:#0088cc; cursor:pointer"></i>
+                <div id="ai-result-area" style="display: none;">
+                    <img id="post-res-img" src="">
+                    <div class="audio-bar">
+                        <button onclick="speakArticle()" style="background:var(--gold); border:none; width:50px; height:50px; border-radius:50%; cursor:pointer;"><i class="fas fa-play"></i></button>
+                        <span>انقر للاستماع للمقال (المدونة المسموعة)</span>
+                    </div>
+                    <div class="card" id="ai-text-output" style="white-space: pre-wrap; line-height: 1.9; font-size: 18px; text-align: justify;"></div>
+                    <button class="btn btn-p" onclick="copyContent()">📋 نسخ المحتوى بالكامل</button>
                 </div>
-            </div>
+            </section>
 
-            <div class="ad-unit" style="height: 600px;">إعلان AdMob / AdSense (جانبي طويل)</div>
-        </div>
+            <!-- صفحة 3: رادار الأخبار (News Hub) -->
+            <section id="news-hub" class="page">
+                <h2><i class="fas fa-rss"></i> رادار أخبار جوجل المباشر</h2>
+                <div class="ad-slot">إعلان AdSense (متوافق مع الأخبار)</div>
+                <div id="news-container" class="grid-stats" style="grid-template-columns: 1fr;">
+                    <!-- الأخبار ستظهر هنا آلياً -->
+                </div>
+            </section>
+
+            <!-- صفحة 4: مركز الأرباح (Revenue) -->
+            <section id="revenue" class="page">
+                <h2><i class="fas fa-wallet"></i> مركز أرباح الإعلانات</h2>
+                <div class="grid-stats">
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-ad fa-3x" style="color:var(--primary); margin-bottom:15px;"></i>
+                        <h3>AdSense Slots</h3>
+                        <p style="font-size: 13px; color:#666; margin-top:10px;">أماكن جاهزة لوضع شفرات الإعلانات</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-mobile-alt fa-3x" style="color:var(--secondary); margin-bottom:15px;"></i>
+                        <h3>AdMob Integration</h3>
+                        <p style="font-size: 13px; color:#666; margin-top:10px;">متوافق مع تطبيقات الجوال</p>
+                    </div>
+                </div>
+                <div class="ad-slot" style="height: 300px;">مساحة إعلانية عمودية (SkyScraper)</div>
+            </section>
+
+            <!-- صفحة 5: الإعدادات -->
+            <section id="settings-page" class="page">
+                <h2>⚙️ إعدادات المنصة العالمية</h2>
+                <div class="card">
+                    <label>مفتاح Groq (gsk_...):</label>
+                    <input type="password" id="groqKey" placeholder="ضع مفتاحك هنا لمرة واحدة...">
+                    <button class="btn btn-p" onclick="saveGlobalSettings()">حفظ وتفعيل الإمبراطورية ✅</button>
+                </div>
+            </section>
+
+        </main>
     </div>
 
     <script>
-        // 1. محرك أخبار جوجل المباشر (RSS)
-        async function fetchGoogleNews() {
-            const stream = document.getElementById('google-news-stream');
+        // نظام التنقل الاحترافي بين الصفحات
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // حفظ الإعدادات
+        function saveGlobalSettings() {
+            const k = document.getElementById('groqKey').value;
+            localStorage.setItem('groq_key', k);
+            alert("تم الحفظ! المحرك العالمي جاهز.");
+        }
+
+        window.onload = () => {
+            const k = localStorage.getItem('groq_key');
+            if(k) document.getElementById('groqKey').value = k;
+            fetchLiveGoogleNews();
+        }
+
+        // محرك أخبار جوجل المباشر
+        async function fetchLiveGoogleNews() {
+            const marquee = document.getElementById('news-marquee');
+            const container = document.getElementById('news-container');
             try {
-                const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://news.google.com/rss/search?q=technology+news&hl=ar&gl=EG&ceid=EG:ar')}`);
+                const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://news.google.com/rss/search?q=technology&hl=ar&gl=EG&ceid=EG:ar')}`);
                 const data = await res.json();
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(data.contents, "text/xml");
                 const items = xml.querySelectorAll("item");
-                let html = "";
-                items.forEach((item, i) => { if(i < 12) html += `<span> <i class="fas fa-circle" style="font-size:8px; color:var(--secondary)"></i> ${item.querySelector("title").innerHTML} </span>`; });
-                stream.innerHTML = html;
-            } catch (e) { stream.innerHTML = "تعذر الاتصال بالأخبار المباشرة الآن."; }
+                
+                let ticker = "";
+                let cards = "";
+                
+                items.forEach((item, i) => {
+                    const title = item.querySelector("title").innerHTML;
+                    const link = item.querySelector("link").innerHTML;
+                    if(i < 10) ticker += " • " + title;
+                    if(i < 6) {
+                        cards += `<div class="card" style="padding:15px;">
+                                    <h4 style="color:var(--primary); font-size:14px;">${title}</h4>
+                                    <a href="${link}" target="_blank" style="color:#555; font-size:11px;">اقرأ الخبر كاملاً من جوجل</a>
+                                  </div>`;
+                    }
+                });
+                marquee.innerHTML = ticker;
+                container.innerHTML = cards;
+            } catch (e) { console.log("News Error"); }
         }
-        fetchGoogleNews();
 
-        // 2. عداد زوار Atlantis (تحديث كل 3 ثواني)
-        setInterval(() => {
-            const current = parseInt(document.getElementById('live-visitors').innerText.replace(',',''));
-            const newCount = current + (Math.floor(Math.random() * 10) - 4);
-            document.getElementById('live-visitors').innerText = newCount.toLocaleString();
-        }, 3000);
-
-        // 3. المحرك الإمبراطوري لصناعة المحتوى
+        // محرك الأتمتة الإمبراطوري (نص + صورة)
         async function generateEmpireContent(type) {
-            const topic = document.getElementById('mainTopic').value;
-            const key = document.getElementById('groqKey').value || localStorage.getItem('groq_key');
+            const topic = document.getElementById('topicInput').value;
+            const key = localStorage.getItem('groq_key');
             
-            if(!topic || !key) return alert("أدخل الموضوع والمفتاح يا بطل!");
-            localStorage.setItem('groq_key', key);
+            if(!topic || !key) return alert("الموضوع والمفتاح أولاً!");
 
-            const container = document.getElementById('article-container');
-            const content = document.getElementById('ai-content');
-            const img = document.getElementById('ai-image');
+            const area = document.getElementById('ai-result-area');
+            const output = document.getElementById('ai-text-output');
+            const img = document.getElementById('post-res-img');
 
-            container.style.display = "block";
-            content.innerHTML = "⏳ جاري استدعاء الذكاء الاصطناعي وتوليد الصورة والسكربت...";
-            
-            // توليد صورة 4K للمقال
-            img.src = `https://pollinations.ai/p/${encodeURIComponent(topic + " high resolution cinematic concept art")}?width=1280&height=720&seed=${Math.random()}`;
+            area.style.display = "block";
+            output.innerHTML = "⏳ جاري استدعاء الذكاء الاصطناعي وصناعة الميديا...";
 
+            // توليد الصورة
+            const imgUrl = `https://pollinations.ai/p/${encodeURIComponent(topic + " cinematic digital art high quality")}?width=1280&height=720&seed=${Math.random()}`;
+            img.src = imgUrl;
+            img.style.display = "block";
+
+            // طلب النص من Groq
             const prompt = type === 'blog' 
-                ? `اكتب مقالاً طويلاً جداً واحترافياً لمدونة tosh5.shop عن ${topic}. اجعله متوافقاً مع سيو جوجل، استخدم عناوين، مقدمة، شرح، وخاتمة.`
-                : `اكتب سكربت فيديو يوتيوب عالمي عن ${topic}. مقدمة تجذب المشاهد، محتوى تفصيلي، وخاتمة تطلب الاشتراك.`;
+                ? `اكتب مقالاً طويلاً جداً (أكثر من 1000 كلمة) لمدونة tosh5.shop عن ${topic}. استخدم عناوين، نقاط، وسيو.` 
+                : `اكتب سكربت فيديو يوتيوب كامل عن ${topic}. مقدمة وعرض وخاتمة.`;
 
             try {
                 const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -213,20 +277,31 @@
                     body: JSON.stringify({ "model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}] })
                 });
                 const data = await response.json();
-                content.innerText = data.choices[0].message.content;
-            } catch (e) { content.innerHTML = "❌ خطأ في النظام. تأكد من صحة المفتاح."; }
+                output.innerText = data.choices[0].message.content;
+            } catch (e) { output.innerHTML = "❌ خطأ في الاتصال بالسيرفر."; }
         }
 
-        // 4. المدونة المسموعة
+        // المدونة المسموعة
         function speakArticle() {
-            const text = document.getElementById('ai-content').innerText;
+            const text = document.getElementById('ai-text-output').innerText;
             const synth = window.speechSynthesis;
             const utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'ar-SA';
             utter.rate = 1.0;
             synth.speak(utter);
         }
-    </script>
 
+        function copyContent() {
+            navigator.clipboard.writeText(document.getElementById('ai-text-output').innerText);
+            alert("✅ تم نسخ المقال الإمبراطوري!");
+        }
+
+        // عداد زوار وهمي ذكي
+        setInterval(() => {
+            const current = parseInt(document.getElementById('visitor-live').innerText.replace(',',''));
+            const change = Math.floor(Math.random() * 11) - 5;
+            document.getElementById('visitor-live').innerText = (current + change).toLocaleString();
+        }, 4000);
+    </script>
 </body>
 </html>
