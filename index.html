@@ -3,108 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الذكاء النخبوية | $1000 Project</title>
+    <title>المساعد الآلي المتكامل | نظام العمل الفوري</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #10b981; /* الزمردي النضر */
-            --secondary: #3b82f6; /* الأزرق الاحترافي */
-            --bg: #030712; /* الأسود العميق */
-        }
-        body { background: var(--bg); color: #f3f4f6; font-family: 'Inter', sans-serif; }
-        
-        /* تأثير الزجاج الاحترافي */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        }
-        
-        /* توهج النضارة */
-        .glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .glow-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); }
-
-        .page { display: none; animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        :root { --p: #10b981; --bg: #030712; }
+        body { background: var(--bg); color: #f3f4f6; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .page { display: none; min-height: 100vh; animation: fadeIn 0.4s ease; }
         .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        
-        /* شريط التنقل المتوهج */
-        .nav-active { color: var(--primary); text-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-active { color: var(--p); text-shadow: 0 0 15px var(--p); }
+        .btn-action { transition: 0.3s; border: 1px solid rgba(16, 185, 129, 0.1); }
+        .btn-action:hover { border-color: var(--p); background: rgba(16, 185, 129, 0.05); }
     </style>
 </head>
 <body class="pb-28">
 
-    <div class="sticky top-0 z-[100] bg-zinc-950/80 backdrop-blur-xl border-b border-white/5 py-3">
-        <div class="flex items-center px-5 overflow-hidden">
-            <div class="flex items-center gap-2 text-[10px] font-bold text-emerald-400">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                GLOBAL RADAR
-            </div>
-            <marquee class="flex-1 text-[11px] font-mono text-zinc-400 mr-4">
-                [LIVE]: GOOGLE TRENDS SYNCED • YANDEX AI NODES CONNECTED • REVENUE ENGINE: OPTIMIZED • SECURITY SHIELD: ACTIVE
-            </marquee>
-        </div>
+    <div class="sticky top-0 z-[100] glass border-b border-white/5 py-3">
+        <marquee id="radar" class="text-[10px] font-mono text-emerald-400 uppercase">
+            جاري سحب ترندات الصحة من ياندكس.. تم تحديث قطاع الغذاء من جوجل.. شقائق النعمان تؤمن المنظومة.. الأرباح في ارتفاع..
+        </marquee>
     </div>
 
     <main id="home" class="page active-page p-6">
-        <div class="text-center mb-10">
-            <div class="inline-block p-1 bg-gradient-to-tr from-emerald-500 to-blue-500 rounded-full mb-4">
-                <div class="bg-zinc-950 rounded-full p-4">
-                    <i class="fas fa-robot text-4xl bg-gradient-to-br from-emerald-400 to-blue-400 bg-clip-text text-transparent"></i>
-                </div>
+        <div class="text-center mb-10 mt-5">
+            <div class="inline-block p-5 glass rounded-full mb-4 border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                <i class="fas fa-robot text-5xl text-emerald-500 animate-pulse"></i>
             </div>
-            <h1 class="text-2xl font-black text-white italic tracking-tighter">نظام الإدارة الشامل</h1>
-            <p id="ai-text" class="text-xs text-zinc-500 mt-2">جاري تحليل البيانات الكلية للمنظومة..</p>
+            <h1 class="text-2xl font-black text-white italic">المساعد الآلي الشامل</h1>
+            <p id="ai-status" class="text-xs text-zinc-500 mt-2 h-8">أنا عقل المنظومة.. كيف يمكنني توجيهك الآن؟</p>
         </div>
 
-        <div class="glass-card glow-emerald rounded-[3rem] p-10 text-center mb-8 relative">
-            <div class="text-[10px] tracking-[0.4em] text-zinc-600 mb-2 font-mono">NET REVENUE FLOW</div>
-            <div class="text-6xl font-black text-white font-mono tracking-tighter mb-4" id="main-counter">842,501</div>
-            <div class="flex justify-center gap-6 text-xs border-t border-white/5 pt-6 mt-4">
-                <div class="text-emerald-500 font-bold tracking-widest uppercase text-[10px]">Active: $1,420</div>
-                <div class="text-blue-500 font-bold tracking-widest uppercase text-[10px]">Status: Pro</div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-4">
-            <button onclick="aiGuide('health')" class="glass-card glow-blue p-5 rounded-3xl flex items-center justify-between group transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="h-10 w-10 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500"><i class="fas fa-heartbeat"></i></div>
-                    <div class="text-right"><p class="text-xs font-bold text-white">قطاع الصحة</p><p class="text-[9px] text-zinc-500 tracking-tight">أبحاث ياندكس للعيش المديد</p></div>
+        <div class="grid grid-cols-1 gap-4 max-w-sm mx-auto">
+            <button onclick="aiAction('health')" class="btn-action glass p-5 rounded-[2rem] flex items-center justify-between group">
+                <div class="flex items-center gap-4 text-right">
+                    <i class="fas fa-heartbeat text-red-500 text-xl"></i>
+                    <div><p class="text-xs font-bold">تفعيل رادار الصحة</p><p class="text-[9px] text-zinc-500">سحب ترندات ياندكس الطبية</p></div>
                 </div>
-                <i class="fas fa-chevron-left text-[10px] text-zinc-700 group-hover:text-blue-500 transition"></i>
+                <i class="fas fa-bolt text-[10px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
             </button>
+
+            <button onclick="aiAction('food')" class="btn-action glass p-5 rounded-[2rem] flex items-center justify-between group">
+                <div class="flex items-center gap-4 text-right">
+                    <i class="fas fa-apple-alt text-amber-500 text-xl"></i>
+                    <div><p class="text-xs font-bold">تفعيل رادار الغذاء</p><p class="text-[9px] text-zinc-500">تحليل جودة الغذاء الرقمي</p></div>
+                </div>
+                <i class="fas fa-bolt text-[10px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
+            </button>
+        </div>
+
+        <div class="mt-10 glass rounded-[2.5rem] p-8 text-center">
+            <p class="text-[9px] tracking-widest text-zinc-600 mb-1">REVENUE FLOW</p>
+            <div id="counter" class="text-5xl font-black text-white font-mono tracking-tighter">842,501</div>
         </div>
     </main>
 
-    <nav class="fixed bottom-8 left-6 right-6 h-20 glass-card rounded-[2.5rem] flex justify-around items-center px-6 z-[200]">
-        <button onclick="tab('analytics', this)" class="text-zinc-600 flex flex-col items-center gap-1"><i class="fas fa-satellite-dish"></i><span class="text-[7px] font-bold">بصيرة</span></button>
-        <button onclick="tab('blog', this)" class="text-zinc-600 flex flex-col items-center gap-1"><i class="fas fa-newspaper"></i><span class="text-[7px] font-bold">المدونة</span></button>
-        <button onclick="tab('home', this)" class="nav-active flex flex-col items-center gap-1"><i class="fas fa-brain text-xl"></i><span class="text-[7px] font-bold">العقل</span></button>
-        <button onclick="tab('security', this)" class="text-zinc-600 flex flex-col items-center gap-1"><i class="fas fa-shield-alt"></i><span class="text-[7px] font-bold">شقائق</span></button>
-        <button onclick="tab('elite', this)" class="text-zinc-600 flex flex-col items-center gap-1"><i class="fas fa-crown"></i><span class="text-[7px] font-bold">إليت</span></button>
+    <section id="blog" class="page p-6">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-black text-white italic">النتائج الذكية</h2>
+            <button onclick="tab('home', document.querySelector('nav button:nth-child(3)'))" class="text-[10px] text-emerald-500">رجوع للمساعد</button>
+        </div>
+        <div id="content-display" class="space-y-4">
+            </div>
+    </section>
+
+    <nav class="fixed bottom-8 left-6 right-6 h-20 glass rounded-[2.5rem] flex justify-around items-center px-6 z-[200]">
+        <button onclick="tab('analytics', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-chart-bar"></i></button>
+        <button onclick="tab('blog', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-rss"></i></button>
+        <button onclick="tab('home', this)" class="nav-active flex flex-col items-center scale-110"><i class="fas fa-brain text-2xl"></i></button>
+        <button onclick="tab('security', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-user-shield"></i></button>
+        <button onclick="tab('elite', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-gem"></i></button>
     </nav>
 
     <script>
+        // نظام التبديل (الأعصاب المركزية)
         function tab(id, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(id).classList.add('active-page');
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('nav-active'));
-            btn.classList.add('nav-active');
+            document.querySelectorAll('nav button').forEach(b => {
+                b.classList.remove('nav-active', 'scale-110');
+                b.classList.add('text-zinc-600');
+            });
+            btn.classList.add('nav-active', 'scale-110');
+            btn.classList.remove('text-zinc-600');
             window.scrollTo(0,0);
         }
 
-        // محرك العداد الآلي ليل نهار
-        let visitors = 842501;
+        // محرك المساعد الآلي (العمل الفوري)
+        const dataCloud = {
+            health: [
+                {t: "ترند ياندكس: ثورة في إطالة العمر", d: "اكتشاف جيني في روسيا يغير مفهوم الشيخوخة.."},
+                {t: "الصحة الرقمية", d: "كيف تحمي عينيك من شاشات التداول ليل نهار.."}
+            ],
+            food: [
+                {t: "أغذية العقل الخارقة", d: "قائمة الأطعمة التي تزيد الذكاء بنسبة 20%.."},
+                {t: "برمجة الغذاء", d: "لماذا يتجه مبرمجو النخبة للنظام الغذائي النباتي؟"}
+            ]
+        };
+
+        function aiAction(type) {
+            const status = document.getElementById('ai-status');
+            const radar = document.getElementById('radar');
+            
+            status.innerText = `جاري سحب بيانات ${type} من العقل السحابي...`;
+            radar.innerText = `[CONNECTED]: FETCHING ${type.toUpperCase()} DATA FROM GLOBAL NODES...`;
+
+            setTimeout(() => {
+                const container = document.getElementById('content-display');
+                container.innerHTML = dataCloud[type].map(item => `
+                    <div class="glass p-6 rounded-[2rem] border-r-2 border-emerald-500 animate-fadeIn">
+                        <div class="text-[8px] text-emerald-500 font-bold mb-2 uppercase">${type} SOURCE: YANDEX/GOOGLE</div>
+                        <h3 class="text-white font-bold mb-2 leading-tight">${item.t}</h3>
+                        <p class="text-[10px] text-zinc-500 leading-relaxed">${item.d}</p>
+                    </div>
+                `).join('');
+                
+                // الانتقال الفوري لصفحة النتائج
+                tab('blog', document.querySelector('nav button:nth-child(2)'));
+                status.innerText = "تم عرض النتائج بنجاح لسيادتكم.";
+            }, 1200);
+        }
+
+        // عداد القلب (تحديث ليل نهار)
+        let count = 842501;
         setInterval(() => {
-            visitors += Math.floor(Math.random() * 8);
-            document.getElementById('main-counter').innerText = visitors.toLocaleString();
-        }, 4000);
+            count += Math.floor(Math.random() * 7);
+            document.getElementById('counter').innerText = count.toLocaleString();
+        }, 3000);
     </script>
 </body>
 </html>
