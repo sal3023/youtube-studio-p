@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.M Studio - الخزنة</title>
+    <title>S.M Studio - المطور</title>
     <style>
         :root { --main-color: #007bff; --bg-color: #121212; --panel-bg: #1e1e1e; --text-color: #e0e0e0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        /* الرأس مع زر الإعدادات */
+        /* الرأس */
         header { background: #000; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--main-color); }
         h1 { margin: 0; font-size: 1.1rem; color: #fff; }
-        .settings-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #fff; transition: 0.3s; }
-        .settings-btn:hover { color: var(--main-color); transform: rotate(90deg); }
+        .settings-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #fff; }
 
-        /* نافذة الخزنة السرية */
+        /* نافذة الخزنة */
         #vaultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
         .vault-box { background: #222; padding: 25px; border-radius: 10px; width: 85%; border: 2px solid var(--main-color); text-align: center; }
-        .vault-input { width: 90%; padding: 10px; background: #333; color: #0f0; border: 1px solid #555; border-radius: 5px; font-family: monospace; margin: 15px 0; }
+        .vault-input { width: 90%; padding: 10px; background: #333; color: #0f0; border: 1px solid #555; border-radius: 5px; margin: 15px 0; }
         
-        /* بقية التصميم */
+        /* القوائم */
         .nav-tabs { display: flex; justify-content: space-around; background: #222; padding: 5px; }
         .nav-btn { background: none; border: none; color: #888; padding: 10px; font-weight: bold; cursor: pointer; flex: 1; border-bottom: 3px solid transparent; }
         .nav-btn.active { color: var(--main-color); border-bottom-color: var(--main-color); }
+
+        /* المحتوى */
         .content-area { flex: 1; overflow-y: auto; padding: 20px; display: none; }
         .content-area.active { display: block; animation: fadeIn 0.5s; }
         .card { background: var(--panel-bg); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
@@ -36,24 +37,24 @@
 
     <div id="vaultModal">
         <div class="vault-box">
-            <h3>🔐 الخزنة السرية</h3>
-            <p style="color:#aaa; font-size:0.9rem;">ضع مفتاح API هنا وسيتم حفظه في جهازك بأمان ولن يظهر في الكود.</p>
+            <h3>🔐 ضبط المفتاح</h3>
+            <p style="color:#aaa; font-size:0.9rem;">أدخل مفتاح API مرة واحدة هنا:</p>
             <input type="password" id="apiKeyInput" class="vault-input" placeholder="AIzaSy...">
-            <button class="action-btn" onclick="saveKey()">حفظ المفتاح وإغلاق</button>
-            <button onclick="closeVault()" style="background:none; border:none; color:#f00; margin-top:10px; cursor:pointer;">إغلاق</button>
+            <button class="action-btn" onclick="saveKey()">حفظ وتشغيل</button>
+            <button onclick="closeVault()" style="background:none; border:none; color:#f00; margin-top:10px;">إغلاق</button>
         </div>
     </div>
 
     <header>
-        <h1>S.M Studio Pro 🚀</h1>
+        <h1>S.M Studio Pro</h1>
         <button class="settings-btn" onclick="openVault()">⚙️</button>
     </header>
 
     <div class="nav-tabs">
-        <button class="nav-btn active" onclick="showTab('blog')">المقالات</button>
-        <button class="nav-btn" onclick="showTab('trend')">الترند</button>
-        <button class="nav-btn" onclick="showTab('ads')">التسويق</button>
-        <button class="nav-btn" onclick="showTab('chat')">المساعد</button>
+        <button class="nav-btn active" onclick="showTab('blog')">مقال</button>
+        <button class="nav-btn" onclick="showTab('trend')">ترند</button>
+        <button class="nav-btn" onclick="showTab('ads')">إعلان</button>
+        <button class="nav-btn" onclick="showTab('chat')">شات</button>
     </div>
 
     <div id="blog" class="content-area active">
@@ -66,7 +67,7 @@
 
     <div id="trend" class="content-area">
         <div class="card">
-            <input type="text" id="trendTopic" placeholder="المجال (مثل: كرة القدم)...">
+            <input type="text" id="trendTopic" placeholder="المجال (مثل: التجارة)...">
             <button class="action-btn" onclick="analyzeTrend()">📊 تحليل الترند</button>
             <div id="trendResult" class="result-box">النتيجة...</div>
         </div>
@@ -82,7 +83,7 @@
 
     <div id="chat" class="content-area">
         <div class="card">
-            <div id="chatBox" class="result-box" style="height: 300px; overflow-y: scroll; margin-bottom: 10px;">أهلاً بك.</div>
+            <div id="chatBox" class="result-box" style="height: 300px; overflow-y: scroll; margin-bottom: 10px;">مرحباً بك.</div>
             <div style="display: flex; gap: 5px;">
                 <input type="text" id="chatInput" placeholder="اكتب..." style="margin: 0;">
                 <button class="action-btn" style="width: 80px;" onclick="sendChat()">إرسال</button>
@@ -91,42 +92,17 @@
     </div>
 
     <script>
-        // دالة جلب المفتاح من الخزنة
-        function getApiKey() {
-            return localStorage.getItem("my_secret_key");
-        }
-
-        // إدارة الخزنة
-        function openVault() {
-            document.getElementById('vaultModal').style.display = 'flex';
-            const savedKey = getApiKey();
-            if(savedKey) document.getElementById('apiKeyInput').value = savedKey;
-        }
-
-        function closeVault() {
-            document.getElementById('vaultModal').style.display = 'none';
-        }
-
+        function getApiKey() { return localStorage.getItem("my_secret_key"); }
+        function openVault() { document.getElementById('vaultModal').style.display = 'flex'; if(getApiKey()) document.getElementById('apiKeyInput').value = getApiKey(); }
+        function closeVault() { document.getElementById('vaultModal').style.display = 'none'; }
         function saveKey() {
             const key = document.getElementById('apiKeyInput').value.trim();
-            if(key.length > 10) {
-                localStorage.setItem("my_secret_key", key);
-                alert("✅ تم حفظ المفتاح في الخزنة بنجاح!");
-                closeVault();
-            } else {
-                alert("❌ المفتاح يبدو قصيراً أو غير صحيح");
-            }
+            if(key.length > 10) { localStorage.setItem("my_secret_key", key); alert("✅ تم الحفظ!"); closeVault(); } 
+            else { alert("❌ المفتاح خطأ"); }
         }
 
-        // التحقق عند البدء
-        window.onload = function() {
-            if(!getApiKey()) {
-                // إذا لم يوجد مفتاح، افتح الخزنة تلقائياً
-                setTimeout(openVault, 1000);
-            }
-        };
+        window.onload = function() { if(!getApiKey()) setTimeout(openVault, 1000); };
 
-        // --- وظائف الذكاء الاصطناعي ---
         function showTab(tabId) {
             document.querySelectorAll('.content-area').forEach(div => div.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -134,32 +110,31 @@
             event.target.classList.add('active');
         }
 
+        // 🟢🟢 هنا كان الخطأ وتم التعديل لاستخدام Gemini Pro المستقر 🟢🟢
         async function callGemini(prompt, resultElementId) {
             const resultBox = document.getElementById(resultElementId);
             const key = getApiKey();
+            if (!key) { openVault(); return; }
 
-            if (!key) {
-                resultBox.innerText = "⛔ توقف: يجب وضع المفتاح في الخزنة (اضغط ⚙️)";
-                openVault();
-                return;
-            }
-
-            resultBox.innerText = "⏳ جاري العمل...";
+            resultBox.innerText = "⏳ جاري المعالجة...";
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+                // ✅ استخدام gemini-pro بدلاً من flash
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${key}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
+
                 const data = await response.json();
+                
                 if (data.error) {
-                    resultBox.innerText = "❌ خطأ: " + data.error.message;
+                    resultBox.innerText = "❌ خطأ من جوجل: " + data.error.message;
                 } else {
                     resultBox.innerHTML = data.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
                 }
             } catch (error) {
-                resultBox.innerText = "❌ تأكد من الإنترنت!";
+                resultBox.innerText = "❌ خطأ في الاتصال!";
             }
         }
 
@@ -175,7 +150,7 @@
 
         function generateAd() {
             const product = document.getElementById('adProduct').value;
-            if(product) callGemini(`اكتب إعلاناً تسويقياً مقنعاً لمنتج: ${product}`, 'adResult');
+            if(product) callGemini(`اكتب إعلاناً تسويقياً جذاباً لمنتج: ${product}`, 'adResult');
         }
 
         async function sendChat() {
@@ -186,12 +161,12 @@
             chatBox.innerHTML += `<br><b>أنت:</b> ${text}`;
             input.value = '';
             
-            // استخدام نفس المنطق مع الخزنة
             const key = getApiKey();
             if(!key) { openVault(); return; }
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+                // ✅ استخدام gemini-pro هنا أيضاً
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${key}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ contents: [{ parts: [{ text: text }] }] })
