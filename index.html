@@ -3,372 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.M Global AI Studio Pro | منصة الأتمتة الاحترافية</title>
-    <!-- استدعاء الأيقونات والخطوط -->
+    <title>S.M GLOBAL AI | tosh5.shop Automation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #ff4d4d;
             --secondary: #00d2ff;
-            --accent: #7d5fff;
-            --bg: #050510;
-            --card-bg: rgba(20, 20, 35, 0.8);
-            --text: #e0e0e0;
-            --glass: rgba(255, 255, 255, 0.05);
+            --accent: #ff9f43;
+            --bg: #0a0a1a;
+            --card-bg: rgba(20, 20, 40, 0.85);
+            --text: #ffffff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
 
         body {
             background: var(--bg);
-            background-image: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #050510 100%);
+            background-image: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
             color: var(--text);
             min-height: 100vh;
-            padding-bottom: 50px;
-            overflow-x: hidden;
         }
 
-        /* الهيدر الاحترافي */
+        /* الهيدر مع رابط المدونة */
         .glass-header {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
             padding: 15px 5%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            border-bottom: 2px solid var(--secondary);
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        .logo { font-size: 24px; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+        .logo { font-size: 22px; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .blog-link { color: var(--secondary); text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid var(--secondary); padding: 5px 15px; border-radius: 20px; transition: 0.3s; }
+        .blog-link:hover { background: var(--secondary); color: #000; }
 
-        #clock { font-family: 'Courier New', monospace; color: var(--secondary); font-weight: bold; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 10px; border: 1px solid var(--secondary); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
 
-        /* شريط الأخبار */
-        .news-bar {
-            background: rgba(255, 77, 77, 0.1);
-            color: var(--primary);
-            padding: 10px;
-            text-align: center;
-            font-size: 13px;
-            margin: 15px 5%;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 77, 77, 0.2);
-            overflow: hidden;
-        }
+        .card { background: var(--card-bg); border-radius: 25px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); position: relative; transition: 0.4s; }
+        .card:hover { border-color: var(--secondary); box-shadow: 0 0 30px rgba(0,210,255,0.2); transform: translateY(-5px); }
 
-        /* الحاوية الرئيسية */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 25px;
-            padding: 20px;
-        }
+        h2 { font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--secondary); }
+        
+        .input-box { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; }
+        .input-box:focus { border-color: var(--primary); }
 
-        /* الكروت */
-        .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-        }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; color: #fff; }
+        .btn-primary { background: linear-gradient(45deg, var(--primary), #ff7979); }
+        .btn-secondary { background: linear-gradient(45deg, var(--secondary), #48dbfb); }
+        .btn-orange { background: linear-gradient(45deg, var(--accent), #feca57); }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--secondary);
-            box-shadow: 0 15px 40px rgba(0, 210, 255, 0.15);
-        }
+        .result-area { background: rgba(0,0,0,0.5); border-radius: 15px; padding: 15px; margin-top: 15px; min-height: 100px; border-right: 4px solid var(--primary); font-size: 14px; white-space: pre-wrap; color: #ccc; }
 
-        .card-icon { 
-            width: 50px; height: 50px; background: var(--glass); 
-            border-radius: 12px; display: flex; align-items: center; 
-            justify-content: center; font-size: 24px; color: var(--secondary);
-            margin-bottom: 20px;
-        }
+        .tag { display: inline-block; background: rgba(0,210,255,0.1); color: var(--secondary); padding: 5px 12px; border-radius: 50px; font-size: 12px; margin: 4px; border: 1px solid var(--secondary); cursor: pointer; }
+        .tag:hover { background: var(--secondary); color: #000; }
 
-        h2 { font-size: 1.3rem; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 12px; }
+        #thumbPre { width: 100%; border-radius: 15px; margin-top: 15px; display: none; }
 
-        /* المدخلات */
-        .input-box {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 14px 18px;
-            border-radius: 14px;
-            color: white;
-            margin-bottom: 15px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .input-box:focus { border-color: var(--secondary); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
-
-        /* الأزرار */
-        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
-
-        .btn {
-            flex: 1;
-            padding: 14px;
-            border-radius: 14px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: 0.3s;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .btn-primary { background: linear-gradient(45deg, var(--primary), #ff7675); }
-        .btn-secondary { background: linear-gradient(45deg, var(--secondary), var(--accent)); }
-        .btn-dark { background: rgba(255,255,255,0.1); }
-        .btn-dark:hover { background: rgba(255,255,255,0.2); }
-
-        /* منطقة النتائج */
-        .result-area {
-            background: rgba(0,0,0,0.4);
-            border-radius: 14px;
-            padding: 18px;
-            margin-top: 15px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            min-height: 50px;
-            border-right: 4px solid var(--secondary);
-            white-space: pre-wrap;
-        }
-
-        /* التاجات (SEO Tags) */
-        .tag {
-            display: inline-block;
-            background: rgba(125, 95, 255, 0.2);
-            color: var(--secondary);
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 12px;
-            margin: 4px;
-            cursor: pointer;
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            transition: 0.2s;
-        }
-
-        .tag:hover { background: var(--secondary); color: #000; transform: scale(1.05); }
-
-        /* صورة اليوتيوب */
-        .thumb-preview { width: 100%; border-radius: 15px; margin-top: 15px; border: 2px solid var(--glass); display: none; }
-
-        /* الأنيميشن */
-        .loading { display: inline-block; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
-
-        /* التجاوب مع الجوال */
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; padding: 10px; }
-            .logo { font-size: 20px; }
-            .glass-header { padding: 10px 15px; }
-        }
+        .loading { animation: pulse 1s infinite; }
+        @keyframes pulse { 0% {opacity: 0.5;} 50% {opacity: 1;} 100% {opacity: 0.5;} }
     </style>
 </head>
 <body>
 
-<!-- الهيدر -->
 <div class="glass-header">
-    <div class="logo"><i class="fab fa-youtube"></i> S.M GLOBAL AI PRO</div>
-    <div id="clock">00:00:00</div>
-</div>
-
-<!-- شريط الترند -->
-<div class="news-bar">
-    <marquee scrollamount="6">
-        <i class="fas fa-fire"></i> تحديثات حية: تم ربط محرك بحث جوجل ويوتيوب - مولد السيناريو بذكاء Gemini AI جاهز - أتمتة n8n محدثة لعام 2024
-    </marquee>
+    <div class="logo"><i class="fas fa-robot"></i> tosh5 AI AUTOMATION</div>
+    <a href="https://www.tosh5.shop" target="_blank" class="blog-link"><i class="fas fa-external-link-alt"></i> زيارة المدونة</a>
 </div>
 
 <div class="container">
 
-    <!-- 1. مولد المحتوى والسيناريو -->
+    <!-- 1. مولد محتوى بلوجر (Special for tosh5.shop) -->
     <div class="card">
-        <div class="card-icon"><i class="fas fa-magic"></i></div>
-        <h2>مولد المحتوى الذكي</h2>
-        <input type="text" id="aiPrompt" class="input-box" placeholder="ما هو موضوع الفيديو؟ (مثال: تعلم البرمجة)">
+        <div class="card-icon" style="color: var(--accent); font-size: 30px; margin-bottom: 10px;"><i class="fab fa-blogger"></i></div>
+        <h2>مولد تدوينات Blogger</h2>
+        <input type="text" id="blogTopic" class="input-box" placeholder="عنوان الفيديو أو الموضوع...">
         <div class="btn-group">
-            <button class="btn btn-primary" onclick="generateAI('script')"><i class="fas fa-pen-nib"></i> كتابة سكربت</button>
-            <button class="btn btn-secondary" onclick="generateAI('titles')"><i class="fas fa-bolt"></i> عناوين جذابة</button>
+            <button class="btn btn-orange" onclick="createBlogPost()"><i class="fas fa-magic"></i> إنشاء كود التدوينة HTML</button>
         </div>
-        <div id="ai-res" class="result-area">بانتظار إدخال موضوعك...</div>
+        <div id="blog-res" class="result-area">سيظهر كود التدوينة الجاهز هنا...</div>
+        <button id="copyBlogBtn" class="btn btn-secondary" style="margin-top:10px; display:none;" onclick="copyBlogCode()">نسخ الكود للنشر</button>
     </div>
 
-    <!-- 2. محرك SEO وكلمات البحث (بيانات حقيقية) -->
+    <!-- 2. محلل يوتيوب والتاجات -->
     <div class="card">
-        <div class="card-icon"><i class="fas fa-search-dollar"></i></div>
-        <h2>أدوات SEO والترندات</h2>
-        <input type="text" id="seoInput" class="input-box" placeholder="اكتب كلمة مفتاحية...">
-        <button class="btn btn-secondary" style="width: 100%;" onclick="getRealTags()">
-            <i class="fas fa-project-diagram"></i> استخراج الكلمات الأكثر بحثاً الآن
-        </button>
-        <div id="tags-res" class="result-area">أدخل كلمة لعرض الكلمات المقترحة من جوجل ويوتيوب.</div>
-    </div>
-
-    <!-- 3. مركز الأتمتة n8n & Blogger -->
-    <div class="card">
-        <div class="card-icon"><i class="fas fa-robot"></i></div>
-        <h2>مركز الأتمتة الشامل</h2>
-        <input type="text" id="rssInput" class="input-box" placeholder="رابط قناة يوتيوب أو RSS">
+        <div class="card-icon" style="color: var(--primary); font-size: 30px; margin-bottom: 10px;"><i class="fab fa-youtube"></i></div>
+        <h2>محلل الفيديو و SEO</h2>
+        <input type="text" id="ytUrl" class="input-box" placeholder="رابط الفيديو...">
         <div class="btn-group">
-            <button class="btn btn-dark" onclick="copyWorkflow('blogger')"><i class="fab fa-blogger"></i> n8n ➔ Blogger</button>
-            <button class="btn btn-dark" onclick="copyWorkflow('wp')"><i class="fab fa-wordpress"></i> n8n ➔ WP</button>
+            <button class="btn btn-primary" onclick="analyzeVideo()"><i class="fas fa-search"></i> تحليل الفيديو</button>
+            <button class="btn btn-secondary" onclick="getRealTags()"><i class="fas fa-tags"></i> جلب التاجات</button>
         </div>
-        <div class="result-area" style="font-size: 11px; color: #aaa; border-right-color: #555;">
-            هذه الأداة تولد كود JSON لبرنامج n8n لربط قناتك بمدونتك ونشر الفيديوهات تلقائياً فور نزولها.
-        </div>
+        <img id="thumbPre">
+        <div id="yt-res" class="result-area">النتائج...</div>
     </div>
 
-    <!-- 4. محلل الفيديو والصور المصغرة -->
+    <!-- 3. كاتب السكربتات الذكي -->
     <div class="card">
-        <div class="card-icon"><i class="fas fa-eye"></i></div>
-        <h2>محلل الفيديو و الصور</h2>
-        <input type="text" id="ytUrl" class="input-box" placeholder="ضع رابط الفيديو هنا...">
-        <button class="btn btn-primary" style="width: 100%;" onclick="analyzeVideo()">
-            <i class="fas fa-download"></i> تحليل وجلب الصورة المصغرة
-        </button>
-        <img id="thumbPre" class="thumb-preview">
-        <div id="yt-res" class="result-area">سيظهر التحليل هنا...</div>
-        <div id="dl-area" style="margin-top: 10px;"></div>
+        <div class="card-icon" style="color: var(--secondary); font-size: 30px; margin-bottom: 10px;"><i class="fas fa-brain"></i></div>
+        <h2>مساعد المحتوى AI</h2>
+        <input type="text" id="aiPrompt" class="input-box" placeholder="موضوع الفيديو...">
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="generateAI('script')"><i class="fas fa-file-alt"></i> سكربت كامل</button>
+            <button class="btn btn-primary" onclick="generateAI('titles')"><i class="fas fa-heading"></i> عناوين جذابة</button>
+        </div>
+        <div id="ai-res" class="result-area">بانتظار الإدخال...</div>
     </div>
 
 </div>
 
 <script>
-    // تحديث الساعة الرقمية
-    setInterval(() => {
-        const now = new Date();
-        document.getElementById('clock').innerText = now.getHours().toString().padStart(2, '0') + ":" + 
-                                                     now.getMinutes().toString().padStart(2, '0') + ":" + 
-                                                     now.getSeconds().toString().padStart(2, '0');
-    }, 1000);
+    // 1. وظيفة إنشاء تدوينة بلوجر احترافية لـ tosh5.shop
+    async function createBlogPost() {
+        const topic = document.getElementById('blogTopic').value;
+        const res = document.getElementById('blog-res');
+        const copyBtn = document.getElementById('copyBlogBtn');
+        
+        if(!topic) return alert("أدخل موضوعاً أولاً!");
 
-    // 1. مولد الذكاء الاصطناعي (Gemini AI Simulation)
-    function generateAI(type) {
-        const prompt = document.getElementById('aiPrompt').value;
-        const res = document.getElementById('ai-res');
-        if(!prompt) return showToast("يرجى كتابة موضوع!");
-
-        res.innerHTML = '<span class="loading">⏳ جاري المعالجة بواسطة Gemini AI...</span>';
+        res.innerHTML = '<span class="loading">⏳ جاري تنسيق التدوينة بأسلوب SEO...</span>';
         
         setTimeout(() => {
-            if(type === 'titles') {
-                const titles = [
-                    `🚀 سر الـ ${prompt} الذي سيغير حياتك في 2024`,
-                    `كيف بدأت في ${prompt} وحققت نتائج مذهلة؟`,
-                    `أخطاء كارثية يقع فيها الجميع عند تجربة ${prompt}`,
-                    `دليل المبتدئين الشامل لاحتراف ${prompt} في أسبوع`,
-                    `أفضل 5 أدوات مجانية لـ ${prompt} لا يعرفها أحد`
-                ];
-                res.innerHTML = titles.join('\n\n');
-            } else {
-                res.innerHTML = `🎬 <b>سكربت فيديو: ${prompt}</b>\n\n` +
-                                `<b>المقدمة:</b> "هل سألت نفسك يوماً كيف يمكنك إتقان ${prompt}؟ في هذا الفيديو سأعطيك الخلاصة..."\n\n` +
-                                `<b>المحتوى:</b> "أولاً، نبدأ بـ... ثانياً، ننتقل إلى... ثالثاً، الأداة السرية هي..."\n\n` +
-                                `<b>الخاتمة:</b> "إذا استفدت من موضوع ${prompt}، لا تنسَ اللايك والاشتراك!"`;
-            }
-            showToast("✅ تم توليد المحتوى!");
-        }, 1200);
+            const htmlCode = `
+<!-- التدوينة مولدة بواسطة S.M GLOBAL PRO لمدونة tosh5.shop -->
+<div dir="rtl" style="text-align: right;">
+    <h2 style="color: #ff4d4d;">${topic}</h2>
+    <p>مرحباً بكم في مدونة <b>tosh5.shop</b>. في هذا المقال سنتحدث بالتفصيل عن ${topic} وكيف يمكنك الاستفادة منه...</p>
+    
+    <div style="text-align: center; margin: 20px 0;">
+        <!-- مكان الفيديو -->
+        <div class="video-container">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID_HERE" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <h3>لماذا يجب أن تهتم بـ ${topic}؟</h3>
+    <ul>
+        <li>زيادة الإنتاجية والأتمتة.</li>
+        <li>الحصول على نتائج احترافية بسرعة.</li>
+        <li>مواكبة ترندات عام 2024.</li>
+    </ul>
+
+    <p>للمزيد من الشروحات التقنية، تابعوا تحديثاتنا المستمرة على <a href="https://www.tosh5.shop">tosh5.shop</a>.</p>
+    
+    <div style="background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 20px;">
+        <small>الكلمات المفتاحية: ${topic}, أتمتة، تقنية، tosh5، يوتيوب</small>
+    </div>
+</div>`;
+            res.innerText = htmlCode;
+            copyBtn.style.display = "block";
+        }, 1500);
     }
 
-    // 2. جلب تاجات SEO حقيقية من جوجل ويوتيوب
-    async function getRealTags() {
-        const input = document.getElementById('seoInput').value;
-        const res = document.getElementById('tags-res');
-        
-        if(!input) return showToast("اكتب كلمة مفتاحية!");
-
-        res.innerHTML = '<span class="loading">🔍 جاري جلب البيانات البحثية من يوتيوب...</span>';
-
-        try {
-            // استخدام بروكسي AllOrigins لجلب اقتراحات البحث من جوجل ويوتيوب مباشرة
-            const resp = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${input}`)}`);
-            const data = await resp.json();
-            const suggestions = JSON.parse(data.contents)[1];
-
-            if (suggestions.length === 0) {
-                res.innerHTML = "❌ لم يتم العثور على نتائج للكلمة المدخلة.";
-                return;
-            }
-
-            res.innerHTML = `<p style="font-size:12px; margin-bottom:10px; color:var(--secondary);">💡 كلمات يبحث عنها الناس الآن بخصوص (${input}):</p>`;
-            suggestions.forEach(tag => {
-                res.innerHTML += `<span class="tag" onclick="copyText('${tag}')">${tag}</span>`;
-            });
-            showToast("✅ تم جلب الترندات!");
-        } catch (e) {
-            res.innerHTML = "❌ خطأ في الاتصال. حاول مرة أخرى.";
-        }
-    }
-
-    // 3. تحليل الفيديو وتحميل الصورة المصغرة
+    // 2. تحليل الفيديو
     async function analyzeVideo() {
         const url = document.getElementById('ytUrl').value;
         const res = document.getElementById('yt-res');
         const img = document.getElementById('thumbPre');
-        const dlArea = document.getElementById('dl-area');
 
-        if(!url || !url.includes('youtu')) return showToast("ضع رابط يوتيوب صحيح!");
+        if(!url.includes('youtu')) return alert("الرابط غير صحيح!");
+
+        res.innerHTML = "⏳ جاري التحليل...";
+        const videoId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+        
+        img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+        img.style.display = "block";
+        
+        const metaResp = await fetch(`https://noembed.com/embed?url=${url}`);
+        const metaData = await metaResp.json();
+        
+        res.innerHTML = `✅ <b>العنوان:</b> ${metaData.title}\n👤 <b>القناة:</b> ${metaData.author_name}\n🖼️ الصورة جاهزة للتحميل.`;
+    }
+
+    // 3. جلب التاجات
+    async function getRealTags() {
+        const input = document.getElementById('ytUrl').value || "تقنية";
+        const res = document.getElementById('yt-res');
+        res.innerHTML = "🔍 جاري جلب التاجات من يوتيوب...";
         
         try {
-            res.innerHTML = '<span class="loading">⏳ جاري استخراج البيانات...</span>';
-            const videoId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
-            const thumbUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            const resp = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${input}`)}`);
+            const data = await resp.json();
+            const suggestions = JSON.parse(data.contents)[1];
             
-            // جلب العنوان عبر oEmbed
-            const metaResp = await fetch(`https://noembed.com/embed?url=${url}`);
-            const metaData = await metaResp.json();
-
-            img.src = thumbUrl;
-            img.style.display = "block";
-            res.innerHTML = `✅ <b>العنوان:</b> ${metaData.title || "فيديو يوتيوب"}\n👤 <b>القناة:</b> ${metaData.author_name || "غير معروف"}`;
-            dlArea.innerHTML = `<button class="btn btn-secondary" style="width:100%" onclick="window.open('${thumbUrl}')"><i class="fas fa-image"></i> تحميل الصورة بجودة HD</button>`;
-            showToast("✅ تم تحليل الفيديو!");
-        } catch(e) {
-            res.innerHTML = "❌ فشل تحليل الفيديو. تأكد من الرابط.";
-        }
+            res.innerHTML = "";
+            suggestions.forEach(s => {
+                res.innerHTML += `<span class="tag" onclick="copyText('${s}')">${s}</span>`;
+            });
+        } catch(e) { res.innerHTML = "خطأ في جلب البيانات."; }
     }
 
-    // 4. نسخ كود n8n Workflow
-    function copyWorkflow(target) {
-        const rss = document.getElementById('rssInput').value || "رابط_القناة_هنا";
-        const workflow = {
-            nodes: [
-                { type: 'n8n-nodes-base.rssFeedRead', parameters: { url: rss } },
-                { type: target === 'blogger' ? 'n8n-nodes-base.blogger' : 'n8n-nodes-base.wordpress', parameters: { title: "={{$json.title}}", content: "={{$json.link}}" } }
-            ]
-        };
-        copyText(JSON.stringify(workflow, null, 2));
-        alert("✅ تم نسخ كود الأتمتة! افتح برنامج n8n واعمل Paste (لصق) لإنشاء الربط فوراً.");
+    // 4. الذكاء الاصطناعي
+    function generateAI(type) {
+        const prompt = document.getElementById('aiPrompt').value;
+        const res = document.getElementById('ai-res');
+        if(!prompt) return alert("أدخل موضوعاً!");
+
+        res.innerHTML = "⏳ Gemini AI يفكر...";
+        setTimeout(() => {
+            if(type === 'titles') {
+                res.innerHTML = `1. سر الـ ${prompt} في 2024\n2. أسرار ${prompt} التي لا تعرفها\n3. كيف تصبح محترف ${prompt}`;
+            } else {
+                res.innerHTML = `🎬 مقدمة عن ${prompt}...\n📝 العرض: اشرح كيفية عمل ${prompt}...\n✅ الخاتمة: اشترك في tosh5.shop`;
+            }
+        }, 1000);
     }
 
-    // وظيفة النسخ
-    function copyText(text) {
-        navigator.clipboard.writeText(text);
-        showToast("تم النسخ إلى الحافظة 📋");
+    function copyBlogCode() {
+        const code = document.getElementById('blog-res').innerText;
+        navigator.clipboard.writeText(code);
+        alert("✅ تم نسخ كود HTML! اذهب لمدونة Blogger -> مشاركة جديدة -> عرض HTML -> ثم الصق الكود.");
     }
 
-    // نظام التنبيهات (Toasts)
-    function showToast(msg) {
-        const toast = document.createElement('div');
-        toast.style = "position:fixed; bottom:25px; left:50%; transform:translateX(-50%); background:var(--accent); color:white; padding:12px 25px; border-radius:50px; z-index:9999; font-size:14px; font-weight:bold; box-shadow:0 10px 30px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.2);";
-        toast.innerText = msg;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
+    function copyText(t) {
+        navigator.clipboard.writeText(t);
+        alert("تم نسخ: " + t);
     }
 </script>
 
