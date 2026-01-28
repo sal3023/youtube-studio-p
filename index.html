@@ -3,175 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.M Studio Pro</title>
+    <title>S.M Studio Pro - لوحة التحكم</title>
     <style>
-        :root { --main: #007bff; --bg: #121212; --dark: #1e1e1e; --text: #e0e0e0; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        
-        /* شاشة الترحيب وإدخال المفتاح */
-        #loginScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
-        .login-box { background: #222; padding: 30px; border-radius: 15px; border: 2px solid var(--main); width: 100%; max-width: 400px; text-align: center; }
-        .login-input { width: 90%; padding: 15px; margin: 20px 0; background: #333; border: 1px solid #555; color: #fff; border-radius: 8px; font-size: 16px; text-align: center; }
-        
-        /* التصميم العام */
-        header { background: #000; padding: 15px; text-align: center; border-bottom: 2px solid var(--main); display: flex; justify-content: space-between; align-items: center; }
-        .reset-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; }
-        
-        .nav { display: flex; background: #222; }
-        .nav-btn { flex: 1; padding: 15px; background: none; border: none; color: #888; border-bottom: 3px solid transparent; font-weight: bold; }
-        .nav-btn.active { color: var(--main); border-bottom-color: var(--main); }
-        
-        .page { flex: 1; padding: 20px; overflow-y: auto; display: none; }
-        .page.active { display: block; }
-        
-        .card { background: var(--dark); padding: 20px; border-radius: 10px; border: 1px solid #333; }
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; background: #2c2c2c; border: 1px solid #444; color: #fff; border-radius: 5px; box-sizing: border-box; }
-        button.action { width: 100%; padding: 15px; background: var(--main); color: #fff; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; margin-top: 10px; }
-        .result { margin-top: 20px; background: #252525; padding: 15px; border-radius: 8px; border-right: 4px solid var(--main); min-height: 50px; line-height: 1.6; white-space: pre-wrap; }
+        :root { --main: #007bff; --bg: #121212; --card: #1e1e1e; --text: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; text-align: center; }
+        .container { max-width: 600px; margin: auto; }
+        header { background: #000; padding: 15px; border-radius: 10px; border-bottom: 3px solid var(--main); margin-bottom: 20px; }
+        .tab-box { display: flex; gap: 5px; margin-bottom: 15px; }
+        .tab-btn { flex: 1; padding: 10px; background: #333; border: none; color: white; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        .tab-btn.active { background: var(--main); }
+        .panel { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #333; text-align: right; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #2c2c2c; border: 1px solid #444; color: white; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        button.main-btn { width: 100%; padding: 15px; background: var(--main); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer; }
+        #res { margin-top: 20px; padding: 15px; background: #252525; border-radius: 8px; line-height: 1.6; white-space: pre-wrap; border-right: 4px solid var(--main); display: none; }
     </style>
 </head>
 <body>
 
-    <div id="loginScreen">
-        <div class="login-box">
-            <h2 style="margin-top:0">🚀 تفعيل التطبيق</h2>
-            <p style="color:#aaa;">لضمان عمل التطبيق، أدخل مفتاح API الخاص بك الجديد هنا:</p>
-            <input type="text" id="apiKeyInput" class="login-input" placeholder="الصق المفتاح الذي يبدأ بـ AIzaSy...">
-            <button class="action" onclick="saveAndStart()">حفظ وبدء التشغيل</button>
-            <p style="font-size:12px; margin-top:15px; color:#555;">سيتم حفظه في هاتفك بأمان</p>
+    <div class="container">
+        <header>
+            <h1 style="margin:0; font-size: 1.5rem;">S.M Studio Pro 🚀</h1>
+            <p style="margin:5px 0 0; font-size: 0.8rem; color: #888;">الذكاء الاصطناعي بين يديك</p>
+        </header>
+
+        <div class="tab-box">
+            <button class="tab-btn active" onclick="setMode('blog')">📝 مقالات</button>
+            <button class="tab-btn" onclick="setMode('trend')">📈 ترند</button>
+            <button class="tab-btn" onclick="setMode('chat')">💬 شات</button>
         </div>
-    </div>
 
-    <header>
-        <button class="reset-btn" onclick="resetApp()">⚙️</button>
-        <h3>S.M Studio Pro</h3>
-        <div style="width:30px"></div>
-    </header>
-
-    <div class="nav">
-        <button class="nav-btn active" onclick="go('blog')">مقال</button>
-        <button class="nav-btn" onclick="go('trend')">ترند</button>
-        <button class="nav-btn" onclick="go('chat')">شات</button>
-    </div>
-
-    <div id="blog" class="page active">
-        <div class="card">
-            <h3 style="margin-top:0">كاتب المقالات</h3>
-            <input type="text" id="blogTitle" placeholder="عنوان المقال...">
-            <button class="action" onclick="askGemini('blog')">✍️ كتابة المقال</button>
-            <div id="blogRes" class="result">النتيجة ستظهر هنا...</div>
-        </div>
-    </div>
-
-    <div id="trend" class="page">
-        <div class="card">
-            <h3 style="margin-top:0">تحليل الترند</h3>
-            <input type="text" id="trendTitle" placeholder="المجال (مثلاً: الأخبار)...">
-            <button class="action" onclick="askGemini('trend')">📊 تحليل</button>
-            <div id="trendRes" class="result">النتيجة ستظهر هنا...</div>
-        </div>
-    </div>
-
-    <div id="chat" class="page">
-        <div class="card">
-            <div id="chatLog" class="result" style="height:300px; overflow-y:scroll; margin-bottom:15px;">مرحباً بك</div>
-            <input type="text" id="chatMsg" placeholder="اكتب رسالتك...">
-            <button class="action" onclick="askGemini('chat')">إرسال</button>
+        <div class="panel">
+            <div id="input-area">
+                <label id="label">ما هو موضوع المقال؟</label>
+                <input type="text" id="userInput" placeholder="مثلاً: الربح من يوتيوب 2026">
+            </div>
+            <button class="main-btn" onclick="startAction()">ابدأ العمل الآن ✨</button>
+            <div id="res"></div>
         </div>
     </div>
 
     <script>
-        let API_KEY = localStorage.getItem("my_gemini_key");
+        // المفتاح الذي أرسلته تم وضعه هنا بنجاح
+        const MY_API_KEY = "AIzaSyBObU3x9BNJB9hS0G0rML4D6bCzl2cfdgI";
+        let currentMode = 'blog';
 
-        // التأكد من وجود المفتاح عند الفتح
-        if (API_KEY && API_KEY.length > 20) {
-            document.getElementById('loginScreen').style.display = 'none';
-        }
-
-        function saveAndStart() {
-            const key = document.getElementById('apiKeyInput').value.trim();
-            if (key.length < 20) {
-                alert("❌ المفتاح قصير جداً! تأكد من نسخه كاملاً.");
-                return;
-            }
-            localStorage.setItem("my_gemini_key", key);
-            API_KEY = key;
-            document.getElementById('loginScreen').style.display = 'none';
-            alert("✅ تم التفعيل بنجاح!");
-        }
-
-        function resetApp() {
-            if(confirm("هل تريد تغيير مفتاح API؟")) {
-                localStorage.removeItem("my_gemini_key");
-                location.reload();
-            }
-        }
-
-        function go(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
+            
+            const labels = {
+                'blog': 'ما هو موضوع المقال الذي تريد كتابته؟',
+                'trend': 'عن أي مجال تريد تحليل الترند؟',
+                'chat': 'اكتب أي سؤال للذكاء الاصطناعي:'
+            };
+            document.getElementById('label').innerText = labels[mode];
         }
 
-        async function askGemini(type) {
-            if (!API_KEY) { location.reload(); return; }
+        async function startAction() {
+            const input = document.getElementById('userInput').value.trim();
+            const resBox = document.getElementById('res');
 
-            let prompt = "", outputId = "";
-            
-            if (type === 'blog') {
-                const topic = document.getElementById('blogTitle').value;
-                if(!topic) return;
-                prompt = `اكتب مقالاً طويلاً واحترافياً (SEO) بعنوان: ${topic}`;
-                outputId = 'blogRes';
-            } 
-            else if (type === 'trend') {
-                const topic = document.getElementById('trendTitle').value;
-                if(!topic) return;
-                prompt = `أعطني تحليل ترند وأفكار يوتيوب ناجحة في مجال: ${topic}`;
-                outputId = 'trendRes';
-            }
-            else if (type === 'chat') {
-                const msg = document.getElementById('chatMsg').value;
-                if(!msg) return;
-                prompt = msg;
-                document.getElementById('chatLog').innerHTML += `<br><b>أنت:</b> ${msg}`;
-                document.getElementById('chatMsg').value = '';
-                outputId = 'chatLog';
-            }
+            if (!input) return alert("الرجاء كتابة شيء أولاً!");
 
-            const outBox = document.getElementById(outputId);
-            if(type !== 'chat') outBox.innerText = "⏳ جاري الاتصال...";
+            resBox.style.display = "block";
+            resBox.innerText = "⏳ جاري التفكير والعمل... يرجى الانتظار...";
+
+            let finalPrompt = "";
+            if (currentMode === 'blog') finalPrompt = `اكتب مقالاً طويلاً ومنسقاً (SEO) حول: ${input}`;
+            else if (currentMode === 'trend') finalPrompt = `أعطني تحليل ترند وأفكار فيديوهات يوتيوب قوية لمجال: ${input}`;
+            else finalPrompt = input;
 
             try {
-                // نستخدم موديل gemini-1.5-flash لأنه الأسرع والأحدث
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                // استخدام الرابط المستقر v1 لضمان عدم حدوث خطأ Not Found
+                const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${MY_API_KEY}`;
+                
+                const response = await fetch(url, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: finalPrompt }] }] })
                 });
 
                 const data = await response.json();
 
                 if (data.error) {
-                    if(type !== 'chat') outBox.innerText = "❌ خطأ في المفتاح: " + data.error.message;
-                    else outBox.innerHTML += `<br><b style="color:red">خطأ: ${data.error.message}</b>`;
-                    
-                    // إذا كان الخطأ بسبب المفتاح، نعيد فتح شاشة الإدخال
-                    if(data.error.message.includes("API key")) {
-                        alert("المفتاح غير صحيح! أعد إدخاله.");
-                        resetApp();
-                    }
+                    resBox.innerHTML = `<b style="color:red">❌ خطأ:</b> ${data.error.message}`;
                 } else {
-                    const text = data.candidates[0].content.parts[0].text;
-                    if(type !== 'chat') outBox.innerHTML = text.replace(/\n/g, '<br>');
-                    else {
-                        outBox.innerHTML += `<br><b>Bot:</b> ${text}<hr>`;
-                        outBox.scrollTop = outBox.scrollHeight;
-                    }
+                    const output = data.candidates[0].content.parts[0].text;
+                    resBox.innerText = output;
                 }
             } catch (e) {
-                outBox.innerText = "❌ خطأ في الاتصال! تأكد من الإنترنت.";
+                resBox.innerText = "❌ حدث خطأ في الاتصال. تأكد من الإنترنت وحاول مجدداً.";
             }
         }
     </script>
