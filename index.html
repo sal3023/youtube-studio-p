@@ -3,106 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOSH5 AI PRO | المحرك الذكي</title>
+    <title>S.M AI PRO | المحرك الذكي</title>
     <style>
-        :root { --p: #ff4d4d; --s: #00d2ff; --bg: #050510; }
-        body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .box { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; border: 1px solid #333; max-width: 500px; margin: 20px auto; }
-        input { width: 90%; padding: 12px; border-radius: 10px; border: 1px solid #444; background: #000; color: #fff; margin-bottom: 10px; }
-        button { width: 90%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; margin: 5px; }
-        .btn-blue { background: var(--s); color: #000; }
-        .btn-red { background: var(--p); color: #fff; }
-        #log { margin-top: 20px; padding: 15px; border-radius: 10px; background: #111; font-size: 13px; min-height: 50px; border-right: 4px solid var(--s); text-align: right; white-space: pre-wrap; }
-        .status { font-size: 12px; color: #888; margin-bottom: 20px; }
+        body { background: #050510; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        .card { background: #111125; border: 1px solid #333; padding: 20px; border-radius: 15px; max-width: 400px; margin: 20px auto; box-shadow: 0 0 20px rgba(0,210,255,0.1); }
+        input { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #000; color: white; }
+        button { width: 95%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; background: #00d2ff; color: black; margin: 5px 0; }
+        #output { background: #000; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: right; min-height: 50px; border-right: 4px solid #ff4d4d; white-space: pre-wrap; font-size: 14px; }
+        .red-btn { background: #ff4d4d; color: white; }
     </style>
 </head>
 <body>
 
-    <h1 style="color:var(--s)">TOSH5.SHOP AI 🤖</h1>
-    <p class="status">لوحة تحكم الأتمتة الذكية</p>
-
-    <!-- الإعدادات -->
-    <div class="box">
-        <h3 style="font-size:14px">1️⃣ خطوة التفعيل (مرة واحدة)</h3>
-        <input type="password" id="key" placeholder="الصق مفتاح API هنا (AIzaSy...)">
-        <button class="btn-blue" onclick="save()">حفظ وتفعيل المحرك ✅</button>
+    <h2 style="color:#00d2ff">S.M GLOBAL AI 🤖</h2>
+    
+    <div class="card">
+        <p style="font-size: 13px; color: #aaa;">1. ضع مفتاح Gemini API هنا:</p>
+        <input type="password" id="myKey" placeholder="AIzaSy...">
+        <button onclick="saveK()">حفظ المفتاح ✅</button>
     </div>
 
-    <!-- العمليات -->
-    <div class="box">
-        <h3 style="font-size:14px">2️⃣ ابدأ الأتمتة</h3>
-        <input type="text" id="topic" placeholder="اكتب موضوع الفيديو أو المقال...">
-        <button class="btn-red" onclick="ask('blog')">كتابة مقال لـ Tosh5</button>
-        <button class="btn-red" onclick="ask('yt')">توليد سكربت يوتيوب</button>
+    <div class="card">
+        <p style="font-size: 13px; color: #aaa;">2. اكتب موضوعك واضغط إنشاء:</p>
+        <input type="text" id="myTopic" placeholder="عن ماذا نكتب اليوم؟">
+        <button class="red-btn" onclick="askAI('blog')">إنشاء مقال لـ Tosh5</button>
+        <button class="red-btn" onclick="askAI('yt')">إنشاء سكربت يوتيوب</button>
         
-        <div id="log">بانتظار الأوامر...</div>
+        <div id="output">النتائج ستظهر هنا...</div>
     </div>
 
-<script>
-    // حفظ المفتاح في المتصفح لضمان عدم سرقته أو مسحه من GitHub
-    function save() {
-        const k = document.getElementById('key').value.trim();
-        if(k) {
-            localStorage.setItem('gem_key', k);
-            alert("تم الحفظ! المحرك جاهز.");
-        } else {
-            alert("يرجى وضع المفتاح!");
+    <script>
+        // حفظ المفتاح
+        function saveK() {
+            const k = document.getElementById('myKey').value;
+            localStorage.setItem('user_key', k);
+            alert("تم حفظ المفتاح بنجاح!");
         }
-    }
 
-    // جلب المفتاح المحفوظ عند تحميل الصفحة
-    window.onload = () => {
-        const k = localStorage.getItem('gem_key');
-        if(k) document.getElementById('key').value = k;
-    }
+        // جلب المفتاح عند الفتح
+        window.onload = () => {
+            const k = localStorage.getItem('user_key');
+            if(k) document.getElementById('myKey').value = k;
+        }
 
-    async function ask(type) {
-        const k = localStorage.getItem('gem_key');
-        const t = document.getElementById('topic').value;
-        const log = document.getElementById('log');
+        // الاتصال بجوجل
+        async function askAI(type) {
+            const k = localStorage.getItem('user_key');
+            const t = document.getElementById('myTopic').value;
+            const out = document.getElementById('output');
 
-        if(!k) return alert("❌ ضع المفتاح أولاً في خانة التفعيل!");
-        if(!t) return alert("❌ اكتب موضوعاً!");
+            if(!k) return alert("من فضلك ضع المفتاح أولاً!");
+            if(!t) return alert("اكتب موضوعاً أولاً!");
 
-        log.innerHTML = "⏳ جاري محاولة الاتصال بجوجل AI...";
+            out.innerHTML = "⏳ جاري الاتصال بجوجل (تأكد من تشغيل VPN)...";
 
-        let p = type === 'blog' ? `اكتب مقال لمدونة tosh5.shop عن: ${t}` : `اكتب سكربت فيديو يوتيوب عن: ${t}`;
+            const prompt = type === 'blog' ? `اكتب مقال لمدونة tosh5.shop عن ${t}` : `اكتب سكربت يوتيوب عن ${t}`;
 
-        try {
-            const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${k}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ contents: [{ parts: [{ text: p }] }] })
-            });
+            try {
+                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${k}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
 
-            const d = await r.json();
+                const d = await r.json();
 
-            if (d.error) {
-                // نظام فحص الأعطال الذكي
-                let m = d.error.message;
-                if(m.includes("location")) {
-                    log.innerHTML = "❌ خطأ جغرافي: جوجل تحظر بلدك من استخدام الذكاء الاصطناعي.\n\n✅ الحل: يجب عليك تشغيل VPN (دولة أمريكا) ثم الضغط على الزر مرة أخرى.";
-                } else if(m.includes("API key not valid")) {
-                    log.innerHTML = "❌ خطأ: مفتاح API الذي وضعته غير صحيح أو منتهي الصلاحية.";
+                if(d.error) {
+                    out.innerHTML = "❌ خطأ من جوجل: " + d.error.message;
+                    if(d.error.message.includes("location")) {
+                        out.innerHTML += "<br><br><b>⚠️ الحل:</b> أنت في منطقة محظورة. يجب تشغيل VPN (أمريكا أو أوروبا) لكي يعمل الذكاء الاصطناعي.";
+                    }
                 } else {
-                    log.innerHTML = "❌ خطأ من جوجل: " + m;
+                    const finalBody = d.candidates[0].content.parts[0].text;
+                    out.innerText = finalBody;
                 }
-            } else {
-                // نجاح العملية
-                const txt = d.candidates[0].content.parts[0].text;
-                log.innerHTML = "✅ تم توليد المحتوى بنجاح:\n\n" + txt;
-                log.innerHTML += `<br><button onclick="copy()" style="background:#555; color:#fff; width:100px; padding:5px; margin-top:10px">نسخ النص</button>`;
+            } catch (e) {
+                out.innerHTML = "❌ فشل الاتصال! تأكد من الإنترنت ومن تشغيل VPN.";
             }
-        } catch (e) {
-            log.innerHTML = "❌ فشل الاتصال نهائياً! تأكد من تشغيل الـ VPN ومن أن الإنترنت يعمل.";
         }
-    }
-
-    function copy() {
-        const t = document.getElementById('log').innerText.replace('نسخ النص', '');
-        navigator.clipboard.writeText(t);
-        alert("تم النسخ!");
-    }
-</script>
+    </script>
 </body>
 </html>
