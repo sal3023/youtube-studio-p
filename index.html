@@ -1,106 +1,168 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية الذكاء | الربط مع بلوجر</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --p: #10b981; --bg: #02040a; }
-        body { background: var(--bg); color: #e5e7eb; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .page { display: none; animation: fadeIn 0.5s ease; }
-        .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        .nav-active { color: var(--p); text-shadow: 0 0 15px var(--p); }
-    </style>
-</head>
-<body class="pb-28">
+import { useState } from "react";
 
-    <div class="sticky top-0 z-[100] glass border-b border-white/5 py-3 text-center">
-        <marquee id="global-radar" class="text-[10px] font-mono text-emerald-400 uppercase">
-            جاري مزامنة مَقَالَات Blogger... تَمَّ الِاتِّصَالُ بـ YANDEX API... شَقَائِقُ النُّعْمَانِ تُؤَمِّنُ خَزْنَةَ الأَرْبَاحِ...
-        </marquee>
-    </div>
+/* =========================
+   🧠 عقل المساعد (عام شامل)
+========================= */
+function smartSupport(q) {
+  const text = q.toLowerCase();
 
-    <main id="home" class="page active-page p-6">
-        <div class="text-center mb-10">
-            <div class="inline-block p-5 glass rounded-full mb-4 border-emerald-500/20 shadow-2xl">
-                <i class="fas fa-robot text-5xl text-emerald-500 animate-pulse"></i>
-            </div>
-            <h1 class="text-2xl font-black text-white italic">المساعد الآلي & Blogger</h1>
-            <p id="ai-status" class="text-xs text-zinc-500 mt-2">سَأَقُومُ بِجَلْبِ أَحْدَثِ مَقَالَاتِ بِلُوجَر لَكَ الآنَ..</p>
-        </div>
+  if (text.includes("تسويق") || text.includes("ربح"))
+    return "📈 التسويق الناجح يعتمد على تقديم قيمة حقيقية وبناء ثقة قبل أي عرض.";
 
-        <div class="grid grid-cols-1 gap-4 max-w-sm mx-auto">
-            <button onclick="syncBlogger('health')" class="glass p-5 rounded-[2rem] flex items-center justify-between group transition hover:border-emerald-500">
-                <div class="flex items-center gap-4">
-                    <i class="fas fa-heartbeat text-red-500 text-xl"></i>
-                    <div class="text-right">
-                        <p class="text-xs font-bold">صحة (من بلوجر)</p>
-                        <p class="text-[9px] text-zinc-500">تحديثات اللحظة</p>
-                    </div>
-                </div>
-                <i class="fas fa-sync text-[10px] text-emerald-500"></i>
+  if (text.includes("برمجة") || text.includes("كود"))
+    return "💻 البرمجة مهارة تُبنى بالممارسة اليومية، لا تحفظ… طبّق.";
+
+  if (text.includes("ذكاء") || text.includes("ai"))
+    return "🤖 الذكاء الاصطناعي قوي عندما يُستخدم لحل مشاكل واقعية.";
+
+  if (text.includes("تعلم") || text.includes("دراسة"))
+    return "📚 أفضل تعلم هو: فهم بسيط + تجربة مباشرة + تكرار.";
+
+  if (text.includes("مشروع") || text.includes("فكرة"))
+    return "🚀 أي مشروع ناجح = مشكلة واضحة + حل بسيط + استمرارية.";
+
+  if (text.includes("حياة") || text.includes("نصيحة"))
+    return "🌿 التوازن هو سر النجاح: طموح بدون ضغط زائد.";
+
+  return "🤝 أنا مساعد دعم، اسألني في أي مجال: تقني، تسويقي، تعليمي أو عام.";
+}
+
+/* =========================
+   💬 مساعد الدعم العائم
+========================= */
+function FloatingAssistant() {
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([
+    { from: "ai", text: "مرحبًا 👋 أنا مساعد الدعم، كيف أساعدك؟" }
+  ]);
+
+  function send() {
+    if (!input.trim()) return;
+    const user = { from: "user", text: input };
+    const ai = { from: "ai", text: smartSupport(input) };
+    setMessages([...messages, user, ai]);
+    setInput("");
+  }
+
+  return (
+    <>
+      {/* زر عائم */}
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+          width: 60,
+          height: 60,
+          borderRadius: "50%",
+          background: "#2563eb",
+          color: "#fff",
+          fontSize: 24,
+          border: "none",
+          cursor: "pointer",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
+        }}>
+        💬
+      </button>
+
+      {/* نافذة الدردشة */}
+      {open && (
+        <div style={{
+          position: "fixed",
+          bottom: 90,
+          right: 20,
+          width: 320,
+          maxHeight: 420,
+          background: "#fff",
+          borderRadius: 16,
+          boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+          display: "flex",
+          flexDirection: "column"
+        }}>
+          <div style={{
+            padding: 12,
+            background: "#2563eb",
+            color: "#fff",
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            textAlign: "center"
+          }}>
+            🤖 مساعد الدعم
+          </div>
+
+          <div style={{
+            flex: 1,
+            padding: 10,
+            overflowY: "auto"
+          }}>
+            {messages.map((m, i) => (
+              <div key={i} style={{
+                marginBottom: 8,
+                textAlign: m.from === "user" ? "right" : "left"
+              }}>
+                <span style={{
+                  display: "inline-block",
+                  padding: "8px 12px",
+                  borderRadius: 12,
+                  background: m.from === "user" ? "#dbeafe" : "#f0fdf4"
+                }}>
+                  {m.text}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", padding: 8 }}>
+            <input
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              placeholder="اكتب سؤالك..."
+              style={{
+                flex: 1,
+                padding: 8,
+                borderRadius: 8,
+                border: "1px solid #ccc"
+              }}
+            />
+            <button
+              onClick={send}
+              style={{
+                marginLeft: 6,
+                padding: "8px 14px",
+                borderRadius: 8,
+                border: "none",
+                background: "#2563eb",
+                color: "#fff",
+                cursor: "pointer"
+              }}>
+              إرسال
             </button>
+          </div>
         </div>
+      )}
+    </>
+  );
+}
 
-        <div class="mt-10 glass rounded-[2.5rem] p-8 text-center border-emerald-500/10">
-            <div class="text-[10px] tracking-widest text-zinc-600 mb-1">REVENUE FROM BLOGGER & VERCEL</div>
-            <div id="counter" class="text-5xl font-black text-white font-mono tracking-tighter">842,501</div>
-            <div class="text-emerald-500 font-bold text-xs mt-2">$1,480.00 PROFIT</div>
-        </div>
+/* =========================
+   🏞️ الصفحة الرئيسية
+========================= */
+export default function Home() {
+  return (
+    <main style={{
+      minHeight: "100vh",
+      padding: 60,
+      background: "linear-gradient(to bottom,#eef2f3,#ffffff)",
+      fontFamily: "system-ui, sans-serif"
+    }}>
+      <h1 style={{ textAlign: "center" }}>🌸 منصة ذكية مجانية</h1>
+      <p style={{ textAlign: "center", color: "#555" }}>
+        مساعد دعم يساعدك في جميع المجالات
+      </p>
+
+      <FloatingAssistant />
     </main>
-
-    <section id="blog" class="page p-6">
-        <h2 class="text-2xl font-black text-white mb-6 italic">مقالات Blogger الذكية</h2>
-        <div id="blogger-posts" class="space-y-4">
-            </div>
-    </section>
-
-    <nav class="fixed bottom-8 left-6 right-6 h-20 glass rounded-[2.5rem] flex justify-around items-center px-6 z-[200]">
-        <button onclick="tab('analytics', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-chart-line"></i></button>
-        <button onclick="tab('blog', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-rss"></i></button>
-        <button onclick="tab('home', this)" class="nav-active flex flex-col items-center scale-110"><i class="fas fa-brain text-xl"></i></button>
-        <button onclick="tab('security', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-shield-alt"></i></button>
-        <button onclick="tab('elite', this)" class="text-zinc-600 flex flex-col items-center"><i class="fas fa-gem"></i></button>
-    </nav>
-
-    <script>
-        function tab(id, btn) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(id).classList.add('active-page');
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('nav-active', 'scale-110'));
-            btn.classList.add('nav-active', 'scale-110');
-            window.scrollTo(0,0);
-        }
-
-        // محرك مزامنة بلوجر (Blogger Sync Engine)
-        function syncBlogger(cat) {
-            const status = document.getElementById('ai-status');
-            status.innerText = `جاري الِاتِّصَالُ بِمُدَوَّنَةِ Blogger لِجَلْبِ مَقَالَاتِ ${cat}...`;
-            
-            setTimeout(() => {
-                const container = document.getElementById('blogger-posts');
-                container.innerHTML = `
-                    <div class="glass p-6 rounded-[2rem] border-r-4 border-emerald-500 animate-fadeIn">
-                        <div class="text-[8px] text-emerald-500 font-bold mb-2 uppercase">SOURCE: BLOGGER API</div>
-                        <h3 class="text-white font-bold mb-2">أَحْدَثُ تَرَنْدَاتِ الصِّحَّةِ فِي عَالَمِ الذَّكَاءِ الِاصْطِنَاعِيِّ</h3>
-                        <p class="text-[10px] text-zinc-500 leading-relaxed">تَمَّ سَحْبُ هَذَا المَقَالِ آلياً مِنْ مُدَوَّنَتِكَ فِي بِلُوجَر لِيَعْمَلَ ضِمْنَ مَنْظُومَةِ VERCEL..</p>
-                    </div>
-                `;
-                tab('blog', document.querySelector('nav button:nth-child(2)'));
-                status.innerText = "تَمَّت المُزَامَنَةُ بِنَجَاحٍ.";
-            }, 1500);
-        }
-
-        // عداد القلب
-        let count = 842501;
-        setInterval(() => {
-            count += Math.floor(Math.random() * 5);
-            document.getElementById('counter').innerText = count.toLocaleString();
-        }, 4000);
-    </script>
-</body>
-</html>
+  );
+}
