@@ -3,143 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube & Blogger Pro - النظام المتكامل</title>
-    
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script async defer src="https://accounts.google.com/gsi/client"></script>
-    
+    <title>YouTube & Blogger Tools</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
         }
         
         body {
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea, #764ba2);
             min-height: 100vh;
             padding: 20px;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
         h1 {
+            text-align: center;
             color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
         }
         
-        .subtitle {
-            color: #666;
-            font-size: 1.1rem;
+        .section {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
         
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            margin: 10px 5px;
-            background: #4285f4;
+        h2 {
+            color: #FF0000;
+            margin-bottom: 15px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        button {
+            background: #FF0000;
             color: white;
+            padding: 12px 30px;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
         }
         
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        button:hover {
+            background: #CC0000;
         }
         
-        .btn-youtube {
-            background: #FF0000;
+        .result {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border-left: 4px solid #4CAF50;
         }
         
-        .btn-blogger {
+        .hidden {
+            display: none;
+        }
+        
+        .blog-btn {
             background: #FF6B00;
         }
         
-        .btn-success {
-            background: #4CAF50;
+        .blog-btn:hover {
+            background: #E55100;
         }
         
-        .status {
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 10px;
-            text-align: center;
-            animation: slideIn 0.5s;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .status.success {
+        .success {
             background: #d4edda;
             color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
             border: 1px solid #c3e6cb;
         }
         
-        .status.error {
+        .error {
             background: #f8d7da;
             color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
             border: 1px solid #f5c6cb;
-        }
-        
-        .status.info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
         }
         
         .tabs {
             display: flex;
-            justify-content: center;
-            margin: 30px 0;
-            border-bottom: 2px solid #e0e0e0;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
         .tab {
-            padding: 15px 30px;
-            background: none;
+            padding: 10px 20px;
+            background: #f0f0f0;
             border: none;
-            font-size: 16px;
-            font-weight: bold;
-            color: #666;
             cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
+            border-radius: 5px;
         }
         
         .tab.active {
-            color: #FF0000;
-        }
-        
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
             background: #FF0000;
+            color: white;
         }
         
         .tab-content {
@@ -148,1255 +133,437 @@
         
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .tool-section {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        
-        .tool-section h2 {
-            color: #FF0000;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #4285f4;
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .info-box {
-            background: #e7f3ff;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #2196F3;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
-        
-        .stat-card .number {
-            font-size: 28px;
-            font-weight: bold;
-            color: #FF0000;
-            margin-bottom: 5px;
-        }
-        
-        .stat-card .label {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .video-list {
-            max-height: 500px;
-            overflow-y: auto;
-            margin-top: 20px;
-        }
-        
-        .video-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: white;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .video-item:hover {
-            transform: translateX(-5px);
-            border-color: #FF0000;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        
-        .video-thumbnail {
-            width: 120px;
-            height: 67px;
-            border-radius: 8px;
-            margin-left: 15px;
-            object-fit: cover;
-        }
-        
-        .video-info {
-            flex: 1;
-        }
-        
-        .video-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .video-meta {
-            color: #666;
-            font-size: 12px;
-        }
-        
-        .progress {
-            width: 100%;
-            height: 30px;
-            background: #e9ecef;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            width: 0%;
-            transition: width 0.5s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .action-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .action-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .action-card i {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-        
-        .action-card h3 {
-            margin-bottom: 10px;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .close-btn {
-            font-size: 30px;
-            cursor: pointer;
-            color: #666;
-        }
-        
-        .close-btn:hover {
-            color: #FF0000;
-        }
-        
-        .hidden {
-            display: none !important;
-        }
-        
-        .success-animation {
-            animation: success 0.5s ease;
-        }
-        
-        @keyframes success {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(0,0,0,.3);
-            border-radius: 50%;
-            border-top-color: #FF0000;
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .quick-actions {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🎬 YouTube & Blogger Pro System</h1>
-            <p class="subtitle">النظام المتكامل لإدارة قناتك ومدونتك</p>
+        <h1>🎬 YouTube & Blogger Tools</h1>
+        
+        <div id="message" class="hidden"></div>
+        
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('youtube')">YouTube Tools</button>
+            <button class="tab" onclick="showTab('blogger')">Blogger Tools</button>
+            <button class="tab" onclick="showTab('convert')">Convert Tools</button>
         </div>
         
-        <!-- Login Section -->
-        <div class="info-box">
-            <h2>🔐 حالة الاتصال</h2>
-            <p>مرحباً! قم بتسجيل الدخول للوصول إلى جميع الأدوات</p>
-            <button id="signInBtn" class="btn" onclick="handleSignIn()">
-                <span id="signInText">🔑 تسجيل الدخول بـ Google</span>
-            </button>
-            <button id="signOutBtn" class="btn hidden" onclick="handleSignOut()">
-                🚪 تسجيل الخروج
-            </button>
-            <div id="status" class="status hidden"></div>
+        <!-- YouTube Tools Tab -->
+        <div id="youtube-tab" class="tab-content active">
+            <!-- Video Title Generator -->
+            <div class="section">
+                <h2>📝 مولد عناوين YouTube</h2>
+                <input type="text" id="titleKeyword" placeholder="أدخل الكلمة المفتاحية">
+                <select id="titleType">
+                    <option value="how">How To - شرح</option>
+                    <option value="list">قائمة Top 10</option>
+                    <option value="review">مراجعة</option>
+                </select>
+                <button onclick="generateTitles()">توليد عناوين</button>
+                <div id="titleResult" class="result hidden"></div>
+            </div>
+            
+            <!-- Video Description Generator -->
+            <div class="section">
+                <h2>📋 مولد وصف الفيديو</h2>
+                <input type="text" id="videoTitle" placeholder="عنوان الفيديو">
+                <textarea id="videoSummary" placeholder="ملخص الفيديو" rows="3"></textarea>
+                <button onclick="generateDescription()">توليد الوصف</button>
+                <div id="descResult" class="result hidden"></div>
+            </div>
+            
+            <!-- Hashtag Generator -->
+            <div class="section">
+                <h2>#️⃣ مولد الهاشتاجات</h2>
+                <input type="text" id="hashtagTopic" placeholder="موضوع الفيديو">
+                <button onclick="generateHashtags()">توليد 30 هاشتاج</button>
+                <div id="hashtagResult" class="result hidden"></div>
+            </div>
         </div>
         
-        <!-- Main Content (Hidden until login) -->
-        <div id="mainContent" class="hidden">
-            
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <div class="action-card" onclick="showTab('upload')">
-                    <i>📹</i>
-                    <h3>رفع فيديو</h3>
-                    <p>رفع فيديو جديد على YouTube</p>
-                </div>
-                <div class="action-card" onclick="showTab('blog')">
-                    <i>✍️</i>
-                    <h3>نشر مقال</h3>
-                    <p>نشر مقال جديد على المدونة</p>
-                </div>
-                <div class="action-card" onclick="showTab('convert')">
-                    <i>🔄</i>
-                    <h3>تحويل فيديو</h3>
-                    <p>تحويل فيديو YouTube إلى مقال</p>
-                </div>
-                <div class="action-card" onclick="showTab('analytics')">
-                    <i>📊</i>
-                    <h3>الإحصائيات</h3>
-                    <p>عرض إحصائيات القناة والمدونة</p>
-                </div>
+        <!-- Blogger Tools Tab -->
+        <div id="blogger-tab" class="tab-content">
+            <!-- Blog Post Generator -->
+            <div class="section">
+                <h2>✍️ مولد مقالات المدونة</h2>
+                <input type="text" id="blogTitle" placeholder="عنوان المقال">
+                <textarea id="blogContent" placeholder="محتوى المقال" rows="5"></textarea>
+                <button class="blog-btn" onclick="generateBlogPost()">إنشاء مقال</button>
+                <div id="blogResult" class="result hidden"></div>
             </div>
             
-            <!-- Tabs -->
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('dashboard')">📊 لوحة التحكم</button>
-                <button class="tab" onclick="switchTab('upload')">📹 رفع فيديو</button>
-                <button class="tab" onclick="switchTab('blog')">✍️ نشر مقال</button>
-                <button class="tab" onclick="switchTab('convert')">🔄 التحويل</button>
-                <button class="tab" onclick="switchTab('videos')">🎥 فيديوهاتي</button>
-                <button class="tab" onclick="switchTab('posts')">📚 مقالاتي</button>
-                <button class="tab" onclick="switchTab('analytics')">📈 التحليلات</button>
-            </div>
-            
-            <!-- Dashboard Tab -->
-            <div id="dashboard-tab" class="tab-content active">
-                <div class="tool-section">
-                    <h2>📊 لوحة التحكم الرئيسية</h2>
-                    
-                    <h3>📺 إحصائيات قناة YouTube</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="number" id="channelName">-</div>
-                            <div class="label">اسم القناة</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="subscribers">0</div>
-                            <div class="label">المشتركين</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="totalVideos">0</div>
-                            <div class="label">الفيديوهات</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="totalViews">0</div>
-                            <div class="label">المشاهدات الكلية</div>
-                        </div>
-                    </div>
-                    
-                    <h3 style="margin-top: 30px;">📝 إحصائيات المدونة</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="number" id="blogName">-</div>
-                            <div class="label">اسم المدونة</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="totalPosts">0</div>
-                            <div class="label">عدد المقالات</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="blogViews">0</div>
-                            <div class="label">المشاهدات</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="blogUrl">-</div>
-                            <div class="label">رابط المدونة</div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 30px;">
-                        <button class="btn btn-success" onclick="refreshStats()">
-                            🔄 تحديث الإحصائيات
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Upload Video Tab -->
-            <div id="upload-tab" class="tab-content">
-                <div class="tool-section">
-                    <h2>📹 رفع فيديو على YouTube</h2>
-                    <input type="text" id="videoTitle" placeholder="عنوان الفيديو *" required>
-                    <textarea id="videoDesc" placeholder="وصف الفيديو (اختياري)"></textarea>
-                    <input type="text" id="videoTags" placeholder="الكلمات المفتاحية (افصل بفاصلة)">
-                    <select id="videoCategory">
-                        <option value="22">People & Blogs</option>
-                        <option value="24">Entertainment</option>
-                        <option value="28">Science & Technology</option>
-                        <option value="27">Education</option>
-                        <option value="20">Gaming</option>
-                    </select>
-                    <select id="videoPrivacy">
-                        <option value="public">عام</option>
-                        <option value="unlisted">غير مدرج</option>
-                        <option value="private">خاص</option>
-                    </select>
-                    <input type="file" id="videoFile" accept="video/*">
-                    
-                    <div class="progress hidden" id="uploadProgressBar">
-                        <div class="progress-bar" id="uploadProgress">0%</div>
-                    </div>
-                    
-                    <button class="btn btn-youtube" onclick="uploadVideo()">
-                        📤 رفع الفيديو
-                    </button>
-                    
-                    <label style="margin-top: 20px;">
-                        <input type="checkbox" id="autoShare"> 
-                        نشر تلقائي على المدونة بعد الرفع
-                    </label>
-                </div>
-            </div>
-            
-            <!-- Blog Post Tab -->
-            <div id="blog-tab" class="tab-content">
-                <div class="tool-section">
-                    <h2>✍️ نشر مقال على Blogger</h2>
-                    <input type="text" id="postTitle" placeholder="عنوان المقال *" required>
-                    <textarea id="postContent" placeholder="محتوى المقال (يدعم HTML)" style="min-height: 300px;"></textarea>
-                    <input type="text" id="postTags" placeholder="التصنيفات (افصل بفاصلة)">
-                    
-                    <div style="margin-top: 20px;">
-                        <button class="btn btn-blogger" onclick="publishPost()">
-                            📝 نشر المقال
-                        </button>
-                        <button class="btn" onclick="saveDraft()">
-                            💾 حفظ كمسودة
-                        </button>
-                        <button class="btn" onclick="previewPost()">
-                            👁️ معاينة
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Convert Tab -->
-            <div id="convert-tab" class="tab-content">
-                <div class="tool-section">
-                    <h2>🔄 تحويل فيديو YouTube إلى مقال</h2>
-                    <input type="url" id="videoUrl" placeholder="رابط فيديو YouTube">
-                    
-                    <div style="margin-top: 20px;">
-                        <label>
-                            <input type="checkbox" id="includeEmbed" checked> 
-                            تضمين الفيديو في المقال
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" id="includeDescription" checked> 
-                            استخدام وصف الفيديو
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" id="autoPublish"> 
-                            نشر مباشر (بدون مراجعة)
-                        </label>
-                    </div>
-                    
-                    <button class="btn btn-success" onclick="convertToPost()" style="margin-top: 20px;">
-                        🔄 تحويل ونشر
-                    </button>
-                </div>
-            </div>
-            
-            <!-- My Videos Tab -->
-            <div id="videos-tab" class="tab-content">
-                <div class="tool-section">
-                    <h2>🎥 فيديوهاتي على YouTube</h2>
-                    <button class="btn btn-youtube" onclick="loadVideos()">
-                        🔄 تحميل الفيديوهات
-                    </button>
-                    <div id="videosList" class="video-list"></div>
-                </div>
-            </div>
-            
-            <!-- My Posts Tab -->
-            <div id="posts-tab" class="tab-content">
-                <div class="tool-section">
-                    <h2>📚 مقالاتي على Blogger</h2>
-                    <button class="btn btn-blogger" onclick="loadPosts()">
-                        🔄 تحميل المقالات
-                    </button>
-                    <div id="postsList" class="video-list"></div>
-                </div>
-            </div>
-            
-            <!-- Analytics Tab -->
-            <div id="analytics-tab" class="tab-content">
-                <div class="tool-section">
-                    <h2>📈 التحليلات المتقدمة</h2>
-                    
-                    <h3>📊 أداء القناة (آخر 30 يوم)</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="number" id="monthViews">0</div>
-                            <div class="label">المشاهدات</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="watchTime">0</div>
-                            <div class="label">وقت المشاهدة (ساعة)</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="newSubs">0</div>
-                            <div class="label">مشتركين جدد</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="number" id="revenue">$0</div>
-                            <div class="label">الأرباح المقدرة</div>
-                        </div>
-                    </div>
-                    
-                    <button class="btn" onclick="loadAnalytics()" style="margin-top: 20px;">
-                        📊 تحميل التحليلات الكاملة
-                    </button>
-                </div>
+            <!-- SEO Meta Generator -->
+            <div class="section">
+                <h2>🔍 مولد Meta Tags</h2>
+                <input type="text" id="metaTitle" placeholder="عنوان الصفحة">
+                <input type="text" id="metaKeywords" placeholder="الكلمات المفتاحية">
+                <button class="blog-btn" onclick="generateMeta()">توليد Meta Tags</button>
+                <div id="metaResult" class="result hidden"></div>
             </div>
         </div>
-    </div>
-    
-    <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>✅ نجحت العملية!</h2>
-                <span class="close-btn" onclick="closeModal()">&times;</span>
+        
+        <!-- Convert Tools Tab -->
+        <div id="convert-tab" class="tab-content">
+            <!-- YouTube to Blog Post -->
+            <div class="section">
+                <h2>🔄 تحويل فيديو YouTube إلى مقال</h2>
+                <input type="url" id="youtubeUrl" placeholder="رابط فيديو YouTube">
+                <button onclick="convertToPost()">تحويل إلى مقال</button>
+                <div id="convertResult" class="result hidden"></div>
             </div>
-            <div id="modalMessage"></div>
+            
+            <!-- Blog to YouTube Script -->
+            <div class="section">
+                <h2>🎬 تحويل مقال إلى سكريبت فيديو</h2>
+                <textarea id="articleContent" placeholder="الصق محتوى المقال هنا" rows="5"></textarea>
+                <button onclick="convertToScript()">تحويل إلى سكريبت</button>
+                <div id="scriptResult" class="result hidden"></div>
+            </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="section" style="background: #fff3cd; border-left: 4px solid #ffc107;">
+            <h3>🔗 روابط سريعة:</h3>
+            <p>📺 YouTube Studio: <a href="https://studio.youtube.com" target="_blank">studio.youtube.com</a></p>
+            <p>📝 Blogger: <a href="https://www.blogger.com" target="_blank">blogger.com</a></p>
+            <p>🌐 مدونتك: <a href="https://www.tosh5.shop" target="_blank">www.tosh5.shop</a></p>
         </div>
     </div>
     
     <script>
-        // ====== ضع مفاتيحك هنا ======
-        const API_KEY = 'YOUR_API_KEY_HERE';
-        const CLIENT_ID = 'YOUR_CLIENT_ID_HERE.apps.googleusercontent.com';
-        
-        // ====== المتغيرات العامة ======
-        let tokenClient;
-        let accessToken;
-        let blogId;
-        let channelId;
-        
-        // ====== التهيئة ======
-        function initializeGapiClient() {
-            gapi.load('client', async () => {
-                await gapi.client.init({
-                    apiKey: API_KEY,
-                    discoveryDocs: [
-                        'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
-                        'https://www.googleapis.com/discovery/v1/apis/blogger/v3/rest'
-                    ]
-                });
-                console.log('✅ GAPI client initialized');
-            });
-        }
-        
-        function initializeGSI() {
-            tokenClient = google.accounts.oauth2.initTokenClient({
-                client_id: CLIENT_ID,
-                scope: 'https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/blogger',
-                callback: (response) => {
-                    accessToken = response.access_token;
-                    onSignIn();
-                }
-            });
-            console.log('✅ GSI initialized');
-        }
-        
-        // ====== تسجيل الدخول ======
-        function handleSignIn() {
-            if (!tokenClient) {
-                showStatus('⏳ جاري التحضير... حاول مرة أخرى', 'error');
-                setTimeout(() => initializeGSI(), 1000);
-                return;
-            }
-            document.getElementById('signInText').innerHTML = '<span class="loading"></span> جاري تسجيل الدخول...';
-            tokenClient.requestAccessToken();
-        }
-        
-        function handleSignOut() {
-            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
-                google.accounts.oauth2.revoke(accessToken);
-                accessToken = null;
-                document.getElementById('signInBtn').classList.remove('hidden');
-                document.getElementById('signOutBtn').classList.add('hidden');
-                document.getElementById('mainContent').classList.add('hidden');
-                showStatus('👋 تم تسجيل الخروج بنجاح', 'info');
-                document.getElementById('signInText').innerHTML = '🔑 تسجيل الدخول بـ Google';
-            }
-        }
-        
-        async function onSignIn() {
-            document.getElementById('signInBtn').classList.add('hidden');
-            document.getElementById('signOutBtn').classList.remove('hidden');
-            document.getElementById('mainContent').classList.remove('hidden');
-            document.getElementById('signInText').innerHTML = '🔑 تسجيل الدخول بـ Google';
-            
-            gapi.client.setToken({ access_token: accessToken });
-            
-            showStatus('✅ تم تسجيل الدخول بنجاح! جاري تحميل البيانات...', 'success');
-            
-            await loadChannelInfo();
-            await loadBlogInfo();
-            
-            showStatus('🎉 مرحباً بك! كل شيء جاهز للعمل', 'success');
-        }
-        
-        // ====== تحميل معلومات القناة ======
-        async function loadChannelInfo() {
-            try {
-                const response = await gapi.client.youtube.channels.list({
-                    part: 'snippet,statistics,contentDetails',
-                    mine: true
-                });
-                
-                if (response.result.items && response.result.items.length > 0) {
-                    const channel = response.result.items[0];
-                    channelId = channel.id;
-                    
-                    document.getElementById('channelName').textContent = channel.snippet.title;
-                    document.getElementById('subscribers').textContent = formatNumber(channel.statistics.subscriberCount);
-                    document.getElementById('totalVideos').textContent = channel.statistics.videoCount;
-                    document.getElementById('totalViews').textContent = formatNumber(channel.statistics.viewCount);
-                }
-            } catch (error) {
-                console.error('Error loading channel:', error);
-                showStatus('⚠️ خطأ في تحميل معلومات القناة', 'error');
-            }
-        }
-        
-        // ====== تحميل معلومات المدونة ======
-        async function loadBlogInfo() {
-            try {
-                const response = await gapi.client.blogger.blogs.listByUser({
-                    userId: 'self'
-                });
-                
-                if (response.result.items && response.result.items.length > 0) {
-                    const blog = response.result.items[0];
-                    blogId = blog.id;
-                    
-                    document.getElementById('blogName').textContent = blog.name;
-                    document.getElementById('totalPosts').textContent = blog.posts.totalItems;
-                    document.getElementById('blogViews').textContent = formatNumber(blog.pages?.totalItems || 0);
-                    document.getElementById('blogUrl').innerHTML = `<a href="${blog.url}" target="_blank">زيارة المدونة</a>`;
-                } else {
-                    document.getElementById('blogName').textContent = 'لا توجد مدونة';
-                    showStatus('⚠️ لم يتم العثور على مدونة Blogger', 'error');
-                }
-            } catch (error) {
-                console.error('Error loading blog:', error);
-            }
-        }
-        
-        // ====== رفع فيديو ======
-        async function uploadVideo() {
-            const title = document.getElementById('videoTitle').value.trim();
-            const description = document.getElementById('videoDesc').value.trim();
-            const tags = document.getElementById('videoTags').value.split(',').map(tag => tag.trim());
-            const category = document.getElementById('videoCategory').value;
-            const privacy = document.getElementById('videoPrivacy').value;
-            const fileInput = document.getElementById('videoFile');
-            const autoShare = document.getElementById('autoShare').checked;
-            
-            if (!title) {
-                showStatus('⚠️ الرجاء إدخال عنوان الفيديو', 'error');
-                return;
-            }
-            
-            if (!fileInput.files[0]) {
-                showStatus('⚠️ الرجاء اختيار ملف الفيديو', 'error');
-                return;
-            }
-            
-            document.getElementById('uploadProgressBar').classList.remove('hidden');
-            updateProgress(10);
-            showStatus('📤 جاري رفع الفيديو... قد يستغرق بعض الوقت', 'info');
-            
-            const metadata = {
-                snippet: {
-                    title: title,
-                    description: description || '',
-                    tags: tags,
-                    categoryId: category
-                },
-                status: {
-                    privacyStatus: privacy,
-                    selfDeclaredMadeForKids: false
-                }
-            };
-            
-            try {
-                // محاكاة رفع الفيديو (في الواقع تحتاج resumable upload)
-                updateProgress(50);
-                
-                // في الواقع، هنا يجب استخدام YouTube API للرفع الفعلي
-                // لكن هذا يتطلب backend أو resumable upload معقد
-                
-                updateProgress(100);
-                
-                const videoId = 'VIDEO_ID_' + Date.now(); // محاكاة
-                
-                showModal(`
-                    <h3>✅ تم رفع الفيديو بنجاح!</h3>
-                    <p>العنوان: ${title}</p>
-                    <p>الحالة: ${privacy === 'public' ? 'عام' : privacy === 'unlisted' ? 'غير مدرج' : 'خاص'}</p>
-                    ${autoShare ? '<p>🔄 جاري النشر على المدونة...</p>' : ''}
-                `);
-                
-                if (autoShare) {
-                    setTimeout(() => {
-                        shareVideoToBlog(videoId, title, description);
-                    }, 2000);
-                }
-                
-                // مسح النموذج
-                document.getElementById('videoTitle').value = '';
-                document.getElementById('videoDesc').value = '';
-                document.getElementById('videoTags').value = '';
-                document.getElementById('videoFile').value = '';
-                document.getElementById('uploadProgressBar').classList.add('hidden');
-                
-            } catch (error) {
-                showStatus('❌ خطأ في رفع الفيديو: ' + error.message, 'error');
-                document.getElementById('uploadProgressBar').classList.add('hidden');
-            }
-        }
-        
-        // ====== نشر مقال ======
-        async function publishPost() {
-            const title = document.getElementById('postTitle').value.trim();
-            const content = document.getElementById('postContent').value.trim();
-            const labels = document.getElementById('postTags').value.split(',').map(tag => tag.trim());
-            
-            if (!title || !content) {
-                showStatus('⚠️ الرجاء إدخال العنوان والمحتوى', 'error');
-                return;
-            }
-            
-            if (!blogId) {
-                showStatus('❌ لم يتم العثور على مدونة', 'error');
-                return;
-            }
-            
-            showStatus('📝 جاري نشر المقال...', 'info');
-            
-            try {
-                const response = await gapi.client.blogger.posts.insert({
-                    blogId: blogId,
-                    resource: {
-                        title: title,
-                        content: content,
-                        labels: labels.filter(label => label.length > 0)
-                    }
-                });
-                
-                showModal(`
-                    <h3>✅ تم نشر المقال بنجاح!</h3>
-                    <p>العنوان: ${title}</p>
-                    <p><a href="${response.result.url}" target="_blank" class="btn btn-success">عرض المقال</a></p>
-                `);
-                
-                // مسح النموذج
-                document.getElementById('postTitle').value = '';
-                document.getElementById('postContent').value = '';
-                document.getElementById('postTags').value = '';
-                
-                // تحديث عدد المقالات
-                const postsCount = document.getElementById('totalPosts');
-                postsCount.textContent = parseInt(postsCount.textContent) + 1;
-                
-            } catch (error) {
-                showStatus('❌ خطأ في نشر المقال: ' + error.message, 'error');
-            }
-        }
-        
-        // ====== حفظ مسودة ======
-        async function saveDraft() {
-            const title = document.getElementById('postTitle').value.trim();
-            const content = document.getElementById('postContent').value.trim();
-            
-            if (!title || !content) {
-                showStatus('⚠️ الرجاء إدخال العنوان والمحتوى', 'error');
-                return;
-            }
-            
-            // حفظ في Local Storage
-            const draft = {
-                title: title,
-                content: content,
-                tags: document.getElementById('postTags').value,
-                date: new Date().toISOString()
-            };
-            
-            localStorage.setItem('blogDraft', JSON.stringify(draft));
-            showStatus('✅ تم حفظ المسودة محلياً', 'success');
-        }
-        
-        // ====== معاينة المقال ======
-        function previewPost() {
-            const title = document.getElementById('postTitle').value.trim();
-            const content = document.getElementById('postContent').value.trim();
-            
-            if (!title || !content) {
-                showStatus('⚠️ الرجاء إدخال العنوان والمحتوى', 'error');
-                return;
-            }
-            
-            const previewWindow = window.open('', '_blank');
-            previewWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="ar" dir="rtl">
-                <head>
-                    <title>${title}</title>
-                    <style>
-                        body { font-family: Arial; padding: 20px; max-width: 800px; margin: 0 auto; }
-                        h1 { color: #333; }
-                    </style>
-                </head>
-                <body>
-                    <h1>${title}</h1>
-                    <div>${content}</div>
-                </body>
-                </html>
-            `);
-        }
-        
-        // ====== تحويل فيديو إلى مقال ======
-        async function convertToPost() {
-            const videoUrl = document.getElementById('videoUrl').value.trim();
-            const includeEmbed = document.getElementById('includeEmbed').checked;
-            const includeDescription = document.getElementById('includeDescription').checked;
-            const autoPublish = document.getElementById('autoPublish').checked;
-            
-            if (!videoUrl) {
-                showStatus('⚠️ الرجاء إدخال رابط الفيديو', 'error');
-                return;
-            }
-            
-            const videoId = extractVideoId(videoUrl);
-            if (!videoId) {
-                showStatus('❌ رابط YouTube غير صحيح', 'error');
-                return;
-            }
-            
-            showStatus('🔄 جاري تحويل الفيديو إلى مقال...', 'info');
-            
-            try {
-                const response = await gapi.client.youtube.videos.list({
-                    part: 'snippet,statistics',
-                    id: videoId
-                });
-                
-                if (response.result.items && response.result.items.length > 0) {
-                    const video = response.result.items[0];
-                    const snippet = video.snippet;
-                    const stats = video.statistics;
-                    
-                    let postContent = '';
-                    
-                    if (includeEmbed) {
-                        postContent += `
-                            <div style="text-align: center; margin: 20px 0;">
-                                <iframe width="560" height="315" 
-                                    src="https://www.youtube.com/embed/${videoId}" 
-                                    frameborder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                        `;
-                    }
-                    
-                    if (includeDescription && snippet.description) {
-                        postContent += `
-                            <div style="margin: 20px 0;">
-                                <h2>عن الفيديو:</h2>
-                                <p style="white-space: pre-wrap;">${snippet.description}</p>
-                            </div>
-                        `;
-                    }
-                    
-                    postContent += `
-                        <div style="margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 10px;">
-                            <h3>📊 إحصائيات الفيديو:</h3>
-                            <ul>
-                                <li>👁️ المشاهدات: ${formatNumber(stats.viewCount)}</li>
-                                <li>👍 الإعجابات: ${formatNumber(stats.likeCount)}</li>
-                                <li>💬 التعليقات: ${formatNumber(stats.commentCount)}</li>
-                            </ul>
-                        </div>
-                        
-                        <div style="margin: 20px 0;">
-                            <p>📺 شاهد الفيديو على YouTube: 
-                                <a href="${videoUrl}" target="_blank" style="color: #FF0000; font-weight: bold;">
-                                    ${snippet.title}
-                                </a>
-                            </p>
-                            <p>📅 تاريخ النشر: ${new Date(snippet.publishedAt).toLocaleDateString('ar-SA')}</p>
-                            <p>📹 القناة: ${snippet.channelTitle}</p>
-                        </div>
-                    `;
-                    
-                    if (autoPublish && blogId) {
-                        // نشر مباشر
-                        const blogResponse = await gapi.client.blogger.posts.insert({
-                            blogId: blogId,
-                            resource: {
-                                title: snippet.title,
-                                content: postContent,
-                                labels: snippet.tags || []
-                            }
-                        });
-                        
-                        showModal(`
-                            <h3>✅ تم تحويل الفيديو ونشره كمقال!</h3>
-                            <p>عنوان المقال: ${snippet.title}</p>
-                            <p><a href="${blogResponse.result.url}" target="_blank" class="btn btn-success">عرض المقال</a></p>
-                        `);
-                    } else {
-                        // عرض في نموذج النشر
-                        document.getElementById('postTitle').value = snippet.title;
-                        document.getElementById('postContent').value = postContent;
-                        document.getElementById('postTags').value = snippet.tags ? snippet.tags.join(', ') : '';
-                        
-                        switchTab('blog');
-                        showStatus('✅ تم تحويل الفيديو! راجع المحتوى وانشره', 'success');
-                    }
-                }
-            } catch (error) {
-                showStatus('❌ خطأ في تحويل الفيديو: ' + error.message, 'error');
-            }
-        }
-        
-        // ====== تحميل الفيديوهات ======
-        async function loadVideos() {
-            showStatus('📺 جاري تحميل الفيديوهات...', 'info');
-            
-            try {
-                const response = await gapi.client.youtube.search.list({
-                    part: 'snippet',
-                    channelId: channelId,
-                    type: 'video',
-                    order: 'date',
-                    maxResults: 20
-                });
-                
-                const videosList = document.getElementById('videosList');
-                videosList.innerHTML = '';
-                
-                if (response.result.items && response.result.items.length > 0) {
-                    response.result.items.forEach(item => {
-                        const videoItem = document.createElement('div');
-                        videoItem.className = 'video-item';
-                        videoItem.innerHTML = `
-                            <img src="${item.snippet.thumbnails.medium.url}" class="video-thumbnail">
-                            <div class="video-info">
-                                <div class="video-title">${item.snippet.title}</div>
-                                <div class="video-meta">
-                                    ${new Date(item.snippet.publishedAt).toLocaleDateString('ar-SA')}
-                                </div>
-                                <div style="margin-top: 10px;">
-                                    <button class="btn btn-blogger" onclick="shareVideoToBlog('${item.id.videoId}', '${item.snippet.title.replace(/'/g, "\\'")}', '${(item.snippet.description || '').replace(/'/g, "\\'")}')">
-                                        📝 نشر على المدونة
-                                    </button>
-                                    <a href="https://youtube.com/watch?v=${item.id.videoId}" target="_blank" class="btn">
-                                        ▶️ مشاهدة
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                        videosList.appendChild(videoItem);
-                    });
-                    
-                    showStatus(`✅ تم تحميل ${response.result.items.length} فيديو`, 'success');
-                } else {
-                    videosList.innerHTML = '<p style="text-align: center; color: #666;">لا توجد فيديوهات</p>';
-                }
-            } catch (error) {
-                showStatus('❌ خطأ في تحميل الفيديوهات', 'error');
-            }
-        }
-        
-        // ====== تحميل المقالات ======
-        async function loadPosts() {
-            if (!blogId) {
-                showStatus('⚠️ لم يتم العثور على مدونة', 'error');
-                return;
-            }
-            
-            showStatus('📚 جاري تحميل المقالات...', 'info');
-            
-            try {
-                const response = await gapi.client.blogger.posts.list({
-                    blogId: blogId,
-                    maxResults: 20,
-                    orderBy: 'published'
-                });
-                
-                const postsList = document.getElementById('postsList');
-                postsList.innerHTML = '';
-                
-                if (response.result.items && response.result.items.length > 0) {
-                    response.result.items.forEach(post => {
-                        const postItem = document.createElement('div');
-                        postItem.className = 'video-item';
-                        postItem.innerHTML = `
-                            <div class="video-info">
-                                <div class="video-title">${post.title}</div>
-                                <div class="video-meta">
-                                    ${new Date(post.published).toLocaleDateString('ar-SA')} | 
-                                    ${post.labels ? post.labels.join(', ') : 'بدون تصنيف'}
-                                </div>
-                                <div style="margin-top: 10px;">
-                                    <a href="${post.url}" target="_blank" class="btn btn-blogger">
-                                        📖 قراءة المقال
-                                    </a>
-                                    <button class="btn" onclick="editPost('${post.id}')">
-                                        ✏️ تعديل
-                                    </button>
-                                    <button class="btn" onclick="deletePost('${post.id}', '${post.title.replace(/'/g, "\\'")}')">
-                                        🗑️ حذف
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                        postsList.appendChild(postItem);
-                    });
-                    
-                    showStatus(`✅ تم تحميل ${response.result.items.length} مقال`, 'success');
-                } else {
-                    postsList.innerHTML = '<p style="text-align: center; color: #666;">لا توجد مقالات</p>';
-                }
-            } catch (error) {
-                showStatus('❌ خطأ في تحميل المقالات', 'error');
-            }
-        }
-        
-        // ====== نشر فيديو على المدونة ======
-        async function shareVideoToBlog(videoId, title, description) {
-            if (!blogId) {
-                showStatus('⚠️ لم يتم العثور على مدونة', 'error');
-                return;
-            }
-            
-            try {
-                const postContent = `
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315" 
-                            src="https://www.youtube.com/embed/${videoId}" 
-                            frameborder="0" allowfullscreen>
-                        </iframe>
-                    </div>
-                    <br>
-                    <p>${description || ''}</p>
-                    <br>
-                    <p>شاهد الفيديو على YouTube: 
-                        <a href="https://youtube.com/watch?v=${videoId}" target="_blank">
-                            ${title}
-                        </a>
-                    </p>
-                `;
-                
-                const response = await gapi.client.blogger.posts.insert({
-                    blogId: blogId,
-                    resource: {
-                        title: title,
-                        content: postContent
-                    }
-                });
-                
-                showModal(`
-                    <h3>✅ تم نشر الفيديو على المدونة!</h3>
-                    <p>العنوان: ${title}</p>
-                    <p><a href="${response.result.url}" target="_blank" class="btn btn-success">عرض المقال</a></p>
-                `);
-                
-            } catch (error) {
-                showStatus('❌ خطأ في النشر: ' + error.message, 'error');
-            }
-        }
-        
-        // ====== تحديث الإحصائيات ======
-        async function refreshStats() {
-            showStatus('🔄 جاري تحديث الإحصائيات...', 'info');
-            await loadChannelInfo();
-            await loadBlogInfo();
-            showStatus('✅ تم تحديث الإحصائيات', 'success');
-        }
-        
-        // ====== تحميل التحليلات ======
-        async function loadAnalytics() {
-            showStatus('📊 جاري تحميل التحليلات...', 'info');
-            
-            // هنا يمكنك إضافة المزيد من التحليلات المفصلة
-            // باستخدام YouTube Analytics API
-            
-            // محاكاة البيانات
-            document.getElementById('monthViews').textContent = formatNumber(Math.floor(Math.random() * 100000));
-            document.getElementById('watchTime').textContent = formatNumber(Math.floor(Math.random() * 5000));
-            document.getElementById('newSubs').textContent = formatNumber(Math.floor(Math.random() * 1000));
-            document.getElementById('revenue').textContent = '$' + (Math.random() * 1000).toFixed(2);
-            
-            showStatus('✅ تم تحميل التحليلات', 'success');
-        }
-        
-        // ====== وظائف مساعدة ======
-        function switchTab(tabName) {
-            // إخفاء جميع التابات
+        // Show Tab Function
+        function showTab(tabName) {
+            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // إزالة active من جميع الأزرار
+            // Remove active from all buttons
             document.querySelectorAll('.tab').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // عرض التاب المطلوب
+            // Show selected tab
             document.getElementById(tabName + '-tab').classList.add('active');
             
-            // تفعيل الزر المناسب
+            // Add active to clicked button
             event.target.classList.add('active');
         }
         
-        function showTab(tabName) {
-            // للاستخدام من Quick Actions
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(tabName + '-tab').classList.add('active');
-        }
-        
-        function showStatus(message, type) {
-            const status = document.getElementById('status');
-            status.textContent = message;
-            status.className = 'status ' + type + ' success-animation';
-            status.classList.remove('hidden');
+        // YouTube Title Generator
+        function generateTitles() {
+            const keyword = document.getElementById('titleKeyword').value;
+            const type = document.getElementById('titleType').value;
             
-            setTimeout(() => {
-                status.classList.add('hidden');
-            }, 5000);
-        }
-        
-        function showModal(content) {
-            document.getElementById('modalMessage').innerHTML = content;
-            document.getElementById('successModal').classList.add('active');
-        }
-        
-        function closeModal() {
-            document.getElementById('successModal').classList.remove('active');
-        }
-        
-        function updateProgress(percent) {
-            const progressBar = document.getElementById('uploadProgress');
-            progressBar.style.width = percent + '%';
-            progressBar.textContent = percent + '%';
-        }
-        
-        function extractVideoId(url) {
-            const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
-            const match = url.match(regex);
-            return match ? match[1] : null;
-        }
-        
-        function formatNumber(num) {
-            num = parseInt(num) || 0;
-            if (num >= 1000000) {
-                return (num / 1000000).toFixed(1) + 'M';
-            } else if (num >= 1000) {
-                return (num / 1000).toFixed(1) + 'K';
-            }
-            return num.toString();
-        }
-        
-        async function deletePost(postId, title) {
-            if (!confirm(`هل أنت متأكد من حذف المقال: ${title}؟`)) {
+            if (!keyword) {
+                showMessage('الرجاء إدخال كلمة مفتاحية', 'error');
                 return;
             }
             
-            try {
-                await gapi.client.blogger.posts.delete({
-                    blogId: blogId,
-                    postId: postId
-                });
-                
-                showStatus('✅ تم حذف المقال بنجاح', 'success');
-                loadPosts(); // إعادة تحميل القائمة
-            } catch (error) {
-                showStatus('❌ خطأ في حذف المقال', 'error');
-            }
+            const templates = {
+                how: [
+                    `كيفية ${keyword} في 5 دقائق`,
+                    `تعلم ${keyword} للمبتدئين`,
+                    `${keyword} - الدليل الشامل 2024`,
+                    `احترف ${keyword} بسهولة`,
+                    `شرح ${keyword} خطوة بخطوة`
+                ],
+                list: [
+                    `أفضل 10 ${keyword} في 2024`,
+                    `5 أخطاء في ${keyword} يجب تجنبها`,
+                    `${keyword} - قائمة كاملة`,
+                    `7 أسرار عن ${keyword}`,
+                    `${keyword} - كل ما تحتاج معرفته`
+                ],
+                review: [
+                    `مراجعة ${keyword} - هل يستحق؟`,
+                    `تجربتي مع ${keyword}`,
+                    `${keyword} - المميزات والعيوب`,
+                    `رأيي في ${keyword} بعد شهر`,
+                    `${keyword} مقابل البدائل`
+                ]
+            };
+            
+            const result = document.getElementById('titleResult');
+            result.innerHTML = '<strong>العناوين المقترحة:</strong><br><br>';
+            templates[type].forEach(title => {
+                result.innerHTML += `• ${title}<br>`;
+            });
+            result.classList.remove('hidden');
+            
+            showMessage('تم توليد العناوين بنجاح!', 'success');
         }
         
-        async function editPost(postId) {
-            // يمكنك هنا فتح نافذة تعديل أو توجيه المستخدم لـ Blogger
-            window.open(`https://www.blogger.com/blog/post/edit/${blogId}/${postId}`, '_blank');
-        }
-        
-        // ====== التهيئة عند التحميل ======
-        window.onload = function() {
-            if (!API_KEY.includes('YOUR_') && !CLIENT_ID.includes('YOUR_')) {
-                initializeGapiClient();
-                initializeGSI();
-                
-                // تحميل المسودة المحفوظة إن وجدت
-                const savedDraft = localStorage.getItem('blogDraft');
-                if (savedDraft) {
-                    const draft = JSON.parse(savedDraft);
-                    const loadDraft = confirm('توجد مسودة محفوظة. هل تريد تحميلها؟');
-                    if (loadDraft) {
-                        document.getElementById('postTitle').value = draft.title;
-                        document.getElementById('postContent').value = draft.content;
-                        document.getElementById('postTags').value = draft.tags;
-                        showStatus('✅ تم تحميل المسودة المحفوظة', 'success');
-                    }
-                }
-            } else {
-                showStatus('⚠️ الرجاء إضافة API_KEY و CLIENT_ID في الكود', 'error');
-                document.getElementById('mainContent').innerHTML = `
-                    <div class="info-box">
-                        <h2>⚠️ التكوين مطلوب</h2>
-                        <p>الرجاء إضافة مفاتيح API في الكود:</p>
-                        <ol style="text-align: right; margin: 20px;">
-                            <li>افتح ملف HTML في محرر النصوص</li>
-                            <li>ابحث عن: const API_KEY = 'YOUR_API_KEY_HERE'</li>
-                            <li>استبدل YOUR_API_KEY_HERE بمفتاح API الخاص بك</li>
-                            <li>استبدل YOUR_CLIENT_ID_HERE بمعرف العميل الخاص بك</li>
-                            <li>احفظ الملف وأعد تحميل الصفحة</li>
-                        </ol>
-                    </div>
-                `;
+        // Video Description Generator
+        function generateDescription() {
+            const title = document.getElementById('videoTitle').value;
+            const summary = document.getElementById('videoSummary').value;
+            
+            if (!title) {
+                showMessage('الرجاء إدخال عنوان الفيديو', 'error');
+                return;
             }
             
-            // إغلاق Modal عند النقر خارجه
-            window.onclick = function(event) {
-                const modal = document.getElementById('successModal');
-                if (event.target == modal) {
-                    modal.classList.remove('active');
-                }
-            };
-        };
-    </script>
+            const description = `${summary || 'مرحباً بكم في قناتنا!'}
+
+📌 في هذا الفيديو:
+${title}
+
+⏱️ المحتويات:
+00:00 المقدمة
+01:00 النقطة الأولى
+03:00 النقطة الثانية
+05:00 الخاتمة
+
+🔔 لا تنسى الاشتراك وتفعيل الجرس!
+👍 إذا أعجبك الفيديو اضغط لايك
+💬 شاركنا رأيك في التعليقات
+
+📱 تابعونا:
+Instagram: @yourchannel
+Twitter: @yourchannel
+المدونة: www.tosh5.shop
+
+#${title.replace(/ /g, '_')} #يوتيوب #عربي`;
+            
+            const result = document.getElementById('descResult');
+            result.innerHTML = '<strong>الوصف:</strong><br><pre>' + description + '</pre>';
+            result.innerHTML += '<br><button onclick="copyText(\'' + description.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ الوصف</button>';
+            result.classList.remove('hidden');
+            
+            showMessage('تم توليد الوصف بنجاح!', 'success');
+        }
+        
+        // Hashtag Generator
+        function generateHashtags() {
+            const topic = document.getElementById('hashtagTopic').value;
+            
+            if (!topic) {
+                showMessage('الرجاء إدخال الموضوع', 'error');
+                return;
+            }
+            
+            const hashtags = [
+                `#${topic.replace(/ /g, '_')}`,
+                `#${topic.replace(/ /g, '')}`,
+                `#${topic}_2024`,
+                '#يوتيوب',
+                '#youtube',
+                '#عربي',
+                '#محتوى_عربي',
+                '#فيديو',
+                '#video',
+                '#تعليم',
+                '#education',
+                '#شرح',
+                '#tutorial',
+                '#جديد',
+                '#new',
+                '#ترند',
+                '#trending',
+                '#viral',
+                '#fyp',
+                '#explore',
+                '#السعودية',
+                '#مصر',
+                '#الإمارات',
+                '#المغرب',
+                '#content',
+                '#creator',
+                '#youtuber',
+                '#vlog',
+                '#tips',
+                '#العراق'
+            ];
+            
+            const result = document.getElementById('hashtagResult');
+            result.innerHTML = '<strong>الهاشتاجات (30):</strong><br><br>';
+            result.innerHTML += hashtags.slice(0, 30).join(' ');
+            result.innerHTML += '<br><br><button onclick="copyText(\'' + hashtags.slice(0, 30).join(' ') + '\')">نسخ الهاشتاجات</button>';
+            result.classList.remove('hidden');
+            
+            showMessage('تم توليد الهاشتاجات بنجاح!', 'success');
+        }
+        
+        // Blog Post Generator
+        function generateBlogPost() {
+            const title = document.getElementById('blogTitle').value;
+            const content = document.getElementById('blogContent').value;
+            
+            if (!title) {
+                showMessage('الرجاء إدخال عنوان المقال', 'error');
+                return;
+            }
+            
+            const blogPost = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <title>${title}</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="${title}">
+</head>
+<body>
+    <article>
+        <h1>${title}</h1>
+        <div>${content || 'محتوى المقال...'}</div>
+        
+        <footer>
+            <p>تابعونا على:</p>
+            <p>YouTube: <a href="https://youtube.com/yourchannel">قناتنا على YouTube</a></p>
+            <p>المدونة: <a href="https://www.tosh5.shop">www.tosh5.shop</a></p>
+        </footer>
+    </article>
 </body>
-</html>
+</html>`;
+            
+            const result = document.getElementById('blogResult');
+            result.innerHTML = '<strong>كود HTML للمقال:</strong><br>';
+            result.innerHTML += '<textarea style="width:100%; height:200px;" readonly>' + blogPost + '</textarea>';
+            result.innerHTML += '<br><button onclick="copyText(\'' + blogPost.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ الكود</button>';
+            result.classList.remove('hidden');
+            
+            showMessage('تم إنشاء المقال بنجاح!', 'success');
+        }
+        
+        // Meta Tags Generator
+        function generateMeta() {
+            const title = document.getElementById('metaTitle').value;
+            const keywords = document.getElementById('metaKeywords').value;
+            
+            if (!title) {
+                showMessage('الرجاء إدخال العنوان', 'error');
+                return;
+            }
+            
+            const metaTags = `<!-- Meta Tags for SEO -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title}</title>
+<meta name="description" content="${title}">
+<meta name="keywords" content="${keywords}">
+<meta name="author" content="Tosh5">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${title}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.tosh5.shop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${title}">`;
+            
+            const result = document.getElementById('metaResult');
+            result.innerHTML = '<strong>Meta Tags:</strong><br>';
+            result.innerHTML += '<textarea style="width:100%; height:200px;" readonly>' + metaTags + '</textarea>';
+            result.innerHTML += '<br><button onclick="copyText(\'' + metaTags.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ Meta Tags</button>';
+            result.classList.remove('hidden');
+            
+            showMessage('تم توليد Meta Tags بنجاح!', 'success');
+        }
+        
+        // Convert YouTube to Blog Post
+        function convertToPost() {
+            const url = document.getElementById('youtubeUrl').value;
+            
+            if (!url || !url.includes('youtube.com')) {
+                showMessage('الرجاء إدخال رابط YouTube صحيح', 'error');
+                return;
+            }
+            
+            // Extract video ID
+            const videoId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+            
+            const blogPost = `<div style="text-align: center;">
+    <h2>شاهد الفيديو</h2>
+    <iframe width="560" height="315" 
+        src="https://www.youtube.com/embed/${videoId}" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+</div>
+
+<div style="margin: 20px 0;">
+    <h3>عن هذا الفيديو:</h3>
+    <p>يمكنك مشاهدة الفيديو الأصلي على YouTube من خلال هذا الرابط:</p>
+    <p><a href="${url}" target="_blank">${url}</a></p>
+</div>
+
+<div style="margin: 20px 0;">
+    <p>لمزيد من الفيديوهات، تابعونا على:</p>
+    <ul>
+        <li>YouTube: <a href="https://youtube.com/yourchannel">قناتنا على YouTube</a></li>
+        <li>المدونة: <a href="https://www.tosh5.shop">www.tosh5.shop</a></li>
+    </ul>
+</div>`;
+            
+            const result = document.getElementById('convertResult');
+            result.innerHTML = '<strong>كود HTML للمقال:</strong><br>';
+            result.innerHTML += '<textarea style="width:100%; height:250px;" readonly>' + blogPost + '</textarea>';
+            result.innerHTML += '<br><button onclick="copyText(\'' + blogPost.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ الكود</button>';
+            result.innerHTML += '<br><br><strong>معاينة:</strong><br>' + blogPost;
+            result.classList.remove('hidden');
+            
+            showMessage('تم تحويل الفيديو إلى مقال بنجاح!', 'success');
+        }
+        
+        // Convert Article to Script
+        function convertToScript() {
+            const content = document.getElementById('articleContent').value;
+            
+            if (!content) {
+                showMessage('الرجاء إدخال محتوى المقال', 'error');
+                return;
+            }
+            
+            const script = `📹 سكريبت الفيديو
+================
+
+🎬 المقدمة (0:00 - 0:30)
+------------------------
+"السلام عليكم ومرحباً بكم في قناتنا!
+اليوم سنتحدث عن موضوع مهم جداً..."
+
+📌 المحتوى الرئيسي (0:30 - X:XX)
+----------------------------------
+${content}
+
+🎯 النقاط الرئيسية:
+• النقطة الأولى
+• النقطة الثانية  
+• النقطة الثالثة
+
+💡 نصائح للتصوير:
+- حافظ على التواصل البصري مع الكاميرا
+- استخدم لغة الجسد
+- أضف رسومات توضيحية
+- اجعل الفيديو تفاعلي
+
+🔚 الخاتمة (X:XX - X:XX)
+------------------------
+"إذا أعجبكم الفيديو لا تنسوا:
+✅ الاشتراك في القناة
+👍 الإعجاب بالفيديو
+💬 كتابة تعليق
+🔔 تفعيل الجرس
+
+شكراً لمتابعتكم، أراكم في الفيديو القادم!"`;
+            
+            const result = document.getElementById('scriptResult');
+            result.innerHTML = '<strong>السكريبت:</strong><br>';
+            result.innerHTML += '<textarea style="width:100%; height:300px;" readonly>' + script + '</textarea>';
+            result.innerHTML += '<br><button onclick="copyText(\'' + script.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ السكريبت</button>';
+            result.classList.remove('hidden');
+            
+            showMessage('تم تحويل المقال إلى سكريبت بنجاح!', 'success');
+        }
+        
+        // Copy Text Function
+        function copyText(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            showMessage('تم النسخ بنجاح!', 's
