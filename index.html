@@ -1,569 +1,647 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube & Blogger Tools</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        
-        .section {
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        
-        h2 {
-            color: #FF0000;
-            margin-bottom: 15px;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        button {
-            background: #FF0000;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-        }
-        
-        button:hover {
-            background: #CC0000;
-        }
-        
-        .result {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
-            border-left: 4px solid #4CAF50;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .blog-btn {
-            background: #FF6B00;
-        }
-        
-        .blog-btn:hover {
-            background: #E55100;
-        }
-        
-        .success {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .tab {
-            padding: 10px 20px;
-            background: #f0f0f0;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        
-        .tab.active {
-            background: #FF0000;
-            color: white;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>YouTube & Blogger Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+    }
+    .app {
+      background: #f9fafb;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      padding: 20px 16px 28px;
+    }
+    .app-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .app-header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+    .app-header p {
+      color: #4b5563;
+      font-size: 14px;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      border: none;
+      outline: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.primary {
+      background-color: #ef4444;
+      color: white;
+    }
+    .tab-btn.primary.inactive {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+    .tab-btn.secondary {
+      background-color: #e5e7eb;
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+    .tab-btn.primary:hover {
+      filter: brightness(1.05);
+    }
+    .sections {
+      margin-top: 4px;
+    }
+    .section {
+      display: none;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px 12px 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .section.active {
+      display: block;
+    }
+    .section h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111827;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .section p.section-subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    .tool-box {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 14px 12px;
+      margin-bottom: 14px;
+      background-color: #f9fafb;
+    }
+    .tool-title {
+      font-weight: 800;
+      font-size: 16px;
+      color: #b91c1c;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tool-title span.icon {
+      font-size: 18px;
+    }
+    .field-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+    .input, select, textarea {
+      width: 100%;
+      font-size: 14px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background-color: #ffffff;
+    }
+    .input:focus, select:focus, textarea:focus {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.25);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .btn-primary {
+      background-color: #ef4444;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background-color: #dc2626;
+      transform: translateY(-1px);
+    }
+    .btn-sm {
+      width: auto;
+      padding-inline: 14px;
+      font-size: 13px;
+    }
+    .output {
+      background-color: #f3f4f6;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: #111827;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .output-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .copy-btn {
+      border: none;
+      background-color: #e5e7eb;
+      color: #374151;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .copy-btn:hover {
+      background-color: #d1d5db;
+    }
+    .small-hint {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    @media (min-width: 768px) {
+      .two-cols {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎬 YouTube & Blogger Tools</h1>
-        
-        <div id="message" class="hidden"></div>
-        
-        <!-- Navigation Tabs -->
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('youtube')">YouTube Tools</button>
-            <button class="tab" onclick="showTab('blogger')">Blogger Tools</button>
-            <button class="tab" onclick="showTab('convert')">Convert Tools</button>
-        </div>
-        
-        <!-- YouTube Tools Tab -->
-        <div id="youtube-tab" class="tab-content active">
-            <!-- Video Title Generator -->
-            <div class="section">
-                <h2>📝 مولد عناوين YouTube</h2>
-                <input type="text" id="titleKeyword" placeholder="أدخل الكلمة المفتاحية">
-                <select id="titleType">
-                    <option value="how">How To - شرح</option>
-                    <option value="list">قائمة Top 10</option>
-                    <option value="review">مراجعة</option>
-                </select>
-                <button onclick="generateTitles()">توليد عناوين</button>
-                <div id="titleResult" class="result hidden"></div>
-            </div>
-            
-            <!-- Video Description Generator -->
-            <div class="section">
-                <h2>📋 مولد وصف الفيديو</h2>
-                <input type="text" id="videoTitle" placeholder="عنوان الفيديو">
-                <textarea id="videoSummary" placeholder="ملخص الفيديو" rows="3"></textarea>
-                <button onclick="generateDescription()">توليد الوصف</button>
-                <div id="descResult" class="result hidden"></div>
-            </div>
-            
-            <!-- Hashtag Generator -->
-            <div class="section">
-                <h2>#️⃣ مولد الهاشتاجات</h2>
-                <input type="text" id="hashtagTopic" placeholder="موضوع الفيديو">
-                <button onclick="generateHashtags()">توليد 30 هاشتاج</button>
-                <div id="hashtagResult" class="result hidden"></div>
-            </div>
-        </div>
-        
-        <!-- Blogger Tools Tab -->
-        <div id="blogger-tab" class="tab-content">
-            <!-- Blog Post Generator -->
-            <div class="section">
-                <h2>✍️ مولد مقالات المدونة</h2>
-                <input type="text" id="blogTitle" placeholder="عنوان المقال">
-                <textarea id="blogContent" placeholder="محتوى المقال" rows="5"></textarea>
-                <button class="blog-btn" onclick="generateBlogPost()">إنشاء مقال</button>
-                <div id="blogResult" class="result hidden"></div>
-            </div>
-            
-            <!-- SEO Meta Generator -->
-            <div class="section">
-                <h2>🔍 مولد Meta Tags</h2>
-                <input type="text" id="metaTitle" placeholder="عنوان الصفحة">
-                <input type="text" id="metaKeywords" placeholder="الكلمات المفتاحية">
-                <button class="blog-btn" onclick="generateMeta()">توليد Meta Tags</button>
-                <div id="metaResult" class="result hidden"></div>
-            </div>
-        </div>
-        
-        <!-- Convert Tools Tab -->
-        <div id="convert-tab" class="tab-content">
-            <!-- YouTube to Blog Post -->
-            <div class="section">
-                <h2>🔄 تحويل فيديو YouTube إلى مقال</h2>
-                <input type="url" id="youtubeUrl" placeholder="رابط فيديو YouTube">
-                <button onclick="convertToPost()">تحويل إلى مقال</button>
-                <div id="convertResult" class="result hidden"></div>
-            </div>
-            
-            <!-- Blog to YouTube Script -->
-            <div class="section">
-                <h2>🎬 تحويل مقال إلى سكريبت فيديو</h2>
-                <textarea id="articleContent" placeholder="الصق محتوى المقال هنا" rows="5"></textarea>
-                <button onclick="convertToScript()">تحويل إلى سكريبت</button>
-                <div id="scriptResult" class="result hidden"></div>
-            </div>
-        </div>
-        
-        <!-- Quick Links -->
-        <div class="section" style="background: #fff3cd; border-left: 4px solid #ffc107;">
-            <h3>🔗 روابط سريعة:</h3>
-            <p>📺 YouTube Studio: <a href="https://studio.youtube.com" target="_blank">studio.youtube.com</a></p>
-            <p>📝 Blogger: <a href="https://www.blogger.com" target="_blank">blogger.com</a></p>
-            <p>🌐 مدونتك: <a href="https://www.tosh5.shop" target="_blank">www.tosh5.shop</a></p>
-        </div>
+  <div class="app">
+    <div class="app-header">
+      <h1>YouTube & 🎬 Blogger Tools</h1>
+      <p>مولدات جاهزة لعناوين ووصف YouTube ومقالات Blogger — انسخ والصق مباشرة في قناتك أو مدونتك.</p>
     </div>
-    
-    <script>
-        // Show Tab Function
-        function showTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active from all buttons
-            document.querySelectorAll('.tab').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(tabName + '-tab').classList.add('active');
-            
-            // Add active to clicked button
-            event.target.classList.add('active');
-        }
-        
-        // YouTube Title Generator
-        function generateTitles() {
-            const keyword = document.getElementById('titleKeyword').value;
-            const type = document.getElementById('titleType').value;
-            
-            if (!keyword) {
-                showMessage('الرجاء إدخال كلمة مفتاحية', 'error');
-                return;
-            }
-            
-            const templates = {
-                how: [
-                    `كيفية ${keyword} في 5 دقائق`,
-                    `تعلم ${keyword} للمبتدئين`,
-                    `${keyword} - الدليل الشامل 2024`,
-                    `احترف ${keyword} بسهولة`,
-                    `شرح ${keyword} خطوة بخطوة`
-                ],
-                list: [
-                    `أفضل 10 ${keyword} في 2024`,
-                    `5 أخطاء في ${keyword} يجب تجنبها`,
-                    `${keyword} - قائمة كاملة`,
-                    `7 أسرار عن ${keyword}`,
-                    `${keyword} - كل ما تحتاج معرفته`
-                ],
-                review: [
-                    `مراجعة ${keyword} - هل يستحق؟`,
-                    `تجربتي مع ${keyword}`,
-                    `${keyword} - المميزات والعيوب`,
-                    `رأيي في ${keyword} بعد شهر`,
-                    `${keyword} مقابل البدائل`
-                ]
-            };
-            
-            const result = document.getElementById('titleResult');
-            result.innerHTML = '<strong>العناوين المقترحة:</strong><br><br>';
-            templates[type].forEach(title => {
-                result.innerHTML += `• ${title}<br>`;
-            });
-            result.classList.remove('hidden');
-            
-            showMessage('تم توليد العناوين بنجاح!', 'success');
-        }
-        
-        // Video Description Generator
-        function generateDescription() {
-            const title = document.getElementById('videoTitle').value;
-            const summary = document.getElementById('videoSummary').value;
-            
-            if (!title) {
-                showMessage('الرجاء إدخال عنوان الفيديو', 'error');
-                return;
-            }
-            
-            const description = `${summary || 'مرحباً بكم في قناتنا!'}
 
-📌 في هذا الفيديو:
-${title}
+    <div class="tabs">
+      <button id="btnBloggerTab" class="tab-btn primary inactive">Blogger Tools</button>
+      <button id="btnYoutubeTab" class="tab-btn primary">YouTube Tools</button>
+      <button class="tab-btn secondary" title="سيتم إضافتها لاحقًا">Convert Tools</button>
+    </div>
 
-⏱️ المحتويات:
-00:00 المقدمة
-01:00 النقطة الأولى
-03:00 النقطة الثانية
-05:00 الخاتمة
+    <div class="sections">
+      <!-- YouTube TOOLS SECTION -->
+      <section id="youtubeSection" class="section active">
+        <h2>🟥 أدوات YouTube</h2>
+        <p class="section-subtitle">اكتب كلمة مفتاحية، اختر نوع الفكرة، واضغط توليد لتحصل على اقتراحات جاهزة.</p>
 
-🔔 لا تنسى الاشتراك وتفعيل الجرس!
-👍 إذا أعجبك الفيديو اضغط لايك
-💬 شاركنا رأيك في التعليقات
+        <!-- مولد عناوين يوتيوب -->
+        <div class="tool-box">
+          <div class="tool-title">
+            <span class="icon">✏️</span>
+            <span>مولد عناوين YouTube</span>
+          </div>
 
-📱 تابعونا:
-Instagram: @yourchannel
-Twitter: @yourchannel
-المدونة: www.tosh5.shop
+          <label class="field-label" for="ytTitleKeyword">الكلمة المفتاحية / موضوع الفيديو</label>
+          <input id="ytTitleKeyword" class="input" placeholder="مثال: الربح من الإنترنت، تقنيات الذكاء الاصطناعي" />
 
-#${title.replace(/ /g, '_')} #يوتيوب #عربي`;
-            
-            const result = document.getElementById('descResult');
-            result.innerHTML = '<strong>الوصف:</strong><br><pre>' + description + '</pre>';
-            result.innerHTML += '<br><button onclick="copyText(\'' + description.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ الوصف</button>';
-            result.classList.remove('hidden');
-            
-            showMessage('تم توليد الوصف بنجاح!', 'success');
-        }
-        
-        // Hashtag Generator
-        function generateHashtags() {
-            const topic = document.getElementById('hashtagTopic').value;
-            
-            if (!topic) {
-                showMessage('الرجاء إدخال الموضوع', 'error');
-                return;
-            }
-            
-            const hashtags = [
-                `#${topic.replace(/ /g, '_')}`,
-                `#${topic.replace(/ /g, '')}`,
-                `#${topic}_2024`,
-                '#يوتيوب',
-                '#youtube',
-                '#عربي',
-                '#محتوى_عربي',
-                '#فيديو',
-                '#video',
-                '#تعليم',
-                '#education',
-                '#شرح',
-                '#tutorial',
-                '#جديد',
-                '#new',
-                '#ترند',
-                '#trending',
-                '#viral',
-                '#fyp',
-                '#explore',
-                '#السعودية',
-                '#مصر',
-                '#الإمارات',
-                '#المغرب',
-                '#content',
-                '#creator',
-                '#youtuber',
-                '#vlog',
-                '#tips',
-                '#العراق'
-            ];
-            
-            const result = document.getElementById('hashtagResult');
-            result.innerHTML = '<strong>الهاشتاجات (30):</strong><br><br>';
-            result.innerHTML += hashtags.slice(0, 30).join(' ');
-            result.innerHTML += '<br><br><button onclick="copyText(\'' + hashtags.slice(0, 30).join(' ') + '\')">نسخ الهاشتاجات</button>';
-            result.classList.remove('hidden');
-            
-            showMessage('تم توليد الهاشتاجات بنجاح!', 'success');
-        }
-        
-        // Blog Post Generator
-        function generateBlogPost() {
-            const title = document.getElementById('blogTitle').value;
-            const content = document.getElementById('blogContent').value;
-            
-            if (!title) {
-                showMessage('الرجاء إدخال عنوان المقال', 'error');
-                return;
-            }
-            
-            const blogPost = `<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <title>${title}</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="${title}">
-</head>
-<body>
-    <article>
-        <h1>${title}</h1>
-        <div>${content || 'محتوى المقال...'}</div>
-        
-        <footer>
-            <p>تابعونا على:</p>
-            <p>YouTube: <a href="https://youtube.com/yourchannel">قناتنا على YouTube</a></p>
-            <p>المدونة: <a href="https://www.tosh5.shop">www.tosh5.shop</a></p>
-        </footer>
-    </article>
+          <label class="field-label" for="ytTitleStyle" style="margin-top: 8px;">نوع القائمة</label>
+          <select id="ytTitleStyle">
+            <option value="top10">قائمة Top 10</option>
+            <option value="howto">فيديو شرح (How To)</option>
+            <option value="secrets">أسرار / حقائق</option>
+            <option value="mistakes">أخطاء شائعة</option>
+            <option value="ideas">أفكار متنوعة</option>
+          </select>
+
+          <button id="btnGenerateYtTitles" class="btn btn-primary" style="margin-top: 10px;">توليد عناوين</button>
+
+          <div style="margin-top: 10px;">
+            <div class="output-title">
+              <span>النتيجة (يمكنك النسخ والاختيار):</span>
+              <button class="copy-btn" onclick="copyOutput('ytTitlesOutput')">نسخ الكل</button>
+            </div>
+            <div id="ytTitlesOutput" class="output"></div>
+          </div>
+          <div class="small-hint">اختر العنوان الأنسب، ثم عدّله قليلًا ليناسب أسلوبك.</div>
+        </div>
+
+        <!-- مولد وصف الفيديو -->
+        <div class="tool-box">
+          <div class="tool-title">
+            <span class="icon">📋</span>
+            <span>مولد وصف الفيديو</span>
+          </div>
+
+          <label class="field-label" for="ytDescKeyword">موضوع الفيديو / الكلمة المفتاحية</label>
+          <input id="ytDescKeyword" class="input" placeholder="مثال: شرح موقع كذا للربح من الإنترنت" />
+
+          <label class="field-label" for="ytDescExtras" style="margin-top: 8px;">نِقاط تريد ذكرها في الوصف (اختياري)</label>
+          <textarea id="ytDescExtras" placeholder="مثال: مميزات الموقع، الحد الأدنى للسحب، رابط التسجيل..."></textarea>
+
+          <button id="btnGenerateYtDesc" class="btn btn-primary" style="margin-top: 10px;">توليد وصف احترافي</button>
+
+          <div style="margin-top: 10px;">
+            <div class="output-title">
+              <span>الوصف المقترح:</span>
+              <button class="copy-btn" onclick="copyOutput('ytDescOutput')">نسخ</button>
+            </div>
+            <div id="ytDescOutput" class="output"></div>
+          </div>
+        </div>
+
+        <!-- مولد كلمات مفتاحية (Tags) -->
+        <div class="tool-box">
+          <div class="tool-title">
+            <span class="icon">🏷️</span>
+            <span>مولد الكلمات المفتاحية (Tags)</span>
+          </div>
+
+          <label class="field-label" for="ytTagsKeyword">أدخل كلمة أو أكثر (افصل بينها بفاصلة)</label>
+          <input id="ytTagsKeyword" class="input" placeholder="مثال: تقنيات الذكاء الاصطناعي, الربح من يوتيوب" />
+
+          <button id="btnGenerateYtTags" class="btn btn-primary" style="margin-top: 10px;">توليد Tags</button>
+
+          <div style="margin-top: 10px;">
+            <div class="output-title">
+              <span>Tags المقترحة (انسخها وضعها في يوتيوب):</span>
+              <button class="copy-btn" onclick="copyOutput('ytTagsOutput')">نسخ</button>
+            </div>
+            <div id="ytTagsOutput" class="output"></div>
+          </div>
+          <div class="small-hint">ضع الكلمات المهمة أولاً، واجعلها قريبة من محتوى الفيديو الفعلي.</div>
+        </div>
+      </section>
+
+      <!-- BLOGGER TOOLS SECTION -->
+      <section id="bloggerSection" class="section">
+        <h2>🟦 أدوات Blogger</h2>
+        <p class="section-subtitle">أنشئ عناوين ومقدمات لمقالات مدونتك بسهولة، ثم انسخها إلى لوحة تحكم Blogger.</p>
+
+        <!-- مولد عناوين مقالات -->
+        <div class="tool-box">
+          <div class="tool-title">
+            <span class="icon">📝</span>
+            <span>مولد عناوين مقالات Blogger</span>
+          </div>
+
+          <label class="field-label" for="blogTitleKeyword">مجال المقال / الكلمة المفتاحية</label>
+          <input id="blogTitleKeyword" class="input" placeholder="مثال: التسويق الإلكتروني، الربح من المدونات" />
+
+          <label class="field-label" for="blogTitleStyle" style="margin-top: 8px;">نوع الفكرة</label>
+          <select id="blogTitleStyle">
+            <option value="guide">دليل شامل</option>
+            <option value="tips">نصائح / أسرار</option>
+            <option value="problems">حل مشكلة</option>
+            <option value="comparison">مقارنة</option>
+          </select>
+
+          <button id="btnGenerateBlogTitles" class="btn btn-primary" style="margin-top: 10px;">توليد عناوين</button>
+
+          <div style="margin-top: 10px;">
+            <div class="output-title">
+              <span>عناوين مقترحة:</span>
+              <button class="copy-btn" onclick="copyOutput('blogTitlesOutput')">نسخ</button>
+            </div>
+            <div id="blogTitlesOutput" class="output"></div>
+          </div>
+        </div>
+
+        <!-- مولد مقدمة ووصف للمقال -->
+        <div class="tool-box">
+          <div class="tool-title">
+            <span class="icon">📄</span>
+            <span>مولد مقدمة / وصف للمقال</span>
+          </div>
+
+          <label class="field-label" for="blogIntroTitle">عنوان المقال (أو الفكرة الرئيسية)</label>
+          <input id="blogIntroTitle" class="input" placeholder="اكتب عنوانًا مبدئيًا للمقال" />
+
+          <label class="field-label" for="blogIntroPoints" style="margin-top: 8px;">نقاط تريد تغطيتها في المقال (اختياري)</label>
+          <textarea id="blogIntroPoints" placeholder="مثال: تعريف بالمجال، أهميته، خطوات عملية، نصائح ختامية..."></textarea>
+
+          <button id="btnGenerateBlogIntro" class="btn btn-primary" style="margin-top: 10px;">توليد مقدمة مقال</button>
+
+          <div style="margin-top: 10px;">
+            <div class="output-title">
+              <span>المقدمة المقترحة:</span>
+              <button class="copy-btn" onclick="copyOutput('blogIntroOutput')">نسخ</button>
+            </div>
+            <div id="blogIntroOutput" class="output"></div>
+          </div>
+          <div class="small-hint">بعد نسخ المقدمة، أكمل باقي الفقرات بنفس الأسلوب أو استخدم المقدمة كملخص.</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // تبويب Blogger / YouTube
+    const youtubeSection = document.getElementById('youtubeSection');
+    const bloggerSection = document.getElementById('bloggerSection');
+    const btnYoutubeTab = document.getElementById('btnYoutubeTab');
+    const btnBloggerTab = document.getElementById('btnBloggerTab');
+
+    btnYoutubeTab.addEventListener('click', () => {
+      youtubeSection.classList.add('active');
+      bloggerSection.classList.remove('active');
+      btnYoutubeTab.classList.remove('inactive');
+      btnBloggerTab.classList.add('inactive');
+    });
+
+    btnBloggerTab.addEventListener('click', () => {
+      bloggerSection.classList.add('active');
+      youtubeSection.classList.remove('active');
+      btnBloggerTab.classList.remove('inactive');
+      btnYoutubeTab.classList.add('inactive');
+    });
+
+    // دالة نسخ المخرجات
+    function copyOutput(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.innerText.trim();
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✅ تم نسخ المحتوى إلى الحافظة.');
+      }).catch(() => {
+        alert('لم يتم النسخ تلقائيًا، يمكنك التحديد والنسخ يدويًا.');
+      });
+    }
+
+    // توليد عناوين يوتيوب
+    document.getElementById('btnGenerateYtTitles').addEventListener('click', () => {
+      const keyword = document.getElementById('ytTitleKeyword').value.trim();
+      const style = document.getElementById('ytTitleStyle').value;
+      const output = document.getElementById('ytTitlesOutput');
+
+      if (!keyword) {
+        output.innerText = 'من فضلك أدخل كلمة مفتاحية أولاً.';
+        return;
+      }
+
+      let templates = [];
+      if (style === 'top10') {
+        templates = [
+          `أفضل 10 طرق لاستخدام ${keyword} في 2024`,
+          `Top 10 أسرار عن ${keyword} لا يخبرك بها أحد`,
+          `10 أفكار مجنونة لـ ${keyword} ستحب تجربتها`,
+          `أفضل 10 أدوات تساعدك في مجال ${keyword}`,
+          `10 أخطاء قاتلة في ${keyword} وتجنّبها`,
+          `10 خطوات عملية لإتقان ${keyword} من الصفر`,
+          `Top 10 قنوات تتحدث عن ${keyword} يجب متابعتها`,
+          `أفضل 10 استراتيجيات لـ ${keyword} للمبتدئين`,
+          `10 نصائح ذهبية لنجاحك في ${keyword}`,
+          `10 معلومات مهمة عن ${keyword} في أقل من 10 دقائق`
+        ];
+      } else if (style === 'howto') {
+        templates = [
+          `شرح كامل: كيف تبدأ في ${keyword} خطوة بخطوة`,
+          `كيف تستخدم ${keyword} لتحقيق دخل شهري ثابت`,
+          `طريقة ذكية لاستغلال ${keyword} بدون خبرة سابقة`,
+          `كيف تتجنب أهم الأخطاء عند البدء في ${keyword}`,
+          `شرح بسيط لـ ${keyword} للمبتدئين من الصفر حتى الاحتراف`,
+          `كيف تطور مهاراتك في ${keyword} خلال 30 يومًا فقط`,
+          `استراتيجية مجربة للنجاح في ${keyword} مهما كان مستواك`,
+          `كيف تحول ${keyword} إلى مصدر دخل حقيقي`,
+          `أسهل طريقة لفهم ${keyword} في أقل وقت`,
+          `كيف تعرف إذا كان ${keyword} مناسبًا لك أم لا؟`
+        ];
+      } else if (style === 'secrets') {
+        templates = [
+          `أسرار ${keyword} التي لا يريد أحد أن يخبرك بها`,
+          `حقائق صادمة عن ${keyword} لن تصدقها`,
+          `أشياء لا تعرفها عن ${keyword} وستغير نظرتك تمامًا`,
+          `5 أسرار خطيرة عن ${keyword} (رقم 3 مهم جدًا!)`,
+          `هل تعرف هذه الخفايا عن ${keyword}؟`,
+          `أسرار المحترفين في ${keyword} وكيف يمكنك استخدامها`,
+          `معلومات مخفية عن ${keyword} تكشف لأول مرة`,
+          `أخطر 7 حقائق عن ${keyword} يجب أن تعرفها الآن`,
+          `حقيقة ${keyword} الكاملة بدون مبالغة`,
+          `ما لا يخبرك به أحد عن ${keyword}`
+        ];
+      } else if (style === 'mistakes') {
+        templates = [
+          `7 أخطاء قاتلة يرتكبها المبتدئون في ${keyword}`,
+          `لا ترتكب هذه الأخطاء عند البدء في ${keyword}`,
+          `أكبر خطأ تقع فيه عند استخدام ${keyword} (وحلّه)`,
+          `5 أخطاء تمنعك من النجاح في ${keyword}`,
+          `لماذا يفشل أغلب الناس في ${keyword}؟ هذه هي الأسباب`,
+          `أخطاء شائعة في ${keyword} وكيف تتجنبها بسهولة`,
+          `أشياء تفعلها في ${keyword} وتدمّر نتائجك بدون أن تشعر`,
+          `10 عادات سيئة تدمّر نجاحك في ${keyword}`,
+          `هذه الأخطاء تجعل ${keyword} يضيع وقتك بدلاً من أن ينفعك`,
+          `كيف تصحح مسارك في ${keyword} وتتجنب الفشل`
+        ];
+      } else {
+        // ideas
+        templates = [
+          `أفكار فيديوهات قوية عن ${keyword} ستجلب لك مشاهدات`,
+          `أفضل محتوى يمكنك تقديمه عن ${keyword} على يوتيوب`,
+          `لماذا يعتبر ${keyword} فرصة ذهبية الآن؟`,
+          `كيف تصنع قناة ناجحة حول ${keyword} من الصفر`,
+          `محتوى مختلف ومميز عن ${keyword} لن تجده عند غيرك`,
+          `خطّة محتوى شهرية لقناة تتحدث عن ${keyword}`,
+          `هل ما زال ${keyword} مربحًا في 2024؟`,
+          `طرق مبتكرة للحديث عن ${keyword} تجذب المشتركين`,
+          `تحليل قنوات ناجحة في مجال ${keyword} وما نتعلمه منها`,
+          `فكرة سلسلة فيديوهات كاملة عن ${keyword}`
+        ];
+      }
+
+      const resultLines = templates.map((t, i) => `${i + 1}. ${t}`);
+      output.innerText = resultLines.join('\n');
+    });
+
+    // توليد وصف يوتيوب
+    document.getElementById('btnGenerateYtDesc').addEventListener('click', () => {
+      const topic = document.getElementById('ytDescKeyword').value.trim();
+      const extras = document.getElementById('ytDescExtras').value.trim();
+      const output = document.getElementById('ytDescOutput');
+
+      if (!topic) {
+        output.innerText = 'من فضلك أدخل موضوع الفيديو أولاً.';
+        return;
+      }
+
+      let base =
+        `في هذا الفيديو سنتحدث عن "${topic}" خطوة بخطوة وبأسلوب بسيط وواضح، ` +
+        `حتى لو كنت مبتدئًا في هذا المجال. ستتعرف على أهم النقاط والأساسيات التي تحتاجها، ` +
+        `مع نصائح عملية يمكنك تطبيقها مباشرة بعد المشاهدة.\n\n`;
+
+      if (extras) {
+        base += `ما ستشاهده في هذا الفيديو:\n- ${extras.split('\n').join('\n- ')}\n\n`;
+      }
+
+      base +=
+        `لا تنسَ دعمنا بالاشتراك في القناة وتفعيل زر الجرس 🔔 ليصلك كل جديد، ` +
+        `وإذا أعجبك الفيديو لا تنسَ الضغط على زر الإعجاب 👍 ومشاركة الفيديو مع أصدقائك.\n\n` +
+        `روابط مفيدة قد تهمك:\n` +
+        `- رابط الموقع / الأداة المذكورة في الفيديو (إن وجد)\n` +
+        `- حساباتنا على مواقع التواصل الاجتماعي\n\n` +
+        `#${topic.replace(/\s+/g, '_')} #تقنية #يوتيوب`;
+
+      output.innerText = base;
+    });
+
+    // توليد Tags
+    document.getElementById('btnGenerateYtTags').addEventListener('click', () => {
+      const raw = document.getElementById('ytTagsKeyword').value.trim();
+      const output = document.getElementById('ytTagsOutput');
+
+      if (!raw) {
+        output.innerText = 'أدخل كلمة أو أكثر أولاً.';
+        return;
+      }
+
+      const parts = raw
+        .split(',')
+        .map((p) => p.trim())
+        .filter(Boolean);
+
+      const tagsSet = new Set();
+
+      parts.forEach((p) => {
+        tagsSet.add(p);
+        tagsSet.add(`شرح ${p}`);
+        tagsSet.add(`تعلم ${p}`);
+        tagsSet.add(`${p} للمبتدئين`);
+        tagsSet.add(`${p} 2024`);
+      });
+
+      // بعض التاجات العامة
+      tagsSet.add('قناة تقنية');
+      tagsSet.add('قناة تعليمية');
+      tagsSet.add('الربح من الانترنت');
+      tagsSet.add('افكار فيديوهات');
+      tagsSet.add('تسويق رقمي');
+      tagsSet.add('يوتيوب شورتس');
+
+      output.innerText = Array.from(tagsSet).join(', ');
+    });
+
+    // توليد عناوين Blogger
+    document.getElementById('btnGenerateBlogTitles').addEventListener('click', () => {
+      const kw = document.getElementById('blogTitleKeyword').value.trim();
+      const style = document.getElementById('blogTitleStyle').value;
+      const output = document.getElementById('blogTitlesOutput');
+
+      if (!kw) {
+        output.innerText = 'من فضلك أدخل مجال أو كلمة مفتاحية للمقال.';
+        return;
+      }
+
+      let titles = [];
+      if (style === 'guide') {
+        titles = [
+          `دليل شامل إلى ${kw}: كل ما تحتاج معرفته قبل أن تبدأ`,
+          `${kw} للمبتدئين: الخطوات الأولى نحو الاحتراف`,
+          `كل ما تريد معرفته عن ${kw} في مقال واحد`,
+          `كيف تبدأ في ${kw} من الصفر حتى الاحتراف`,
+          `أهم المصطلحات التي يجب أن تعرفها في ${kw}`,
+          `خريطة طريق عملية لإتقان ${kw} خلال 90 يومًا`
+        ];
+      } else if (style === 'tips') {
+        titles = [
+          `10 نصائح ذهبية للنجاح في ${kw}`,
+          `أسرار المحترفين في ${kw} وكيف تطبقها بنفسك`,
+          `أخطاء شائعة في ${kw} وكيف تتجنبها بسهولة`,
+          `أفضل الممارسات في ${kw} التي لا يخبرك بها أحد`,
+          `كيف تطور أداءك في ${kw} بخطوات بسيطة`
+        ];
+      } else if (style === 'problems') {
+        titles = [
+          `أشهر المشاكل التي تواجهك في ${kw} وحلول عملية لها`,
+          `لماذا لا تحصل على نتائج جيدة في ${kw}؟ الأسباب والحلول`,
+          `مشاكل ${kw} للمبتدئين وكيف تتخطاها`,
+          `دليل حل المشاكل الشائعة في ${kw}`,
+          `كيف تحوّل فشل ${kw} إلى قصة نجاح؟`
+        ];
+      } else {
+        titles = [
+          `مقارنة شاملة بين أهم أدوات ${kw}`,
+          `أفضل منصات ${kw}: مقارنة تفصيلية`,
+          `أي خيار أنسب لك في ${kw}؟ مقارنة بين أشهر البدائل`,
+          `مميزات وعيوب أشهر طرق ${kw}`,
+          `مقارنة بين الطرق المجانية والمدفوعة في ${kw}`
+        ];
+      }
+
+      output.innerText = titles.map((t, i) => `${i + 1}. ${t}`).join('\n');
+    });
+
+    // توليد مقدمة مقال
+    document.getElementById('btnGenerateBlogIntro').addEventListener('click', () => {
+      const title = document.getElementById('blogIntroTitle').value.trim();
+      const points = document.getElementById('blogIntroPoints').value.trim();
+      const output = document.getElementById('blogIntroOutput');
+
+      if (!title) {
+        output.innerText = 'اكتب عنوانًا مبدئيًا للمقال أولاً.';
+        return;
+      }
+
+      let intro =
+        `إذا كنت تبحث عن معلومات موثوقة حول "${title}" فأنت في المكان المناسب. ` +
+        `في هذا المقال سنحاول تبسيط الفكرة قدر الإمكان، مع التركيز على الجوانب العملية التي يمكنك تطبيقها مباشرة في حياتك أو عملك.\n\n`;
+
+      if (points) {
+        intro += `سنقوم في هذا المقال بتغطية المحاور التالية:\n`;
+        intro += points
+          .split('\n')
+          .filter(Boolean)
+          .map((p) => `- ${p.trim()}`)
+          .join('\n');
+        intro += '\n\n';
+      }
+
+      intro +=
+        `سواء كنت مبتدئًا في هذا المجال أو لديك خبرة سابقة، ستجد في هذا المقال ` +
+        `ما يساعدك على فهم "${title}" بصورة أوضح واتخاذ قرارات أفضل.\n\n` +
+        `لنبدأ على بركة الله.`;
+
+      output.innerText = intro;
+    });
+  </script>
 </body>
-</html>`;
-            
-            const result = document.getElementById('blogResult');
-            result.innerHTML = '<strong>كود HTML للمقال:</strong><br>';
-            result.innerHTML += '<textarea style="width:100%; height:200px;" readonly>' + blogPost + '</textarea>';
-            result.innerHTML += '<br><button onclick="copyText(\'' + blogPost.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ الكود</button>';
-            result.classList.remove('hidden');
-            
-            showMessage('تم إنشاء المقال بنجاح!', 'success');
-        }
-        
-        // Meta Tags Generator
-        function generateMeta() {
-            const title = document.getElementById('metaTitle').value;
-            const keywords = document.getElementById('metaKeywords').value;
-            
-            if (!title) {
-                showMessage('الرجاء إدخال العنوان', 'error');
-                return;
-            }
-            
-            const metaTags = `<!-- Meta Tags for SEO -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${title}</title>
-<meta name="description" content="${title}">
-<meta name="keywords" content="${keywords}">
-<meta name="author" content="Tosh5">
-<meta property="og:title" content="${title}">
-<meta property="og:description" content="${title}">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://www.tosh5.shop">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="${title}">
-<meta name="twitter:description" content="${title}">`;
-            
-            const result = document.getElementById('metaResult');
-            result.innerHTML = '<strong>Meta Tags:</strong><br>';
-            result.innerHTML += '<textarea style="width:100%; height:200px;" readonly>' + metaTags + '</textarea>';
-            result.innerHTML += '<br><button onclick="copyText(\'' + metaTags.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ Meta Tags</button>';
-            result.classList.remove('hidden');
-            
-            showMessage('تم توليد Meta Tags بنجاح!', 'success');
-        }
-        
-        // Convert YouTube to Blog Post
-        function convertToPost() {
-            const url = document.getElementById('youtubeUrl').value;
-            
-            if (!url || !url.includes('youtube.com')) {
-                showMessage('الرجاء إدخال رابط YouTube صحيح', 'error');
-                return;
-            }
-            
-            // Extract video ID
-            const videoId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
-            
-            const blogPost = `<div style="text-align: center;">
-    <h2>شاهد الفيديو</h2>
-    <iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/${videoId}" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe>
-</div>
-
-<div style="margin: 20px 0;">
-    <h3>عن هذا الفيديو:</h3>
-    <p>يمكنك مشاهدة الفيديو الأصلي على YouTube من خلال هذا الرابط:</p>
-    <p><a href="${url}" target="_blank">${url}</a></p>
-</div>
-
-<div style="margin: 20px 0;">
-    <p>لمزيد من الفيديوهات، تابعونا على:</p>
-    <ul>
-        <li>YouTube: <a href="https://youtube.com/yourchannel">قناتنا على YouTube</a></li>
-        <li>المدونة: <a href="https://www.tosh5.shop">www.tosh5.shop</a></li>
-    </ul>
-</div>`;
-            
-            const result = document.getElementById('convertResult');
-            result.innerHTML = '<strong>كود HTML للمقال:</strong><br>';
-            result.innerHTML += '<textarea style="width:100%; height:250px;" readonly>' + blogPost + '</textarea>';
-            result.innerHTML += '<br><button onclick="copyText(\'' + blogPost.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ الكود</button>';
-            result.innerHTML += '<br><br><strong>معاينة:</strong><br>' + blogPost;
-            result.classList.remove('hidden');
-            
-            showMessage('تم تحويل الفيديو إلى مقال بنجاح!', 'success');
-        }
-        
-        // Convert Article to Script
-        function convertToScript() {
-            const content = document.getElementById('articleContent').value;
-            
-            if (!content) {
-                showMessage('الرجاء إدخال محتوى المقال', 'error');
-                return;
-            }
-            
-            const script = `📹 سكريبت الفيديو
-================
-
-🎬 المقدمة (0:00 - 0:30)
-------------------------
-"السلام عليكم ومرحباً بكم في قناتنا!
-اليوم سنتحدث عن موضوع مهم جداً..."
-
-📌 المحتوى الرئيسي (0:30 - X:XX)
-----------------------------------
-${content}
-
-🎯 النقاط الرئيسية:
-• النقطة الأولى
-• النقطة الثانية  
-• النقطة الثالثة
-
-💡 نصائح للتصوير:
-- حافظ على التواصل البصري مع الكاميرا
-- استخدم لغة الجسد
-- أضف رسومات توضيحية
-- اجعل الفيديو تفاعلي
-
-🔚 الخاتمة (X:XX - X:XX)
-------------------------
-"إذا أعجبكم الفيديو لا تنسوا:
-✅ الاشتراك في القناة
-👍 الإعجاب بالفيديو
-💬 كتابة تعليق
-🔔 تفعيل الجرس
-
-شكراً لمتابعتكم، أراكم في الفيديو القادم!"`;
-            
-            const result = document.getElementById('scriptResult');
-            result.innerHTML = '<strong>السكريبت:</strong><br>';
-            result.innerHTML += '<textarea style="width:100%; height:300px;" readonly>' + script + '</textarea>';
-            result.innerHTML += '<br><button onclick="copyText(\'' + script.replace(/'/g, "\\'").replace(/\n/g, "\\n") + '\')">نسخ السكريبت</button>';
-            result.classList.remove('hidden');
-            
-            showMessage('تم تحويل المقال إلى سكريبت بنجاح!', 'success');
-        }
-        
-        // Copy Text Function
-        function copyText(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            
-            showMessage('تم النسخ بنجاح!', 's
+</html>
