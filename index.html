@@ -3,229 +3,1228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أدوات YouTube</title>
+    <title>YouTube Studio Pro - أدوات احترافية</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
-            background: #f0f0f0;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
         }
         
-        h1 {
-            color: #ff0000;
-            text-align: center;
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
         }
         
         .tool {
-            margin: 30px 0;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 8px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .tool:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
         
         .tool h2 {
-            color: #333;
+            color: #ff0000;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tool-icon {
+            font-size: 1.5rem;
         }
         
         input, textarea, select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff0000;
         }
         
         button {
-            background: #ff0000;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s;
         }
         
         button:hover {
-            background: #cc0000;
+            background: linear-gradient(135deg, #cc0000, #990000);
+            transform: scale(1.02);
         }
         
         .result {
             margin-top: 15px;
             padding: 15px;
-            background: white;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #ff0000;
+            max-height: 300px;
+            overflow-y: auto;
         }
         
         .hidden {
             display: none;
         }
+        
+        .copy-btn {
+            background: #4CAF50;
+            padding: 8px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 5px 12px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .stat {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff0000;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .progress {
+            background: #e0e0e0;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #ff0000, #ff6b6b);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-weight: bold;
+            transition: width 0.3s;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>🎬 YouTube Studio Pro</h1>
+        <p>15 أداة احترافية لتطوير قناتك على YouTube</p>
+    </div>
+    
     <div class="container">
-        <h1>🎬 أدوات YouTube المجانية</h1>
-        
-        <!-- أداة 1 -->
-        <div class="tool">
-            <h2>📝 مولد عناوين YouTube</h2>
-            <input type="text" id="keyword1" placeholder="اكتب كلمة مفتاحية (مثال: طبخ)">
-            <button onclick="generateTitle()">إنشاء عناوين</button>
-            <div id="result1" class="result hidden"></div>
-        </div>
-        
-        <!-- أداة 2 -->
-        <div class="tool">
-            <h2>📋 مولد الوصف</h2>
-            <input type="text" id="videoTitle" placeholder="عنوان الفيديو">
-            <button onclick="generateDesc()">إنشاء وصف</button>
-            <div id="result2" class="result hidden"></div>
-        </div>
-        
-        <!-- أداة 3 -->
-        <div class="tool">
-            <h2>#️⃣ مولد الهاشتاجات</h2>
-            <input type="text" id="topic" placeholder="موضوع الفيديو">
-            <button onclick="generateTags()">إنشاء هاشتاجات</button>
-            <div id="result3" class="result hidden"></div>
-        </div>
-        
-        <!-- أداة 4 -->
-        <div class="tool">
-            <h2>⏰ أفضل وقت للنشر</h2>
-            <select id="country">
-                <option>السعودية</option>
-                <option>مصر</option>
-                <option>الإمارات</option>
-            </select>
-            <button onclick="showBestTime()">عرض الأوقات</button>
-            <div id="result4" class="result hidden"></div>
-        </div>
-        
-        <!-- أداة 5 -->
-        <div class="tool">
-            <h2>🔢 عداد الحروف</h2>
-            <textarea id="textCount" placeholder="اكتب النص هنا" oninput="countText()"></textarea>
-            <div id="result5" class="result">عدد الحروف: 0</div>
+        <div class="tools-grid">
+            
+            <!-- أداة 1: مولد العناوين المتقدم -->
+            <div class="tool">
+                <h2><span class="tool-icon">📝</span> مولد العناوين الذكي</h2>
+                <input type="text" id="titleKeyword" placeholder="الكلمة المفتاحية">
+                <select id="titleStyle">
+                    <option value="how">تعليمي - How To</option>
+                    <option value="list">قائمة - Top X</option>
+                    <option value="review">مراجعة</option>
+                    <option value="story">قصة</option>
+                    <option value="news">أخبار</option>
+                    <option value="challenge">تحدي</option>
+                </select>
+                <button onclick="generateAdvancedTitles()">توليد 10 عناوين</button>
+                <div id="titleResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 2: مولد الوصف الاحترافي -->
+            <div class="tool">
+                <h2><span class="tool-icon">📋</span> مولد الوصف الاحترافي</h2>
+                <input type="text" id="descTitle" placeholder="عنوان الفيديو">
+                <input type="text" id="descKeywords" placeholder="الكلمات المفتاحية (افصل بفاصلة)">
+                <button onclick="generateProDesc()">إنشاء وصف احترافي</button>
+                <div id="descResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 3: مولد الهاشتاجات الذكي -->
+            <div class="tool">
+                <h2><span class="tool-icon">#️⃣</span> مولد الهاشتاجات الرائجة</h2>
+                <input type="text" id="hashtagTopic" placeholder="موضوع الفيديو">
+                <select id="hashtagLang">
+                    <option value="ar">عربي</option>
+                    <option value="en">English</option>
+                    <option value="mix">مختلط</option>
+                </select>
+                <button onclick="generateSmartTags()">توليد 30 هاشتاج</button>
+                <div id="tagResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 4: محلل العنوان -->
+            <div class="tool">
+                <h2><span class="tool-icon">🔍</span> محلل قوة العنوان</h2>
+                <input type="text" id="analyzeTitle" placeholder="اكتب العنوان لتحليله">
+                <button onclick="analyzeTitle()">تحليل العنوان</button>
+                <div id="analyzeResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 5: مولد أفكار المحتوى -->
+            <div class="tool">
+                <h2><span class="tool-icon">💡</span> مولد أفكار المحتوى</h2>
+                <select id="contentNiche">
+                    <option value="tech">تقنية</option>
+                    <option value="gaming">ألعاب</option>
+                    <option value="cooking">طبخ</option>
+                    <option value="education">تعليم</option>
+                    <option value="vlog">فلوج</option>
+                    <option value="comedy">كوميدي</option>
+                </select>
+                <button onclick="generateIdeas()">توليد 10 أفكار</button>
+                <div id="ideasResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 6: حاسبة الأرباح -->
+            <div class="tool">
+                <h2><span class="tool-icon">💰</span> حاسبة أرباح YouTube</h2>
+                <input type="number" id="viewsCount" placeholder="عدد المشاهدات">
+                <select id="country">
+                    <option value="high">دول مرتفعة CPM ($5-10)</option>
+                    <option value="medium">دول متوسطة CPM ($2-5)</option>
+                    <option value="low">دول منخفضة CPM ($0.5-2)</option>
+                </select>
+                <button onclick="calculateEarnings()">حساب الأرباح</button>
+                <div id="earningsResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 7: مولد الصور المصغرة -->
+            <div class="tool">
+                <h2><span class="tool-icon">🖼️</span> أفكار الصور المصغرة</h2>
+                <input type="text" id="thumbTopic" placeholder="موضوع الفيديو">
+                <button onclick="generateThumbnailIdeas()">توليد أفكار</button>
+                <div id="thumbResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 8: جدول النشر -->
+            <div class="tool">
+                <h2><span class="tool-icon">📅</span> جدول النشر الأمثل</h2>
+                <select id="targetRegion">
+                    <option value="gulf">الخليج</option>
+                    <option value="egypt">مصر</option>
+                    <option value="maghreb">المغرب</option>
+                    <option value="levant">الشام</option>
+                </select>
+                <button onclick="getSchedule()">عرض الجدول</button>
+                <div id="scheduleResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 9: محلل التعليقات -->
+            <div class="tool">
+                <h2><span class="tool-icon">💬</span> مولد ردود التعليقات</h2>
+                <select id="commentType">
+                    <option value="thanks">شكر</option>
+                    <option value="question">سؤال</option>
+                    <option value="criticism">نقد</option>
+                    <option value="request">طلب</option>
+                </select>
+                <button onclick="generateResponses()">توليد ردود</button>
+                <div id="responseResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 10: مولد السكريبت -->
+            <div class="tool">
+                <h2><span class="tool-icon">🎬</span> مولد السكريبت</h2>
+                <input type="text" id="scriptTopic" placeholder="موضوع الفيديو">
+                <input type="number" id="scriptDuration" placeholder="المدة بالدقائق" min="1" max="60">
+                <button onclick="generateScript()">توليد سكريبت</button>
+                <div id="scriptResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 11: محسن SEO -->
+            <div class="tool">
+                <h2><span class="tool-icon">🚀</span> محسن SEO للفيديو</h2>
+                <input type="text" id="seoKeyword" placeholder="الكلمة المفتاحية الرئيسية">
+                <button onclick="optimizeSEO()">تحسين SEO</button>
+                <div id="seoResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 12: مولد الأسئلة -->
+            <div class="tool">
+                <h2><span class="tool-icon">❓</span> مولد أسئلة التفاعل</h2>
+                <input type="text" id="questionTopic" placeholder="موضوع الفيديو">
+                <button onclick="generateQuestions()">توليد أسئلة</button>
+                <div id="questionResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 13: حاسبة معدل النمو -->
+            <div class="tool">
+                <h2><span class="tool-icon">📊</span> حاسبة نمو القناة</h2>
+                <input type="number" id="currentSubs" placeholder="المشتركين الحاليين">
+                <input type="number" id="monthlyGrowth" placeholder="النمو الشهري %">
+                <button onclick="calculateGrowth()">حساب النمو</button>
+                <div id="growthResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 14: مولد العبارات CTA -->
+            <div class="tool">
+                <h2><span class="tool-icon">👆</span> عبارات الحث على الإجراء</h2>
+                <select id="ctaType">
+                    <option value="subscribe">اشتراك</option>
+                    <option value="like">إعجاب</option>
+                    <option value="share">مشاركة</option>
+                    <option value="comment">تعليق</option>
+                </select>
+                <button onclick="generateCTA()">توليد عبارات</button>
+                <div id="ctaResult" class="result hidden"></div>
+            </div>
+            
+            <!-- أداة 15: مقارن الفيديوهات -->
+            <div class="tool">
+                <h2><span class="tool-icon">⚖️</span> مقارن الأداء</h2>
+                <input type="number" id="video1Views" placeholder="مشاهدات الفيديو 1">
+                <input type="number" id="video2Views" placeholder="مشاهدات الفيديو 2">
+                <button onclick="compareVideos()">مقارنة الأداء</button>
+                <div id="compareResult" class="result hidden"></div>
+            </div>
+            
         </div>
     </div>
     
     <script>
-        function generateTitle() {
-            var keyword = document.getElementById('keyword1').value;
-            if(keyword == '') {
-                alert('اكتب كلمة مفتاحية أولاً');
+        // أداة 1: مولد العناوين المتقدم
+        function generateAdvancedTitles() {
+            const keyword = document.getElementById('titleKeyword').value;
+            const style = document.getElementById('titleStyle').value;
+            
+            if(!keyword) {
+                alert('اكتب كلمة مفتاحية');
                 return;
             }
             
-            var titles = [
-                'كيف تتعلم ' + keyword + ' في 10 دقائق',
-                'أسرار ' + keyword + ' التي لا يعرفها أحد',
-                'دليلك الكامل لـ ' + keyword + ' 2024',
-                keyword + ' للمبتدئين - شرح كامل',
-                'أفضل 10 نصائح في ' + keyword
-            ];
-            
-            var result = document.getElementById('result1');
-            result.innerHTML = '<strong>العناوين المقترحة:</strong><br><br>';
-            for(var i = 0; i < titles.length; i++) {
-                result.innerHTML += (i+1) + '. ' + titles[i] + '<br>';
-            }
-            result.classList.remove('hidden');
-        }
-        
-        function generateDesc() {
-            var title = document.getElementById('videoTitle').value;
-            if(title == '') {
-                alert('اكتب عنوان الفيديو أولاً');
-                return;
-            }
-            
-            var desc = 'مرحباً بكم في قناتنا!\n\n';
-            desc += 'في هذا الفيديو: ' + title + '\n\n';
-            desc += '📌 المحتويات:\n';
-            desc += '00:00 المقدمة\n';
-            desc += '01:00 الجزء الأول\n';
-            desc += '03:00 الجزء الثاني\n';
-            desc += '05:00 الخاتمة\n\n';
-            desc += '🔔 لا تنسى الاشتراك في القناة\n';
-            desc += '👍 اضغط لايك إذا أعجبك الفيديو\n\n';
-            desc += '📱 تابعونا على السوشيال ميديا\n';
-            desc += '📧 للتواصل: email@example.com';
-            
-            var result = document.getElementById('result2');
-            result.innerHTML = '<strong>الوصف:</strong><br><pre>' + desc + '</pre>';
-            result.classList.remove('hidden');
-        }
-        
-        function generateTags() {
-            var topic = document.getElementById('topic').value;
-            if(topic == '') {
-                alert('اكتب موضوع الفيديو أولاً');
-                return;
-            }
-            
-            var tags = [
-                '#' + topic.replace(/ /g, '_'),
-                '#' + topic.replace(/ /g, '') + '2024',
-                '#عربي',
-                '#youtube',
-                '#محتوى_عربي',
-                '#' + topic.replace(/ /g, '') + '_العرب',
-                '#تعليم',
-                '#شرح',
-                '#دروس',
-                '#فيديو',
-                '#جديد',
-                '#ترند',
-                '#viral',
-                '#fyp',
-                '#explore'
-            ];
-            
-            var result = document.getElementById('result3');
-            result.innerHTML = '<strong>الهاشتاجات:</strong><br><br>' + tags.join(' ');
-            result.classList.remove('hidden');
-        }
-        
-        function showBestTime() {
-            var country = document.getElementById('country').value;
-            var times = {
-                'السعودية': '8:00 PM - 11:00 PM بتوقيت السعودية',
-                'مصر': '9:00 PM - 12:00 AM بتوقيت مصر',
-                'الإمارات': '7:00 PM - 10:00 PM بتوقيت الإمارات'
+            const templates = {
+                how: [
+                    `كيفية ${keyword} في 5 دقائق (سهل جداً!)`,
+                    `تعلم ${keyword} - دليل المبتدئين الشامل 2024`,
+                    `${keyword} خطوة بخطوة (شرح مفصل)`,
+                    `أسهل طريقة لـ ${keyword} (مضمونة 100%)`,
+                    `احترف ${keyword} في أسبوع واحد فقط!`
+                ],
+                list: [
+                    `أفضل 10 ${keyword} لعام 2024 (القائمة الكاملة)`,
+                    `5 أخطاء قاتلة في ${keyword} (تجنبها فوراً!)`,
+                    `7 أسرار ${keyword} لا يعرفها 99% من الناس`,
+                    `أغرب 10 حقائق عن ${keyword} (صادمة!)`,
+                    `قائمة: كل ما تحتاجه لـ ${keyword}`
+                ],
+                review: [
+                    `مراجعة صادقة: ${keyword} - هل يستحق؟`,
+                    `تجربتي الكاملة مع ${keyword} (الإيجابيات والسلبيات)`,
+                    `${keyword} بعد 30 يوم استخدام (النتيجة صادمة!)`,
+                    `مقارنة شاملة: ${keyword} ضد البدائل`,
+                    `الحقيقة الكاملة عن ${keyword} (لا أحد يخبرك بها)`
+                ],
+                story: [
+                    `قصتي مع ${keyword} (تجربة شخصية مؤثرة)`,
+                    `كيف غير ${keyword} حياتي تماماً`,
+                    `من الصفر إلى النجاح بفضل ${keyword}`,
+                    `${keyword}: الرحلة الكاملة من البداية للنهاية`,
+                    `ماذا حدث عندما جربت ${keyword} لأول مرة؟`
+                ],
+                news: [
+                    `عاجل: ${keyword} - آخر التطورات والأخبار`,
+                    `${keyword} 2024: كل ما تحتاج معرفته`,
+                    `تحديث مهم حول ${keyword} (اقرأ الآن!)`,
+                    `${keyword}: الأخبار والتحليلات الحصرية`,
+                    `ما الجديد في ${keyword}؟ (تقرير شامل)`
+                ],
+                challenge: [
+                    `تحدي ${keyword} لمدة 30 يوم (النتائج مذهلة!)`,
+                    `${keyword} في 24 ساعة - هل أستطيع؟`,
+                    `أصعب تحدي ${keyword} على الإنترنت!`,
+                    `تحدي ${keyword} مع الأصدقاء (مضحك جداً)`,
+                    `${keyword} بدون توقف لمدة أسبوع (تجربة جنونية)`
+                ]
             };
             
-            var result = document.getElementById('result4');
-            result.innerHTML = '<strong>أفضل وقت للنشر في ' + country + ':</strong><br><br>';
-            result.innerHTML += times[country] + '<br><br>';
-            result.innerHTML += 'أيام مميزة: الجمعة والسبت<br>';
-            result.innerHTML += 'تجنب: أوقات العمل الصباحية';
+            const titles = templates[style];
+            const result = document.getElementById('titleResult');
+            result.innerHTML = '<strong>العناوين المقترحة:</strong><br><br>';
+            
+            // إضافة 5 عناوين إضافية عامة
+            const extraTitles = [
+                `${keyword} - كل ما تريد معرفته`,
+                `لن تصدق ما حدث مع ${keyword}!`,
+                `${keyword} بطريقة لم تراها من قبل`,
+                `الدليل النهائي لـ ${keyword}`,
+                `${keyword} - نصائح لم يخبرك بها أحد`
+            ];
+            
+            const allTitles = [...titles, ...extraTitles];
+            
+            allTitles.forEach((title, index) => {
+                result.innerHTML += `${index + 1}. ${title}<br>`;
+            });
+            
+            result.innerHTML += '<button class="copy-btn" onclick="copyText(\'titleResult\')">نسخ الكل</button>';
             result.classList.remove('hidden');
         }
         
-        function countText() {
-            var text = document.getElementById('textCount').value;
-            var count = text.length;
-            var result = document.getElementById('result5');
-            result.innerHTML = 'عدد الحروف: ' + count;
+        // أداة 2: مولد الوصف الاحترافي
+        function generateProDesc() {
+            const title = document.getElementById('descTitle').value;
+            const keywords = document.getElementById('descKeywords').value;
             
-            if(count > 100) {
-                result.innerHTML += ' - <span style="color:red">تجاوزت حد العنوان (100 حرف)</span>';
-            } else if(count <= 100 && count > 0) {
-                result.innerHTML += ' - <span style="color:green">مناسب للعنوان</span>';
+            if(!title) {
+                alert('اكتب عنوان الفيديو');
+                return;
             }
+            
+            const desc = `🎬 ${title}
+
+مرحباً بكم في قناتنا! في هذا الفيديو سنتحدث عن ${title}
+
+📌 محتويات الفيديو:
+00:00 - المقدمة والترحيب
+01:00 - النقطة الأولى
+03:00 - النقطة الثانية  
+05:00 - النقطة الثالثة
+07:00 - نصائح مهمة
+09:00 - الخلاصة والختام
+
+🎯 ما ستتعلمه في هذا الفيديو:
+✅ معلومات شاملة عن الموضوع
+✅ نصائح عملية قابلة للتطبيق
+✅ حلول للمشاكل الشائعة
+✅ أمثلة واقعية
+
+🔍 الكلمات المفتاحية:
+${keywords || title}
+
+📱 تواصل معنا:
+• Instagram: @yourchannel
+• Twitter: @yourchannel  
+• Facebook: /yourchannel
+• TikTok: @yourchannel
+
+💼 للتعاون والأعمال:
+business@example.com
+
+🔔 اشترك في القناة وفعّل الجرس ليصلك كل جديد!
+👍 إذا أعجبك الفيديو، لا تنسى الإعجاب والمشاركة
+💬 شاركنا رأيك في التعليقات
+
+🏷️ الهاشتاجات:
+#${keywords ? keywords.replace(/,/g, ' #').replace(/ /g, '') : title.replace(/ /g, '')}
+
+⚠️ إخلاء المسؤولية:
+المعلومات المقدمة في هذا الفيديو هي لأغراض تعليمية فقط.
+
+© جميع الحقوق محفوظة - ${new Date().getFullYear()}`;
+            
+            const result = document.getElementById('descResult');
+            result.innerHTML = '<strong>الوصف الكامل:</strong><br><pre>' + desc + '</pre>';
+            result.innerHTML += '<button class="copy-btn" onclick="copyText(\'descResult\')">نسخ الوصف</button>';
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 3: مولد الهاشتاجات الذكي
+        function generateSmartTags() {
+            const topic = document.getElementById('hashtagTopic').value;
+            const lang = document.getElementById('hashtagLang').value;
+            
+            if(!topic) {
+                alert('اكتب موضوع الفيديو');
+                return;
+            }
+            
+            let tags = [];
+            
+            if(lang === 'ar' || lang === 'mix') {
+                tags.push(
+                    `#${topic.replace(/ /g, '_')}`,
+                    `#${topic.replace(/ /g, '')}`,
+                    '#عربي',
+                    '#محتوى_عربي',
+                    '#يوتيوب_عربي',
+                    '#فيديو',
+                    '#ترند',
+                    '#استكشف',
+                    '#للأستكشاف',
+                    `#${topic}_2024`,
+                    '#جديد',
+                    '#مشاهدة',
+                    '#متابعة'
+                );
+            }
+            
+            if(lang === 'en' || lang === 'mix') {
+                tags.push(
+                    `#${topic.replace(/ /g, '').toLowerCase()}`,
+                    '#youtube',
+                    '#video',
+                    '#viral',
+                    '#trending',
+                    '#fyp',
+                    '#explore',
+                    '#new',
+                    '#2024',
+                    '#mustwatch',
+                    '#subscribe',
+                    '#like',
+                    '#share'
+                );
+            }
+            
+            // إضافة المزيد من التاجات
+            tags.push(
+                '#content',
+                '#creator',
+                '#youtuber',
+                '#vlog',
+                '#tutorial',
+                '#howto',
+                '#tips',
+                '#tricks',
+                '#learn',
+                '#education',
+                '#entertainment',
+                '#fun',
+                '#amazing',
+                '#awesome',
+                '#best',
+                '#top'
+            );
+            
+            const result = document.getElementById('tagResult');
+            result.innerHTML = '<strong>30 هاشتاج:</strong><br><br>';
+            
+            tags.slice(0, 30).forEach(tag => {
+                result.innerHTML += `<span class="tag">${tag}</span>`;
+            });
+            
+            result.innerHTML += '<br><button class="copy-btn" onclick="copyTags()">نسخ الهاشتاجات</button>';
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 4: محلل العنوان
+        function analyzeTitle() {
+            const title = document.getElementById('analyzeTitle').value;
+            
+            if(!title) {
+                alert('اكتب العنوان للتحليل');
+                return;
+            }
+            
+            let score = 0;
+            let feedback = [];
+            
+            // طول العنوان
+            if(title.length >= 50 && title.length <= 70) {
+                score += 20;
+                feedback.push('✅ طول العنوان مثالي (50-70 حرف)');
+            } else if(title.length < 50) {
+                feedback.push('⚠️ العنوان قصير جداً (أضف المزيد من التفاصيل)');
+            } else {
+                feedback.push('⚠️ العنوان طويل جداً (اختصر قليلاً)');
+            }
+            
+            // وجود أرقام
+            if(/\d/.test(title)) {
+                score += 15;
+                feedback.push('✅ يحتوي على أرقام (يزيد النقرات)');
+            } else {
+                feedback.push('💡 نصيحة: أضف أرقام للعنوان');
+            }
+            
+            // كلمات قوية
+            const powerWords = ['أفضل', 'سري', 'مذهل', 'حصري', 'مجاني', 'سهل', 'جديد', 'رائع'];
+            if(powerWords.some(word => title.includes(word))) {
+                score += 20;
+                feedback.push('✅ يحتوي على كلمات جذابة');
+            }
+            
+            // أقواس
+            if(title.includes('(') || title.includes('[')) {
+                score += 10;
+                feedback.push('✅ يستخدم الأقواس بشكل جيد');
+            }
+            
+            // علامة تعجب أو استفهام
+            if(title.includes('!') || title.includes('؟')) {
+                score += 10;
+                feedback.push('✅ يحتوي على علامات تعبيرية');
+            }
+            
+            // تقييم عام
+            if(score >= 60) {
+                score += 25;
+                feedback.push('🎉 عنوان ممتاز!');
+            }
+            
+            const result = document.getElementById('analyzeResult');
+            result.innerHTML = `<strong>تحليل العنوان:</strong><br><br>`;
+            result.innerHTML += `<div class="progress"><div class="progress-bar" style="width: ${score}%">قوة العنوان: ${score}%</div></div>`;
+            result.innerHTML += '<br><strong>التقييم:</strong><br>';
+            feedback.forEach(item => {
+                result.innerHTML += item + '<br>';
+            });
+            
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 5: مولد أفكار المحتوى
+        function generateIdeas() {
+            const niche = document.getElementById('contentNiche').value;
+            
+            const ideas = {
+                tech: [
+                    'مراجعة أحدث هاتف في السوق',
+                    'مقارنة بين أفضل اللابتوبات للطلاب',
+                    'شرح الذكاء الاصطناعي للمبتدئين',
+                    'أفضل تطبيقات 2024',
+                    'كيفية حماية خصوصيتك على الإنترنت',
+                    'نصائح لتسريع الكمبيوتر',
+                    'أفضل أدوات البرمجة المجانية',
+                    'مستقبل التكنولوجيا في 10 سنوات',
+                    'شرح Web 3.0 و Blockchain',
+                    'أخطاء شائعة عند شراء الأجهزة الإلكترونية'
+                ],
+                gaming: [
+                    'أفضل ألعاب 2024',
+                    'نصائح للفوز في ألعاب Battle Royale',
+                    'مراجعة أحدث بطاقة رسومات',
+                    'بناء PC قيمنج بميزانية محدودة',
+                    'قصة تطور الألعاب الإلكترونية',
+                    'مقارنة بين PlayStation و Xbox',
+                    'أفضل إعدادات للألعاب التنافسية',
+                    'ألعاب مخفية تستحق التجربة',
+                    'كيف تصبح لاعب محترف',
+                    'أغرب الأسرار في الألعاب الشهيرة'
+                ],
+                cooking: [
+                    'وصفات سريعة في 5 دقائق',
+                    'أكلات صحية للدايت',
+                    'تحدي طبخ بـ 3 مكونات فقط',
+                    'أخطاء شائعة في الطبخ',
+                    'وصفات من مختلف دول العالم',
+                    'حلويات بدون فرن',
+                    'نصائح الشيفات المحترفين',
+                    'تجربة وصفات من TikTok',
+                    'وجبات اقتصادية للطلاب',
+                    'أسرار المطاعم الشهيرة'
+                ],
+                education: [
+                    'طرق المذاكرة الفعالة',
+                    'كيف تتعلم لغة جديدة بسرعة',
+                    'أفضل المواقع للتعلم المجاني',
+                    'نصائح للتفوق الدراسي',
+                    'شرح المواد الصعبة ببساطة',
+                    'كيفية كتابة بحث علمي',
+                    'مهارات يجب تعلمها قبل التخرج',
+                    'أخطاء شائعة في الامتحانات',
+                    'تنظيم الوقت للطلاب',
+                    'أفضل التخصصات الجامعية للمستقبل'
+                ],
+                vlog: [
+                    'روتيني اليومي',
+                    'جولة في مدينتي',
+                    'تحدي 24 ساعة',
+                    'رحلة سفر مميزة',
+                    'يوم في حياتي',
+                    'تجربة أشياء لأول مرة',
+                    'زيارة أماكن غريبة',
+                    'قصص من حياتي',
+                    'نصائح من تجربتي الشخصية',
+                    'لقاءات مع أشخاص مثيرين للاهتمام'
+                ],
+                comedy: [
+                    'مواقف محرجة حصلت معي',
+                    'تقليد الشخصيات المشهورة',
+                    'مقالب في الأصدقاء',
+                    'تحديات مضحكة',
+                    'باروديا على الأفلام/المسلسلات',
+                    'ردود فعل على فيديوهات مضحكة',
+                    'سكتشات كوميدية قصيرة',
+                    'أخطاء المصورين خلف الكواليس',
+                    'تجربة تطبيقات غريبة',
+                    'قراءة تعليقات المتابعين المضحكة'
+                ]
+            };
+            
+            const result = document.getElementById('ideasResult');
+            result.innerHTML = '<strong>10 أفكار لمحتوى ' + document.getElementById('contentNiche').selectedOptions[0].text + ':</strong><br><br>';
+            
+            ideas[niche].forEach((idea, index) => {
+                result.innerHTML += `${index + 1}. ${idea}<br>`;
+            });
+            
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 6: حاسبة الأرباح
+        function calculateEarnings() {
+            const views = parseInt(document.getElementById('viewsCount').value);
+            const cpmType = document.getElementById('country').value;
+            
+            if(!views) {
+                alert('أدخل عدد المشاهدات');
+                return;
+            }
+            
+            let minCPM, maxCPM;
+            if(cpmType === 'high') {
+                minCPM = 5;
+                maxCPM = 10;
+            } else if(cpmType === 'medium') {
+                minCPM = 2;
+                maxCPM = 5;
+            } else {
+                minCPM = 0.5;
+                maxCPM = 2;
+            }
+            
+            const minEarnings = (views / 1000) * minCPM * 0.55; // YouTube takes 45%
+            const maxEarnings = (views / 1000) * maxCPM * 0.55;
+            
+            const result = document.getElementById('earningsResult');
+            result.innerHTML = '<strong>الأرباح المتوقعة:</strong><br><br>';
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">$${minEarnings.toFixed(2)} - $${maxEarnings.toFixed(2)}</div>
+                <div class="stat-label">الأرباح بالدولار</div>
+            </div>`;
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">${(minEarnings * 3.75).toFixed(0)} - ${(maxEarnings * 3.75).toFixed(0)} ر.س</div>
+                <div class="stat-label">بالريال السعودي</div>
+            </div>`;
+            result.innerHTML += '<br><div class="alert alert-warning">⚠️ هذه تقديرات تقريبية وقد تختلف حسب عوامل كثيرة</div>';
+            
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 7: مولد أفكار الصور المصغرة
+        function generateThumbnailIdeas() {
+            const topic = document.getElementById('thumbTopic').value;
+            
+            if(!topic) {
+                alert('اكتب موضوع الفيديو');
+                return;
+            }
+            
+            const ideas = [
+                `وجه متفاجئ + نص "${topic}" بخط كبير`,
+                `سهم أحمر يشير إلى شيء مهم + "${topic}؟"`,
+                `قبل وبعد - صورتين للمقارنة`,
+                `رقم كبير + "${topic}" + خلفية ملونة`,
+                `صورتك + فقاعة كلام تقول "${topic}"`,
+                `خلفية حمراء/صفراء زاهية + نص بالأبيض`,
+                `وجه صادم 😱 + "${topic} (لن تصدق!)"`,
+                `دائرة حمراء حول التفصيل المهم`,
+                `"${topic}" + علامة ❌ أو ✅`,
+                `تصميم بسيط: نص فقط على خلفية ملونة`,
+                `صورة مقربة للموضوع + نص صغير`,
+                `استخدم الألوان المتضادة (أحمر/أبيض، أصفر/أسود)`,
+                `أضف رموز تعبيرية مناسبة 🔥💯⚡`,
+                `صورة غامضة + "ما هذا؟" أو "احزر!"`,
+                `إطار ملون حول الصورة الرئيسية`
+            ];
+            
+            const result = document.getElementById('thumbResult');
+            result.innerHTML = '<strong>أفكار للصورة المصغرة:</strong><br><br>';
+            
+            ideas.forEach((idea, index) => {
+                result.innerHTML += `${index + 1}. ${idea}<br>`;
+            });
+            
+            result.innerHTML += '<br><div class="alert alert-success">💡 نصيحة: استخدم Canva أو Photoshop للتصميم</div>';
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 8: جدول النشر
+        function getSchedule() {
+            const region = document.getElementById('targetRegion').value;
+            
+            const schedules = {
+                gulf: {
+                    best: '8:00 PM - 11:00 PM بتوقيت السعودية',
+                    days: 'الخميس والجمعة والسبت',
+                    avoid: '2:00 PM - 5:00 PM (وقت القيلولة)'
+                },
+                egypt: {
+                    best: '9:00 PM - 12:00 AM بتوقيت القاهرة',
+                    days: 'الجمعة والسبت والأحد',
+                    avoid: '10:00 AM - 2:00 PM (وقت العمل)'
+                },
+                maghreb: {
+                    best: '8:00 PM - 11:00 PM بتوقيت المغرب',
+                    days: 'الجمعة والسبت والأحد',
+                    avoid: '1:00 PM - 4:00 PM'
+                },
+                levant: {
+                    best: '7:00 PM - 10:00 PM بتوقيت دمشق/عمان',
+                    days: 'الجمعة والسبت',
+                    avoid: '12:00 PM - 3:00 PM'
+                }
+            };
+            
+            const schedule = schedules[region];
+            const result = document.getElementById('scheduleResult');
+            
+            result.innerHTML = '<strong>جدول النشر الأمثل:</strong><br><br>';
+            result.innerHTML += `🕐 <strong>أفضل وقت:</strong> ${schedule.best}<br>`;
+            result.innerHTML += `📅 <strong>أفضل أيام:</strong> ${schedule.days}<br>`;
+            result.innerHTML += `⚠️ <strong>تجنب:</strong> ${schedule.avoid}<br><br>`;
+            result.innerHTML += '<div class="alert alert-success">💡 انشر بانتظام في نفس الأوقات لبناء جمهور مخلص</div>';
+            
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 9: مولد ردود التعليقات
+        function generateResponses() {
+            const type = document.getElementById('commentType').value;
+            
+            const responses = {
+                thanks: [
+                    'شكراً لك على دعمك! يسعدني أن الفيديو أعجبك ❤️',
+                    'تسلم/ي على كلامك الجميل، هذا يحفزني للاستمرار 🙏',
+                    'الله يسعدك، تعليقك أسعدني جداً 😊',
+                    'منور/ة القناة، أتمنى تستمتع بباقي الفيديوهات 🌟',
+                    'ألف شكر على الدعم، لا تنسى الاشتراك إذا لم تشترك 🔔'
+                ],
+                question: [
+                    'سؤال ممتاز! الإجابة هي... [أضف الإجابة]',
+                    'شكراً على سؤالك، سأجيب عنه في الفيديو القادم إن شاء الله',
+                    'هذا موضوع مهم، ربما أعمل فيديو كامل عنه',
+                    'الإجابة المختصرة: [أضف الإجابة]. لمزيد من التفاصيل شاهد الفيديو في الرابط...',
+                    'سؤال ذكي! ببساطة... [أضف الإجابة]'
+                ],
+                criticism: [
+                    'شكراً على ملاحظتك، سآخذها بعين الاعتبار في الفيديوهات القادمة',
+                    'أقدر رأيك وأحترمه، دائماً أسعى للتحسين',
+                    'نقدك البناء مهم لي، شكراً على الوقت الذي أخذته للمشاهدة والتعليق',
+                    'ملاحظة في محلها، سأعمل على تحسين هذه النقطة',
+                    'أشكرك على الصراحة، هدفي دائماً تقديم محتوى أفضل'
+                ],
+                request: [
+                    'فكرة رائعة! أضفتها لقائمة الفيديوهات القادمة',
+                    'اقتراح ممتاز، سأعمل عليه قريباً إن شاء الله',
+                    'شكراً على الاقتراح، ترقب الفيديو قريباً!',
+                    'أعجبتني الفكرة كثيراً، سأبدأ العمل عليها',
+                    'طلبك وصل! انتظر المفاجآت في القناة 🎬'
+                ]
+            };
+            
+            const result = document.getElementById('responseResult');
+            result.innerHTML = '<strong>ردود مقترحة:</strong><br><br>';
+            
+            responses[type].forEach((response, index) => {
+                result.innerHTML += `${index + 1}. ${response}<br><br>`;
+            });
+            
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 10: مولد السكريبت
+        function generateScript() {
+            const topic = document.getElementById('scriptTopic').value;
+            const duration = document.getElementById('scriptDuration').value;
+            
+            if(!topic || !duration) {
+                alert('املأ جميع الحقول');
+                return;
+            }
+            
+            const script = `📝 سكريبت فيديو: ${topic}
+المدة: ${duration} دقيقة
+
+🎬 المقدمة (0:00 - 0:30)
+-----------------
+"السلام عليكم ومرحباً بكم في قناتي!
+اليوم سنتحدث عن ${topic}، موضوع مهم جداً [أضف سبب الأهمية].
+في هذا الفيديو ستتعلمون [اذكر 3 نقاط رئيسية].
+قبل أن نبدأ، لا تنسوا الاشتراك في القناة وتفعيل الجرس!"
+
+📍 الجزء الأول (0:30 - ${Math.round(duration*0.3)}:00)
+-----------------
+[ابدأ بقصة أو إحصائية مثيرة عن ${topic}]
+- النقطة الأولى: [اشرح بالتفصيل]
+- مثال عملي: [أعط مثال واضح]
+- نصيحة مهمة: [قدم نصيحة قيمة]
+
+📍 الجزء الثاني (${Math.round(duration*0.3)}:00 - ${Math.round(duration*0.6)}:00)
+-----------------
+[انتقل للمعلومة الثانية عن ${topic}]
+- النقطة الثانية: [اشرح بالتفصيل]
+- الأخطاء الشائعة: [اذكر الأخطاء وكيف تتجنبها]
+- حل المشاكل: [قدم حلول عملية]
+
+📍 الجزء الثالث (${Math.round(duration*0.6)}:00 - ${Math.round(duration*0.85)}:00)
+-----------------
+[المعلومة الثالثة والأهم عن ${topic}]
+- النقطة الثالثة: [اشرح بالتفصيل]
+- نصائح الخبراء: [شارك نصائح متقدمة]
+- التطبيق العملي: [كيف يطبق المشاهد ما تعلمه]
+
+🎯 الخلاصة (${Math.round(duration*0.85)}:00 - ${duration}:00)
+-----------------
+"إذن لنلخص ما تعلمناه اليوم عن ${topic}:
+1. [النقطة الأولى باختصار]
+2. [النقطة الثانية باختصار]
+3. [النقطة الثالثة باختصار]
+
+إذا استفدتم من الفيديو، اضغطوا لايك 👍
+واكتبوا في التعليقات أي سؤال عن ${topic}.
+أراكم في الفيديو القادم، في أمان الله!"
+
+📌 نصائح للتصوير:
+- حافظ على الطاقة والحماس
+- استخدم لغة الجسد
+- انظر للكاميرا مباشرة
+- استخدم الرسوم والأمثلة البصرية`;
+            
+            const result = document.getElementById('scriptResult');
+            result.innerHTML = '<strong>السكريبت الكامل:</strong><br><pre>' + script + '</pre>';
+            result.innerHTML += '<button class="copy-btn" onclick="copyText(\'scriptResult\')">نسخ السكريبت</button>';
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 11: محسن SEO
+        function optimizeSEO() {
+            const keyword = document.getElementById('seoKeyword').value;
+            
+            if(!keyword) {
+                alert('اكتب الكلمة المفتاحية');
+                return;
+            }
+            
+            const seo = `🔍 خطة SEO الكاملة لكلمة "${keyword}":
+
+📝 العنوان المُحسّن:
+- الأساسي: ${keyword} - دليل شامل 2024
+- بديل 1: كيفية ${keyword} (خطوة بخطوة)
+- بديل 2: أفضل طرق ${keyword} [محدث]
+
+📄 الوصف المُحسّن:
+"تعلم ${keyword} بطريقة احترافية. في هذا الفيديو الشامل، نشرح ${keyword} خطوة بخطوة مع أمثلة عملية ونصائح الخبراء. شاهد الآن!"
+
+🏷️ العلامات Tags:
+${keyword}, ${keyword} للمبتدئين, شرح ${keyword}, تعليم ${keyword}, ${keyword} 2024, ${keyword} بالعربي, دورة ${keyword}, كورس ${keyword}
+
+#️⃣ الهاشتاجات:
+#${keyword.replace(/ /g, '')} #${keyword.replace(/ /g, '_')} #تعلم_${keyword.replace(/ /g, '_')} #شرح_${keyword.replace(/ /g, '_')}
+
+📊 كلمات مفتاحية LSI ذات صلة:
+- ${keyword} للمبتدئين
+- أساسيات ${keyword}
+- احتراف ${keyword}
+- نصائح ${keyword}
+- أخطاء ${keyword}
+- مشاكل ${keyword}
+- حلول ${keyword}
+
+🎯 نصائح SEO:
+1. ضع الكلمة المفتاحية في أول 25 كلمة من الوصف
+2. كررها 2-3 مرات في الوصف الكامل
+3. استخدمها في أول 20 ثانية من الفيديو
+4. اذكرها في التعليق المثبت
+5. أضفها في البطاقات والشاشات النهائية
+
+📈 عوامل الترتيب:
+✅ معدل النقر CTR - اجعل العنوان والصورة جذابة
+✅ وقت المشاهدة - احتفظ بانتباه المشاهد
+✅ التفاعل - اطلب اللايك والتعليق
+✅ الاحتفاظ - اجعل المحتوى قيماً`;
+            
+            const result = document.getElementById('seoResult');
+            result.innerHTML = '<strong>خطة SEO:</strong><br><pre>' + seo + '</pre>';
+            result.innerHTML += '<button class="copy-btn" onclick="copyText(\'seoResult\')">نسخ خطة SEO</button>';
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 12: مولد الأسئلة
+        function generateQuestions() {
+            const topic = document.getElementById('questionTopic').value;
+            
+            if(!topic) {
+                alert('اكتب موضوع الفيديو');
+                return;
+            }
+            
+            const questions = [
+                `ما رأيكم في ${topic}؟ شاركوني في التعليقات!`,
+                `هل جربتم ${topic} من قبل؟ كيف كانت تجربتكم؟`,
+                `أي جزء من ${topic} تريدون أن أشرحه بالتفصيل؟`,
+                `ما هي أكبر مشكلة واجهتكم في ${topic}؟`,
+                `اكتبوا في التعليقات: ما الذي تعلمتموه من هذا الفيديو عن ${topic}؟`,
+                `سؤال اليوم: ما هو أفضل شيء في ${topic} برأيكم؟`,
+                `تحدي! من يستطيع ذكر 3 فوائد لـ ${topic}؟`,
+                `صوتوا: هل ${topic} مفيد أم لا؟ (نعم 👍 / لا 👎)`,
+                `اكتبوا "تم" إذا استفدتم من شرح ${topic}`,
+                `من 1 إلى 10، كم تقيمون معرفتكم بـ ${topic}؟`,
+                `ما هو الفيديو القادم الذي تريدونه عن ${topic}؟`,
+                `شاركوا الفيديو مع شخص يحتاج معرفة ${topic}!`,
+                `اكتبوا أي سؤال عن ${topic} وسأجيب في التعليقات`,
+                `ما رأيكم لو أعمل سلسلة كاملة عن ${topic}؟`,
+                `اضغطوا لايك إذا تريدون المزيد عن ${topic}!`
+            ];
+            
+            const result = document.getElementById('questionResult');
+            result.innerHTML = '<strong>أسئلة للتفاعل:</strong><br><br>';
+            
+            questions.forEach((q, index) => {
+                result.innerHTML += `${index + 1}. ${q}<br>`;
+            });
+            
+            result.innerHTML += '<br><div class="alert alert-success">💡 استخدم 2-3 أسئلة في نهاية كل فيديو</div>';
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 13: حاسبة النمو
+        function calculateGrowth() {
+            const current = parseInt(document.getElementById('currentSubs').value);
+            const growth = parseInt(document.getElementById('monthlyGrowth').value);
+            
+            if(!current || !growth) {
+                alert('املأ جميع الحقول');
+                return;
+            }
+            
+            const monthly = current * (growth / 100);
+            const after3 = Math.round(current * Math.pow(1 + growth/100, 3));
+            const after6 = Math.round(current * Math.pow(1 + growth/100, 6));
+            const after12 = Math.round(current * Math.pow(1 + growth/100, 12));
+            
+            const result = document.getElementById('growthResult');
+            result.innerHTML = '<strong>توقعات نمو القناة:</strong><br><br>';
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">${monthly.toLocaleString()}</div>
+                <div class="stat-label">مشترك جديد شهرياً</div>
+            </div>`;
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">${after3.toLocaleString()}</div>
+                <div class="stat-label">بعد 3 شهور</div>
+            </div>`;
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">${after6.toLocaleString()}</div>
+                <div class="stat-label">بعد 6 شهور</div>
+            </div>`;
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">${after12.toLocaleString()}</div>
+                <div class="stat-label">بعد سنة</div>
+            </div>`;
+            
+            if(after12 >= 1000 && current < 1000) {
+                result.innerHTML += '<div class="alert alert-success">🎉 ستحقق شروط تفعيل الربح!</div>';
+            }
+            if(after12 >= 100000) {
+                result.innerHTML += '<div class="alert alert-success">🏆 ستحصل على الدرع الفضي!</div>';
+            }
+            
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 14: مولد CTA
+        function generateCTA() {
+            const type = document.getElementById('ctaType').value;
+            
+            const ctas = {
+                subscribe: [
+                    'اشترك في القناة وفعّل الجرس 🔔 ليصلك كل جديد!',
+                    'إذا أعجبك المحتوى، اشترك معنا لمزيد من الفيديوهات الرائعة!',
+                    'انضم لعائلتنا! اضغط اشتراك الآن ❤️',
+                    'لا تنسى الاشتراك إذا استفدت من الفيديو!',
+                    'اشترك الآن واحصل على محتوى حصري كل أسبوع!'
+                ],
+                like: [
+                    'إذا أعجبك الفيديو، اضغط لايك 👍',
+                    'دعمك بلايك يساعدني على الاستمرار!',
+                    'أعجبك الفيديو؟ لا تبخل علينا بلايك!',
+                    'اضغط لايك إذا تعلمت شيئاً جديداً اليوم!',
+                    'كل لايك يحفزني لتقديم محتوى أفضل!'
+                ],
+                share: [
+                    'شارك الفيديو مع أصدقائك لتعم الفائدة!',
+                    'انشر الفيديو لمن يحتاجه!',
+                    'ساعدنا في الوصول لأكبر عدد، شارك الفيديو!',
+                    'إذا استفدت، شارك الفيديو مع 3 أشخاص!',
+                    'انشر الخير! شارك الفيديو على وسائل التواصل'
+                ],
+                comment: [
+                    'اكتب رأيك في التعليقات، أريد أن أسمع منك!',
+                    'شاركني أفكارك في التعليقات أسفل الفيديو',
+                    'ما رأيك؟ اترك تعليقاً!',
+                    'أسئلتك واقتراحاتك في التعليقات مهمة لي!',
+                    'دعنا نتناقش! اكتب تعليقك الآن'
+                ]
+            };
+            
+            const result = document.getElementById('ctaResult');
+            result.innerHTML = '<strong>عبارات الحث على الإجراء:</strong><br><br>';
+            
+            ctas[type].forEach((cta, index) => {
+                result.innerHTML += `${index + 1}. ${cta}<br><br>`;
+            });
+            
+            result.innerHTML += '<div class="alert alert-warning">💡 استخدم CTA في البداية والنهاية</div>';
+            result.classList.remove('hidden');
+        }
+        
+        // أداة 15: مقارن الفيديوهات
+        function compareVideos() {
+            const video1 = parseInt(document.getElementById('video1Views').value);
+            const video2 = parseInt(document.getElementById('video2Views').value);
+            
+            if(!video1 || !video2) {
+                alert('أدخل مشاهدات الفيديوهين');
+                return;
+            }
+            
+            const diff = Math.abs(video1 - video2);
+            const percentage = ((diff / Math.min(video1, video2)) * 100).toFixed(1);
+            const winner = video1 > video2 ? 'الفيديو الأول' : 'الفيديو الثاني';
+            
+            const result = document.getElementById('compareResult');
+            result.innerHTML = '<strong>نتيجة المقارنة:</strong><br><br>';
+            
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">${video1.toLocaleString()}</div>
+                <div class="stat-label">الفيديو الأول</div>
+            </div>`;
+            
+            result.innerHTML += `<div class="stat">
+                <div class="stat-number">${video2.toLocaleString()}</div>
+                <div class="stat-label">الفيديو الثاني</div>
+            </div>`;
+            
+            result.innerHTML += `<br><div class="alert alert-success">
+                🏆 ${winner} أفضل بفارق ${diff.toLocaleString()} مشاهدة (${percentage}%)
+            </div>`;
+            
+            // تحليل الأداء
+            const analysis = [];
+            if(video1 > 10000 || video2 > 10000) {
+                analysis.push('✅ أداء ممتاز! أحد الفيديوهات viral');
+            }
+            if(percentage > 50) {
+                analysis.push('⚠️ فرق كبير بين الفيديوهين، حلل السبب');
+            }
+            if(video1 < 1000 && video2 < 1000) {
+                analysis.push('💡 حاول تحسين العناوين والصور المصغرة');
+            }
+            
+            if(analysis.length > 0) {
+                result.innerHTML += '<br><strong>التحليل:</strong><br>';
+                analysis.forEach(item => {
+                    result.innerHTML += item + '<br>';
+                });
+            }
+            
+            result.classList.remove('hidden');
+        }
+        
+        // وظائف مساعدة
+        function copyText(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText || element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('تم النسخ بنجاح!');
+            });
+        }
+        
+        function copyTags() {
+            const tags = document.querySelectorAll('#tagResult .tag');
+            const text = Array.from(tags).map(tag => tag.textContent).join(' ');
+            navigator.clipboard.writeText(text).then(() => {
+                alert('تم نسخ جميع الهاشتاجات!');
+            });
         }
     </script>
 </body>
