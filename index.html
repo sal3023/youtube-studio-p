@@ -4,146 +4,317 @@
   <meta charset="UTF-8" />
   <title>YouTube & Blogger Tools</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- خط عربي جميل -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #1d4ed8, #6d28d9);
+      --card-bg: #ffffff;
+      --card-soft-bg: #f9fafb;
+      --accent: #ef4444;
+      --accent-soft: #fee2e2;
+      --accent-dark: #b91c1c;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-soft: #e5e7eb;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-strong: 0 22px 45px rgba(15, 23, 42, 0.35);
+      --shadow-soft: 0 8px 22px rgba(15, 23, 42, 0.12);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
     }
+
     body {
-      background: linear-gradient(135deg, #4f46e5, #9333ea);
       min-height: 100vh;
+      background: var(--bg-gradient);
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 16px;
+      padding: 18px 12px;
+      color: var(--text-main);
     }
-    .app {
-      background: #f9fafb;
+
+    .app-shell {
       width: 100%;
-      max-width: 900px;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-      padding: 20px 16px 28px;
+      max-width: 1024px;
     }
+
+    /* شريط علوي */
+    .top-bar {
+      color: #e5e7eb;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .top-bar-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-bar-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .top-bar-text h1 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .top-bar-text p {
+      font-size: 11px;
+      color: #cbd5f5;
+    }
+
+    .top-bar-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(226, 232, 240, 0.6);
+      background: rgba(15, 23, 42, 0.25);
+      backdrop-filter: blur(16px);
+      white-space: nowrap;
+    }
+
+    /* الكارت الرئيسي */
+    .app {
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.22), transparent),
+        radial-gradient(circle at bottom left, rgba(15, 23, 42, 0.18), transparent),
+        #0f172a;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-strong);
+      padding: 18px 10px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-inner {
+      background: linear-gradient(
+          to bottom right,
+          rgba(255, 255, 255, 0.96),
+          rgba(243, 244, 246, 0.98)
+        );
+      border-radius: calc(var(--radius-lg) - 4px);
+      padding: 18px 12px 26px;
+      box-shadow: var(--shadow-soft);
+    }
+
     .app-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
-    .app-header h1 {
-      font-size: 26px;
-      font-weight: 800;
-      color: #111827;
-      margin-bottom: 8px;
-    }
-    .app-header p {
-      color: #4b5563;
-      font-size: 14px;
-    }
-    .tabs {
+
+    .app-header-title {
+      font-size: 24px;
+      font-weight: 900;
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+      color: var(--text-main);
     }
+
+    .app-header-badge {
+      font-size: 12px;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background-color: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+    }
+
+    .app-header-subtitle {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* التبويبات */
+    .tabs {
+      display: inline-flex;
+      background: #f3f4f6;
+      padding: 4px;
+      border-radius: 999px;
+      margin: 12px auto 16px;
+      gap: 4px;
+      position: relative;
+    }
+
     .tab-btn {
       border: none;
       outline: none;
-      padding: 10px 18px;
+      padding: 8px 16px;
       border-radius: 999px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
+      background: transparent;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
     }
-    .tab-btn.primary {
-      background-color: #ef4444;
-      color: white;
+
+    .tab-btn.primary-active {
+      background: #ffffff;
+      color: #111827;
+      box-shadow: 0 6px 15px rgba(15, 23, 42, 0.16);
     }
-    .tab-btn.primary.inactive {
-      background-color: #fee2e2;
-      color: #b91c1c;
+
+    .tab-btn.primary-inactive {
+      color: #6b7280;
     }
+
     .tab-btn.secondary {
       background-color: #e5e7eb;
-      color: #6b7280;
+      color: #9ca3af;
       cursor: not-allowed;
     }
-    .tab-btn.primary:hover {
-      filter: brightness(1.05);
-    }
+
     .sections {
       margin-top: 4px;
     }
+
     .section {
       display: none;
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 16px 12px 18px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      background: transparent;
     }
+
     .section.active {
       display: block;
     }
+
     .section h2 {
       font-size: 20px;
       font-weight: 800;
       color: #111827;
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
     }
-    .section p.section-subtitle {
+
+    .section-subtitle {
       text-align: center;
-      font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* الأدوات */
+    .tools-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
     }
 
     .tool-box {
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-soft);
       padding: 14px 12px;
-      margin-bottom: 14px;
-      background-color: #f9fafb;
+      background: var(--card-bg);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+      position: relative;
+      overflow: hidden;
     }
+
+    .tool-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(239, 68, 68, 0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .tool-box:hover::before {
+      opacity: 1;
+    }
+
     .tool-title {
       font-weight: 800;
-      font-size: 16px;
-      color: #b91c1c;
+      font-size: 15px;
+      color: var(--accent-dark);
       margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 6px;
     }
+
     .tool-title span.icon {
       font-size: 18px;
     }
+
     .field-label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #374151;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
-    .input, select, textarea {
+
+    .input,
+    select,
+    textarea {
       width: 100%;
-      font-size: 14px;
+      font-size: 13px;
       padding: 8px 10px;
-      border-radius: 8px;
+      border-radius: 9px;
       border: 1px solid #d1d5db;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
       background-color: #ffffff;
     }
-    .input:focus, select:focus, textarea:focus {
-      border-color: #ef4444;
-      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.25);
+
+    .input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2);
+      background-color: #fef2f2;
     }
+
     textarea {
       resize: vertical;
       min-height: 80px;
     }
+
     .btn {
       display: inline-block;
       width: 100%;
@@ -151,36 +322,43 @@
       padding: 9px 14px;
       border-radius: 999px;
       border: none;
-      font-weight: 700;
-      font-size: 14px;
+      font-weight: 800;
+      font-size: 13px;
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      transition: background-color 0.18s ease, transform 0.08s ease, box-shadow 0.18s;
     }
+
     .btn-primary {
-      background-color: #ef4444;
+      background-color: var(--accent);
       color: #ffffff;
+      box-shadow: 0 6px 14px rgba(248, 113, 113, 0.5);
     }
+
     .btn-primary:hover {
       background-color: #dc2626;
       transform: translateY(-1px);
+      box-shadow: 0 9px 22px rgba(248, 113, 113, 0.7);
     }
-    .btn-sm {
-      width: auto;
-      padding-inline: 14px;
-      font-size: 13px;
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(248, 113, 113, 0.55);
     }
+
     .output {
       background-color: #f3f4f6;
-      border-radius: 8px;
+      border-radius: 9px;
       padding: 8px 10px;
-      font-size: 13px;
-      color: #111827;
+      font-size: 12px;
+      color: var(--text-main);
       white-space: pre-wrap;
-      max-height: 200px;
+      max-height: 190px;
       overflow-y: auto;
+      border: 1px dashed #d1d5db;
     }
+
     .output-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #374151;
       margin-bottom: 4px;
@@ -189,459 +367,336 @@
       align-items: center;
       gap: 6px;
     }
+
     .copy-btn {
       border: none;
       background-color: #e5e7eb;
       color: #374151;
       border-radius: 999px;
-      padding: 4px 10px;
+      padding: 3px 10px;
       font-size: 11px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.16s ease, transform 0.08s ease;
     }
+
     .copy-btn:hover {
       background-color: #d1d5db;
+      transform: translateY(-1px);
     }
+
     .small-hint {
       font-size: 11px;
-      color: #6b7280;
+      color: var(--text-muted);
       margin-top: 4px;
     }
-    @media (min-width: 768px) {
-      .two-cols {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+
+    @media (min-width: 640px) {
+      .app-inner {
+        padding: 22px 20px 28px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="app-header">
-      <h1>YouTube & 🎬 Blogger Tools</h1>
-      <p>مولدات جاهزة لعناوين ووصف YouTube ومقالات Blogger — انسخ والصق مباشرة في قناتك أو مدونتك.</p>
-    </div>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="top-bar-title">
+        <div class="top-bar-logo">🎬</div>
+        <div class="top-bar-text">
+          <h1>Studio Tools</h1>
+          <p>أدوات جاهزة لصنّاع المحتوى على YouTube وBlogger</p>
+        </div>
+      </div>
+      <div class="top-bar-pill">نسخة أوفلاين – كل شيء يعمل من المتصفح فقط</div>
+    </header>
 
-    <div class="tabs">
-      <button id="btnBloggerTab" class="tab-btn primary inactive">Blogger Tools</button>
-      <button id="btnYoutubeTab" class="tab-btn primary">YouTube Tools</button>
-      <button class="tab-btn secondary" title="سيتم إضافتها لاحقًا">Convert Tools</button>
-    </div>
-
-    <div class="sections">
-      <!-- YouTube TOOLS SECTION -->
-      <section id="youtubeSection" class="section active">
-        <h2>🟥 أدوات YouTube</h2>
-        <p class="section-subtitle">اكتب كلمة مفتاحية، اختر نوع الفكرة، واضغط توليد لتحصل على اقتراحات جاهزة.</p>
-
-        <!-- مولد عناوين يوتيوب -->
-        <div class="tool-box">
-          <div class="tool-title">
-            <span class="icon">✏️</span>
-            <span>مولد عناوين YouTube</span>
+    <main class="app">
+      <div class="app-inner">
+        <div class="app-header">
+          <div class="app-header-title">
+            <span>YouTube & Blogger Tools</span>
+            <span class="app-header-badge">مساعد المحتوى العربي</span>
           </div>
-
-          <label class="field-label" for="ytTitleKeyword">الكلمة المفتاحية / موضوع الفيديو</label>
-          <input id="ytTitleKeyword" class="input" placeholder="مثال: الربح من الإنترنت، تقنيات الذكاء الاصطناعي" />
-
-          <label class="field-label" for="ytTitleStyle" style="margin-top: 8px;">نوع القائمة</label>
-          <select id="ytTitleStyle">
-            <option value="top10">قائمة Top 10</option>
-            <option value="howto">فيديو شرح (How To)</option>
-            <option value="secrets">أسرار / حقائق</option>
-            <option value="mistakes">أخطاء شائعة</option>
-            <option value="ideas">أفكار متنوعة</option>
-          </select>
-
-          <button id="btnGenerateYtTitles" class="btn btn-primary" style="margin-top: 10px;">توليد عناوين</button>
-
-          <div style="margin-top: 10px;">
-            <div class="output-title">
-              <span>النتيجة (يمكنك النسخ والاختيار):</span>
-              <button class="copy-btn" onclick="copyOutput('ytTitlesOutput')">نسخ الكل</button>
-            </div>
-            <div id="ytTitlesOutput" class="output"></div>
-          </div>
-          <div class="small-hint">اختر العنوان الأنسب، ثم عدّله قليلًا ليناسب أسلوبك.</div>
+          <p class="app-header-subtitle">
+            أدخل فكرتك أو كلمتك المفتاحية، واحصل على عناوين، وصف، Tags ومقدمات جاهزة للنسخ واللصق.
+          </p>
         </div>
 
-        <!-- مولد وصف الفيديو -->
-        <div class="tool-box">
-          <div class="tool-title">
-            <span class="icon">📋</span>
-            <span>مولد وصف الفيديو</span>
-          </div>
-
-          <label class="field-label" for="ytDescKeyword">موضوع الفيديو / الكلمة المفتاحية</label>
-          <input id="ytDescKeyword" class="input" placeholder="مثال: شرح موقع كذا للربح من الإنترنت" />
-
-          <label class="field-label" for="ytDescExtras" style="margin-top: 8px;">نِقاط تريد ذكرها في الوصف (اختياري)</label>
-          <textarea id="ytDescExtras" placeholder="مثال: مميزات الموقع، الحد الأدنى للسحب، رابط التسجيل..."></textarea>
-
-          <button id="btnGenerateYtDesc" class="btn btn-primary" style="margin-top: 10px;">توليد وصف احترافي</button>
-
-          <div style="margin-top: 10px;">
-            <div class="output-title">
-              <span>الوصف المقترح:</span>
-              <button class="copy-btn" onclick="copyOutput('ytDescOutput')">نسخ</button>
-            </div>
-            <div id="ytDescOutput" class="output"></div>
-          </div>
+        <!-- Tabs -->
+        <div class="tabs">
+          <button id="btnYoutubeTab" class="tab-btn primary-active">
+            <span>🟥 YouTube Tools</span>
+          </button>
+          <button id="btnBloggerTab" class="tab-btn primary-inactive">
+            <span>🟦 Blogger Tools</span>
+          </button>
+          <button class="tab-btn secondary" title="قريبًا">
+            <span>🧩 Convert Tools</span>
+          </button>
         </div>
 
-        <!-- مولد كلمات مفتاحية (Tags) -->
-        <div class="tool-box">
-          <div class="tool-title">
-            <span class="icon">🏷️</span>
-            <span>مولد الكلمات المفتاحية (Tags)</span>
-          </div>
+        <div class="sections">
+          <!-- YouTube Section -->
+          <section id="youtubeSection" class="section active">
+            <h2>🟥 أدوات YouTube</h2>
+            <p class="section-subtitle">
+              استخدم هذه الأدوات لتسريع إنشاء العناوين والوصف وTags لفيديوهاتك على YouTube.
+            </p>
 
-          <label class="field-label" for="ytTagsKeyword">أدخل كلمة أو أكثر (افصل بينها بفاصلة)</label>
-          <input id="ytTagsKeyword" class="input" placeholder="مثال: تقنيات الذكاء الاصطناعي, الربح من يوتيوب" />
+            <div class="tools-grid">
+              <!-- مولد عناوين يوتيوب -->
+              <div class="tool-box">
+                <div class="tool-title">
+                  <span class="icon">✏️</span>
+                  <span>مولد عناوين YouTube</span>
+                </div>
 
-          <button id="btnGenerateYtTags" class="btn btn-primary" style="margin-top: 10px;">توليد Tags</button>
+                <label class="field-label" for="ytTitleKeyword">الكلمة المفتاحية / موضوع الفيديو</label>
+                <input
+                  id="ytTitleKeyword"
+                  class="input"
+                  placeholder="مثال: الذكاء الاصطناعي، الربح من الإنترنت، التسويق بالعمولة"
+                />
 
-          <div style="margin-top: 10px;">
-            <div class="output-title">
-              <span>Tags المقترحة (انسخها وضعها في يوتيوب):</span>
-              <button class="copy-btn" onclick="copyOutput('ytTagsOutput')">نسخ</button>
+                <label class="field-label" for="ytTitleStyle" style="margin-top: 6px;"
+                  >نوع القائمة</label
+                >
+                <select id="ytTitleStyle">
+                  <option value="top10">قائمة Top 10</option>
+                  <option value="howto">فيديو شرح (How To)</option>
+                  <option value="secrets">أسرار / حقائق</option>
+                  <option value="mistakes">أخطاء شائعة</option>
+                  <option value="ideas">أفكار متنوعة</option>
+                </select>
+
+                <button
+                  id="btnGenerateYtTitles"
+                  class="btn btn-primary"
+                  style="margin-top: 10px;"
+                >
+                  توليد عناوين
+                </button>
+
+                <div style="margin-top: 8px;">
+                  <div class="output-title">
+                    <span>النتيجة (اختر وغيّر بما يناسبك):</span>
+                    <button class="copy-btn" onclick="copyOutput('ytTitlesOutput')">
+                      نسخ الكل
+                    </button>
+                  </div>
+                  <div id="ytTitlesOutput" class="output"></div>
+                </div>
+                <div class="small-hint">
+                  عدّل العنوان بعد التوليد ليكون خاص بقناتك وأسلوبك، وتجنب النسخ الحرفي.
+                </div>
+              </div>
+
+              <!-- مولد وصف الفيديو -->
+              <div class="tool-box">
+                <div class="tool-title">
+                  <span class="icon">📋</span>
+                  <span>مولد وصف الفيديو</span>
+                </div>
+
+                <label class="field-label" for="ytDescKeyword"
+                  >موضوع الفيديو / العنوان المبدئي</label
+                >
+                <input
+                  id="ytDescKeyword"
+                  class="input"
+                  placeholder="مثال: شرح موقع معين، مراجعة منتج، دورة قصيرة..."
+                />
+
+                <label class="field-label" for="ytDescExtras" style="margin-top: 6px;"
+                  >نِقاط تريد ذكرها في الوصف (اختياري)</label
+                >
+                <textarea
+                  id="ytDescExtras"
+                  placeholder="مثال: 
+- مميزات الموقع
+- الحد الأدنى للسحب
+- رابط التسجيل
+- طرق الدعم للقناة"
+                ></textarea>
+
+                <button id="btnGenerateYtDesc" class="btn btn-primary" style="margin-top: 10px;">
+                  توليد وصف احترافي
+                </button>
+
+                <div style="margin-top: 8px;">
+                  <div class="output-title">
+                    <span>الوصف المقترح:</span>
+                    <button class="copy-btn" onclick="copyOutput('ytDescOutput')">نسخ</button>
+                  </div>
+                  <div id="ytDescOutput" class="output"></div>
+                </div>
+              </div>
+
+              <!-- مولد Tags -->
+              <div class="tool-box">
+                <div class="tool-title">
+                  <span class="icon">🏷️</span>
+                  <span>مولد الكلمات المفتاحية (Tags)</span>
+                </div>
+
+                <label class="field-label" for="ytTagsKeyword"
+                  >أدخل كلمة أو أكثر (افصل بينها بفاصلة)</label
+                >
+                <input
+                  id="ytTagsKeyword"
+                  class="input"
+                  placeholder="مثال: الربح من يوتيوب, الذكاء الاصطناعي, قنوات تقنية"
+                />
+
+                <button id="btnGenerateYtTags" class="btn btn-primary" style="margin-top: 10px;">
+                  توليد Tags
+                </button>
+
+                <div style="margin-top: 8px;">
+                  <div class="output-title">
+                    <span>Tags المقترحة:</span>
+                    <button class="copy-btn" onclick="copyOutput('ytTagsOutput')">نسخ</button>
+                  </div>
+                  <div id="ytTagsOutput" class="output"></div>
+                </div>
+                <div class="small-hint">
+                  ضع الكلمات الأكثر أهمية أولاً، واحرص أن تعكس فعلاً محتوى الفيديو لتجنب
+                  المخالفات.
+                </div>
+              </div>
             </div>
-            <div id="ytTagsOutput" class="output"></div>
-          </div>
-          <div class="small-hint">ضع الكلمات المهمة أولاً، واجعلها قريبة من محتوى الفيديو الفعلي.</div>
-        </div>
-      </section>
+          </section>
 
-      <!-- BLOGGER TOOLS SECTION -->
-      <section id="bloggerSection" class="section">
-        <h2>🟦 أدوات Blogger</h2>
-        <p class="section-subtitle">أنشئ عناوين ومقدمات لمقالات مدونتك بسهولة، ثم انسخها إلى لوحة تحكم Blogger.</p>
+          <!-- Blogger Section -->
+          <section id="bloggerSection" class="section">
+            <h2>🟦 أدوات Blogger</h2>
+            <p class="section-subtitle">
+              استخدم هذه الأدوات لإنشاء عناوين ومقدمات قوية لمقالات مدونتك، ثم انسخها إلى
+              لوحة تحكم Blogger.
+            </p>
 
-        <!-- مولد عناوين مقالات -->
-        <div class="tool-box">
-          <div class="tool-title">
-            <span class="icon">📝</span>
-            <span>مولد عناوين مقالات Blogger</span>
-          </div>
+            <div class="tools-grid">
+              <!-- مولد عناوين مقالات Blogger -->
+              <div class="tool-box">
+                <div class="tool-title">
+                  <span class="icon">📝</span>
+                  <span>مولد عناوين مقالات Blogger</span>
+                </div>
 
-          <label class="field-label" for="blogTitleKeyword">مجال المقال / الكلمة المفتاحية</label>
-          <input id="blogTitleKeyword" class="input" placeholder="مثال: التسويق الإلكتروني، الربح من المدونات" />
+                <label class="field-label" for="blogTitleKeyword"
+                  >مجال المقال / الكلمة المفتاحية</label
+                >
+                <input
+                  id="blogTitleKeyword"
+                  class="input"
+                  placeholder="مثال: التسويق الإلكتروني، الربح من المدونات، العمل الحر"
+                />
 
-          <label class="field-label" for="blogTitleStyle" style="margin-top: 8px;">نوع الفكرة</label>
-          <select id="blogTitleStyle">
-            <option value="guide">دليل شامل</option>
-            <option value="tips">نصائح / أسرار</option>
-            <option value="problems">حل مشكلة</option>
-            <option value="comparison">مقارنة</option>
-          </select>
+                <label class="field-label" for="blogTitleStyle" style="margin-top: 6px;"
+                  >نوع الفكرة</label
+                >
+                <select id="blogTitleStyle">
+                  <option value="guide">دليل شامل</option>
+                  <option value="tips">نصائح / أسرار</option>
+                  <option value="problems">حل مشكلة</option>
+                  <option value="comparison">مقارنة</option>
+                </select>
 
-          <button id="btnGenerateBlogTitles" class="btn btn-primary" style="margin-top: 10px;">توليد عناوين</button>
+                <button
+                  id="btnGenerateBlogTitles"
+                  class="btn btn-primary"
+                  style="margin-top: 10px;"
+                >
+                  توليد عناوين
+                </button>
 
-          <div style="margin-top: 10px;">
-            <div class="output-title">
-              <span>عناوين مقترحة:</span>
-              <button class="copy-btn" onclick="copyOutput('blogTitlesOutput')">نسخ</button>
+                <div style="margin-top: 8px;">
+                  <div class="output-title">
+                    <span>عناوين مقترحة:</span>
+                    <button class="copy-btn" onclick="copyOutput('blogTitlesOutput')">
+                      نسخ
+                    </button>
+                  </div>
+                  <div id="blogTitlesOutput" class="output"></div>
+                </div>
+              </div>
+
+              <!-- مولد مقدمة مقال -->
+              <div class="tool-box">
+                <div class="tool-title">
+                  <span class="icon">📄</span>
+                  <span>مولد مقدمة / وصف للمقال</span>
+                </div>
+
+                <label class="field-label" for="blogIntroTitle"
+                  >عنوان المقال (أو الفكرة الرئيسية)</label
+                >
+                <input
+                  id="blogIntroTitle"
+                  class="input"
+                  placeholder="اكتب عنوانًا مبدئيًا للمقال أو الفكرة الأساسية"
+                />
+
+                <label class="field-label" for="blogIntroPoints" style="margin-top: 6px;"
+                  >نقاط تريد تغطيتها في المقال (اختياري)</label
+                >
+                <textarea
+                  id="blogIntroPoints"
+                  placeholder="مثال:
+- تعريف بالمجال
+- لماذا هو مهم؟
+- خطوات عملية
+- نصائح ختامية"
+                ></textarea>
+
+                <button
+                  id="btnGenerateBlogIntro"
+                  class="btn btn-primary"
+                  style="margin-top: 10px;"
+                >
+                  توليد مقدمة مقال
+                </button>
+
+                <div style="margin-top: 8px;">
+                  <div class="output-title">
+                    <span>المقدمة المقترحة:</span>
+                    <button class="copy-btn" onclick="copyOutput('blogIntroOutput')">
+                      نسخ
+                    </button>
+                  </div>
+                  <div id="blogIntroOutput" class="output"></div>
+                </div>
+                <div class="small-hint">
+                  يمكنك استخدام المقدمة كما هي، أو تعديلها قليلاً، ثم بناء باقي فقرات المقال
+                  على نفس الأسلوب.
+                </div>
+              </div>
             </div>
-            <div id="blogTitlesOutput" class="output"></div>
-          </div>
+          </section>
         </div>
-
-        <!-- مولد مقدمة ووصف للمقال -->
-        <div class="tool-box">
-          <div class="tool-title">
-            <span class="icon">📄</span>
-            <span>مولد مقدمة / وصف للمقال</span>
-          </div>
-
-          <label class="field-label" for="blogIntroTitle">عنوان المقال (أو الفكرة الرئيسية)</label>
-          <input id="blogIntroTitle" class="input" placeholder="اكتب عنوانًا مبدئيًا للمقال" />
-
-          <label class="field-label" for="blogIntroPoints" style="margin-top: 8px;">نقاط تريد تغطيتها في المقال (اختياري)</label>
-          <textarea id="blogIntroPoints" placeholder="مثال: تعريف بالمجال، أهميته، خطوات عملية، نصائح ختامية..."></textarea>
-
-          <button id="btnGenerateBlogIntro" class="btn btn-primary" style="margin-top: 10px;">توليد مقدمة مقال</button>
-
-          <div style="margin-top: 10px;">
-            <div class="output-title">
-              <span>المقدمة المقترحة:</span>
-              <button class="copy-btn" onclick="copyOutput('blogIntroOutput')">نسخ</button>
-            </div>
-            <div id="blogIntroOutput" class="output"></div>
-          </div>
-          <div class="small-hint">بعد نسخ المقدمة، أكمل باقي الفقرات بنفس الأسلوب أو استخدم المقدمة كملخص.</div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </main>
   </div>
 
   <script>
-    // تبويب Blogger / YouTube
-    const youtubeSection = document.getElementById('youtubeSection');
-    const bloggerSection = document.getElementById('bloggerSection');
-    const btnYoutubeTab = document.getElementById('btnYoutubeTab');
-    const btnBloggerTab = document.getElementById('btnBloggerTab');
+    // تبويب YouTube / Blogger
+    const youtubeSection = document.getElementById("youtubeSection");
+    const bloggerSection = document.getElementById("bloggerSection");
+    const btnYoutubeTab = document.getElementById("btnYoutubeTab");
+    const btnBloggerTab = document.getElementById("btnBloggerTab");
 
-    btnYoutubeTab.addEventListener('click', () => {
-      youtubeSection.classList.add('active');
-      bloggerSection.classList.remove('active');
-      btnYoutubeTab.classList.remove('inactive');
-      btnBloggerTab.classList.add('inactive');
-    });
-
-    btnBloggerTab.addEventListener('click', () => {
-      bloggerSection.classList.add('active');
-      youtubeSection.classList.remove('active');
-      btnBloggerTab.classList.remove('inactive');
-      btnYoutubeTab.classList.add('inactive');
-    });
-
-    // دالة نسخ المخرجات
-    function copyOutput(elementId) {
-      const el = document.getElementById(elementId);
-      if (!el) return;
-      const text = el.innerText.trim();
-      if (!text) return;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('✅ تم نسخ المحتوى إلى الحافظة.');
-      }).catch(() => {
-        alert('لم يتم النسخ تلقائيًا، يمكنك التحديد والنسخ يدويًا.');
-      });
-    }
-
-    // توليد عناوين يوتيوب
-    document.getElementById('btnGenerateYtTitles').addEventListener('click', () => {
-      const keyword = document.getElementById('ytTitleKeyword').value.trim();
-      const style = document.getElementById('ytTitleStyle').value;
-      const output = document.getElementById('ytTitlesOutput');
-
-      if (!keyword) {
-        output.innerText = 'من فضلك أدخل كلمة مفتاحية أولاً.';
-        return;
-      }
-
-      let templates = [];
-      if (style === 'top10') {
-        templates = [
-          `أفضل 10 طرق لاستخدام ${keyword} في 2024`,
-          `Top 10 أسرار عن ${keyword} لا يخبرك بها أحد`,
-          `10 أفكار مجنونة لـ ${keyword} ستحب تجربتها`,
-          `أفضل 10 أدوات تساعدك في مجال ${keyword}`,
-          `10 أخطاء قاتلة في ${keyword} وتجنّبها`,
-          `10 خطوات عملية لإتقان ${keyword} من الصفر`,
-          `Top 10 قنوات تتحدث عن ${keyword} يجب متابعتها`,
-          `أفضل 10 استراتيجيات لـ ${keyword} للمبتدئين`,
-          `10 نصائح ذهبية لنجاحك في ${keyword}`,
-          `10 معلومات مهمة عن ${keyword} في أقل من 10 دقائق`
-        ];
-      } else if (style === 'howto') {
-        templates = [
-          `شرح كامل: كيف تبدأ في ${keyword} خطوة بخطوة`,
-          `كيف تستخدم ${keyword} لتحقيق دخل شهري ثابت`,
-          `طريقة ذكية لاستغلال ${keyword} بدون خبرة سابقة`,
-          `كيف تتجنب أهم الأخطاء عند البدء في ${keyword}`,
-          `شرح بسيط لـ ${keyword} للمبتدئين من الصفر حتى الاحتراف`,
-          `كيف تطور مهاراتك في ${keyword} خلال 30 يومًا فقط`,
-          `استراتيجية مجربة للنجاح في ${keyword} مهما كان مستواك`,
-          `كيف تحول ${keyword} إلى مصدر دخل حقيقي`,
-          `أسهل طريقة لفهم ${keyword} في أقل وقت`,
-          `كيف تعرف إذا كان ${keyword} مناسبًا لك أم لا؟`
-        ];
-      } else if (style === 'secrets') {
-        templates = [
-          `أسرار ${keyword} التي لا يريد أحد أن يخبرك بها`,
-          `حقائق صادمة عن ${keyword} لن تصدقها`,
-          `أشياء لا تعرفها عن ${keyword} وستغير نظرتك تمامًا`,
-          `5 أسرار خطيرة عن ${keyword} (رقم 3 مهم جدًا!)`,
-          `هل تعرف هذه الخفايا عن ${keyword}؟`,
-          `أسرار المحترفين في ${keyword} وكيف يمكنك استخدامها`,
-          `معلومات مخفية عن ${keyword} تكشف لأول مرة`,
-          `أخطر 7 حقائق عن ${keyword} يجب أن تعرفها الآن`,
-          `حقيقة ${keyword} الكاملة بدون مبالغة`,
-          `ما لا يخبرك به أحد عن ${keyword}`
-        ];
-      } else if (style === 'mistakes') {
-        templates = [
-          `7 أخطاء قاتلة يرتكبها المبتدئون في ${keyword}`,
-          `لا ترتكب هذه الأخطاء عند البدء في ${keyword}`,
-          `أكبر خطأ تقع فيه عند استخدام ${keyword} (وحلّه)`,
-          `5 أخطاء تمنعك من النجاح في ${keyword}`,
-          `لماذا يفشل أغلب الناس في ${keyword}؟ هذه هي الأسباب`,
-          `أخطاء شائعة في ${keyword} وكيف تتجنبها بسهولة`,
-          `أشياء تفعلها في ${keyword} وتدمّر نتائجك بدون أن تشعر`,
-          `10 عادات سيئة تدمّر نجاحك في ${keyword}`,
-          `هذه الأخطاء تجعل ${keyword} يضيع وقتك بدلاً من أن ينفعك`,
-          `كيف تصحح مسارك في ${keyword} وتتجنب الفشل`
-        ];
+    function activateTab(tab) {
+      if (tab === "youtube") {
+        youtubeSection.classList.add("active");
+        bloggerSection.classList.remove("active");
+        btnYoutubeTab.classList.add("primary-active");
+        btnYoutubeTab.classList.remove("primary-inactive");
+        btnBloggerTab.classList.add("primary-inactive");
+        btnBloggerTab.classList.remove("primary-active");
       } else {
-        // ideas
-        templates = [
-          `أفكار فيديوهات قوية عن ${keyword} ستجلب لك مشاهدات`,
-          `أفضل محتوى يمكنك تقديمه عن ${keyword} على يوتيوب`,
-          `لماذا يعتبر ${keyword} فرصة ذهبية الآن؟`,
-          `كيف تصنع قناة ناجحة حول ${keyword} من الصفر`,
-          `محتوى مختلف ومميز عن ${keyword} لن تجده عند غيرك`,
-          `خطّة محتوى شهرية لقناة تتحدث عن ${keyword}`,
-          `هل ما زال ${keyword} مربحًا في 2024؟`,
-          `طرق مبتكرة للحديث عن ${keyword} تجذب المشتركين`,
-          `تحليل قنوات ناجحة في مجال ${keyword} وما نتعلمه منها`,
-          `فكرة سلسلة فيديوهات كاملة عن ${keyword}`
-        ];
-      }
-
-      const resultLines = templates.map((t, i) => `${i + 1}. ${t}`);
-      output.innerText = resultLines.join('\n');
-    });
-
-    // توليد وصف يوتيوب
-    document.getElementById('btnGenerateYtDesc').addEventListener('click', () => {
-      const topic = document.getElementById('ytDescKeyword').value.trim();
-      const extras = document.getElementById('ytDescExtras').value.trim();
-      const output = document.getElementById('ytDescOutput');
-
-      if (!topic) {
-        output.innerText = 'من فضلك أدخل موضوع الفيديو أولاً.';
-        return;
-      }
-
-      let base =
-        `في هذا الفيديو سنتحدث عن "${topic}" خطوة بخطوة وبأسلوب بسيط وواضح، ` +
-        `حتى لو كنت مبتدئًا في هذا المجال. ستتعرف على أهم النقاط والأساسيات التي تحتاجها، ` +
-        `مع نصائح عملية يمكنك تطبيقها مباشرة بعد المشاهدة.\n\n`;
-
-      if (extras) {
-        base += `ما ستشاهده في هذا الفيديو:\n- ${extras.split('\n').join('\n- ')}\n\n`;
-      }
-
-      base +=
-        `لا تنسَ دعمنا بالاشتراك في القناة وتفعيل زر الجرس 🔔 ليصلك كل جديد، ` +
-        `وإذا أعجبك الفيديو لا تنسَ الضغط على زر الإعجاب 👍 ومشاركة الفيديو مع أصدقائك.\n\n` +
-        `روابط مفيدة قد تهمك:\n` +
-        `- رابط الموقع / الأداة المذكورة في الفيديو (إن وجد)\n` +
-        `- حساباتنا على مواقع التواصل الاجتماعي\n\n` +
-        `#${topic.replace(/\s+/g, '_')} #تقنية #يوتيوب`;
-
-      output.innerText = base;
-    });
-
-    // توليد Tags
-    document.getElementById('btnGenerateYtTags').addEventListener('click', () => {
-      const raw = document.getElementById('ytTagsKeyword').value.trim();
-      const output = document.getElementById('ytTagsOutput');
-
-      if (!raw) {
-        output.innerText = 'أدخل كلمة أو أكثر أولاً.';
-        return;
-      }
-
-      const parts = raw
-        .split(',')
-        .map((p) => p.trim())
-        .filter(Boolean);
-
-      const tagsSet = new Set();
-
-      parts.forEach((p) => {
-        tagsSet.add(p);
-        tagsSet.add(`شرح ${p}`);
-        tagsSet.add(`تعلم ${p}`);
-        tagsSet.add(`${p} للمبتدئين`);
-        tagsSet.add(`${p} 2024`);
-      });
-
-      // بعض التاجات العامة
-      tagsSet.add('قناة تقنية');
-      tagsSet.add('قناة تعليمية');
-      tagsSet.add('الربح من الانترنت');
-      tagsSet.add('افكار فيديوهات');
-      tagsSet.add('تسويق رقمي');
-      tagsSet.add('يوتيوب شورتس');
-
-      output.innerText = Array.from(tagsSet).join(', ');
-    });
-
-    // توليد عناوين Blogger
-    document.getElementById('btnGenerateBlogTitles').addEventListener('click', () => {
-      const kw = document.getElementById('blogTitleKeyword').value.trim();
-      const style = document.getElementById('blogTitleStyle').value;
-      const output = document.getElementById('blogTitlesOutput');
-
-      if (!kw) {
-        output.innerText = 'من فضلك أدخل مجال أو كلمة مفتاحية للمقال.';
-        return;
-      }
-
-      let titles = [];
-      if (style === 'guide') {
-        titles = [
-          `دليل شامل إلى ${kw}: كل ما تحتاج معرفته قبل أن تبدأ`,
-          `${kw} للمبتدئين: الخطوات الأولى نحو الاحتراف`,
-          `كل ما تريد معرفته عن ${kw} في مقال واحد`,
-          `كيف تبدأ في ${kw} من الصفر حتى الاحتراف`,
-          `أهم المصطلحات التي يجب أن تعرفها في ${kw}`,
-          `خريطة طريق عملية لإتقان ${kw} خلال 90 يومًا`
-        ];
-      } else if (style === 'tips') {
-        titles = [
-          `10 نصائح ذهبية للنجاح في ${kw}`,
-          `أسرار المحترفين في ${kw} وكيف تطبقها بنفسك`,
-          `أخطاء شائعة في ${kw} وكيف تتجنبها بسهولة`,
-          `أفضل الممارسات في ${kw} التي لا يخبرك بها أحد`,
-          `كيف تطور أداءك في ${kw} بخطوات بسيطة`
-        ];
-      } else if (style === 'problems') {
-        titles = [
-          `أشهر المشاكل التي تواجهك في ${kw} وحلول عملية لها`,
-          `لماذا لا تحصل على نتائج جيدة في ${kw}؟ الأسباب والحلول`,
-          `مشاكل ${kw} للمبتدئين وكيف تتخطاها`,
-          `دليل حل المشاكل الشائعة في ${kw}`,
-          `كيف تحوّل فشل ${kw} إلى قصة نجاح؟`
-        ];
-      } else {
-        titles = [
-          `مقارنة شاملة بين أهم أدوات ${kw}`,
-          `أفضل منصات ${kw}: مقارنة تفصيلية`,
-          `أي خيار أنسب لك في ${kw}؟ مقارنة بين أشهر البدائل`,
-          `مميزات وعيوب أشهر طرق ${kw}`,
-          `مقارنة بين الطرق المجانية والمدفوعة في ${kw}`
-        ];
-      }
-
-      output.innerText = titles.map((t, i) => `${i + 1}. ${t}`).join('\n');
-    });
-
-    // توليد مقدمة مقال
-    document.getElementById('btnGenerateBlogIntro').addEventListener('click', () => {
-      const title = document.getElementById('blogIntroTitle').value.trim();
-      const points = document.getElementById('blogIntroPoints').value.trim();
-      const output = document.getElementById('blogIntroOutput');
-
-      if (!title) {
-        output.innerText = 'اكتب عنوانًا مبدئيًا للمقال أولاً.';
-        return;
-      }
-
-      let intro =
-        `إذا كنت تبحث عن معلومات موثوقة حول "${title}" فأنت في المكان المناسب. ` +
-        `في هذا المقال سنحاول تبسيط الفكرة قدر الإمكان، مع التركيز على الجوانب العملية التي يمكنك تطبيقها مباشرة في حياتك أو عملك.\n\n`;
-
-      if (points) {
-        intro += `سنقوم في هذا المقال بتغطية المحاور التالية:\n`;
-        intro += points
-          .split('\n')
-          .filter(Boolean)
-          .map((p) => `- ${p.trim()}`)
-          .join('\n');
-        intro += '\n\n';
-      }
-
-      intro +=
-        `سواء كنت مبتدئًا في هذا المجال أو لديك خبرة سابقة، ستجد في هذا المقال ` +
-        `ما يساعدك على فهم "${title}" بصورة أوضح واتخاذ قرارات أفضل.\n\n` +
-        `لنبدأ على بركة الله.`;
-
-      output.innerText = intro;
-    });
-  </script>
-</body>
-</html>
+        bloggerSection.classList.add("active");
+        youtubeSection.classList.remove("active");
+        btnBloggerTab.classList.add("primary-active");
+        btnBloggerTab.classList.remove("primary-inactive");
+        btnYoutubeTab.classList.add("primary-inactive");
+        btn
