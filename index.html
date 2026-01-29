@@ -3,112 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube & Blogger Studio</title>
+    <title>Tosh5 Studio Pro | نظام صناعة المحتوى</title>
+    
+    <!-- مكتبات الدعم -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* التنسيق - لضمان المظهر الاحترافي */
-        :root { --main: #ff0000; --bg: #0f0f0f; --card: #1e1e1e; }
-        body { font-family: sans-serif; background: var(--bg); color: white; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 600px; margin: auto; }
-        
-        /* التبويبات */
-        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background: #333; color: white; font-weight: bold; }
-        .tab-btn.active { background: var(--main); }
+        :root {
+            --primary: #ff0000;
+            --blogger: #fb8c00;
+            --dark: #0f0f0f;
+            --accent: #00d2ff;
+        }
 
-        /* الكروت والأدوات */
-        .card { background: var(--card); padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .content { display: none; }
-        .content.active { display: block; }
-        
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #222; color: white; box-sizing: border-box; }
-        
-        .btn-action { width: 100%; padding: 15px; background: var(--main); border: none; color: white; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 16px; }
-        .btn-action:hover { background: #cc0000; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--dark);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        .result { margin-top: 20px; padding: 15px; background: #000; border-right: 4px solid var(--main); text-align: right; display: none; line-height: 1.6; }
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            padding: 15px 5%;
+            background: #000;
+            border-bottom: 2px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 24px; font-weight: bold; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: #222;
+            color: #888;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active { background: var(--primary); color: white; }
+        .tab-btn.blog-active { background: var(--blogger); color: white; }
+
+        /* Tools Card */
+        .card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            width: 100%;
+        }
+
+        .content-area { display: none; }
+        .content-area.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #000;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--accent); }
+
+        .btn-action {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn-yt { background: var(--primary); }
+        .btn-blog { background: var(--blogger); }
+
+        /* مخرج النتائج المطور */
+        .result-box {
+            margin-top: 25px;
+            background: #222;
+            border-radius: 15px;
+            padding: 20px;
+            border-right: 5px solid var(--blogger);
+            text-align: right;
+            display: none;
+        }
+
+        .html-preview {
+            background: #fff;
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            background: #444;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .copy-btn:hover { background: #666; }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1 style="color:var(--main)">YouTube Studio AI 🎬</h1>
-    <p>أدوات توش 5 - Tosh5.shop</p>
+<div class="navbar">
+    <div class="logo"><i class="fab fa-youtube"></i> Studio Pro AI</div>
+    <div style="color: #666; font-size: 13px;">Tosh5 Dashboard</div>
+</div>
 
-    <!-- أزرار التبديل -->
+<div class="container">
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('yt')">يوتيوب</button>
-        <button class="tab-btn" onclick="showTab('blog')">بلوجر</button>
-        <button class="tab-btn" onclick="showTab('seo')">سيو (SEO)</button>
+        <button class="tab-btn active" onclick="showSection('yt', this)">أدوات يوتيوب</button>
+        <button class="tab-btn" onclick="showSection('blog', this)">كاتب مقالات Tosh5</button>
     </div>
 
     <div class="card">
-        <!-- أداة يوتيوب -->
-        <div id="yt" class="content active">
-            <h3>📝 مولد عناوين يوتيوب</h3>
-            <input type="text" id="ytIn" placeholder="اكتب موضوع الفيديو هنا...">
-            <button class="btn-action" onclick="genYT()">إنشاء عناوين</button>
-            <div id="ytRes" class="result"></div>
+        <!-- قسم يوتيوب -->
+        <div id="yt-sec" class="content-area active">
+            <h2>📝 مولد عناوين احترافي</h2>
+            <input type="text" id="ytTopic" placeholder="اكتب الكلمة المفتاحية...">
+            <button class="btn-action btn-yt" onclick="genYT()">توليد أفضل 5 عناوين</button>
+            <div id="ytRes" class="result-box"></div>
         </div>
 
-        <!-- أداة بلوجر -->
-        <div id="blog" class="content">
-            <h3>✍️ كاتب مقالات Tosh5</h3>
-            <input type="text" id="blogIn" placeholder="عنوان المقال...">
-            <button class="btn-action" style="background:#fb8c00" onclick="genBlog()">كتابة المقال</button>
-            <div id="blogRes" class="result"></div>
-        </div>
-
-        <!-- أداة السيو -->
-        <div id="seo" class="content">
-            <h3>#️⃣ مولد الهاشتاجات</h3>
-            <input type="text" id="seoIn" placeholder="اكتب الكلمة المفتاحية...">
-            <button class="btn-action" style="background:#6c5ce7" onclick="genSEO()">توليد الهاشتاجات</button>
-            <div id="seoRes" class="result"></div>
+        <!-- قسم بلوجر المطور -->
+        <div id="blog-sec" class="content-area">
+            <h2>✍️ صانع المقالات الذكي (SEO)</h2>
+            <p style="color:#aaa; font-size: 14px; margin-bottom: 20px;">سيتم كتابة مقال كامل متوافق مع محركات البحث لمدونتك.</p>
+            <input type="text" id="blogTopic" placeholder="عنوان المقال الذي تريده...">
+            <button class="btn-action btn-blog" onclick="genBlogAI()">كتابة مقال كامل بضغطة زر</button>
+            
+            <div id="blogRes" class="result-box">
+                <h3 style="color:var(--blogger)">المقال الجاهز:</h3>
+                <div id="articleHTML" class="html-preview"></div>
+                <button class="copy-btn" onclick="copyHTML()"><i class="fas fa-copy"></i> نسخ كود HTML للنشر</button>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // وظيفة تبديل الأقسام (تضمن أن الموقع يتفاعل)
-    function showTab(id) {
-        // إخفاء كل المحتوى
-        var contents = document.getElementsByClassName("content");
-        for (var i = 0; i < contents.length; i++) { contents[i].className = "content"; }
+    // وظيفة تبديل الأقسام
+    function showSection(id, btn) {
+        document.querySelectorAll('.content-area').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'blog-active'));
         
-        // إزالة اللون الأحمر من الأزرار
-        var btns = document.getElementsByClassName("tab-btn");
-        for (var i = 0; i < btns.length; i++) { btns[i].className = "tab-btn"; }
-        
-        // إظهار القسم المختار وتلوين الزر
-        document.getElementById(id).className = "content active";
-        event.currentTarget.className = "tab-btn active";
+        document.getElementById(id + '-sec').classList.add('active');
+        if(id === 'blog') btn.classList.add('blog-active');
+        else btn.classList.add('active');
     }
 
-    // وظيفة عناوين يوتيوب
+    // وظيفة يوتيوب
     function genYT() {
-        var val = document.getElementById("ytIn").value;
-        if(!val) return alert("اكتب كلمة أولاً!");
-        var res = document.getElementById("ytRes");
-        res.style.display = "block";
-        res.innerHTML = "<b>العناوين المقترحة:</b><br>1. أسرار " + val + " في 2024<br>2. كيف تبدأ في " + val + "<br>3. تجربة حقيقية مع " + val;
-    }
-
-    // وظيفة كاتب المقالات
-    function genBlog() {
-        var val = document.getElementById("blogIn").value;
+        const val = document.getElementById('ytTopic').value;
         if(!val) return alert("اكتب موضوعاً!");
-        var res = document.getElementById("blogRes");
+        const res = document.getElementById('ytRes');
         res.style.display = "block";
-        res.innerHTML = "<b>جاري الكتابة لمدونة Tosh5...</b><br>مقال كامل عن " + val + " سيتم إنتاجه هنا.";
+        res.innerHTML = `
+            1. 🔥 كيف تبدأ في <b>${val}</b> وتنجح في 2024<br>
+            2. 😱 أسرار <b>${val}</b> التي لا يخبرك بها أحد<br>
+            3. تجربة حقيقية: هل <b>${val}</b> يستحق وقتك؟<br>
+            4. دليلك الشامل لاحتراف <b>${val}</b> من الصفر<br>
+            5. أفضل 10 أدوات لـ <b>${val}</b> ستغير حياتك
+        `;
     }
 
-    // وظيفة السيو
-    function genSEO() {
-        var val = document.getElementById("seoIn").value;
-        if(!val) return alert("اكتب كلمة دلالية!");
-        var res = document.getElementById("seoRes");
+    // وظيفة بلوجر المتطورة (AI Simulation)
+    function genBlogAI() {
+        const topic = document.getElementById('blogTopic').value;
+        if(!topic) return alert("الرجاء كتابة عنوان للمقال");
+        
+        const res = document.getElementById('blogRes');
         res.style.display = "block";
-        res.innerHTML = "<b>الهاشتاجات:</b><br>#" + val.replace(/ /g,"_") + " #tosh5 #سيو #تقنية";
+        res.innerHTML = "<p>⏳ جاري تحليل الكلمات المفتاحية وكتابة المقال لـ Tosh5.shop...</p>";
+
+        setTimeout(() => {
+            const htmlContent = `
+<h2>مقدمة عن ${topic}</h2>
+<p>مرحباً بكم في مدونة <b>Tosh5.shop</b>، اليوم سنتحدث عن <b>${topic}</b> الذي أصبح حديث الساعة في الأوساط التقنية. إذا كنت تبحث عن التميز، فأنت في المكان الصحيح.</p>
+
+<img src="https://via.placeholder.com/800x400.png?text=${topic}" alt="${topic}" style="width:100%; border-radius:10px;">
+
+<h2>أهمية ${topic} في الوقت الحالي</h2>
+<p>يعتبر <b>${topic}</b> نقلة نوعية بسبب السهولة والكفاءة. إليك أهم 3 فوائد:</p>
+<ul>
+    <li>توفير الوقت والجهد بشكل ملحوظ.</li>
+    <li>تحسين جودة المخرجات النهائية.</li>
+    <li>التوافق مع أحدث معايير التكنولوجيا.</li>
+</ul>
+
+<h2>الخلاصة</h2>
+<p>في النهاية، نجد أن <b>${topic}</b> هو الخيار الأمثل لكل من يسعى للتطور. شكراً لمتابعتكم مدونة <b>توش 5</b>.</p>
+            `;
+            
+            res.innerHTML = `
+                <h3 style="color:var(--blogger)">✅ مقال جاهز لمدونة Tosh5:</h3>
+                <div id="articleHTML" class="html-preview">${htmlContent}</div>
+                <button class="copy-btn" onclick="copyHTML()"><i class="fas fa-copy"></i> نسخ كود HTML للمقال</button>
+            `;
+        }, 2000);
+    }
+
+    // وظيفة النسخ
+    function copyHTML() {
+        const content = document.getElementById('articleHTML').innerHTML;
+        navigator.clipboard.writeText(content);
+        alert("تم نسخ الكود! اذهب لمدونة بلوجر، اختر 'عرض HTML' ثم الصق الكود.");
     }
 </script>
 
