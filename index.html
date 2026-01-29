@@ -1,27 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>TechNews Global - أخبار التقنية والتسويق</title>
     <meta name="description" content="مصدرك الأول للأخبار التقنية والتسويق الرقمي">
-    <meta property="og:title" content="TechNews Global">
-    <meta property="og:description" content="أحدث أخبار التقنية والتسويق الرقمي">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root {
-            --primary: #0066ff;
-            --secondary: #ff4500;
-            --dark: #1a1a1a;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --white: #ffffff;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -29,11 +15,10 @@
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
-            overflow-x: hidden;
+            color: #333;
+            background: #f4f4f4;
         }
 
         .container {
@@ -42,265 +27,102 @@
             padding: 0 20px;
         }
 
-        #loader {
+        header {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        #header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        .navbar {
-            padding: 1rem 0;
-        }
-
-        .nav-wrapper {
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
 
-        .logo a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            background: var(--gradient);
-            color: white;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .logo-text {
+        .logo {
             font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: var(--light);
-            border-radius: 50px;
-            padding: 5px;
-            min-width: 300px;
-        }
-
-        .search-bar input {
-            border: none;
-            background: none;
-            padding: 10px 15px;
-            flex: 1;
-            outline: none;
-        }
-
-        .search-bar button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
+            font-weight: bold;
+            color: #0066ff;
         }
 
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 2rem;
         }
 
         .nav-menu a {
             text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
+            color: #333;
             transition: color 0.3s;
-            position: relative;
         }
 
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: var(--primary);
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-actions button {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--dark);
-        }
-
-        .mobile-toggle {
-            display: none;
+        .nav-menu a:hover {
+            color: #0066ff;
         }
 
         .hero {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin-top: 80px;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
         }
 
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .hero-title {
+        .hero h1 {
             font-size: 3rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
         }
 
-        .gradient-text {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-description {
+        .hero p {
             font-size: 1.2rem;
-            color: var(--gray);
-            margin-bottom: 30px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
+            margin-bottom: 2rem;
         }
 
         .btn {
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
             display: inline-block;
-            border: 2px solid transparent;
-            cursor: pointer;
+            padding: 12px 30px;
+            background: #fff;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
+        .btn:hover {
+            transform: translateY(-2px);
         }
 
-        .btn-outline {
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            background: transparent;
-        }
-
-        .hero-image img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 60px;
-            padding: 40px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .featured,
-        .categories,
-        .latest,
-        .newsletter {
-            padding: 80px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
+        .articles {
+            padding: 4rem 0;
         }
 
         .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .section-subtitle {
-            color: var(--gray);
-            font-size: 1.1rem;
-        }
-
-        .articles-grid,
-        .articles-list {
+        .articles-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 2rem;
         }
 
         .article-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s;
-            cursor: pointer;
         }
 
         .article-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
 
         .article-image {
@@ -310,184 +132,55 @@
         }
 
         .article-content {
-            padding: 20px;
-        }
-
-        .article-category {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
+            padding: 1.5rem;
         }
 
         .article-title {
             font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--dark);
+            margin-bottom: 0.5rem;
+            color: #333;
         }
 
-        .article-excerpt {
-            color: var(--gray);
+        .article-text {
+            color: #666;
             line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray);
-            font-size: 0.9rem;
         }
 
         .categories {
-            background: var(--light);
+            padding: 4rem 0;
+            background: #fff;
         }
 
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 2rem;
         }
 
         .category-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
             text-align: center;
-            text-decoration: none;
-            color: var(--dark);
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
             transition: all 0.3s;
-            box-shadow: var(--shadow);
         }
 
         .category-card:hover {
-            transform: translateY(-5px);
+            background: #0066ff;
+            color: white;
         }
 
-        .category-card i {
+        .category-icon {
             font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
 
-        .filter-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .tab {
-            padding: 10px 25px;
-            background: none;
-            border: 2px solid var(--gray);
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            background: var(--primary);
+        footer {
+            background: #333;
             color: white;
-            border-color: var(--primary);
-        }
-
-        .load-more {
             text-align: center;
-            margin-top: 40px;
-        }
-
-        .newsletter {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .newsletter-box {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 50px;
-            text-align: center;
-        }
-
-        .newsletter-form {
-            display: flex;
-            gap: 20px;
-            max-width: 500px;
-            margin: 30px auto 0;
-        }
-
-        .newsletter-form input {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-        }
-
-        .footer {
-            background: var(--dark);
-            color: white;
-            padding: 50px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 30px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 20px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #ccc;
-        }
-
-        body.dark {
-            background: #121212;
-            color: #e0e0e0;
-        }
-
-        body.dark #header {
-            background: #1e1e1e;
+            padding: 2rem 0;
+            margin-top: 4rem;
         }
 
         @media (max-width: 768px) {
@@ -495,201 +188,142 @@
                 display: none;
             }
             
-            .mobile-toggle {
-                display: block;
-            }
-            
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .hero-title {
+            .hero h1 {
                 font-size: 2rem;
             }
             
-            .stats {
-                flex-direction: column;
-                gap: 30px;
-            }
-            
-            .newsletter-form {
-                flex-direction: column;
-            }
-            
-            .search-bar {
-                display: none;
+            .articles-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div id="loader">
-        <div class="spinner"></div>
-    </div>
-
-    <header id="header">
-        <nav class="navbar">
-            <div class="container">
-                <div class="nav-wrapper">
-                    <div class="logo">
-                        <a href="#home">
-                            <span class="logo-icon">TN</span>
-                            <span class="logo-text">TechNews Global</span>
-                        </a>
-                    </div>
-                    <div class="search-bar">
-                        <input type="search" placeholder="ابحث عن مقال..." id="searchInput">
-                        <button onclick="searchArticles()"><i class="fas fa-search"></i></button>
-                    </div>
-                    <ul class="nav-menu" id="navMenu">
-                        <li><a href="#home" class="active">الرئيسية</a></li>
-                        <li><a href="#ai">الذكاء الاصطناعي</a></li>
-                        <li><a href="#programming">البرمجة</a></li>
-                        <li><a href="#marketing">التسويق</a></li>
-                        <li><a href="#security">الأمن السيبراني</a></li>
-                    </ul>
-                    <div class="nav-actions">
-                        <button onclick="toggleTheme()" id="themeToggle"><i class="fas fa-moon"></i></button>
-                        <button><i class="fas fa-globe"></i></button>
-                        <button class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
-                    </div>
-                </div>
-            </div>
+    <header>
+        <nav class="container">
+            <div class="logo">TechNews</div>
+            <ul class="nav-menu">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#articles">المقالات</a></li>
+                <li><a href="#categories">الأقسام</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+            </ul>
         </nav>
     </header>
 
     <section class="hero" id="home">
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">مرحباً في <span class="gradient-text">TechNews Global</span></h1>
-                    <p class="hero-description">مصدرك الأول لأحدث أخبار التقنية والتسويق الرقمي باللغة العربية</p>
-                    <div class="hero-buttons">
-                        <a href="#latest" class="btn btn-primary">تصفح الأخبار</a>
-                        <a href="#subscribe" class="btn btn-outline">اشترك الآن</a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=600" alt="Tech News">
-                </div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-number">1000+</span>
-                    <span class="stat-label">مقال</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">50K+</span>
-                    <span class="stat-label">قارئ</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100+</span>
-                    <span class="stat-label">كاتب</span>
-                </div>
-            </div>
+            <h1>مرحباً بك في TechNews Global</h1>
+            <p>مصدرك الأول لأخبار التقنية والتسويق الرقمي</p>
+            <a href="#articles" class="btn">تصفح المقالات</a>
         </div>
     </section>
 
-    <section class="featured" id="featured">
+    <section class="articles" id="articles">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">المقالات المميزة</h2>
-                <p class="section-subtitle">أهم الأخبار والمقالات التقنية لهذا الأسبوع</p>
-            </div>
-            <div class="articles-grid" id="featuredArticles"></div>
+            <h2 class="section-title">أحدث المقالات</h2>
+            <div class="articles-grid" id="articlesContainer"></div>
         </div>
     </section>
 
     <section class="categories" id="categories">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">الأقسام</h2>
-            </div>
+            <h2 class="section-title">الأقسام</h2>
             <div class="categories-grid">
-                <a href="#ai" class="category-card">
-                    <i class="fas fa-robot"></i>
+                <div class="category-card">
+                    <div class="category-icon">🤖</div>
                     <h3>الذكاء الاصطناعي</h3>
                     <p>125 مقال</p>
-                </a>
-                <a href="#programming" class="category-card">
-                    <i class="fas fa-code"></i>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">💻</div>
                     <h3>البرمجة</h3>
                     <p>230 مقال</p>
-                </a>
-                <a href="#marketing" class="category-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>التسويق الرقمي</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">📈</div>
+                    <h3>التسويق</h3>
                     <p>180 مقال</p>
-                </a>
-                <a href="#security" class="category-card">
-                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🔒</div>
                     <h3>الأمن السيبراني</h3>
                     <p>95 مقال</p>
-                </a>
-                <a href="#mobile" class="category-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>تطبيقات الموبايل</h3>
-                    <p>150 مقال</p>
-                </a>
-                <a href="#web" class="category-card">
-                    <i class="fas fa-globe"></i>
-                    <h3>تطوير الويب</h3>
-                    <p>200 مقال</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="latest" id="latest">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">آخر الأخبار</h2>
-                <div class="filter-tabs">
-                    <button class="tab active" onclick="filterArticles('all')">الكل</button>
-                    <button class="tab" onclick="filterArticles('ai')">الذكاء الاصطناعي</button>
-                    <button class="tab" onclick="filterArticles('programming')">البرمجة</button>
-                    <button class="tab" onclick="filterArticles('marketing')">التسويق</button>
                 </div>
             </div>
-            <div class="articles-list" id="latestArticles"></div>
-            <div class="load-more">
-                <button class="btn btn-outline" onclick="loadMore()">تحميل المزيد</button>
-            </div>
         </div>
     </section>
 
-    <section class="newsletter" id="subscribe">
+    <footer>
         <div class="container">
-            <div class="newsletter-box">
-                <div class="newsletter-content">
-                    <h2>اشترك في النشرة البريدية</h2>
-                    <p>احصل على أحدث الأخبار التقنية مباشرة في بريدك الإلكتروني</p>
-                </div>
-                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" placeholder="أدخل بريدك الإلكتروني" required>
-                    <button type="submit" class="btn btn-primary">اشترك الآن</button>
-                </form>
-            </div>
+            <p>&copy; 2024 TechNews Global. جميع الحقوق محفوظة</p>
         </div>
-    </section>
+    </footer>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>عن الموقع</h3>
-                    <p>TechNews Global هو مصدرك الأول للأخبار التقنية والتسويق الرقمي باللغة العربية</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+    <script>
+        const articles = [
+            {
+                title: "الذكاء الاصطناعي يغير مستقبل التقنية",
+                text: "تطورات مذهلة في عالم الذكاء الاصطناعي تعد بثورة تقنية",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%234A90E2'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dominant-baseline='middle'%3EAI Article%3C/text%3E%3C/svg%3E"
+            },
+            {
+                title: "أفضل لغات البرمجة لعام 2024",
+                text: "دليلك الشامل لاختيار لغة البرمجة المناسبة",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%2350C878'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dominant-baseline='middle'%3EProgramming%3C/text%3E%3C/svg%3E"
+            },
+            {
+                title: "استراتيجيات التسويق الرقمي",
+                text: "كيف تبني استراتيجية تسويق رقمي فعالة",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%23FF6B6B'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dominant-baseline='middle'%3EMarketing%3C/text%3E%3C/svg%3E"
+            },
+            {
+                title: "الأمن السيبراني في 2024",
+                text: "حماية بياناتك في عصر التحول الرقمي",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%23845EC2'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dominant-baseline='middle'%3ESecurity%3C/text%3E%3C/svg%3E"
+            },
+            {
+                title: "تطوير تطبيقات الموبايل",
+                text: "أحدث التقنيات في تطوير التطبيقات",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%23FFC75F'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dominant-baseline='middle'%3EMobile Dev%3C/text%3E%3C/svg%3E"
+            },
+            {
+                title: "مستقبل العمل عن بعد",
+                text: "كيف غيرت التقنية طريقة عملنا",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%234ECDC4'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dominant-baseline='middle'%3ERemote Work%3C/text%3E%3C/svg%3E"
+            }
+        ];
+
+        function loadArticles() {
+            const container = document.getElementById('articlesContainer');
+            
+            articles.forEach(article => {
+                const card = document.createElement('div');
+                card.className = 'article-card';
+                card.innerHTML = `
+                    <img src="${article.image}" alt="${article.title}" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-title">${article.title}</h3>
+                        <p class="article-text">${article.text}</p>
                     </div>
-                </div>
-                <div class="footer-section">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#about">من نحن</a></li>
-                        <li><a href="#contact">اتصل بنا</
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // تحميل المقالات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', loadArticles);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
