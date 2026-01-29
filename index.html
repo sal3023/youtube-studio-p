@@ -3,276 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TOSH5 GLOBAL EMPIRE - منصة الأتمتة الإعلامية الشاملة لمدونة tosh5.shop">
-    <title>TOSH5 EMPIRE | الإمبراطورية العالمية</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-
+    <title>مساعد اليوتيوبر الذكي</title>
+    <!-- استدعاء التصميم والأيقونات -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root {
-            --primary: #00d2ff; --secondary: #ff4d4d; --gold: #ffca28;
-            --bg: #050510; --side: #0a0a20; --card: rgba(20, 20, 45, 0.95);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        
-        body { background: var(--bg); color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-
-        /* شريط الأخبار العلوي الثابت */
-        .top-ticker {
-            background: #000; color: #fff; height: 40px; display: flex; align-items: center;
-            border-bottom: 1px solid var(--primary); z-index: 2000; font-size: 12px; position: fixed; top: 0; width: 100%;
-        }
-        .live-label { background: var(--secondary); padding: 0 12px; height: 100%; display: flex; align-items: center; font-weight: 900; animation: pulse 1.5s infinite; }
-        .ticker-wrap { flex: 1; overflow: hidden; white-space: nowrap; }
-        #news-marquee { display: inline-block; animation: marquee 60s linear infinite; }
-
-        /* الهيكل الرئيسي */
-        .wrapper { display: flex; flex: 1; overflow: hidden; margin-top: 40px; margin-bottom: 60px; }
-
-        /* القائمة الجانبية (للكمبيوتر فقط) */
-        .sidebar {
-            width: 260px; background: var(--side); border-left: 1px solid #1a1a3a;
-            display: flex; flex-direction: column; padding: 20px; transition: 0.3s;
-        }
-        .logo { font-size: 22px; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; text-align: center; }
-        
-        .nav-item {
-            padding: 12px 15px; border-radius: 12px; cursor: pointer; transition: 0.3s;
-            margin-bottom: 8px; display: flex; align-items: center; gap: 12px; color: #888; font-size: 14px;
-        }
-        .nav-item:hover, .nav-item.active { background: rgba(0, 210, 255, 0.1); color: var(--primary); border-right: 3px solid var(--primary); }
-
-        /* شريط التنقل السفلي (للجوال فقط) */
-        .mobile-nav {
-            display: none; position: fixed; bottom: 0; width: 100%; background: var(--side);
-            border-top: 1px solid #1a1a3a; height: 65px; justify-content: space-around; align-items: center; z-index: 2000;
-        }
-        .mobile-nav i { font-size: 20px; color: #888; transition: 0.3s; }
-        .mobile-nav div.active i { color: var(--primary); }
-
-        /* منطقة المحتوى الرئيسي */
-        .main-content { flex: 1; overflow-y: auto; padding: 20px; scroll-behavior: smooth; position: relative; }
-        .page { display: none; animation: fadeIn 0.4s ease; max-width: 1200px; margin: auto; }
-        .page.active { display: block; }
-
-        /* الكروت والشبكات المتجاوبة */
-        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        
-        .stat-box { background: #000; padding: 20px; border-radius: 15px; border-bottom: 3px solid var(--primary); text-align: center; }
-        .stat-val { font-size: 28px; font-weight: 900; color: var(--primary); margin: 5px 0; }
-
-        /* الإعلانات المتجاوبة */
-        .ad-space { background: rgba(255,255,255,0.02); border: 1px dashed #444; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 10px; margin: 15px 0; min-height: 90px; width: 100%; }
-
-        /* الميديا AI */
-        input, textarea { width: 100%; padding: 15px; background: #000; border: 1px solid #333; border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; }
-        .btn { padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; width: 100%; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
-        .btn-p { background: var(--primary); color: #000; }
-        .btn-s { background: var(--secondary); color: #fff; }
-
-        .ai-img-res { width: 100%; border-radius: 20px; border: 3px solid var(--primary); margin-bottom: 20px; }
-        .audio-bar { background: rgba(255, 202, 40, 0.1); border: 1px solid var(--gold); padding: 15px; border-radius: 50px; display: flex; align-items: center; gap: 15px; margin: 15px 0; }
-
-        /* الاستجابة للأجهزة (Media Queries) */
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .mobile-nav { display: flex; }
-            .wrapper { margin-bottom: 65px; }
-            .main-content { padding: 15px; }
-            .logo-mobile { display: block; text-align: center; padding: 10px; font-weight: 900; color: var(--primary); border-bottom: 1px solid #111; }
-            .grid-3 { grid-template-columns: 1fr; }
-            h2 { font-size: 1.5rem; }
-        }
-
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        @keyframes pulse { 50% {opacity: 0.5;} }
+        body { background-color: #09090b; color: #fff; font-family: system-ui, sans-serif; }
+        .glass { background: rgba(39, 39, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .input-box { background: #18181b; border: 1px solid #27272a; transition: all 0.2s; }
+        .input-box:focus { border-color: #dc2626; outline: none; box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2); }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <!-- شريط أخبار جوجل المباشر -->
-    <div class="top-ticker">
-        <div class="live-label"><i class="fas fa-satellite-dish"></i> مباشر</div>
-        <div class="ticker-wrap"><div id="news-marquee">جاري الاتصال بسيرفرات أخبار جوجل العالمية لمدونة tosh5.shop...</div></div>
-    </div>
-
-    <div class="wrapper">
-        <!-- القائمة الجانبية (للكومبيوتر) -->
-        <aside class="sidebar">
-            <div class="logo">TOSH5 EMPIRE</div>
-            <div class="nav-item active" onclick="showPage('home')"><i class="fas fa-chart-pie"></i> الإحصائيات</div>
-            <div class="nav-item" onclick="showPage('create')"><i class="fas fa-robot"></i> محرك الأتمتة AI</div>
-            <div class="nav-item" onclick="showPage('news')"><i class="fas fa-rss"></i> رادار الأخبار</div>
-            <div class="nav-item" onclick="showPage('ads')"><i class="fas fa-dollar-sign"></i> مركز الأرباح</div>
-            <div class="nav-item" onclick="showPage('settings')"><i class="fas fa-tools"></i> الإعدادات</div>
+    <!-- الحاوية الرئيسية -->
+    <div class="w-full max-w-2xl space-y-8">
+        
+        <!-- الرأس -->
+        <div class="flex justify-between items-center border-b border-zinc-800 pb-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-red-600 p-2 rounded-lg">
+                    <i data-lucide="youtube" class="text-white w-6 h-6"></i>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight">استوديو <span class="text-red-500">الذكاء الاصطناعي</span></h1>
+            </div>
             
-            <div class="ad-space" style="margin-top: auto; min-height: 200px;">إعلان جانبي</div>
-        </aside>
+            <button onclick="toggleSettings()" class="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition text-zinc-400 hover:text-white">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                <span class="text-sm font-medium">الإعدادات</span>
+            </button>
+        </div>
 
-        <!-- منطقة المحتوى -->
-        <main class="main-content">
-            
-            <!-- الصفحة 1: الإحصائيات -->
-            <section id="home" class="page active">
-                <h2 style="margin-bottom: 10px;">لوحة البيانات الإمبراطورية 👑</h2>
-                <div class="grid-3">
-                    <div class="stat-box"><div>الزوار الآن</div><div class="stat-val" id="visitor-count">2,481</div></div>
-                    <div class="stat-box"><div>أرباح اليوم</div><div class="stat-val" style="color:var(--gold)">$84.12</div></div>
-                    <div class="stat-box"><div>قوة SEO</div><div class="stat-val" style="color:#4caf50">99.2%</div></div>
-                </div>
-                <div class="card">
-                    <h3><i class="fas fa-fire" style="color:var(--secondary)"></i> ترند الساعة</h3>
-                    <div id="trend-data" style="margin-top: 15px; font-size: 14px;">
-                        <div style="padding:10px 0; border-bottom:1px solid #222;">أتمتة يوتيوب Tosh5 <span style="float:left; color:var(--primary)">+500%</span></div>
-                        <div style="padding:10px 0; border-bottom:1px solid #222;">ذكاء اصطناعي 2025 <span style="float:left; color:var(--primary)">+320%</span></div>
-                    </div>
-                </div>
-            </section>
+        <!-- صندوق الإعدادات (مخفي) -->
+        <div id="settingsBox" class="hidden bg-zinc-900/50 border border-red-900/30 p-6 rounded-2xl animate-pulse">
+            <label class="flex items-center gap-2 text-sm font-bold text-red-400 mb-3">
+                <i data-lucide="key" class="w-4 h-4"></i>
+                أدخل مفتاح Google Gemini هنا:
+            </label>
+            <input type="password" id="apiKey" placeholder="AIzaSyD..." 
+                class="w-full bg-black border border-zinc-700 p-3 rounded-xl text-white focus:border-red-500 outline-none text-left" style="direction: ltr;">
+            <p class="text-xs text-zinc-500 mt-2">نصيحة: احصل على المفتاح مجاناً من Google AI Studio.</p>
+        </div>
 
-            <!-- الصفحة 2: محرك الإنشاء -->
-            <section id="create" class="page">
-                <h2><i class="fas fa-robot"></i> صانع المحتوى العالمي</h2>
-                <div class="card">
-                    <input type="text" id="topicInput" placeholder="اكتب الموضوع (تقني، رياضي، عام)...">
-                    <div class="grid-3" style="grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <button class="btn btn-p" onclick="generateMegaContent('blog')"><i class="fas fa-pen-fancy"></i> مقال + صورة</button>
-                        <button class="btn btn-s" onclick="generateMegaContent('yt')"><i class="fas fa-play"></i> سكربت فيديو</button>
-                    </div>
-                </div>
-                <div id="ai-result" style="display: none;">
-                    <img id="ai-img" src="" class="ai-img-res">
-                    <div class="audio-bar">
-                        <button onclick="speakText()" style="background:var(--gold); border:none; width:45px; height:45px; border-radius:50%; cursor:pointer;"><i class="fas fa-play"></i></button>
-                        <span style="font-size: 13px;">استمع للمقال (المدونة المسموعة)</span>
-                    </div>
-                    <div class="card" id="ai-text" style="white-space: pre-wrap; line-height: 1.8; text-align: justify; font-size: 16px;"></div>
-                </div>
-            </section>
-
-            <!-- الصفحة 3: رادار الأخبار -->
-            <section id="news" class="page">
-                <h2><i class="fas fa-newspaper"></i> رادار أخبار جوجل المباشر</h2>
-                <div id="news-grid" class="grid-3">
-                    <!-- الأخبار ستظهر هنا -->
-                </div>
-            </section>
-
-            <!-- الصفحة 4: الإعدادات -->
-            <section id="settings" class="page">
-                <h2>⚙️ إعدادات المنصة</h2>
-                <div class="card">
-                    <label>مفتاح Groq (gsk_...):</label>
-                    <input type="password" id="groqKey" placeholder="ضع مفتاحك هنا لمرة واحدة...">
-                    <button class="btn btn-p" onclick="saveSettings()">حفظ وتفعيل الإمبراطورية ✅</button>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <!-- شريط التنقل السفلي (للجوال) -->
-    <nav class="mobile-nav">
-        <div onclick="showPage('home')" class="active"><i class="fas fa-chart-pie"></i></div>
-        <div onclick="showPage('create')"><i class="fas fa-robot"></i></div>
-        <div onclick="showPage('news')"><i class="fas fa-rss"></i></div>
-        <div onclick="showPage('settings')"><i class="fas fa-tools"></i></div>
-    </nav>
-
-    <script>
-        // التنقل بين الصفحات
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item, .mobile-nav div').forEach(n => n.classList.remove('active'));
-            
-            document.getElementById(pageId).classList.add('active');
-            // تفعيل الزر المناسب في الكمبيوتر والجوال
-            const navItems = document.querySelectorAll(`[onclick="showPage('${pageId}')"]`);
-            navItems.forEach(item => item.classList.add('active'));
-        }
-
-        // حفظ المفتاح
-        function saveSettings() {
-            const k = document.getElementById('groqKey').value;
-            localStorage.setItem('groq_key', k);
-            alert("تم الحفظ! موقعك الآن متصل بذكاء Llama 3.3");
-        }
-
-        window.onload = () => {
-            const k = localStorage.getItem('groq_key');
-            if(k) document.getElementById('groqKey').value = k;
-            fetchGoogleNews();
-        }
-
-        // جلب أخبار جوجل
-        async function fetchGoogleNews() {
-            try {
-                const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://news.google.com/rss/search?q=technology&hl=ar&gl=EG&ceid=EG:ar')}`);
-                const data = await res.json();
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data.contents, "text/xml");
-                const items = xml.querySelectorAll("item");
+        <!-- منطقة الإدخال -->
+        <div class="space-y-4">
+            <h2 class="text-lg text-zinc-400">عن ماذا سيتحدث الفيديو القادم؟</h2>
+            <div class="relative">
+                <input type="text" id="topic" placeholder="مثال: أفضل هواتف 2024..." 
+                    class="w-full bg-zinc-900 border border-zinc-800 p-5 pl-32 rounded-2xl text-lg text-white outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition shadow-2xl">
                 
-                let ticker = "";
-                let grid = "";
-                items.forEach((item, i) => {
-                    const title = item.querySelector("title").innerHTML;
-                    if(i < 10) ticker += " • " + title;
-                    if(i < 6) grid += `<div class="card" style="font-size:13px;"><b>${title}</b><br><small style="color:#555">جوجل نيوز</small></div>`;
-                });
-                document.getElementById('news-marquee').innerHTML = ticker;
-                document.getElementById('news-grid').innerHTML = grid;
-            } catch (e) { console.log("News Error"); }
+                <button onclick="generate()" id="btn" 
+                    class="absolute left-2 top-2 bottom-2 bg-white text-black px-6 rounded-xl font-bold hover:bg-gray-200 transition flex items-center gap-2 disabled:opacity-50">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-red-600"></i>
+                    <span id="btnText">توليد</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- منطقة النتائج -->
+        <div id="resultArea" class="hidden space-y-2">
+            <div class="flex justify-between items-center px-2">
+                <span class="text-sm font-mono text-zinc-500 uppercase">النتائج المقترحة</span>
+                <button onclick="copyResult()" class="text-zinc-500 hover:text-white flex items-center gap-1 text-sm">
+                    <i data-lucide="copy" class="w-4 h-4"></i> نسخ
+                </button>
+            </div>
+            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-red-600 via-purple-600 to-blue-600 opacity-50"></div>
+                <pre id="output" class="whitespace-pre-wrap leading-8 text-zinc-200 font-sans text-lg"></pre>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- السكريبت (المنطق) -->
+    <script>
+        lucide.createIcons(); // تفعيل الأيقونات
+
+        function toggleSettings() {
+            document.getElementById('settingsBox').classList.toggle('hidden');
         }
 
-        // توليد المحتوى
-        async function generateMegaContent(type) {
-            const topic = document.getElementById('topicInput').value;
-            const key = localStorage.getItem('groq_key');
-            
-            if(!topic || !key) return alert("الموضوع والمفتاح مطلوبين!");
+        async function generate() {
+            const topic = document.getElementById('topic').value;
+            const apiKey = document.getElementById('apiKey').value;
+            const btn = document.getElementById('btn');
+            const btnText = document.getElementById('btnText');
+            const output = document.getElementById('output');
+            const resultArea = document.getElementById('resultArea');
 
-            const area = document.getElementById('ai-result');
-            const textOut = document.getElementById('ai-text');
-            const imgOut = document.getElementById('ai-img');
+            // التحقق من المدخلات
+            if (!apiKey) {
+                alert("⚠️ يرجى إدخال مفتاح API في الإعدادات أولاً!");
+                toggleSettings();
+                return;
+            }
+            if (!topic) return;
 
-            area.style.display = "block";
-            textOut.innerHTML = "⏳ جاري استحضار الذكاء الاصطناعي...";
-            
-            // توليد الصورة
-            imgOut.src = `https://pollinations.ai/p/${encodeURIComponent(topic + " cinematic tech")}?width=800&height=450&seed=${Math.random()}`;
-
-            const prompt = type === 'blog' 
-                ? `اكتب مقالاً طويلاً جداً واحترافياً لمدونة tosh5.shop عن ${topic}. استخدم عناوين ونقاط وسيو.` 
-                : `اكتب سكربت فيديو يوتيوب كامل عن ${topic}. مقدمة وعرض وخاتمة.`;
+            // حالة التحميل
+            btn.disabled = true;
+            btnText.innerText = "جاري الكتابة...";
+            output.innerText = "";
+            resultArea.classList.add('hidden');
 
             try {
-                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                    method: "POST",
-                    headers: { "Authorization": `Bearer ${key}`, "Content-Type": "application/json" },
-                    body: JSON.stringify({ "model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}] })
+                // الاتصال بجوجل
+                const prompt = `أنت خبير يوتيوب. للموضوع: "${topic}"
+                اكتب لي باللغة العربية:
+                1. ثلاثة عناوين قوية (Clickbait).
+                2. وصف فيديو احترافي يحتوي كلمات مفتاحية (SEO).
+                3. خمسة وسوم (Hashtags).
+                نسق الإجابة بوضوح.`;
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
+
                 const data = await response.json();
-                textOut.innerText = data.choices[0].message.content;
-            } catch (e) { textOut.innerHTML = "❌ خطأ في السيرفر العالمي."; }
+
+                if (data.error) throw new Error(data.error.message);
+                
+                const text = data.candidates[0].content.parts[0].text;
+                
+                // عرض النتيجة
+                output.innerText = text;
+                resultArea.classList.remove('hidden');
+
+            } catch (error) {
+                alert("حدث خطأ! تأكد أن المفتاح صحيح.\n" + error.message);
+            } finally {
+                btn.disabled = false;
+                btnText.innerText = "توليد";
+            }
         }
 
-        // المدونة المسموعة
-        function speakText() {
-            const text = document.getElementById('ai-text').innerText;
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'ar-SA';
-            window.speechSynthesis.speak(utter);
+        function copyResult() {
+            navigator.clipboard.writeText(document.getElementById('output').innerText);
+            alert("تم نسخ النص!");
         }
-
-        // عداد زوار وهمي ذكي
-        setInterval(() => {
-            const count = 2400 + Math.floor(Math.random() * 200);
-            document.getElementById('visitor-count').innerText = count.toLocaleString();
-        }, 3000);
     </script>
 </body>
 </html>
