@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Studio Pro - أدوات احترافية لصناع المحتوى</title>
-    <meta name="description" content="أدوات متقدمة لتحليل وتطوير قناتك على YouTube">
-    
+    <title>YouTube Studio Pro - أدوات احترافية تعمل</title>
     <style>
         * {
             margin: 0;
@@ -15,37 +13,39 @@
 
         :root {
             --youtube-red: #FF0000;
-            --youtube-black: #282828;
-            --bg-dark: #181818;
-            --text-primary: #FFFFFF;
-            --text-secondary: #AAAAAA;
+            --dark: #212121;
+            --darker: #181818;
+            --light: #FFFFFF;
+            --gray: #909090;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         /* Header */
         header {
-            background: var(--youtube-black);
+            background: var(--dark);
             padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 20px;
         }
 
         .logo {
@@ -57,319 +57,224 @@
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
             background: var(--youtube-red);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
-            font-size: 1.2rem;
+            padding: 8px 12px;
+            border-radius: 8px;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--youtube-red);
-        }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
-            margin-top: 80px;
-            padding: 4rem 20px;
             text-align: center;
+            padding: 3rem 0;
             background: linear-gradient(135deg, rgba(255,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #FF0000, #FF6B6B);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 2rem 0;
+        }
+
+        .tool-container {
+            background: var(--dark);
+            border-radius: 12px;
+            padding: 2rem;
             margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .cta-buttons {
+        .tool-header {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
         }
 
-        .btn {
-            padding: 12px 30px;
-            border-radius: 24px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-block;
+        .tool-icon {
+            font-size: 2rem;
         }
 
-        .btn-primary {
+        .tool-title {
+            font-size: 1.5rem;
+            color: var(--youtube-red);
+        }
+
+        .tool-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form Elements */
+        input[type="text"],
+        input[type="url"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            background: var(--darker);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
             background: var(--youtube-red);
             color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .btn-primary:hover {
+        button:hover {
             background: #CC0000;
             transform: translateY(-2px);
         }
 
-        .btn-secondary {
-            border: 2px solid var(--youtube-red);
-            color: var(--youtube-red);
+        .output-box {
+            background: var(--darker);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            min-height: 100px;
         }
 
-        .btn-secondary:hover {
+        .output-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .output-content {
+            color: var(--light);
+            font-size: 1.1rem;
+            word-wrap: break-word;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--youtube-red);
+            color: var(--youtube-red);
+            padding: 8px 20px;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
             background: var(--youtube-red);
             color: white;
         }
 
-        /* Features Section */
-        .features {
-            padding: 4rem 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .features-grid {
+        /* Stats Display */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: var(--youtube-black);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--youtube-red);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-description {
-            color: var(--text-secondary);
-        }
-
-        /* Tools Section */
-        .tools {
-            background: var(--youtube-black);
-            padding: 4rem 20px;
-        }
-
-        .tools-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .tool-item {
-            background: var(--bg-dark);
-            padding: 1.5rem;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .tool-item:hover {
-            border-color: var(--youtube-red);
-            background: rgba(255,0,0,0.1);
-        }
-
-        .tool-icon {
-            font-size: 1.5rem;
-            color: var(--youtube-red);
-        }
-
-        .tool-name {
-            font-weight: bold;
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 3rem 20px;
-            background: linear-gradient(135deg, rgba(255,0,0,0.1) 0%, transparent 100%);
-        }
-
-        .stats-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item {
-            padding: 1rem;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--youtube-red);
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        /* AI Tools Section */
-        .ai-section {
-            padding: 4rem 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .ai-tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .ai-card {
-            background: linear-gradient(135deg, var(--youtube-black) 0%, rgba(255,0,0,0.1) 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid var(--youtube-red);
-        }
-
-        .ai-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--youtube-red);
-        }
-
-        .ai-features {
-            list-style: none;
             margin-top: 1rem;
         }
 
-        .ai-features li {
-            padding: 0.5rem 0;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .stat-card {
+            background: var(--darker);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
         }
 
-        .ai-features li:before {
-            content: "✓";
+        .stat-value {
+            font-size: 1.5rem;
             color: var(--youtube-red);
             font-weight: bold;
         }
 
-        /* Footer */
-        footer {
-            background: var(--youtube-black);
-            padding: 3rem 20px 1rem;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+        /* Tag Generator */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
         }
 
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: var(--youtube-red);
+        .tag {
+            background: rgba(255,0,0,0.2);
+            border: 1px solid var(--youtube-red);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
         }
 
-        .footer-section ul {
-            list-style: none;
+        /* Progress Bar */
+        .progress-bar {
+            background: var(--darker);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
         }
 
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
+        .progress-fill {
+            background: var(--youtube-red);
+            height: 100%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-size: 0.9rem;
         }
 
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
         }
 
-        .footer-section a:hover {
-            color: var(--text-primary);
+        .alert-success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
         }
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-secondary);
+        .alert-error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #F44336;
+            color: #F44336;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
-            .features-grid,
-            .tools-grid {
-                grid-template-columns: 1fr;
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
@@ -379,249 +284,330 @@
     <header>
         <nav>
             <div class="logo">
-                <div class="logo-icon">▶</div>
+                <span class="logo-icon">▶</span>
                 <span>YouTube Studio Pro</span>
             </div>
-            <ul class="nav-links">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#features">المميزات</a></li>
-                <li><a href="#tools">الأدوات</a></li>
-                <li><a href="#ai">AI Tools</a></li>
-                <li><a href="#contact">اتصل بنا</a></li>
-            </ul>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <h1>YouTube Studio Pro</h1>
-        <p>الحل الشامل لإدارة وتطوير قناتك على YouTube بأدوات الذكاء الاصطناعي</p>
-        <div class="cta-buttons">
-            <a href="#tools" class="btn btn-primary">جرب الأدوات المجانية</a>
-            <a href="#ai" class="btn btn-secondary">أدوات AI المتقدمة</a>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">أداة متخصصة</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100K+</div>
-                <div class="stat-label">مستخدم نشط</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">1M+</div>
-                <div class="stat-label">فيديو محلل</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">دعم فني</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <h2 class="section-title">لماذا YouTube Studio Pro؟</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3 class="feature-title">تحليلات متقدمة</h3>
-                <p class="feature-description">احصل على تحليلات عميقة لأداء قناتك وفيديوهاتك</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3 class="feature-title">نمو سريع</h3>
-                <p class="feature-description">استراتيجيات مثبتة لزيادة المشاهدات والمشتركين</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🤖</div>
-                <h3 class="feature-title">ذكاء اصطناعي</h3>
-                <p class="feature-description">أدوات AI لإنشاء محتوى احترافي</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h3 class="feature-title">تصاميم احترافية</h3>
-                <p class="feature-description">قوالب جاهزة للصور المصغرة والبنرات</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔍</div>
-                <h3 class="feature-title">SEO متقدم</h3>
-                <p class="feature-description">حسّن ظهور فيديوهاتك في نتائج البحث</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📅</div>
-                <h3 class="feature-title">جدولة ذكية</h3>
-                <p class="feature-description">انشر في أفضل الأوقات لجمهورك</p>
-            </div>
+    <section class="hero">
+        <div class="container">
+            <h1>أدوات YouTube احترافية تعمل فعلياً</h1>
+            <p>جميع الأدوات التي تحتاجها لتطوير قناتك في مكان واحد</p>
         </div>
     </section>
 
     <!-- Tools Section -->
-    <section class="tools" id="tools">
-        <div class="tools-container">
-            <h2 class="section-title">أدواتنا المجانية</h2>
-            <div class="tools-grid">
-                <div class="tool-item">
-                    <div class="tool-icon">🏷️</div>
-                    <div>
-                        <div class="tool-name">مولد العناوين</div>
-                        <small>عناوين جذابة لفيديوهاتك</small>
-                    </div>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">🔑</div>
-                    <div>
-                        <div class="tool-name">مولد الكلمات المفتاحية</div>
-                        <small>كلمات مفتاحية عالية البحث</small>
-                    </div>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">📝</div>
-                    <div>
-                        <div class="tool-name">كاتب الوصف</div>
-                        <small>أوصاف محسنة لـ SEO</small>
-                    </div>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">🎯</div>
-                    <div>
-                        <div class="tool-name">محلل المنافسين</div>
-                        <small>راقب منافسيك</small>
-                    </div>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">📈</div>
-                    <div>
-                        <div class="tool-name">تتبع الترند</div>
-                        <small>اكتشف المواضيع الرائجة</small>
-                    </div>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">🖼️</div>
-                    <div>
-                        <div class="tool-name">مصمم الصور المصغرة</div>
-                        <small>صور مصغرة احترافية</small>
-                    </div>
-                </div>
+    <div class="container tools-section">
+        
+        <!-- Tool 1: Title Generator -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">📝</span>
+                <h2 class="tool-title">مولد عناوين YouTube</h2>
+            </div>
+            <p class="tool-description">أنشئ عناوين جذابة لفيديوهاتك تزيد من نسبة النقر</p>
+            
+            <input type="text" id="titleKeyword" placeholder="أدخل الكلمة المفتاحية الرئيسية (مثال: برمجة، طبخ، رياضة)">
+            <select id="titleType">
+                <option value="how">شرح - How To</option>
+                <option value="list">قائمة - Top 10</option>
+                <option value="review">مراجعة</option>
+                <option value="tutorial">دروس تعليمية</option>
+                <option value="tips">نصائح</option>
+            </select>
+            <button onclick="generateTitles()">توليد العناوين</button>
+            
+            <div class="output-box" id="titlesOutput" style="display:none;">
+                <div class="output-label">العناوين المقترحة:</div>
+                <div class="output-content" id="titlesList"></div>
+                <button class="copy-btn" onclick="copyToClipboard('titlesList')">نسخ العناوين</button>
             </div>
         </div>
-    </section>
 
-    <!-- AI Section -->
-    <section class="ai-section" id="ai">
-        <h2 class="section-title">أدوات الذكاء الاصطناعي</h2>
-        <div class="ai-tools-grid">
-            <div class="ai-card">
-                <h3>🤖 مساعد AI الشخصي</h3>
-                <p>مساعدك الذكي لإنشاء محتوى احترافي</p>
-                <ul class="ai-features">
-                    <li>إنشاء سكريبت كامل للفيديو</li>
-                    <li>اقتراحات محتوى مخصصة</li>
-                    <li>تحليل المشاعر والتفاعل</li>
-                    <li>ترجمة تلقائية متعددة اللغات</li>
-                </ul>
+        <!-- Tool 2: Description Generator -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">📄</span>
+                <h2 class="tool-title">مولد وصف الفيديو</h2>
             </div>
-            <div class="ai-card">
-                <h3>🎬 محرر الفيديو الذكي</h3>
-                <p>تحرير احترافي بضغطة زر</p>
-                <ul class="ai-features">
-                    <li>قص تلقائي للمقاطع المملة</li>
-                    <li>إضافة تأثيرات احترافية</li>
-                    <li>تحسين جودة الصوت والصورة</li>
-                    <li>إنشاء مقدمات ونهايات جذابة</li>
-                </ul>
+            <p class="tool-description">أنشئ وصف محسّن لـ SEO لفيديوهاتك</p>
+            
+            <input type="text" id="videoTitle" placeholder="عنوان الفيديو">
+            <input type="text" id="videoKeywords" placeholder="الكلمات المفتاحية (افصل بينها بفاصلة)">
+            <textarea id="videoSummary" placeholder="ملخص قصير عن الفيديو"></textarea>
+            <button onclick="generateDescription()">توليد الوصف</button>
+            
+            <div class="output-box" id="descOutput" style="display:none;">
+                <div class="output-label">الوصف:</div>
+                <div class="output-content" id="descriptionText"></div>
+                <button class="copy-btn" onclick="copyToClipboard('descriptionText')">نسخ الوصف</button>
             </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>YouTube Studio Pro</h3>
-                <p>منصتك الشاملة لإدارة قناتك على YouTube</p>
+        <!-- Tool 3: Hashtag Generator -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">#️⃣</span>
+                <h2 class="tool-title">مولد الهاشتاجات</h2>
             </div>
-            <div class="footer-section">
-                <h3>روابط سريعة</h3>
-                <ul>
-                    <li><a href="#features">المميزات</a></li>
-                    <li><a href="#tools">الأدوات</a></li>
-                    <li><a href="#pricing">الأسعار</a></li>
-                    <li><a href="#support">الدعم</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>الموارد</h3>
-                <ul>
-                    <li><a href="#blog">المدونة</a></li>
-                    <li><a href="#tutorials">دروس تعليمية</a></li>
-                    <li><a href="#api">API</a></li>
-                    <li><a href="#faq">الأسئلة الشائعة</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>تواصل معنا</h3>
-                <ul>
-                    <li>support@youtubstudio.pro</li>
-                    <li>+966 50 123 4567</li>
-                    <li>الرياض، السعودية</li>
-                </ul>
+            <p class="tool-description">احصل على أفضل الهاشتاجات لفيديوك</p>
+            
+            <input type="text" id="hashtagTopic" placeholder="موضوع الفيديو">
+            <button onclick="generateHashtags()">توليد الهاشتاجات</button>
+            
+            <div class="output-box" id="hashtagsOutput" style="display:none;">
+                <div class="output-label">الهاشتاجات المقترحة:</div>
+                <div class="tags-container" id="hashtagsList"></div>
+                <button class="copy-btn" onclick="copyHashtags()">نسخ جميع الهاشتاجات</button>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 YouTube Studio Pro. جميع الحقوق محفوظة.</p>
+
+        <!-- Tool 4: Video SEO Analyzer -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">🔍</span>
+                <h2 class="tool-title">محلل SEO للفيديو</h2>
+            </div>
+            <p class="tool-description">حلل عنوانك ووصفك لتحسين SEO</p>
+            
+            <input type="text" id="seoTitle" placeholder="عنوان الفيديو">
+            <textarea id="seoDescription" placeholder="وصف الفيديو"></textarea>
+            <button onclick="analyzeSEO()">تحليل SEO</button>
+            
+            <div class="output-box" id="seoOutput" style="display:none;">
+                <div class="output-label">نتائج التحليل:</div>
+                <div id="seoResults"></div>
+            </div>
         </div>
-    </footer>
+
+        <!-- Tool 5: Best Time to Post -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">⏰</span>
+                <h2 class="tool-title">أفضل وقت للنشر</h2>
+            </div>
+            <p class="tool-description">اكتشف أفضل الأوقات لنشر فيديوهاتك</p>
+            
+            <select id="targetAudience">
+                <option value="gulf">دول الخليج</option>
+                <option value="egypt">مصر</option>
+                <option value="maghreb">المغرب العربي</option>
+                <option value="global">عالمي</option>
+            </select>
+            <select id="contentType">
+                <option value="entertainment">ترفيه</option>
+                <option value="education">تعليمي</option>
+                <option value="gaming">ألعاب</option>
+                <option value="news">أخبار</option>
+            </select>
+            <button onclick="findBestTime()">إيجاد أفضل الأوقات</button>
+            
+            <div class="output-box" id="timeOutput" style="display:none;">
+                <div class="output-label">أفضل أوقات النشر:</div>
+                <div id="bestTimes"></div>
+            </div>
+        </div>
+
+        <!-- Tool 6: Character Counter -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">🔢</span>
+                <h2 class="tool-title">عداد الأحرف</h2>
+            </div>
+            <p class="tool-description">تأكد من أن عنوانك ووصفك ضمن الحدود المسموحة</p>
+            
+            <input type="text" id="titleCounter" placeholder="العنوان (الحد الأقصى: 100 حرف)" oninput="countChars('title')">
+            <div class="progress-bar">
+                <div class="progress-fill" id="titleProgress" style="width: 0%">0 / 100</div>
+            </div>
+            
+            <textarea id="descCounter" placeholder="الوصف (الحد الأقصى: 5000 حرف)" oninput="countChars('desc')"></textarea>
+            <div class="progress-bar">
+                <div class="progress-fill" id="descProgress" style="width: 0%">0 / 5000</div>
+            </div>
+        </div>
+
+        <!-- Tool 7: Thumbnail Text Generator -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">🖼️</span>
+                <h2 class="tool-title">نص الصورة المصغرة</h2>
+            </div>
+            <p class="tool-description">اقتراحات لنصوص جذابة للصور المصغرة</p>
+            
+            <input type="text" id="thumbTopic" placeholder="موضوع الفيديو">
+            <button onclick="generateThumbnailText()">توليد النصوص</button>
+            
+            <div class="output-box" id="thumbOutput" style="display:none;">
+                <div class="output-label">نصوص مقترحة للصورة المصغرة:</div>
+                <div id="thumbnailTexts"></div>
+            </div>
+        </div>
+
+        <!-- Tool 8: Video Length Calculator -->
+        <div class="tool-container">
+            <div class="tool-header">
+                <span class="tool-icon">⏱️</span>
+                <h2 class="tool-title">حاسبة مدة الفيديو المثالية</h2>
+            </div>
+            <p class="tool-description">احسب المدة المثالية لفيديوك حسب المحتوى</p>
+            
+            <select id="videoCategory">
+                <option value="tutorial">شرح تعليمي</option>
+                <option value="vlog">فلوج</option>
+                <option value="review">مراجعة منتج</option>
+                <option value="gaming">جيمنج</option>
+                <option value="shorts">Shorts</option>
+            </select>
+            <button onclick="calculateIdealLength()">حساب المدة المثالية</button>
+            
+            <div class="output-box" id="lengthOutput" style="display:none;">
+                <div class="output-label">المدة المثالية:</div>
+                <div id="idealLength"></div>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+        // Tool 1: Title Generator
+        function generateTitles() {
+            const keyword = document.getElementById('titleKeyword').value;
+            const type = document.getElementById('titleType').value;
+            
+            if (!keyword) {
+                alert('الرجاء إدخال كلمة مفتاحية');
+                return;
+            }
+            
+            const templates = {
+                how: [
+                    `كيفية ${keyword} في 5 دقائق فقط!`,
+                    `تعلم ${keyword} بطريقة سهلة وبسيطة`,
+                    `${keyword} للمبتدئين - الدليل الشامل`,
+                    `أسرار ${keyword} التي لا يخبرك بها أحد`,
+                    `خطوة بخطوة: ${keyword} من الصفر`
+                ],
+                list: [
+                    `أفضل 10 ${keyword} لعام 2024`,
+                    `5 أخطاء في ${keyword} يجب تجنبها`,
+                    `7 نصائح ذهبية حول ${keyword}`,
+                    `أهم 10 أسرار في ${keyword}`,
+                    `قائمة كاملة: كل ما تحتاج معرفته عن ${keyword}`
+                ],
+                review: [
+                    `مراجعة شاملة: ${keyword} - هل يستحق؟`,
+                    `تجربتي مع ${keyword} بعد 30 يوم`,
+                    `${keyword}: المميزات والعيوب`,
+                    `رأيي الصريح في ${keyword}`,
+                    `${keyword} vs البدائل - مقارنة شاملة`
+                ],
+                tutorial: [
+                    `دورة ${keyword} المجانية - الحلقة الأولى`,
+                    `احترف ${keyword} في أسبوع واحد`,
+                    `${keyword} من الصفر إلى الاحتراف`,
+                    `شرح ${keyword} بالتفصيل للمبتدئين`,
+                    `ماستر كلاس: ${keyword} المتقدم`
+                ],
+                tips: [
+                    `نصائح ذهبية في ${keyword} لم تسمع بها من قبل`,
+                    `${keyword}: نصائح الخبراء`,
+                    `كيف تصبح محترف في ${keyword}`,
+                    `أسرار نجاحي في ${keyword}`,
+                    `${keyword} - نصائح ستغير حياتك`
+                ]
+            };
+            
+            const titles = templates[type];
+            const output = document.getElementById('titlesOutput');
+            const list = document.getElementById('titlesList');
+            
+            list.innerHTML = titles.join('<br><br>');
+            output.style.display = 'block';
+        }
+
+        // Tool 2: Description Generator
+        function generateDescription() {
+            const title = document.getElementById('videoTitle').value;
+            const keywords = document.getElementById('videoKeywords').value;
+            const summary = document.getElementById('videoSummary').value;
+            
+            if (!title || !keywords || !summary) {
+                alert('الرجاء ملء جميع الحقول');
+                return;
+            }
+            
+            const description = `${summary}
+
+📌 في هذا الفيديو:
+${title}
+
+⏱️ المحتويات:
+00:00 المقدمة
+00:30 النقطة الأولى
+02:00 النقطة الثانية
+03:30 النقطة الثالثة
+05:00 الخلاصة
+
+🔍 الكلمات المفتاحية:
+${keywords}
+
+📱 تابعونا على:
+• Instagram: @yourchannel
+• Twitter: @yourchannel
+• Facebook: /yourchannel
+
+💼 للتواصل والأعمال:
+business@yourchannel.com
+
+🔔 لا تنسى الاشتراك وتفعيل الجرس ليصلك كل جديد!
+👍 إذا أعجبك الفيديو، اضغط لايك ومشاركة
+
+#${keywords.replace(/,/g, ' #').replace(/ /g, '')}
+
+© جميع الحقوق محفوظة`;
+            
+            document.getElementById('descriptionText').innerText = description;
+            document.getElementById('descOutput').style.display = 'block';
+        }
+
+        // Tool 3: Hashtag Generator
+        function generateHashtags() {
+            const topic = document.getElementById('hashtagTopic').value;
+            
+            if (!topic) {
+                alert('الرجاء إدخال موضوع الفيديو');
+                return;
+            }
+            
+            const generalTags = ['youtube', 'عربي', 'arabic', 'فيديو', 'video', '2024', 'محتوى', 'content'];
+            const topicWords = topic.split(' ');
+            const tags = [];
+            
+            // Add topic-specific tags
+            topicWords.forEach(word => {
+                if (word.length > 2) {
+                    tags.push(word);
+                    tags.push(word + '_عربي');
                 }
             });
-        });
-
-        // Animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
+            
+            // Add general tags
+            tags.push(...generalTags);
+            
+            // Add trending tags
+            tags.push('trending', 'fyp', 'viral', 'explore');
+            
+            const container = document.getElementById('hashtagsList');
+            container.innerHTML = '';
+            
+            tags.slice(0, 30).forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = '#' + tag.replace(/ /g, '_');
+                container.appendChild(tagElement);
             });
-        }, observerOptions);
-
-        // Apply animation to cards
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.feature-card, .ai-card, .tool-item');
-            cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'all 0.6s ease';
-                observer.observe(card);
-            });
-        });
-
-        // Tool items click handler
-        document.querySelectorAll('.tool-item').forEach(item => {
-            item.addEventListener('click', () => {
-                alert('هذه الأداة ستكون متاحة قريباً!');
-            });
-        });
-    </script>
-</body>
-</html>
+            
+            document.getElementById('hashtagsOutput').style.displ
