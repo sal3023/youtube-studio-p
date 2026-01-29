@@ -6,6 +6,16 @@
     <title>مساعد اليوتيوبر الذكي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- استدعاء مكتبة جوجل الرسمية -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+
     <style>
         body { background-color: #09090b; color: #fff; font-family: system-ui, sans-serif; }
         .input-box:focus { border-color: #dc2626; outline: none; }
@@ -14,41 +24,28 @@
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
     <div class="w-full max-w-2xl space-y-8">
-        
         <!-- الرأس -->
         <div class="flex justify-between items-center border-b border-zinc-800 pb-6">
             <div class="flex items-center gap-3">
-                <div class="bg-red-600 p-2 rounded-lg">
-                    <i data-lucide="youtube" class="text-white w-6 h-6"></i>
-                </div>
+                <div class="bg-red-600 p-2 rounded-lg"><i data-lucide="youtube" class="text-white w-6 h-6"></i></div>
                 <h1 class="text-2xl font-bold tracking-tight">Studio <span class="text-red-500">AI</span></h1>
             </div>
-            
             <button onclick="toggleSettings()" class="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition text-zinc-400 hover:text-white">
-                <i data-lucide="settings" class="w-5 h-5"></i>
-                <span class="text-sm font-medium">الإعدادات</span>
+                <i data-lucide="settings" class="w-5 h-5"></i> <span class="text-sm font-medium">الإعدادات</span>
             </button>
         </div>
 
         <!-- صندوق الإعدادات -->
         <div id="settingsBox" class="bg-zinc-900/50 border border-red-900/30 p-6 rounded-2xl">
-            <label class="flex items-center gap-2 text-sm font-bold text-red-400 mb-3">
-                <i data-lucide="key" class="w-4 h-4"></i>
-                ضع المفتاح هنا:
-            </label>
-            <input type="password" id="apiKey" placeholder="AIzaSyD..." 
-                class="w-full bg-black border border-zinc-700 p-3 rounded-xl text-white focus:border-red-500 outline-none text-left" style="direction: ltr;">
+            <label class="flex items-center gap-2 text-sm font-bold text-red-400 mb-3"><i data-lucide="key" class="w-4 h-4"></i> ضع المفتاح الجديد هنا:</label>
+            <input type="password" id="apiKey" placeholder="AIzaSyD..." class="w-full bg-black border border-zinc-700 p-3 rounded-xl text-white focus:border-red-500 outline-none text-left" style="direction: ltr;">
         </div>
 
         <!-- الإدخال -->
         <div class="space-y-4">
-            <input type="text" id="topic" placeholder="عن ماذا سيتحدث الفيديو؟" 
-                class="w-full bg-zinc-900 border border-zinc-800 p-5 pl-32 rounded-2xl text-lg text-white outline-none focus:border-red-600 transition shadow-2xl">
-            
-            <button onclick="generate()" id="btn" 
-                class="w-full bg-white text-black py-4 rounded-xl font-bold hover:bg-gray-200 transition flex items-center justify-center gap-2 disabled:opacity-50">
-                <i data-lucide="sparkles" class="w-5 h-5 text-red-600"></i>
-                <span id="btnText">توليد الأفكار</span>
+            <input type="text" id="topic" placeholder="عن ماذا سيتحدث الفيديو؟" class="w-full bg-zinc-900 border border-zinc-800 p-5 pl-32 rounded-2xl text-lg text-white outline-none focus:border-red-600 transition shadow-2xl">
+            <button id="btn" class="w-full bg-white text-black py-4 rounded-xl font-bold hover:bg-gray-200 transition flex items-center justify-center gap-2 disabled:opacity-50">
+                <i data-lucide="sparkles" class="w-5 h-5 text-red-600"></i> <span id="btnText">توليد الأفكار</span>
             </button>
         </div>
 
@@ -58,17 +55,18 @@
                 <pre id="output" class="whitespace-pre-wrap leading-8 text-zinc-200 font-sans text-lg"></pre>
             </div>
         </div>
-
     </div>
 
-    <script>
+    <!-- السكريبت بمنطق جديد (type="module") -->
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // تهيئة الأيقونات والواجهة
         lucide.createIcons();
+        window.toggleSettings = () => document.getElementById('settingsBox').classList.toggle('hidden');
 
-        function toggleSettings() {
-            document.getElementById('settingsBox').classList.toggle('hidden');
-        }
-
-        async function generate() {
+        // دالة التوليد الرئيسية
+        window.generate = async () => {
             const topic = document.getElementById('topic').value;
             const apiKey = document.getElementById('apiKey').value.trim();
             const btn = document.getElementById('btn');
@@ -76,44 +74,45 @@
             const output = document.getElementById('output');
             const resultArea = document.getElementById('resultArea');
 
-            if (!apiKey) { alert("من فضلك ضع المفتاح في خانة الإعدادات"); return; }
+            if (!apiKey) { alert("⚠️ يجب وضع المفتاح في الإعدادات!"); return; }
             if (!topic) return;
 
             btn.disabled = true;
-            btnText.innerText = "جاري الاتصال...";
+            btnText.innerText = "جاري المعالجة...";
             output.innerText = "";
             resultArea.classList.add('hidden');
 
             try {
-                // ✅ تم التغيير هنا: العودة للموديل "gemini-pro" المستقر
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+                // 1. استخدام المكتبة الرسمية
+                const genAI = new GoogleGenerativeAI(apiKey);
                 
-                const prompt = `أنت خبير يوتيوب. للموضوع: "${topic}"
-                اكتب بالعربية: 3 عناوين جذابة، وصف سيو، و 5 وسوم.`;
+                // 2. استخدام أحدث موديل (gemini-1.5-flash)
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
+                const prompt = `أنت خبير يوتيوب. للموضوع: "${topic}"، اكتب بالعربية: 
+                - 3 عناوين جذابة
+                - وصف دقيق للفيديو
+                - 5 كلمات مفتاحية`;
 
-                const data = await response.json();
-
-                if (data.error) {
-                    throw new Error(data.error.message);
-                }
+                // 3. إرسال الطلب
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                const text = response.text();
                 
-                const text = data.candidates[0].content.parts[0].text;
                 output.innerText = text;
                 resultArea.classList.remove('hidden');
 
             } catch (error) {
-                alert("❌ حدث خطأ:\n" + error.message);
+                console.error(error);
+                alert("❌ حدث خطأ: " + error.message + "\n\nتأكد أنك أنشأت مفتاحاً جديداً من Google AI Studio.");
             } finally {
                 btn.disabled = false;
                 btnText.innerText = "توليد الأفكار";
             }
-        }
+        };
+
+        // ربط الزر بالدالة
+        document.getElementById('btn').addEventListener('click', window.generate);
     </script>
 </body>
 </html>
