@@ -34,14 +34,10 @@
         <div id="settingsBox" class="bg-zinc-900/50 border border-red-900/30 p-6 rounded-2xl">
             <label class="flex items-center gap-2 text-sm font-bold text-red-400 mb-3">
                 <i data-lucide="key" class="w-4 h-4"></i>
-                تأكد من المفتاح هنا:
+                ضع المفتاح هنا:
             </label>
-            <input type="password" id="apiKey" placeholder="لصق مفتاح AIzaSyD..." 
+            <input type="password" id="apiKey" placeholder="AIzaSyD..." 
                 class="w-full bg-black border border-zinc-700 p-3 rounded-xl text-white focus:border-red-500 outline-none text-left" style="direction: ltr;">
-            <p class="text-xs text-zinc-500 mt-2">
-                ⚠️ هام: يجب أن يكون المفتاح من Google AI Studio وليس من Google Cloud.
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-red-400 underline">احصل عليه من هنا</a>
-            </p>
         </div>
 
         <!-- الإدخال -->
@@ -74,7 +70,7 @@
 
         async function generate() {
             const topic = document.getElementById('topic').value;
-            const apiKey = document.getElementById('apiKey').value.trim(); // إزالة المسافات الزائدة
+            const apiKey = document.getElementById('apiKey').value.trim();
             const btn = document.getElementById('btn');
             const btnText = document.getElementById('btnText');
             const output = document.getElementById('output');
@@ -84,13 +80,13 @@
             if (!topic) return;
 
             btn.disabled = true;
-            btnText.innerText = "جاري الاتصال بجوجل...";
+            btnText.innerText = "جاري الاتصال...";
             output.innerText = "";
             resultArea.classList.add('hidden');
 
             try {
-                // استخدام الموديل الأحدث Gemini 1.5 Flash
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                // ✅ تم التغيير هنا: العودة للموديل "gemini-pro" المستقر
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
                 
                 const prompt = `أنت خبير يوتيوب. للموضوع: "${topic}"
                 اكتب بالعربية: 3 عناوين جذابة، وصف سيو، و 5 وسوم.`;
@@ -103,10 +99,8 @@
 
                 const data = await response.json();
 
-                // كشف سبب الخطأ الحقيقي
                 if (data.error) {
-                    console.error("Gemini Error:", data.error);
-                    throw new Error(data.error.message || "المفتاح غير صالح أو انتهى الرصيد المجاني");
+                    throw new Error(data.error.message);
                 }
                 
                 const text = data.candidates[0].content.parts[0].text;
@@ -114,7 +108,7 @@
                 resultArea.classList.remove('hidden');
 
             } catch (error) {
-                alert("❌ حدث خطأ:\n" + error.message + "\n\nتأكد أن المفتاح من موقع AI Studio وأنه نُسخ بشكل صحيح.");
+                alert("❌ حدث خطأ:\n" + error.message);
             } finally {
                 btn.disabled = false;
                 btnText.innerText = "توليد الأفكار";
