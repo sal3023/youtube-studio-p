@@ -3,95 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصنع فيديوهات 4K - لوحة التحكم</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>معرض الصور</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+        body{background:#0f172a;color:#fff;min-height:100vh}
+        .header{background:#1e293b;padding:1rem;display:flex;justify-content:space-between;align-items:center}
+        .btn{background:#6366f1;color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer}
+        .container{max-width:1200px;margin:0 auto;padding:1rem}
+        .folders{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1rem 0}
+        .folder{background:#1e293b;padding:1rem;border-radius:12px;cursor:pointer;transition:0.3s}
+        .folder:hover{transform:translateY(-5px);background:#334155}
+        .folder-icon{font-size:2rem;margin-bottom:0.5rem}
+        .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
+        .photo{aspect-ratio:1;background:#1e293b;border-radius:8px;overflow:hidden;cursor:pointer}
+        .photo img{width:100%;height:100%;object-fit:cover}
+        .upload-zone{border:2px dashed #6366f1;padding:2rem;text-align:center;border-radius:12px;margin:1rem 0;cursor:pointer}
+        .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;justify-content:center;align-items:center;padding:1rem}
+        .modal.active{display:flex}
+        .modal-content{background:#1e293b;padding:1.5rem;border-radius:12px;width:100%;max-width:400px}
+        .input{width:100%;padding:0.5rem;margin:0.5rem 0;background:#0f172a;border:1px solid #334155;color:#fff;border-radius:6px}
+        .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:200;justify-content:center;align-items:center}
+        .lightbox.active{display:flex}
+        .lightbox img{max-width:90%;max-height:90vh;border-radius:8px}
+        .close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer}
+    </style>
 </head>
-<body class="bg-slate-950 text-white font-sans p-4">
-
-    <div class="max-w-5xl mx-auto">
-        <header class="text-center mb-10">
-            <h1 class="text-4xl font-black text-red-600 mb-2">4K AUTO-STUDIO PRO</h1>
-            <p class="text-gray-400 text-sm">نظام الإنتاج الآلي والنشر الفوري</p>
-        </header>
-
-        <section class="bg-slate-900 p-6 rounded-3xl border border-slate-800 mb-8 shadow-2xl">
-            <h2 class="text-xl font-bold mb-6 text-yellow-500 flex items-center">
-                <span class="ml-2">🔑</span> غرفة المفاتيح (إلزامي للتشغيل)
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-4">
-                    <input id="api_key" type="password" placeholder="YouTube API Key (AIza...)" class="w-full p-3 bg-black border border-slate-700 rounded-xl outline-none focus:border-red-600">
-                    <input id="client_id" type="password" placeholder="Client ID (OAuth)" class="w-full p-3 bg-black border border-slate-700 rounded-xl outline-none focus:border-red-600">
-                    <input id="client_secret" type="password" placeholder="Client Secret (GOCSPX-...)" class="w-full p-3 bg-black border border-slate-700 rounded-xl outline-none focus:border-red-600">
-                </div>
-                <div class="space-y-4">
-                    <input id="pexels_key" type="password" placeholder="Pexels Key (للفيديوهات 4K)" class="w-full p-3 bg-black border border-slate-700 rounded-xl outline-none focus:border-blue-500">
-                    <input id="shotstack_key" type="password" placeholder="Shotstack Key (للمونتاج)" class="w-full p-3 bg-black border border-slate-700 rounded-xl outline-none focus:border-purple-500">
-                    <button onclick="saveKeys()" class="w-full bg-yellow-600 hover:bg-yellow-700 py-3 rounded-xl font-bold transition">حفظ المفاتيح في المتصفح</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="bg-slate-900 p-8 rounded-3xl border border-slate-800 mb-8">
-            <h2 class="text-2xl font-bold mb-6 text-blue-400">🚀 بدء الإنتاج والتحميل</h2>
-            <input id="topic" type="text" placeholder="اكتب موضوع الفيديو (مثلاً: Nature, Technology)" class="w-full p-5 bg-black border border-slate-700 rounded-2xl text-xl mb-6 outline-none focus:ring-2 focus:ring-blue-600">
-            
-            <button id="btn_main" onclick="startProduction()" class="w-full bg-gradient-to-r from-red-600 to-red-800 py-5 rounded-2xl font-black text-2xl shadow-xl transform transition active:scale-95">
-                إنتاج ونشر 4K الآن
-            </button>
-        </section>
-
-        <div class="bg-black p-6 rounded-3xl border border-slate-800 h-64 overflow-y-auto" id="logs_container">
-            <div id="logs" class="font-mono text-sm space-y-1">
-                <p class="text-gray-600">-- النظام بانتظار إدخال المفاتيح والبدء --</p>
-            </div>
+<body>
+    <div class="header">
+        <h2>📷 معرض الصور</h2>
+        <div>
+            <button class="btn" onclick="showFolderModal()">+ مجموعة</button>
+            <button class="btn" onclick="document.getElementById('file').click()">+ صور</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="upload-zone" onclick="document.getElementById('file').click()">
+            <h3>📁 اسحب الصور هنا أو انقر</h3>
+        </div>
+        <input type="file" id="file" multiple accept="image/*" style="display:none" onchange="upload(this)">
+        
+        <div id="foldersView">
+            <h3>المجموعات</h3>
+            <div class="folders" id="folders"></div>
+        </div>
+        
+        <div id="photosView" style="display:none">
+            <button class="btn" onclick="back()">← رجوع</button>
+            <h3 id="folderTitle"></h3>
+            <div class="photos" id="photos"></div>
         </div>
     </div>
 
+    <div class="modal" id="folderModal">
+        <div class="modal-content">
+            <h3>مجموعة جديدة</h3>
+            <input type="text" class="input" id="folderName" placeholder="اسم المجموعة">
+            <button class="btn" onclick="createFolder()" style="width:100%">إنشاء</button>
+            <button class="btn" onclick="hideModal()" style="width:100%;margin-top:0.5rem;background:#334155">إلغاء</button>
+        </div>
+    </div>
+
+    <div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+        <button class="close" onclick="hideLightbox()">×</button>
+        <img id="lightboxImg" src="">
+    </div>
+
     <script>
-        function log(msg, color = "text-gray-400") {
-            const logs = document.getElementById('logs');
-            logs.innerHTML += `<p class="${color}">>> ${msg}</p>`;
-            document.getElementById('logs_container').scrollTop = logs.scrollHeight;
+        let folders=JSON.parse(localStorage.getItem('folders')||'[]');
+        let photos=JSON.parse(localStorage.getItem('photos')||'[]');
+        let currentFolder=null;
+
+        function save(){localStorage.setItem('folders',JSON.stringify(folders));localStorage.setItem('photos',JSON.stringify(photos))}
+        
+        function renderFolders(){
+            const el=document.getElementById('folders');
+            if(folders.length===0){el.innerHTML='<p style="grid-column:1/-1;color:#64748b">لا توجد مجموعات</p>';return}
+            el.innerHTML=folders.map(f=>{
+                const count=photos.filter(p=>p.folder===f.id).length;
+                return`<div class="folder" onclick="openFolder('${f.id}')"><div class="folder-icon">📁</div><div><b>${f.name}</b><br><small>${count} صورة</small></div></div>`
+            }).join('')
         }
 
-        function saveKeys() {
-            const keys = {
-                api: document.getElementById('api_key').value,
-                client: document.getElementById('client_id').value,
-                secret: document.getElementById('client_secret').value,
-                pexels: document.getElementById('pexels_key').value,
-                shotstack: document.getElementById('shotstack_key').value
-            };
-            localStorage.setItem('yt_auto_keys_v3', JSON.stringify(keys));
-            log("✅ تم حفظ المفاتيح بنجاح محلياً.", "text-green-500");
+        function showFolderModal(){document.getElementById('folderModal').classList.add('active')}
+        function hideModal(){document.getElementById('folderModal').classList.remove('active')}
+        
+        function createFolder(){
+            const name=document.getElementById('folderName').value.trim();
+            if(!name)return alert('أدخل الاسم');
+            folders.push({id:Date.now().toString(),name});
+            save();renderFolders();hideModal();
+            document.getElementById('folderName').value='';
         }
 
-        // استعادة المفاتيح عند فتح الصفحة
-        window.onload = function() {
-            const saved = JSON.parse(localStorage.getItem('yt_auto_keys_v3'));
-            if(saved) {
-                document.getElementById('api_key').value = saved.api;
-                document.getElementById('client_id').value = saved.client;
-                document.getElementById('client_secret').value = saved.secret;
-                document.getElementById('pexels_key').value = saved.pexels;
-                document.getElementById('shotstack_key').value = saved.shotstack;
-                log("🔄 تم استعادة المفاتيح المحفوظة تلقائياً.");
-            }
-        };
-
-        async function startProduction() {
-            const topic = document.getElementById('topic').value;
-            const keys = JSON.parse(localStorage.getItem('yt_auto_keys_v3'));
-            
-            if(!topic || !keys.api || !keys.secret) { 
-                alert("يرجى إدخال كافة المفاتيح وحفظها أولاً!"); return; 
-            }
-
-            log(`🤖 بدأت الآلة بإنتاج فيديو حول: ${topic}`, "text-blue-400");
-            // هنا يكمل الكود بقية خطوات Pexels و Shotstack و YouTube...
+        function openFolder(id){
+            currentFolder=id;
+            document.getElementById('foldersView').style.display='none';
+            document.getElementById('photosView').style.display='block';
+            document.getElementById('folderTitle').innerText=folders.find(f=>f.id===id)?.name||'';
+            renderPhotos();
         }
+
+        function back(){currentFolder=null;document.getElementById('foldersView').style.display='block';document.getElementById('photosView').style.display='none'}
+
+        function renderPhotos(){
+            const folderPhotos=photos.filter(p=>p.folder===currentFolder);
+            const el=document.getElementById('photos');
+            if(folderPhotos.length===0){el.innerHTML='<p style="color:#64748b">لا توجد صور</p>';return}
+            el.innerHTML=folderPhotos.map((p,i)=>`<div class="photo" onclick="showLightbox(${i})"><img src="${p.src}"></div>`).join('');
+        }
+
+        function upload(input){
+            if(!currentFolder){if(!confirm('لم تختر مجموعة. إنشاء مجموعة افتراضية؟'))return;createDefaultFolder()}
+            Array.from(input.files).forEach(file=>{
+                if(!file.type.startsWith('image/'))return;
+                const reader=new FileReader();
+                reader.onload=e=>{photos.push({id:Date.now(),folder:currentFolder,src:e.target.result});save();renderPhotos()};
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function createDefaultFolder(){const id=Date.now().toString();folders.push({id,name:'مجموعة افتراضية'});currentFolder=id;save();renderFolders();openFolder(id)}
+
+        function showLightbox(idx){
+            const folderPhotos=photos.filter(p=>p.folder===currentFolder);
+            document.getElementById('lightboxImg').src=folderPhotos[idx].src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function hideLightbox(){document.getElementById('lightbox').classList.remove('active')}
+
+        renderFolders();
     </script>
 </body>
 </html>
