@@ -3,58 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض الصور</title>
+    <title>معرض الصور - مع نظام الأرباح</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
         body{background:#0f172a;color:#fff;min-height:100vh}
-        .header{background:#1e293b;padding:1rem;display:flex;justify-content:space-between;align-items:center}
-        .btn{background:#6366f1;color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer}
+        .header{background:#1e293b;padding:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+        .btn{background:#6366f1;color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer;font-size:0.9rem}
+        .btn-success{background:#10b981}
+        .btn-warning{background:#f59e0b}
         .container{max-width:1200px;margin:0 auto;padding:1rem}
+        
+        /* نظام الأرباح */
+        .earnings-box{background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:1rem;border-radius:12px;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+        .earnings-stats{display:flex;gap:2rem;flex-wrap:wrap}
+        .stat{text-align:center}
+        .stat-value{font-size:1.5rem;font-weight:bold}
+        .stat-label{font-size:0.8rem;opacity:0.9}
+        
+        /* الإعلانات */
+        .ad-banner{background:#1e293b;padding:1rem;border-radius:12px;margin:1rem 0;text-align:center;position:relative;overflow:hidden}
+        .ad-label{position:absolute;top:5px;left:5px;background:#f59e0b;color:#000;padding:2px 8px;font-size:0.7rem;border-radius:4px}
+        .ad-content{min-height:60px;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
+        .ad-btn{background:#ec4899;color:#fff;padding:0.5rem 1rem;border-radius:20px;text-decoration:none;font-size:0.9rem}
+        
+        /* أنواع الإعلانات */
+        .ad-types{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}
+        .ad-type-card{background:#1e293b;padding:1rem;border-radius:12px;border:2px solid transparent;cursor:pointer;transition:0.3s}
+        .ad-type-card:hover{border-color:#6366f1}
+        .ad-type-card.active{border-color:#10b981;background:#064e3b}
+        .ad-type-title{font-weight:bold;margin-bottom:0.5rem}
+        .ad-type-desc{font-size:0.85rem;color:#94a3b8}
+        .ad-type-earnings{color:#10b981;font-weight:bold;margin-top:0.5rem}
+        
+        /* المعرض */
         .folders{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1rem 0}
-        .folder{background:#1e293b;padding:1rem;border-radius:12px;cursor:pointer;transition:0.3s}
-        .folder:hover{transform:translateY(-5px);background:#334155}
+        .folder{background:#1e293b;padding:1rem;border-radius:12px;cursor:pointer;transition:0.3s;position:relative}
+        .folder:hover{transform:translateY(-5px)}
         .folder-icon{font-size:2rem;margin-bottom:0.5rem}
         .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
-        .photo{aspect-ratio:1;background:#1e293b;border-radius:8px;overflow:hidden;cursor:pointer}
+        .photo{aspect-ratio:1;background:#1e293b;border-radius:8px;overflow:hidden;cursor:pointer;position:relative}
         .photo img{width:100%;height:100%;object-fit:cover}
-        .upload-zone{border:2px dashed #6366f1;padding:2rem;text-align:center;border-radius:12px;margin:1rem 0;cursor:pointer}
+        .photo-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem;padding:0.5rem}
+        .photo:hover .photo-overlay{display:flex}
+        .view-btn{background:#6366f1;color:#fff;border:none;padding:0.5rem;border-radius:6px;cursor:pointer;width:100%}
+        
+        /* نافذة الإعلان */
+        .ad-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:300;justify-content:center;align-items:center;padding:1rem}
+        .ad-modal.active{display:flex}
+        .ad-box{background:#1e293b;padding:2rem;border-radius:16px;max-width:400px;width:100%;text-align:center}
+        .ad-timer{font-size:3rem;font-weight:bold;color:#6366f1;margin:1rem 0}
+        .skip-btn{background:#334155;color:#fff;border:none;padding:0.75rem 2rem;border-radius:8px;cursor:pointer;margin-top:1rem}
+        .skip-btn:disabled{opacity:0.5;cursor:not-allowed}
+        
+        /* سحب الأرباح */
+        .withdraw-section{background:#1e293b;padding:1rem;border-radius:12px;margin-top:1rem}
+        .withdraw-input{width:100%;padding:0.75rem;margin:0.5rem 0;background:#0f172a;border:1px solid #334155;color:#fff;border-radius:8px}
+        
+        /* تبويبات */
+        .tabs{display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap}
+        .tab{background:#334155;color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer}
+        .tab.active{background:#6366f1}
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+        
         .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;justify-content:center;align-items:center;padding:1rem}
         .modal.active{display:flex}
-        .modal-content{background:#1e293b;padding:1.5rem;border-radius:12px;width:100%;max-width:400px}
+        .modal-content{background:#1e293b;padding:1.5rem;border-radius:12px;max-width:400px;width:100%}
         .input{width:100%;padding:0.5rem;margin:0.5rem 0;background:#0f172a;border:1px solid #334155;color:#fff;border-radius:6px}
         .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:200;justify-content:center;align-items:center}
         .lightbox.active{display:flex}
         .lightbox img{max-width:90%;max-height:90vh;border-radius:8px}
         .close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer}
+        
+        @media(max-width:768px){.earnings-stats{justify-content:center;width:100%}}
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
         <h2>📷 معرض الصور</h2>
-        <div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            <button class="btn btn-success" onclick="showTab('earnings')">💰 الأرباح</button>
+            <button class="btn btn-warning" onclick="showTab('gallery')">🖼️ المعرض</button>
             <button class="btn" onclick="showFolderModal()">+ مجموعة</button>
             <button class="btn" onclick="document.getElementById('file').click()">+ صور</button>
         </div>
     </div>
-    
+
     <div class="container">
-        <div class="upload-zone" onclick="document.getElementById('file').click()">
-            <h3>📁 اسحب الصور هنا أو انقر</h3>
+        <!-- صندوق الأرباح -->
+        <div class="earnings-box">
+            <div>
+                <h3>💵 رصيدك الحالي</h3>
+            </div>
+            <div class="earnings-stats">
+                <div class="stat">
+                    <div class="stat-value" id="totalEarnings">$0.00</div>
+                    <div class="stat-label">إجمالي الأرباح</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="todayEarnings">$0.00</div>
+                    <div class="stat-label">أرباح اليوم</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="totalViews">0</div>
+                    <div class="stat-label">عدد المشاهدات</div>
+                </div>
+            </div>
         </div>
-        <input type="file" id="file" multiple accept="image/*" style="display:none" onchange="upload(this)">
-        
-        <div id="foldersView">
-            <h3>المجموعات</h3>
-            <div class="folders" id="folders"></div>
+
+        <!-- تبويبات -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('gallery')" id="tab-gallery">المعرض</button>
+            <button class="tab" onclick="showTab('earnings')" id="tab-earnings">نظام الأرباح</button>
+            <button class="tab" onclick="showTab('withdraw')" id="tab-withdraw">سحب الأرباح</button>
         </div>
-        
-        <div id="photosView" style="display:none">
-            <button class="btn" onclick="back()">← رجوع</button>
-            <h3 id="folderTitle"></h3>
-            <div class="photos" id="photos"></div>
+
+        <!-- محتوى المعرض -->
+        <div id="content-gallery" class="tab-content active">
+            <!-- إعلان في المعرض -->
+            <div class="ad-banner" onclick="openAd('banner')">
+                <span class="ad-label">إعلان</span>
+                <div class="ad-content">
+                    <span>📢 اضغط هنا لمشاهدة إعلان ومضاعفة أرباحك!</span>
+                    <span class="ad-btn">شاهد الآن (+$0.50)</span>
+                </div>
+            </div>
+
+            <input type="file" id="file" multiple accept="image/*" style="display:none" onchange="upload(this)">
+            
+            <div id="foldersView">
+                <h3>📁 المجموعات</h3>
+                <div class="folders" id="folders"></div>
+            </div>
+            
+            <div id="photosView" style="display:none">
+                <button class="btn" onclick="back()">← رجوع</button>
+                <h3 id="folderTitle"></h3>
+                
+                <!-- إعلان بين الصور -->
+                <div class="ad-banner" style="margin:1rem 0" onclick="openAd('inline')">
+                    <span class="ad-label">إعلان مميز</span>
+                    <div class="ad-content">
+                        <span>🎯 إعلان مخصص - اضغط لمشاهدة المزيد</span>
+                        <span class="ad-btn" style="background:#6366f1">+$0.75</span>
+                    </div>
+                </div>
+                
+                <div class="photos" id="photos"></div>
+            </div>
+        </div>
+
+        <!-- محتوى الأرباح -->
+        <div id="content-earnings" class="tab-content">
+            <h3>📊 اختر نوع الإعلان</h3>
+            <div class="ad-types">
+                <div class="ad-type-card" onclick="selectAdType('banner', this)">
+                    <div class="ad-type-title">📢 إعلان بانر</div>
+                    <div class="ad-type-desc">إعلان صغير يظهر في أعلى الصفحة</div>
+                    <div class="ad-type-earnings">+$0.50 لكل نقرة</div>
+                </div>
+                <div class="ad-type-card" onclick="selectAdType('video', this)">
+                    <div class="ad-type-title">🎥 إعلان فيديو</div>
+                    <div class="ad-type-desc">شاهد فيديو قصير لمدة 30 ثانية</div>
+                    <div class="ad-type-earnings">+$2.00 لكل مشاهدة</div>
+                </div>
+                <div class="ad-type-card" onclick="selectAdType('popup', this)">
+                    <div class="ad-type-title">💥 إعلان منبثق</div>
+                    <div class="ad-type-desc">نافذة منبثقة تظهر عند التصفح</div>
+                    <div class="ad-type-earnings">+$1.50 لكل ظهور</div>
+                </div>
+                <div class="ad-type-card" onclick="selectAdType('reward', this)">
+                    <div class="ad-type-title">🎁 إعلان مكافآت</div>
+                    <div class="ad-type-desc">أكمل المهمة واحصل على مكافأة</div>
+                    <div class="ad-type-earnings">+$5.00 لكل إكمال</div>
+                </div>
+            </div>
+
+            <button class="btn btn-success" style="width:100%;padding:1rem" onclick="startEarning()">
+                🚀 ابدأ الربح الآن
+            </button>
+
+            <h3 style="margin-top:2rem">📈 إحصائيات الأرباح</h3>
+            <div style="background:#1e293b;padding:1rem;border-radius:12px;margin-top:1rem">
+                <div style="display:flex;justify-content:space-between;margin:0.5rem 0">
+                    <span>نقرات الإعلانات:</span>
+                    <span id="adClicks">0</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin:0.5rem 0">
+                    <span>مشاهدات الفيديو:</span>
+                    <span id="videoViews">0</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin:0.5rem 0">
+                    <span>إعلانات مكتملة:</span>
+                    <span id="completedAds">0</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin:0.5rem 0;padding-top:0.5rem;border-top:1px solid #334155">
+                    <span><b>المعدل اليومي:</b></span>
+                    <span style="color:#10b981" id="dailyRate">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- محتوى السحب -->
+        <div id="content-withdraw" class="tab-content">
+            <div class="withdraw-section">
+                <h3>💳 سحب الأرباح</h3>
+                <p style="color:#94a3b8;margin:0.5rem 0">الحد الأدنى للسحب: $10.00</p>
+                
+                <input type="text" class="withdraw-input" placeholder="اسم صاحب الحساب" id="withdrawName">
+                <input type="text" class="withdraw-input" placeholder="رقم البطاقة / IBAN" id="withdrawAccount">
+                <input type="number" class="withdraw-input" placeholder="المبلغ (USD)" id="withdrawAmount" max="1000">
+                
+                <button class="btn btn-success" style="width:100%;margin-top:1rem" onclick="requestWithdraw()">
+                    💰 طلب سحب
+                </button>
+            </div>
+
+            <h3 style="margin-top:2rem">📋 سجل المدفوعات</h3>
+            <div id="paymentHistory" style="background:#1e293b;padding:1rem;border-radius:12px;margin-top:1rem">
+                <p style="color:#64748b;text-align:center">لا توجد عمليات سحب سابقة</p>
+            </div>
         </div>
     </div>
 
+    <!-- نافذة الإعلان -->
+    <div class="ad-modal" id="adModal">
+        <div class="ad-box">
+            <h2>🎬 شاهد الإعلان</h2>
+            <p>شاهد الإعلان للنهاية للحصول على المكافأة</p>
+            <div class="ad-timer" id="adTimer">30</div>
+            <div style="background:#334155;height:4px;border-radius:2px;margin:1rem 0">
+                <div style="background:#6366f1;height:100%;width:0%;transition:width 1s" id="adProgress"></div>
+            </div>
+            <button class="skip-btn" id="skipBtn" disabled onclick="completeAd()">
+                تخطي (<span id="skipCount">30</span>)
+            </button>
+        </div>
+    </div>
+
+    <!-- Modals -->
     <div class="modal" id="folderModal">
         <div class="modal-content">
             <h3>مجموعة جديدة</h3>
@@ -70,12 +258,137 @@
     </div>
 
     <script>
+        // البيانات
         let folders=JSON.parse(localStorage.getItem('folders')||'[]');
         let photos=JSON.parse(localStorage.getItem('photos')||'[]');
+        let earnings=JSON.parse(localStorage.getItem('earnings')||'{"total":0,"today":0,"views":0,"clicks":0,"videoViews":0,"completed":0}');
         let currentFolder=null;
+        let selectedAdType='';
+        let adTimer=null;
 
-        function save(){localStorage.setItem('folders',JSON.stringify(folders));localStorage.setItem('photos',JSON.stringify(photos))}
-        
+        // حفظ البيانات
+        function save(){
+            localStorage.setItem('folders',JSON.stringify(folders));
+            localStorage.setItem('photos',JSON.stringify(photos));
+            localStorage.setItem('earnings',JSON.stringify(earnings));
+            updateEarningsDisplay();
+        }
+
+        // تحديث عرض الأرباح
+        function updateEarningsDisplay(){
+            document.getElementById('totalEarnings').textContent='$'+earnings.total.toFixed(2);
+            document.getElementById('todayEarnings').textContent='$'+earnings.today.toFixed(2);
+            document.getElementById('totalViews').textContent=earnings.views;
+            document.getElementById('adClicks').textContent=earnings.clicks;
+            document.getElementById('videoViews').textContent=earnings.videoViews;
+            document.getElementById('completedAds').textContent=earnings.completed;
+            document.getElementById('dailyRate').textContent='$'+(earnings.today/((new Date().getHours())||1)).toFixed(2)+'/ساعة';
+        }
+
+        // التبويبات
+        function showTab(tab){
+            document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+            document.getElementById('tab-'+tab).classList.add('active');
+            document.getElementById('content-'+tab).classList.add('active');
+        }
+
+        // اختيار نوع الإعلان
+        function selectAdType(type,element){
+            selectedAdType=type;
+            document.querySelectorAll('.ad-type-card').forEach(c=>c.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // بدء الربح
+        function startEarning(){
+            if(!selectedAdType)return alert('اختر نوع الإعلان أولاً');
+            openAd(selectedAdType);
+        }
+
+        // فتح الإعلان
+        function openAd(type){
+            const modal=document.getElementById('adModal');
+            const timerEl=document.getElementById('adTimer');
+            const skipBtn=document.getElementById('skipBtn');
+            const skipCount=document.getElementById('skipCount');
+            const progress=document.getElementById('adProgress');
+            
+            let time=type==='video'?30:15;
+            modal.classList.add('active');
+            timerEl.textContent=time;
+            skipBtn.disabled=true;
+            progress.style.width='0%';
+            
+            let elapsed=0;
+            adTimer=setInterval(()=>{
+                elapsed++;
+                time--;
+                timerEl.textContent=time;
+                skipCount.textContent=time;
+                progress.style.width=((elapsed/30)*100)+'%';
+                
+                if(time<=0){
+                    clearInterval(adTimer);
+                    skipBtn.disabled=false;
+                    skipBtn.textContent='حصل على المكافأة ✅';
+                    skipBtn.style.background='#10b981';
+                }
+            },1000);
+        }
+
+        // إكمال الإعلان
+        function completeAd(){
+            clearInterval(adTimer);
+            document.getElementById('adModal').classList.remove('active');
+            
+            let reward=0;
+            switch(selectedAdType){
+                case 'banner':reward=0.50;earnings.clicks++;break;
+                case 'video':reward=2.00;earnings.videoViews++;break;
+                case 'popup':reward=1.50;break;
+                case 'reward':reward=5.00;earnings.completed++;break;
+                default:reward=0.50;
+            }
+            
+            earnings.total+=reward;
+            earnings.today+=reward;
+            earnings.views++;
+            save();
+            
+            alert('🎉 ربحت $'+reward.toFixed(2)+'!');
+            document.getElementById('skipBtn').textContent='تخطي (30)';
+            document.getElementById('skipBtn').style.background='#334155';
+        }
+
+        // طلب سحب
+        function requestWithdraw(){
+            const amount=parseFloat(document.getElementById('withdrawAmount').value);
+            const name=document.getElementById('withdrawName').value;
+            const account=document.getElementById('withdrawAccount').value;
+            
+            if(!name||!account)return alert('أكمل البيانات');
+            if(amount<10)return alert('الحد الأدنى $10');
+            if(amount>earnings.total)return alert('رصيد غير كافٍ');
+            
+            earnings.total-=amount;
+            save();
+            
+            const history=document.getElementById('paymentHistory');
+            const date=new Date().toLocaleDateString('ar-SA');
+            history.innerHTML=`<div style="padding:0.5rem;border-bottom:1px solid #334155">
+                <div style="display:flex;justify-content:space-between">
+                    <span>سحب إلى ${account.slice(-4)}</span>
+                    <span style="color:#ef4444">-$${amount}</span>
+                </div>
+                <small style="color:#64748b">${date} - ${name}</small>
+            </div>`+history.innerHTML;
+            
+            alert('✅ تم إرسال طلب السحب بنجاح!');
+            document.getElementById('withdrawAmount').value='';
+        }
+
+        // المعرض (نفس الكود السابق)
         function renderFolders(){
             const el=document.getElementById('folders');
             if(folders.length===0){el.innerHTML='<p style="grid-column:1/-1;color:#64748b">لا توجد مجموعات</p>';return}
@@ -102,6 +415,8 @@
             document.getElementById('photosView').style.display='block';
             document.getElementById('folderTitle').innerText=folders.find(f=>f.id===id)?.name||'';
             renderPhotos();
+            earnings.views++;
+            save();
         }
 
         function back(){currentFolder=null;document.getElementById('foldersView').style.display='block';document.getElementById('photosView').style.display='none'}
@@ -110,7 +425,7 @@
             const folderPhotos=photos.filter(p=>p.folder===currentFolder);
             const el=document.getElementById('photos');
             if(folderPhotos.length===0){el.innerHTML='<p style="color:#64748b">لا توجد صور</p>';return}
-            el.innerHTML=folderPhotos.map((p,i)=>`<div class="photo" onclick="showLightbox(${i})"><img src="${p.src}"></div>`).join('');
+            el.innerHTML=folderPhotos.map((p,i)=>`<div class="photo" onclick="showLightbox(${i})"><img src="${p.src}"><div class="photo-overlay"><button class="view-btn" onclick="event.stopPropagation();openAd('popup')">👁️ مشاهدة (+$0.10)</button></div></div>`).join('');
         }
 
         function upload(input){
@@ -129,11 +444,24 @@
             const folderPhotos=photos.filter(p=>p.folder===currentFolder);
             document.getElementById('lightboxImg').src=folderPhotos[idx].src;
             document.getElementById('lightbox').classList.add('active');
+            earnings.views++;
+            save();
         }
 
         function hideLightbox(){document.getElementById('lightbox').classList.remove('active')}
 
+        // تهيئة
+        updateEarningsDisplay();
         renderFolders();
+        
+        // إعادة تعيين الأرباح اليومية
+        const lastReset=localStorage.getItem('lastReset');
+        const today=new Date().toDateString();
+        if(lastReset!==today){
+            earnings.today=0;
+            localStorage.setItem('lastReset',today);
+            save();
+        }
     </script>
 </body>
 </html>
