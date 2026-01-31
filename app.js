@@ -356,3 +356,4 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('cookieBanner').style.display = 'none';
     }
 });
+                                                                    
