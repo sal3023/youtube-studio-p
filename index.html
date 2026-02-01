@@ -3,45 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="منصة hd4kstudio لإنشاء فيديوهات إسلامية 4K بجودة احترافية">
-    <meta name="keywords" content="فيديو, 4K, إسلامي, يوتيوب, ربح, AdSense, قرآن">
-    <meta name="author" content="hd4kstudio">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="hd4kstudio - منصة الفيديو الاحترافية">
-    <meta property="og:description" content="أنشئ فيديوهات إسلامية 4K واربح من AdSense">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://youtube-studio-p.vercel.app">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="hd4kstudio">
-    <meta name="twitter:description" content="منصة الفيديو الإسلامي 4K">
-    
-    <title>hd4kstudio - منصة الفيديو الإسلامي 4K | الربح من AdSense</title>
+    <title>hd4kstudio - منصة الفيديو الإسلامي 4K</title>
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?ca-pub-YOUR_ADSENSE_ID" crossorigin="anonymous"></script>
-    
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_GA_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-YOUR_GA_ID', {
-            'anonymize_ip': true,
-            'cookie_flags': 'SameSite=None;Secure'
-        });
-    </script>
-    
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-YOUR_GTM_ID');</script>
     
     <style>
         * {
@@ -52,105 +17,48 @@
         
         :root {
             --gold: #ffd700;
-            --gold-dark: #ffaa00;
             --dark: #0a0a0f;
-            --darker: #050508;
             --card: #151520;
-            --card-hover: #1a1a28;
-            --accent: #1e1e2e;
-            --success: #00d084;
-            --danger: #ff4757;
-            --warning: #ffa502;
-            --info: #3742fa;
             --text: #e0e0e0;
-            --text-muted: #888;
-            --border: rgba(255,215,0,0.1);
-            --gradient: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f23 100%);
-            --gradient-gold: linear-gradient(45deg, #ffd700, #ff8c00);
-        }
-        
-        html {
-            scroll-behavior: smooth;
+            --muted: #888;
         }
         
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--gradient);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
             color: var(--text);
             min-height: 100vh;
             line-height: 1.6;
-            overflow-x: hidden;
         }
         
-        /* Accessibility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
-            border: 0;
-        }
-        
-        /* Header Ad - Responsive */
+        /* Header Ad */
         .ad-header {
-            background: var(--darker);
+            background: #050508;
             padding: 10px;
             text-align: center;
             min-height: 90px;
-            border-bottom: 1px solid var(--border);
-            position: relative;
+            border-bottom: 1px solid rgba(255,215,0,0.1);
         }
         
         .ad-label {
-            position: absolute;
-            top: 5px;
-            right: 10px;
             font-size: 10px;
-            color: var(--text-muted);
-            background: rgba(0,0,0,0.5);
-            padding: 2px 8px;
-            border-radius: 4px;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 5px;
         }
         
-        /* Skip to content for accessibility */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--gold);
-            color: var(--dark);
-            padding: 8px;
-            text-decoration: none;
-            z-index: 10000;
-        }
-        
-        .skip-link:focus {
-            top: 0;
-        }
-        
-        /* Navigation */
+        /* Navbar */
         .navbar {
             background: rgba(10,10,15,0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
-            z-index: 9999;
+            z-index: 1000;
             border-bottom: 2px solid var(--gold);
-            transition: all 0.3s;
-        }
-        
-        .navbar.scrolled {
-            padding: 0.5rem 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         
         .nav-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -158,1048 +66,261 @@
         }
         
         .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--gold);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            letter-spacing: -1px;
-        }
-        
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 0.5rem;
-            list-style: none;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-            font-weight: 500;
-            position: relative;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: all 0.3s;
-            transform: translateX(-50%);
-        }
-        
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 80%;
-        }
-        
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--gold);
-        }
-        
-        .btn-nav {
-            background: var(--gradient-gold);
-            color: var(--dark) !important;
-            font-weight: 700;
-            padding: 0.6rem 1.5rem !important;
-        }
-        
-        .btn-nav::after {
-            display: none !important;
-        }
-        
-        .btn-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255,215,0,0.3);
-        }
-        
-        /* Mobile menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--gold);
             font-size: 1.5rem;
-            cursor: pointer;
+            font-weight: bold;
+            color: var(--gold);
+            text-decoration: none;
         }
         
         /* Container */
         .container {
-            max-width: 1400px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
         }
         
-        /* Hero Section */
+        /* Hero */
         .hero {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 2rem;
-            margin: 3rem 0;
-            align-items: start;
-        }
-        
-        .hero-main {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 4rem;
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-main::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
-            pointer-events: none;
+            text-align: center;
+            padding: 3rem 0;
         }
         
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-        
-        .hero-description {
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            font-size: 1.2rem;
-            max-width: 600px;
-        }
-        
-        .hero-badges {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-        
-        .badge {
-            background: rgba(255,215,0,0.1);
-            color: var(--gold);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-        
-        .stat-box {
-            background: var(--accent);
-            padding: 2rem;
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-gold);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-        
-        .stat-box:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .stat-box:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold);
-        }
-        
-        .stat-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-number {
             font-size: 2.5rem;
-            font-weight: 800;
             color: var(--gold);
-            line-height: 1;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            position: sticky;
-            top: 100px;
-        }
-        
-        .ad-box {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 1.5rem;
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-            position: relative;
-        }
-        
-        .ad-box.large {
-            min-height: 600px;
-        }
-        
-        /* Main Content Ad */
-        .content-ad {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 3rem 0;
-            text-align: center;
-            min-height: 120px;
-            border: 1px solid var(--border);
-        }
-        
-        /* Generator Section */
-        .generator-section {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 4rem;
-            margin: 4rem 0;
-            border: 2px solid var(--gold);
-            position: relative;
-            box-shadow: 0 20px 60px rgba(255,215,0,0.1);
-        }
-        
-        .section-badge {
-            position: absolute;
-            top: -15px;
-            right: 40px;
-            background: var(--gradient-gold);
-            color: var(--dark);
-            padding: 0.6rem 2rem;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            box-shadow: 0 5px 20px rgba(255,215,0,0.3);
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-header h2 {
-            color: var(--gold);
-            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
         
-        .section-header p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
+        .hero p {
+            color: var(--(--muted);
+            font-size: 1.1rem;
         }
         
-        /* Form */
-        .generator-form {
+        /* Stats */
+        .stats {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-box {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        
+        /* Generator */
+        .generator {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--gold);
+        }
+        
+        .generator h2 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
         }
         
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-        
-        .form-group.full-width {
-            grid-column: span 2;
+            margin-bottom: 1.5rem;
         }
         
         .form-group label {
-            font-size: 0.95rem;
+            display: block;
             color: var(--gold);
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .form-group label .required {
-            color: var(--danger);
         }
         
         .form-group select,
-        .form-group input,
-        .form-group textarea {
-            padding: 1.2rem;
-            border-radius: 12px;
-            border: 2px solid var(--border);
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255,215,0,0.2);
             background: var(--dark);
             color: white;
             font-size: 1rem;
-            transition: all 0.3s;
-            font-family: inherit;
         }
         
-        .form-group select:focus,
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
-        }
-        
-        .form-group select option {
-            background: var(--dark);
-            color: white;
-        }
-        
-        .form-hint {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-        
-        .btn-generate {
-            grid-column: span 2;
-            background: var(--gradient-gold);
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(45deg, var(--gold), #ff8c00);
             color: var(--dark);
-            padding: 1.5rem;
             border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 800;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-top: 1rem;
-            position: relative;
-            overflow: hidden;
         }
         
-        .btn-generate::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
         }
         
-        .btn-generate:hover::before {
-            left: 100%;
-        }
-        
-        .btn-generate:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255,215,0,0.3);
-        }
-        
-        .btn-generate:disabled {
+        .btn-submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
         
-        /* Loading State */
-        .loading-state {
+        /* Loading */
+        .loading {
             display: none;
             text-align: center;
-            padding: 4rem;
+            padding: 2rem;
         }
         
-        .loading-state.active {
+        .loading.show {
             display: block;
         }
         
-        .spinner-container {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2rem;
-        }
-        
         .spinner {
-            width: 100%;
-            height: 100%;
-            border: 4px solid var(--border);
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,215,0,0.2);
             border-top-color: var(--gold);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-        }
-        
-        .spinner-inner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
+            margin: 0 auto 1rem;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        .loading-title {
-            font-size: 1.5rem;
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-        
-        .loading-text {
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-        
-        .progress-bar {
-            max-width: 400px;
-            margin: 2rem auto;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: var(--gradient-gold);
-            width: 0%;
-            transition: width 0.5s;
-            border-radius: 4px;
-        }
-        
-        /* Features Grid */
-        .features-section {
-            margin: 5rem 0;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .feature-card {
-            background: var(--card);
-            padding: 2.5rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: all 0.4s;
-            position: relative;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-            padding: 2px;
-            background: var(--gradient-gold);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: var(--card-hover);
-        }
-        
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: var(--gradient-gold);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-        }
-        
-        .feature-title {
-            color: var(--gold);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-        
-        .feature-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-        
-        /* Pricing Section */
-        .pricing-section {
-            margin: 5rem 0;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .pricing-card {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            border: 2px solid var(--border);
-            text-align: center;
-            position: relative;
-            transition: all 0.3s;
-        }
-        
-        .pricing-card.popular {
-            border-color: var(--gold);
-            transform: scale(1.05);
-            box-shadow: 0 20px 60px rgba(255,215,0,0.1);
-        }
-        
-        .popular-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gradient-gold);
-            color: var(--dark);
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-        
-        .pricing-name {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .pricing-price {
-            font-size: 4rem;
-            font-weight: 800;
-            color: var(--gold);
-            line-height: 1;
-        }
-        
-        .pricing-price span {
-            font-size: 1rem;
-            color: var(--text-muted);
-        }
-        
-        .pricing-features {
-            list-style: none;
-            margin: 2rem 0;
-            text-align: right;
-        }
-        
-        .pricing-features li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .pricing-features li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: bold;
-        }
-        
-        .btn-pricing {
-            width: 100%;
+        /* Alert */
+        .alert {
             padding: 1rem;
-            border-radius: 12px;
-            border: 2px solid var(--gold);
-            background: transparent;
-            color: var(--gold);
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .pricing-card.popular .btn-pricing {
-            background: var(--gradient-gold);
-            color: var(--dark);
-            border-color: transparent;
-        }
-        
-        .btn-pricing:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255,215,0,0.2);
-        }
-        
-        /* FAQ Section */
-        .faq-section {
-            margin: 5rem 0;
-        }
-        
-        .faq-list {
-            max-width: 800px;
-            margin: 3rem auto 0;
-        }
-        
-        .faq-item {
-            background: var(--card);
-            border-radius: 16px;
+            border-radius: 10px;
             margin-bottom: 1rem;
-            border: 1px solid var(--border);
-            overflow: hidden;
+            display: none;
         }
         
-        .faq-question {
+        .alert.show {
+            display: block;
+        }
+        
+        .alert-success {
+            background: rgba(0,208,132,0.1);
+            border: 1px solid #00d084;
+            color: #00d084;
+        }
+        
+        .alert-error {
+            background: rgba(255,71,87,0.1);
+            border: 1px solid #ff4757;
+            color: #ff4757;
+        }
+        
+        /* Content Ad */
+        .content-ad {
+            background: var(--card);
+            border-radius: 15px;
             padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .faq-question:hover {
-            color: var(--gold);
-        }
-        
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s;
-            color: var(--text-muted);
-        }
-        
-        .faq-item.active .faq-answer {
-            padding: 0 1.5rem 1.5rem;
-            max-height: 500px;
-        }
-        
-        .faq-item.active .faq-question {
-            color: var(--gold);
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 100px;
         }
         
         /* Footer */
         .footer {
-            background: var(--darker);
-            padding: 4rem 2rem 2rem;
-            margin-top: 6rem;
+            background: #050508;
+            padding: 2rem;
+            margin-top: 3rem;
             border-top: 2px solid var(--gold);
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr repeat(3, 1fr);
-            gap: 3rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .footer-brand h3 {
-            color: var(--gold);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-brand p {
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: var(--card);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold);
-            text-decoration: none;
-            transition: all 0.3s;
-            border: 1px solid var(--border);
-        }
-        
-        .social-links a:hover {
-            background: var(--gold);
-            color: var(--dark);
-            transform: translateY(-3px);
-        }
-        
-        .footer h4 {
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+            text-align: center;
         }
         
         .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--muted);
             text-decoration: none;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
         
         .footer-links a:hover {
             color: var(--gold);
-            padding-right: 5px;
         }
         
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 3rem auto 0;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .footer-bottom p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        .footer-ad {
-            width: 100%;
-            margin-top: 2rem;
-            padding: 2rem;
-            background: var(--card);
-            border-radius: 16px;
-            text-align: center;
-        }
-        
-        /* Cookie Consent */
+        /* Cookie Banner */
         .cookie-banner {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--darker);
-            padding: 2rem;
+            background: var(--card);
+            padding: 1.5rem;
             border-top: 2px solid var(--gold);
-            z-index: 10000;
             display: none;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            z-index: 9999;
         }
         
         .cookie-banner.show {
             display: block;
         }
         
-        .cookie-container {
-            max-width: 1400px;
+        .cookie-content {
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .cookie-text h4 {
-            color: var(--gold);
-            margin-bottom: 0.5rem;
-        }
-        
-        .cookie-text p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-        
-        .cookie-buttons {
-            display: flex;
             gap: 1rem;
             flex-wrap: wrap;
         }
         
         .cookie-btn {
-            padding: 0.8rem 2rem;
-            border-radius: 10px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
             border: none;
-            font-size: 0.95rem;
+            font-weight: 600;
         }
         
         .cookie-accept {
-            background: var(--gradient-gold);
+            background: var(--gold);
             color: var(--dark);
         }
         
-        .cookie-accept:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255,215,0,0.3);
-        }
-        
-        .cookie-settings {
-            background: transparent;
-            color: var(--text);
-            border: 2px solid var(--border);
-        }
-        
-        .cookie-settings:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-        
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 9998;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            backdrop-filter: blur(5px);
-        }
-        
-        .modal-overlay.show {
-            display: flex;
-        }
-        
-        .modal {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 3rem;
-            max-width: 500px;
-            width: 100%;
-            border: 2px solid var(--gold);
-            position: relative;
-            animation: modalSlide 0.3s;
-        }
-        
-        @keyframes modalSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .modal-close:hover {
-            background: var(--border);
-            color: var(--gold);
-        }
-        
         /* Responsive */
-        @media (max-width: 1200px) {
-            .hero {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                display: none;
-            }
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-            .pricing-card.popular {
-                transform: none;
-            }
-        }
-        
         @media (max-width: 768px) {
-            .navbar {
-                padding: 1rem;
-            }
-            .nav-links {
-                display: none;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-            .hero-main {
-                padding: 2rem;
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
             }
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .generator-form {
-                grid-template-columns: 1fr;
-            }
-            .form-group.full-width,
-            .btn-generate {
-                grid-column: span 1;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .social-links {
-                justify-content: center;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-        
-        /* Animations */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Success/Error Messages */
-        .alert {
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        
-        .alert-success {
-            background: rgba(0,208,132,0.1);
-            border: 1px solid var(--success);
-            color: var(--success);
-        }
-        
-        .alert-error {
-            background: rgba(255,71,87,0.1);
-            border: 1px solid var(--danger);
-            color: var(--danger);
-        }
-        
-        /* Policy Links */
-        .policy-link {
-            color: var(--gold);
-            text-decoration: underline;
-            text-underline-offset: 3px;
-        }
-        
-        .policy-link:hover {
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-YOUR_GTM_ID"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    
-    <!-- Skip to content for accessibility -->
-    <a href="#main-content" class="skip-link">انتقل للمحتوى الرئيسي</a>
-    
+
     <!-- Header Ad -->
     <div class="ad-header">
         <span class="ad-label">إعلان</span>
@@ -1207,630 +328,229 @@
              style="display:block"
              data-ad-client="ca-pub-YOUR_ADSENSE_ID"
              data-ad-slot="HEADER_AD_SLOT"
-             data-ad-format="horizontal"
+             data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <!-- Navbar -->
+    <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo" aria-label="hd4kstudio Home">
-                🎬 hd4kstudio
-            </a>
-            
-            <ul class="nav-links" role="menubar">
-                <li role="none"><a href="#home" class="active" role="menuitem">الرئيسية</a></li>
-                <li role="none"><a href="#generator" role="menuitem">مولد الفيديو</a></li>
-                <li role="none"><a href="#features" role="menuitem">المميزات</a></li>
-                <li role="none"><a href="#pricing" role="menuitem">الأسعار</a></li>
-                <li role="none"><a href="#faq" role="menuitem">الأسئلة</a></li>
-                <li role="none"><a href="#generator" class="btn-nav" role="menuitem">ابدأ مجاناً</a></li>
-            </ul>
-            
-            <button class="mobile-menu-btn" aria-label="فتح القائمة" onclick="toggleMobileMenu()">
-                ☰
-            </button>
+            <a href="#" class="logo">🎬 hd4kstudio</a>
         </div>
     </nav>
 
-    <main id="main-content">
-        <div class="container">
-            
-            <!-- Hero Section -->
-            <section class="hero fade-in" id="home">
-                <div class="hero-main">
-                    <div class="hero-badges">
-                        <span class="badge">✨ مجاني 100%</span>
-                        <span class="badge">🎯 متوافق مع AdSense</span>
-                        <span class="badge">🔒 آمن وموثوق</span>
-                    </div>
-                    
-                    <h1>منصة الفيديو الإسلامي 4K</h1>
-                    <p class="hero-description">
-                        أنشئ فيديوهات قرآنية احترافية بجودة 4K Ultra HD. 
-                        ربح من AdSense وحقق دخل سلبي من محتوى إسلامي مميز.
-                    </p>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <div class="stat-icon">🎬</div>
-                            <div class="stat-number" id="statVideos">0</div>
-                            <div class="stat-label">فيديو منشأ</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-icon">👁️</div>
-                            <div class="stat-number" id="statViews">0</div>
-                            <div class="stat-label">مشاهدة</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-icon">👥</div>
-                            <div class="stat-number" id="statUsers">0</div>
-                            <div class="stat-label">مستخدم نشط</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-icon">💰</div>
-                            <div class="stat-number" id="statRevenue">$0</div>
-                            <div class="stat-label">أرباح مستخدمينا</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Sidebar Ads -->
-                <aside class="sidebar" aria-label="إعلانات جانبية">
-                    <div class="ad-box">
-                        <span class="ad-label">إعلان</span>
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                             data-ad-slot="SIDEBAR_AD_1"
-                             data-ad-format="vertical"></ins>
-                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                    </div>
-                    <div class="ad-box large">
-                        <span class="ad-label">إعلان</span>
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                             data-ad-slot="SIDEBAR_AD_2"
-                             data-ad-format="vertical"></ins>
-                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                    </div>
-                </aside>
-            </section>
-
-            <!-- In-Content Ad -->
-            <div class="content-ad">
-                <span class="ad-label">إعلان</span>
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                     data-ad-slot="CONTENT_AD_SLOT"
-                     data-ad-format="horizontal"
-                     data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </div>
-
-            <!-- Generator Section -->
-            <section class="generator-section fade-in" id="generator">
-                <span class="section-badge">🔥 الأكثر استخداماً</span>
-                
-                <div class="section-header">
-                    <h2>مولد الفيديو الذكي</h2>
-                    <p>أنشئ فيديوهاتك في دقائق. اختر السورة، حدد الجودة، واستلم الفيديو على بريدك.</p>
-                </div>
-                
-                <form class="generator-form" id="videoForm" novalidate>
-                    <div class="form-group">
-                        <label for="surah">📖 اختر السورة <span class="required">*</span></label>
-                        <select id="surah" name="surah" required aria-required="true">
-                            <option value="" disabled selected>اختر سورة...</option>
-                            <option value="fatiha">سورة الفاتحة</option>
-                            <option value="ikhlas">سورة الإخلاص</option>
-                            <option value="falaq">سورة الفلق</option>
-                            <option value="nas">سورة الناس</option>
-                            <option value="kawthar">سورة الكوثر</option>
-                            <option value="asr">سورة العصر</option>
-                            <option value="kafirun">سورة الكافرون</option>
-                            <option value="maun">سورة الماعون</option>
-                            <option value="quraysh">سورة قريش</option>
-                            <option value="humazah">سورة الهمزة</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="quality">🎥 جودة الفيديو</label>
-                        <select id="quality" name="quality">
-                            <option value="4K">4K Ultra HD (3840×2160)</option>
-                            <option value="1080" selected>Full HD (1920×1080)</option>
-                            <option value="720">HD (1280×720)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="duration">⏱️ المدة (دقائق)</label>
-                        <select id="duration" name="duration">
-                            <option value="5">5 دقائق</option>
-                            <option value="10" selected>10 دقائق</option>
-                            <option value="15">15 دقيقة</option>
-                            <option value="20">20 دقيقة</option>
-                            <option value="30">30 دقيقة</option>
-                        </select>
-                        <span class="form-hint">المدة الأطول = أرباح AdSense أعلى</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">📧 البريد الإلكتروني <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" 
-                               placeholder="example@email.com" 
-                               required aria-required="true"
-                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                        <span class="form-hint">سنرسل لك رابط التنزيل هنا</span>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label for="notes">📝 ملاحظات إضافية (اختياري)</label>
-                        <textarea id="notes" name="notes" rows="3" 
-                                  placeholder="أي تفاصيل خاصة تريدها في الفيديو..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-generate" id="submitBtn">
-                        <span>⚡</span>
-                        <span>إنشاء الفيديو الآن - مجاناً</span>
-                    </button>
-                    
-                    <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
-                        بالضغط على الزر، توافق على 
-                        <a href="/terms.html" class="policy-link">شروط الاستخدام</a> و
-                        <a href="/privacy.html" class="policy-link">سياسة الخصوصية</a>
-                    </p>
-                </form>
-                
-                <!-- Loading State -->
-                <div class="loading-state" id="loadingState">
-                    <div class="spinner-container">
-                        <div class="spinner"></div>
-                        <div class="spinner-inner">🎬</div>
-                    </div>
-                    <h3 class="loading-title">جاري إنشاء الفيديو...</h3>
-                    <p class="loading-text">نقوم بتحميل الصور عالية الجودة</p>
-                    <p class="loading-text">ثم نضيف التلاوة والمؤثرات</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <p style="color: var(--text-muted); margin-top: 1rem;">
-                        ⏱️ المتبقي: <span id="timeRemaining">15</span> دقيقة تقريباً
-                    </p>
-                </div>
-            </section>
-
-            <!-- Features Section -->
-            <section class="features-section fade-in" id="features">
-                <div class="section-header">
-                    <h2>لماذا hd4kstudio؟</h2>
-                    <p>كل ما تحتاجه لإنشاء محتوى إسلامي ناجح وربحي</p>
-                </div>
-                
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🎬</div>
-                        <h3 class="feature-title">جودة 4K حقيقية</h3>
-                        <p class="feature-desc">فيديوهات بدقة 3840×2160 بمعدل 60 إطار/ثانية لجودة سينمائية</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🤖</div>
-                        <h3 class="feature-title">ذكاء اصطناعي</h3>
-                        <p class="feature-desc">تحليل تلقائي للمحتوى واقتراحات تحسين لمعدلات الربح</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3 class="feature-title">تحليلات AdSense</h3>
-                        <p class="feature-desc">متابعة دقيقة للأرباح والمشاهدات والنقرات</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🚀</div>
-                        <h3 class="feature-title">نشر تلقائي</h3>
-                        <p class="feature-desc">رفع مباشر إلى YouTube مع تحسين SEO تلقائي</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎵</div>
-                        <h3 class="feature-title">تلاوات احترافية</h3>
-                        <p class="feature-desc">صوت عربي واضح بجودة استوديو مع تأثيرات صوتية</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔒</div>
-                        <h3 class="feature-title">100% آمن</h3>
-                        <p class="feature-desc">متوافق مع سياسات YouTube وAdSense بالكامل</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">💰</div>
-                        <h3 class="feature-title">ربح سريع</h3>
-                        <p class="feature-desc">ابدأ الربح من أول فيديو مع إعلانات مُحسّنة</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📱</div>
-                        <h3 class="feature-title">تطبيق موبايل</h3>
-                        <p class="feature-desc">إدارة قناتك من أي مكان مع تطبيق iOS وAndroid</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- In-Content Ad 2 -->
-            <div class="content-ad">
-                <span class="ad-label">إعلان</span>
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                     data-ad-slot="CONTENT_AD_2_SLOT"
-                     data-ad-format="horizontal"
-                     data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </div>
-
-            <!-- Pricing Section -->
-            <section class="pricing-section fade-in" id="pricing">
-                <div class="section-header">
-                    <h2>خطط الأسعار</h2>
-                    <p>اختر الخطة المناسبة لأهدافك</p>
-                </div>
-                
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3 class="pricing-name">مجاني</h3>
-                        <div class="pricing-price">$0<span>/شهر</span></div>
-                        <ul class="pricing-features">
-                            <li>5 فيديوهات شهرياً</li>
-                            <li>جودة 1080p</li>
-                            <li>علامة مائية</li>
-                            <li>دعم عبر البريد</li>
-                        </ul>
-                        <button class="btn-pricing" onclick="selectPlan('free')">ابدأ مجاناً</button>
-                    </div>
-                    
-                    <div class="pricing-card popular">
-                        <span class="popular-badge">الأكثر شعبية</span>
-                        <h3 class="pricing-name">برو</h3>
-                        <div class="pricing-price">$9.99<span>/شهر</span></div>
-                        <ul class="pricing-features">
-                            <li>فيديوهات غير محدودة</li>
-                            <li>جودة 4K</li>
-                            <li>بدون علامة مائية</li>
-                            <li>نشر تلقائي</li>
-                            <li>تحليلات AdSense متقدمة</li>
-                            <li>دعم فني 24/7</li>
-                        </ul>
-                        <button class="btn-pricing" onclick="selectPlan('pro')">اشترك الآن</button>
-                    </div>
-                    
-                    <div class="pricing-card">
-                        <h3 class="pricing-name">وكالة</h3>
-                        <div class="pricing-price">$49.99<span>/شهر</span></div>
-                        <ul class="pricing-features">
-                            <li>كل مميزات البرو</li>
-                            <li>10 حسابات فرعية</li>
-                            <li>API للتكامل</li>
-                            <li>تصميم مخصص</li>
-                            <li>مدير حساب مخصص</li>
-                        </ul>
-                        <button class="btn-pricing" onclick="selectPlan('agency')">تواصل معنا</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- FAQ Section -->
-            <section class="faq-section fade-in" id="faq">
-                <div class="section-header">
-                    <h2>الأسئلة الشائعة</h2>
-                    <p>إجابات على استفساراتك</p>
-                </div>
-                
-                <div class="faq-list">
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>هل يمكنني الربح من AdSense باستخدام هذه الفيديوهات؟</span>
-                            <span>▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            نعم! جميع فيديوهاتنا متوافقة 100% مع سياسات AdSense. نحن نستخدم محتوى قرآني عام مع صور مرخصة وصوت AI، لذا لا توجد مشاكل حقوق نشر.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>كم من الوقت يستغرق إنشاء الفيديو؟</span>
-                            <span>▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            عادة بين 10-20 دقيقة حسب الجودة والمدة. الفيديوهات 4K تستغرق وقتاً أطول قليلاً. سيتم إرسال رابط التنزيل إلى بريدك فور الانتهاء.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>هل يمكنني استخدام الفيديوهات على YouTube؟</span>
-                            <span>▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            نعم، الفيديوهات ملكك بالكامل. يمكنك استخدامها على YouTube وFacebook وInstagram وTikTok وأي منصة أخرى.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>هل المنصة آمنة وقانونية؟</span>
-                            <span>▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            نعم، نحن نلتزم بجميع القوانين وسياسات Google. لدينا صفحات خصوصية وشروط استخدام واضحة، ونستخدم فقط مصادر محتوى مرخصة.
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3>🎬 hd4kstudio</h3>
-                <p>منصة احترافية لإنشاء الفيديوهات الإسلامية 4K. ساعدنا الآلاف من المستخدمين على بناء قنوات ناجحة وتحقيق دخل سلبي.</p>
-                <div class="social-links">
-                    <a href="#" aria-label="Twitter">🐦</a>
-                    <a href="#" aria-label="Telegram">✈️</a>
-                    <a href="#" aria-label="YouTube">▶️</a>
-                    <a href="#" aria-label="Instagram">📷</a>
-                </div>
-            </div>
-            <div>
-                <h4>روابط سريعة</h4>
-                <ul class="footer-links">
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#generator">مولد الفيديو</a></li>
-                    <li><a href="#pricing">الأسعار</a></li>
-                    <li><a href="#faq">الأسئلة الشائعة</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>قانوني</h4>
-                <ul class="footer-links">
-                    <li><a href="/privacy.html">سياسة الخصوصية</a></li>
-                    <li><a href="/terms.html">شروط الاستخدام</a></li>
-                    <li><a href="/cookies.html">سياسة الكوكيز</a></li>
-                    <li><a href="/dmca">DMCA</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>الدعم</h4>
-                <ul class="footer-links">
-                    <li><a href="mailto:support@hd4kstudio.com">support@hd4kstudio.com</a></li>
-                    <li><a href="https://t.me/hd4kstudio">تيليجرام</a></li>
-                    <li><a href="#">مركز المساعدة</a></li>
-                    <li><a href="#">حالة النظام</a></li>
-                </ul>
-            </div>
-        </div>
+    <div class="container">
         
-        <div class="footer-ad">
+        <!-- Hero -->
+        <section class="hero">
+            <h1>منصة الفيديو الإسلامي 4K</h1>
+            <p>أنشئ فيديوهات قرآنية احترافية واربح من AdSense</p>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="statVideos">15,420</div>
+                    <div class="stat-label">فيديو منشأ</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="statViews">892K</div>
+                    <div class="stat-label">مشاهدة</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="statUsers">5,230</div>
+                    <div class="stat-label">مستخدم</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="statRevenue">$12.5K</div>
+                    <div class="stat-label">أرباح</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Ad -->
+        <div class="content-ad">
             <span class="ad-label">إعلان</span>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                 data-ad-slot="FOOTER_AD_SLOT"
-                 data-ad-format="horizontal"
-                 data-full-width-responsive="true"></ins>
+                 data-ad-slot="CONTENT_AD_SLOT"
+                 data-ad-format="auto"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-        
-        <div class="footer-bottom">
-            <p>© 2025 hd4kstudio. جميع الحقوق محفوظة.</p>
-            <p>متوافق مع Google AdSense | Google AdMob | YouTube Partner Program</p>
+
+        <!-- Generator -->
+        <section class="generator">
+            <h2>🎬 مولد الفيديو</h2>
+            
+            <div class="alert alert-success" id="successAlert">
+                ✅ تم إرسال طلبك بنجاح! سيتم إرسال رابط الفيديو إلى بريدك.
+            </div>
+            
+            <div class="alert alert-error" id="errorAlert">
+                ❌ حدث خطأ. يرجى المحاولة مرة أخرى.
+            </div>
+            
+            <form id="videoForm">
+                <div class="form-group">
+                    <label for="surah">📖 اختر السورة</label>
+                    <select id="surah" name="surah" required>
+                        <option value="">اختر سورة...</option>
+                        <option value="fatiha">سورة الفاتحة</option>
+                        <option value="ikhlas">سورة الإخلاص</option>
+                        <option value="falaq">سورة الفلق</option>
+                        <option value="nas">سورة الناس</option>
+                        <option value="kawthar">سورة الكوثر</option>
+                        <option value="asr">سورة العصر</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quality">🎥 الجودة</label>
+                    <select id="quality" name="quality">
+                        <option value="1080">Full HD (1080p)</option>
+                        <option value="4K">4K Ultra HD</option>
+                        <option value="720">HD (720p)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">⏱️ المدة (دقائق)</label>
+                    <select id="duration" name="duration">
+                        <option value="5">5 دقائق</option>
+                        <option value="10" selected>10 دقائق</option>
+                        <option value="15">15 دقيقة</option>
+                        <option value="20">20 دقيقة</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">📧 البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    ⚡ إنشاء الفيديو الآن
+                </button>
+            </form>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>جاري إرسال الطلب...</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/privacy.html">سياسة الخصوصية</a>
+            <a href="/terms.html">شروط الاستخدام</a>
+            <a href="/cookies.html">سياسة الكوكيز</a>
+            <a href="mailto:support@hd4kstudio.com">الدعم</a>
         </div>
+        <p style="color: var(--muted);">© 2025 hd4kstudio - جميع الحقوق محفوظة</p>
     </footer>
 
-    <!-- Cookie Consent -->
+    <!-- Cookie Banner -->
     <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-container">
-            <div class="cookie-text">
-                <h4>🍪 نستخدم ملفات تعريف الارتباط</h4>
-                <p>نستخدم Google AdSense وGoogle Analytics لتحسين تجربتك وعرض إعلانات مخصصة. 
-                   بالمتابعة، توافق على <a href="/cookies.html" class="policy-link">سياسة الكوكيز</a> الخاصة بنا.</p>
+        <div class="cookie-content">
+            <div>
+                <strong style="color: var(--gold);">🍪 نستخدم ملفات تعريف الارتباط</strong>
+                <p style="color: var(--muted); font-size: 0.9rem;">نستخدم Google AdSense لعرض إعلانات مخصصة</p>
             </div>
-            <div class="cookie-buttons">
-                <button class="cookie-btn cookie-settings" onclick="openCookieSettings()">الإعدادات</button>
-                <button class="cookie-btn cookie-accept" onclick="acceptCookies()">موافق</button>
-            </div>
+            <button class="cookie-btn cookie-accept" onclick="acceptCookies()">موافق</button>
         </div>
     </div>
 
     <!-- JavaScript -->
     <script>
-        // Animate numbers
-        function animateNumber(id, target, prefix = '', duration = 2000) {
-            const el = document.getElementById(id);
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                el.textContent = prefix + Math.floor(current).toLocaleString();
-            }, 16);
+        // Cookie consent
+        if (!localStorage.getItem('cookies')) {
+            document.getElementById('cookieBanner').classList.add('show');
         }
-
-        // Initialize
-        window.addEventListener('load', () => {
-            animateNumber('statVideos', 15420);
-            animateNumber('statViews', 892000);
-            animateNumber('statUsers', 5230);
-            animateNumber('statRevenue', 12500, '$');
-            
-            // Check cookie consent
-            if (!localStorage.getItem('cookieConsent')) {
-                document.getElementById('cookieBanner').classList.add('show');
-            }
-            
-            // Navbar scroll effect
-            window.addEventListener('scroll', () => {
-                const navbar = document.getElementById('navbar');
-                if (window.scrollY > 100) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-        });
-
-        // Cookie functions
+        
         function acceptCookies() {
-            localStorage.setItem('cookieConsent', JSON.stringify({
-                accepted: true,
-                date: new Date().toISOString(),
-                preferences: {
-                    necessary: true,
-                    analytics: true,
-                    ads: true
-                }
-            }));
-            document.getElementById('cookieBanner').classList.remove('show');
-            initializeAds();
-        }
-
-        function declineCookies() {
-            localStorage.setItem('cookieConsent', JSON.stringify({
-                accepted: false,
-                date: new Date().toISOString()
-            }));
+            localStorage.setItem('cookies', 'accepted');
             document.getElementById('cookieBanner').classList.remove('show');
         }
-
-        function openCookieSettings() {
-            // Open cookie settings modal
-            alert('سيتم فتح إعدادات الكوكيز هنا');
-        }
-
-        // Initialize ads
-        function initializeAds() {
-            if (typeof adsbygoogle !== 'undefined') {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            }
-        }
-
+        
         // Form submission
         document.getElementById('videoForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const form = e.target;
             const submitBtn = document.getElementById('submitBtn');
-            const loadingState = document.getElementById('loadingState');
-            const progressFill = document.getElementById('progressFill');
-            const timeRemaining = document.getElementById('timeRemaining');
+            const loading = document.getElementById('loading');
+            const form = document.getElementById('videoForm');
+            const successAlert = document.getElementById('successAlert');
+            const errorAlert = document.getElementById('errorAlert');
             
-            // Validate
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
+            // Hide alerts
+            successAlert.classList.remove('show');
+            errorAlert.classList.remove('show');
             
             // Show loading
+            submitBtn.disabled = true;
             form.style.display = 'none';
-            loadingState.classList.add('active');
-            
-            // Simulate progress
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 95) progress = 95;
-                progressFill.style.width = progress + '%';
-                timeRemaining.textContent = Math.max(1, Math.floor((100 - progress) / 10));
-            }, 2000);
+            loading.classList.add('show');
             
             try {
                 const formData = {
                     surah: document.getElementById('surah').value,
                     quality: document.getElementById('quality').value,
                     duration: document.getElementById('duration').value,
-                    email: document.getElementById('email').value,
-                    notes: document.getElementById('notes').value
+                    email: document.getElementById('email').value
                 };
                 
                 const response = await fetch('/api/generate', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(formData)
                 });
                 
                 const result = await response.json();
                 
-                clearInterval(progressInterval);
-                progressFill.style.width = '100%';
-                
                 if (result.success) {
-                    alert('✅ تم بدء إنشاء الفيديو بنجاح! سيتم إرسال الرابط إلى بريدك.');
-                    // Reset form
+                    successAlert.classList.add('show');
                     form.reset();
                 } else {
-                    throw new Error(result.error || 'حدث خطأ غير متوقع');
+                    throw new Error(result.error || 'Unknown error');
                 }
+                
             } catch (error) {
-                alert('❌ خطأ: ' + error.message);
-            } finally {
-                setTimeout(() => {
-                    loadingState.classList.remove('active');
-                    form.style.display = 'grid';
-                    progressFill.style.width = '0%';
-                }, 1000);
-            }
-        });
-
-        // FAQ toggle
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            // Close all
-            document.querySelectorAll('.faq-item').forEach(faq => {
-                faq.classList.remove('active');
-            });
-            
-            // Open clicked if wasn't active
-            if (!isActive) {
-                item.classList.add('active');
-            }
-        }
-
-        // Plan selection
-        function selectPlan(plan) {
-            if (plan === 'free') {
-                document.getElementById('generator').scrollIntoView({behavior: 'smooth'});
-            } else {
-                alert('سيتم توجيهك لصفحة الدفع لخطة ' + plan);
-            }
-        }
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            alert('سيتم فتح القائمة الجانبية');
-        }
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+                console.error('Error:', errorah').value,
+                    quality: document.getElementById('quality').value,
+                    duration: document.getElementById('duration').value,
+                    email: document.getElementById('email').value
+                };
+                
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    successAlert.classList.add('show');
+                    form.reset();
+                } else {
+                    throw new Error(result.error || 'Unknown error');
                 }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card, .pricing-card, .faq-item').forEach(el => {
-            observer.observe(el);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                errorAlert.classList.add('show');
+            } finally {
+                loading.classList.remove('show');
+                form.style.display = 'block';
+                submitBtn.disabled = false;
+            }
         });
     </script>
 
