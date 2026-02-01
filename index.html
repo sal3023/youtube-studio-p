@@ -1,314 +1,161 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض الصور | ربح العملات الرقمية</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
-        body{background:#0f172a;color:#fff;min-height:100vh}
-        
-        /* Cookie Banner */
-        .cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#1e293b;padding:1rem;z-index:9999;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:2px solid #6366f1}
-        .cookie-btn{background:#6366f1;color:#fff;border:none;padding:0.5rem 1.5rem;border-radius:8px;cursor:pointer}
-        
-        /* Header */
-        .header{background:#1e293b;padding:1rem;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.1)}
-        .header-content{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-        .logo{font-size:1.5rem;font-weight:bold;background:linear-gradient(90deg,#6366f1,#f7931a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .btn{padding:0.6rem 1.2rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:all 0.3s}
-        .btn-primary{background:#6366f1;color:#fff}
-        .btn-success{background:#10b981;color:#fff}
-        .btn-crypto{background:#f7931a;color:#000}
-        .btn-secondary{background:#334155;color:#fff}
-        
-        .container{max-width:1400px;margin:0 auto;padding:1.5rem}
-        
-        /* Stats */
-        .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
-        @media(min-width:768px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
-        .stat-card{background:#1e293b;padding:1.5rem;border-radius:16px;text-align:center;border:1px solid rgba(255,255,255,0.1)}
-        .stat-value{font-size:1.8rem;font-weight:bold;color:#f7931a}
-        .stat-label{color:#64748b;font-size:0.9rem;margin-top:0.5rem}
-        
-        /* Tabs */
-        .tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:0.5rem}
-        .tab{background:#334155;color:#94a3b8;border:none;padding:0.75rem 1.5rem;border-radius:12px;cursor:pointer;white-space:nowrap;transition:all 0.3s}
-        .tab.active{background:#6366f1;color:#fff}
-        .tab-content{display:none !important}
-        .tab-content.active{display:block !important;animation:fadeIn 0.3s}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        
-        /* Ad Cards */
-        .ad-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
-        .ad-card{background:#1e293b;padding:1.5rem;border-radius:16px;cursor:pointer;transition:all 0.3s;text-align:center;border:2px solid transparent}
-        .ad-card:hover{border-color:#6366f1;transform:translateY(-5px)}
-        .ad-icon{font-size:3rem;margin-bottom:1rem}
-        .ad-title{font-weight:bold;margin-bottom:0.5rem}
-        .ad-desc{color:#64748b;font-size:0.9rem;margin-bottom:1rem}
-        .ad-reward{background:#10b981;color:#000;padding:0.5rem 1rem;border-radius:20px;font-weight:bold;display:inline-block}
-        
-        /* Crypto */
-        .crypto-section{background:#1e293b;padding:2rem;border-radius:16px;border:1px solid rgba(247,147,26,0.3)}
-        .crypto-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1.5rem 0}
-        @media(min-width:768px){.crypto-grid{grid-template-columns:repeat(4,1fr)}}
-        .crypto-option{background:#0f172a;padding:1.5rem;border-radius:12px;text-align:center;cursor:pointer;transition:all 0.3s;border:2px solid transparent}
-        .crypto-option:hover{border-color:#f7931a}
-        .crypto-option.selected{border-color:#f7931a;background:rgba(247,147,26,0.1)}
-        .crypto-icon{font-size:2.5rem;margin-bottom:0.5rem}
-        
-        .form-input{width:100%;padding:0.875rem;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#fff;margin:0.5rem 0;font-size:1rem}
-        .form-input:focus{outline:none;border-color:#f7931a}
-        
-        /* Tasks */
-        .task-item{display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#1e293b;border-radius:12px;margin-bottom:0.5rem}
-        .task-info{display:flex;align-items:center;gap:1rem}
-        .task-icon{font-size:1.5rem}
-        
-        /* Gallery */
-        .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-        @media(min-width:768px){.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
-        .folder-card,.photo-card{background:#1e293b;border-radius:12px;overflow:hidden;cursor:pointer;aspect-ratio:1;position:relative;transition:transform 0.3s}
-        .folder-card:hover,.photo-card:hover{transform:scale(1.02)}
-        .folder-icon,.photo-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem}
-        .photo-img img{width:100%;height:100%;object-fit:cover}
-        .folder-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.9));padding:1rem}
-        
-        .upload-zone{background:#1e293b;padding:2rem;border-radius:16px;text-align:center;cursor:pointer;margin-bottom:1rem;border:2px dashed #334155;transition:all 0.3s}
-        .upload-zone:hover{border-color:#6366f1}
-        
-        /* History */
-        .history-item{display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#0f172a;border-radius:8px;margin-bottom:0.5rem}
-        .status-pending{color:#f59e0b}
-        .status-completed{color:#10b981}
-        
-        /* Modal */
-        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;justify-content:center;align-items:center;padding:1rem}
-        .modal-overlay.active{display:flex}
-        .modal{background:#1e293b;padding:2rem;border-radius:20px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
-        .modal-close{position:absolute;top:1rem;left:1rem;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
-        
-        .timer{font-size:4rem;font-weight:bold;color:#f7931a;text-align:center;margin:2rem 0}
-        .progress-bar{height:8px;background:#334155;border-radius:4px;overflow:hidden;margin:1rem 0}
-        .progress-fill{height:100%;background:linear-gradient(90deg,#f7931a,#ffd700);width:0%;transition:width 0.3s}
-        
-        /* Notification */
-        .notification{position:fixed;top:20px;right:20px;background:#10b981;color:#fff;padding:1rem 1.5rem;border-radius:12px;z-index:9999;transform:translateX(400px);transition:transform 0.3s;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
-        .notification.show{transform:translateX(0)}
-        .notification.error{background:#ef4444}
-        
-        /* Footer */
-        .footer{background:#1e293b;padding:2rem;margin-top:3rem;border-top:1px solid rgba(255,255,255,0.1)}
-        .footer-content{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem}
-        .footer a{color:#94a3b8;text-decoration:none}
-        .footer a:hover{color:#fff}
-        
-        .hidden{display:none !important}
-    </style>
-</head>
-<body>
-    <!-- Cookie Banner -->
-    <div class="cookie-banner" id="cookieBanner">
-        <p>🍪 نستخدم الكوكيز لتحسين تجربتك</p>
-        <button class="cookie-btn" onclick="acceptCookies()">موافق</button>
-    </div>
+#!/usr/bin/env python3
+"""
+hd4kstudio - 4K Islamic Video Generator
+"""
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">📷 Gallery Crypto Earn</div>
-            <div>
-                <button class="btn btn-primary" onclick="switchTab('gallery')">🖼️ معرض</button>
-                <button class="btn btn-success" onclick="switchTab('earn')">💰 ربح</button>
-                <button class="btn btn-crypto" onclick="switchTab('crypto')">₿ سحب</button>
-            </div>
-        </div>
-    </header>
+import os
+import sys
+import subprocess
 
-    <div class="container">
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="statBtc">₿0.000000</div>
-                <div class="stat-label">رصيد Bitcoin</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="statUsd">$0.00</div>
-                <div class="stat-label">رصيد USD</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="statViews">0</div>
-                <div class="stat-label">المشاهدات</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="statToday">$0.00</div>
-                <div class="stat-label">أرباح اليوم</div>
-            </div>
-        </div>
+def install_packages():
+    packages = ['moviepy', 'Pillow', 'numpy', 'gTTS', 'pydub', 'requests', 'imageio']
+    for pkg in packages:
+        try:
+            __import__(pkg.lower().replace('pillow', 'PIL'))
+        except ImportError:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", pkg, "-q"])
 
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('earn')" id="tab-earn">💰 الربح</button>
-            <button class="tab" onclick="switchTab('tasks')" id="tab-tasks">📋 مهام</button>
-            <button class="tab" onclick="switchTab('crypto')" id="tab-crypto">₿ سحب</button>
-            <button class="tab" onclick="switchTab('history')" id="tab-history">📊 سجل</button>
-            <button class="tab" onclick="switchTab('gallery')" id="tab-gallery">🖼️ معرض</button>
-        </div>
+install_packages()
 
-        <!-- EARN TAB -->
-        <div id="tab-content-earn" class="tab-content active">
-            <h2 style="margin-bottom:1.5rem;text-align:center">🎯 اختر طريقة الربح</h2>
-            <div class="ad-grid" id="earnGrid">
-                <!-- سيتم ملؤها بالJavaScript -->
-            </div>
-        </div>
+import requests
+from pathlib import Path
+from datetime import datetime
+from time import sleep
+from moviepy.editor import *
+from moviepy.video.fx.all import fadein, fadeout
+from gtts import gTTS
+from pydub import AudioSegment
+from PIL import Image, ImageDraw
 
-        <!-- TASKS TAB -->
-        <div id="tab-content-tasks" class="tab-content">
-            <h2 style="margin-bottom:1.5rem">📋 مهام اليومية</h2>
-            <div id="tasksContainer"></div>
-        </div>
+CONFIG = {'width': 3840, 'height': 2160, 'fps': 60, 'duration': 600, 'bitrate': '40000k'}
 
-        <!-- CRYPTO TAB -->
-        <div id="tab-content-crypto" class="tab-content">
-            <div class="crypto-section">
-                <h2 style="text-align:center;margin-bottom:1rem">₿ سحب الأرباح</h2>
-                <p style="text-align:center;color:#64748b;margin-bottom:1.5rem">اختر العملة وأدخل عنوان المحفظة</p>
-                
-                <div class="crypto-grid">
-                    <div class="crypto-option" onclick="selectCrypto('BTC', this)">
-                        <div class="crypto-icon">₿</div>
-                        <div>Bitcoin</div>
-                        <small style="color:#64748b">min $10</small>
-                    </div>
-                    <div class="crypto-option" onclick="selectCrypto('ETH', this)">
-                        <div class="crypto-icon">Ξ</div>
-                        <div>Ethereum</div>
-                        <small style="color:#64748b">min $10</small>
-                    </div>
-                    <div class="crypto-option" onclick="selectCrypto('USDT', this)">
-                        <div class="crypto-icon">💵</div>
-                        <div>USDT</div>
-                        <small style="color:#64748b">min $5</small>
-                    </div>
-                    <div class="crypto-option" onclick="selectCrypto('BNB', this)">
-                        <div class="crypto-icon">🔶</div>
-                        <div>BNB</div>
-                        <small style="color:#64748b">min $10</small>
-                    </div>
-                </div>
+for folder in ['output', 'assets/images', 'assets/audio']:
+    Path(folder).mkdir(parents=True, exist_ok=True)
 
-                <div id="withdrawForm" style="display:none">
-                    <input type="text" class="form-input" id="walletAddress" placeholder="عنوان المحفظة">
-                    <input type="number" class="form-input" id="withdrawAmount" placeholder="المبلغ بالدولار" oninput="calculateCrypto()">
-                    <div style="background:#0f172a;padding:1rem;border-radius:8px;margin:1rem 0;text-align:center">
-                        <div>ستحصل على: <span id="cryptoAmount" style="color:#f7931a;font-size:1.5rem;font-weight:bold">0</span></div>
-                        <div style="color:#64748b;margin-top:0.5rem">رسوم الشبكة: $0.50</div>
-                    </div>
-                    <button class="btn btn-crypto" style="width:100%" onclick="submitWithdrawal()">🚀 تأكيد السحب</button>
-                </div>
-            </div>
-        </div>
+class ImageScraper:
+    def __init__(self):
+        self.session = requests.Session()
+        self.session.headers.update({'User-Agent': 'Mozilla/5.0'})
+        self.output_dir = Path("assets/images")
+    
+    def download(self, query="islamic", count=10):
+        print(f"Downloading {count} images...")
+        images = []
+        for i in range(count):
+            try:
+                url = f"https://source.unsplash.com/3840x2160/?{query.replace(' ', ',')}"
+                response = self.session.get(url, timeout=30)
+                if response.status_code == 200:
+                    filepath = self.output_dir / f"img_{i:03d}.jpg"
+                    with open(filepath, 'wb') as f:
+                        f.write(response.content)
+                    images.append(str(filepath))
+                    print(f"  OK {i+1}/{count}")
+                    sleep(0.3)
+            except:
+                print(f"  Skip {i+1}")
+        return images if images else self.create_placeholders(count)
+    
+    def create_placeholders(self, count):
+        images = []
+        for i in range(count):
+            img = Image.new('RGB', (3840, 2160), color=(20, 40, 60))
+            draw = ImageDraw.Draw(img)
+            draw.text((1500, 1000), f"Islamic {i+1}", fill=(255, 215, 0))
+            filepath = self.output_dir / f"placeholder_{i:03d}.jpg"
+            img.save(filepath)
+            images.append(str(filepath))
+        return images
 
-        <!-- HISTORY TAB -->
-        <div id="tab-content-history" class="tab-content">
-            <h2 style="margin-bottom:1.5rem">📊 سجل المعاملات</h2>
-            <div id="historyContainer">
-                <p style="text-align:center;color:#64748b;padding:2rem">لا توجد معاملات بعد</p>
-            </div>
-        </div>
+class ArabicVoice:
+    def __init__(self):
+        self.output_dir = Path("assets/audio")
+    
+    def create(self, text, filename="voice.mp3"):
+        try:
+            filepath = self.output_dir / filename
+            tts = gTTS(text=text, lang='ar', slow=False)
+            tts.save(str(filepath))
+            audio = AudioSegment.from_mp3(filepath)
+            audio = audio.set_frame_rate(48000).set_channels(2)
+            audio.export(filepath, format="mp3", bitrate="320k")
+            return str(filepath)
+        except:
+            return None
 
-        <!-- GALLERY TAB -->
-        <div id="tab-content-gallery" class="tab-content">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-                <h2>🖼️ معرض الصور</h2>
-                <button class="btn btn-primary" onclick="showModal('folderModal')">+ مجموعة</button>
-            </div>
-            
-            <input type="file" id="fileInput" multiple accept="image/*" style="display:none" onchange="uploadPhotos(this)">
-            
-            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-                <div style="font-size:3rem;margin-bottom:1rem">📤</div>
-                <h3>اضغط لرفع الصور</h3>
-                <p style="color:#64748b;margin-top:0.5rem">كل صورة = $0.001</p>
-            </div>
+class VideoBuilder:
+    def __init__(self):
+        self.w = CONFIG['width']
+        self.h = CONFIG['height']
+    
+    def build(self, images, texts, audio_file, output_path):
+        print("Building 4K video...")
+        duration = CONFIG['duration']
+        segment_duration = duration / len(texts)
+        clips = []
+        
+        for i, (text, img_path) in enumerate(zip(texts, images[:len(texts)])):
+            bg = (ImageClip(img_path).set_duration(segment_duration)
+                  .resize(height=self.h).set_position('center'))
+            overlay = ColorClip((self.w, self.h), (0,0,0)).set_duration(segment_duration).set_opacity(0.5)
+            txt = (TextClip(text, fontsize=140, color='gold', font='Arial-Bold',
+                          stroke_color='black', stroke_width=4, method='caption',
+                          size=(3600, None), align='center')
+                   .set_duration(segment_duration).set_position('center').fx(fadein, duration=1.5))
+            segment = CompositeVideoClip([bg, overlay, txt], size=(self.w, self.h))
+            clips.append(segment)
+        
+        final_video = concatenate_videoclips(clips, method="compose")
+        
+        if audio_file and Path(audio_file).exists():
+            audio = AudioFileClip(audio_file)
+            if audio.duration < final_video.duration:
+                n_loops = int(final_video.duration / audio.duration) + 1
+                audio = audio.loop(n=n_loops)
+            final_video = final_video.set_audio(audio.subclip(0, final_video.duration))
+        
+        final_video.write_videofile(output_path, fps=CONFIG['fps'], codec='libx264',
+                                   audio_codec='aac', bitrate=CONFIG['bitrate'],
+                                   threads=8, preset='medium', logger=None)
+        return output_path
 
-            <div id="galleryView">
-                <div class="gallery-grid" id="foldersGrid"></div>
-            </div>
-            
-            <div id="photosView" class="hidden">
-                <button class="btn btn-secondary" onclick="backToFolders()" style="margin-bottom:1rem">← رجوع</button>
-                <h3 id="currentFolderName" style="margin-bottom:1rem"></h3>
-                <div class="gallery-grid" id="photosGrid"></div>
-            </div>
-        </div>
-    </div>
+class Generator:
+    CONTENTS = {
+        '1': ('Al-Fatiha', ["Bismillahir Rahmanir Rahim", "Alhamdu lillahi Rabbil 'alamin",
+               "Ar-Rahmanir Rahim", "Maliki Yawmid Din", "Iyyaka na'budu wa Iyyaka nasta'in",
+               "Ihdinas Siratal Mustaqim", "Siratal Ladhina An'amta 'Alayhim",
+               "Ghayril Maghdubi 'Alayhim Walad Dallin"]),
+        '2': ('Al-Ikhlas', ["Bismillahir Rahmanir Rahim", "Qul Huwallahu Ahad",
+               "Allahus Samad", "Lam Yalid Wa Lam Yulad", "Wa Lam Yakun Lahu Kufuwan Ahad"]),
+        '3': ('Al-Falaq', ["Bismillahir Rahmanir Rahim", "Qul A'uzu Birabbil Falaq",
+               "Min Sharri Ma Khalaq", "Wa Min Sharri Ghasiqin Idha Waqab",
+               "Wa Min Sharri Naffathati Fil 'Uqad", "Wa Min Sharri Hasidin Idha Hasad"]),
+    }
+    
+    def __init__(self):
+        self.scraper = ImageScraper()
+        self.voice = ArabicVoice()
+        self.builder = VideoBuilder()
+    
+    def generate(self, choice='1'):
+        name, verses = self.CONTENTS.get(choice, self.CONTENTS['1'])
+        print(f"\nhd4kstudio - {name}\n{'='*50}")
+        images = self.scraper.download("islamic mosque", count=len(verses))
+        audio = self.voice.create(verses[0], f"{name.lower()}.mp3")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+        output = f"output/{name}_4K_{timestamp}.mp4"
+        self.builder.build(images, verses, audio, output)
+        print(f"\nDone: {output}")
+        return output
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div>
-                <h4 style="color:#f7931a;margin-bottom:1rem">عن الموقع</h4>
-                <p style="color:#64748b">منصة لربح العملات الرقمية مقابل مشاهدة الإعلانات واستعراض الصور</p>
-            </div>
-            <div>
-                <h4 style="color:#f7931a;margin-bottom:1rem">روابط</h4>
-                <p><a href="#" onclick="showModal('privacyModal')">الخصوصية</a></p>
-                <p><a href="#" onclick="showModal('termsModal')">الشروط</a></p>
-            </div>
-        </div>
-    </footer>
+def main():
+    print("hd4kstudio - 4K Islamic Video Generator")
+    gen = Generator()
+    print("\nAvailable:")
+    for k, (name, _) in gen.CONTENTS.items():
+        print(f"  {k}. {name}")
+    choice = input("\nSelect (1-3): ").strip()
+    gen.generate(choice if choice in gen.CONTENTS else '1')
 
-    <!-- Modals -->
-    <div class="modal-overlay" id="adModal">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('adModal')">×</button>
-            <div style="text-align:center;padding-top:1rem">
-                <div id="adIcon" style="font-size:4rem;margin-bottom:1rem">📢</div>
-                <h3 id="adTitle">جاري عرض الإعلان</h3>
-                <div class="timer" id="adTimer">5</div>
-                <div class="progress-bar"><div class="progress-fill" id="adProgress"></div></div>
-                <button class="btn btn-secondary" id="adBtn" disabled style="width:100%">انتظر...</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="folderModal">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('folderModal')">×</button>
-            <h3 style="margin-bottom:1rem">مجموعة جديدة</h3>
-            <input type="text" class="form-input" id="folderName" placeholder="اسم المجموعة">
-            <button class="btn btn-primary" style="width:100%;margin-top:1rem" onclick="createFolder()">إنشاء</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="privacyModal">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('privacyModal')">×</button>
-            <h3 style="margin-bottom:1rem">📜 سياسة الخصوصية</h3>
-            <div style="color:#94a3b8;line-height:1.8">
-                <p>نقوم بجمع: عنوان IP، نوع المتصفح، سجل النشاط.</p>
-                <p>نستخدم هذه البيانات لحساب الأرباح وعرض إعلانات مناسبة.</p>
-                <p>لا نبيع بياناتك لأطراف ثالثة.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="termsModal">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('termsModal')">×</button>
-            <h3 style="margin-bottom:1rem">⚖️ الشروط والأحكام</h3>
-            <div style="color:#94a3b8;line-height:1.8">
-                <p>يجب أن يكون عمرك 18+ سنة.</p>
-                <p>يُحظر استخدام VPN أو برامج النقر التلقائي.</p>
-                <p>الأرباح من الإعلانات حقيقية لكنها صغيرة.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="notification" id="notification"></div>
-
-    <script src="app.js"></script>
-</body>
-</html>
+if __name__ == "__main__":
+    main()
