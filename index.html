@@ -1,558 +1,73 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hd4kstudio - منصة الفيديو الإسلامي 4K</title>
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import os
+
+def send_email():
+    # ==========================================
+    # إعدادات الخادم (اختر الإعداد المناسب لك)
+    # ==========================================
     
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?ca-pub-YOUR_ADSENSE_ID" crossorigin="anonymous"></script>
+    # 1. إعدادات خادم هوتميل (Hotmail / Outlook):
+    smtp_server = "smtp.office365.com"
+    smtp_port = 587
     
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --gold: #ffd700;
-            --dark: #0a0a0f;
-            --card: #151520;
-            --text: #e0e0e0;
-            --muted: #888;
-        }
-        
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-        
-        /* Header Ad */
-        .ad-header {
-            background: #050508;
-            padding: 10px;
-            text-align: center;
-            min-height: 90px;
-            border-bottom: 1px solid rgba(255,215,0,0.1);
-        }
-        
-        .ad-label {
-            font-size: 10px;
-            color: var(--muted);
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        /* Navbar */
-        .navbar {
-            background: rgba(10,10,15,0.98);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--gold);
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--gold);
-            text-decoration: none;
-        }
-        
-        /* Container */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 3rem 0;
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-        
-        .hero p {
-            color: var(--(--muted);
-            font-size: 1.1rem;
-        }
-        
-        /* Stats */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        
-        .stat-box {
-            background: var(--card);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(255,215,0,0.1);
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--gold);
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-        
-        /* Generator */
-        .generator {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid var(--gold);
-        }
-        
-        .generator h2 {
-            text-align: center;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            color: var(--gold);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .form-group select,
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 10px;
-            border: 2px solid rgba(255,215,0,0.2);
-            background: var(--dark);
-            color: white;
-            font-size: 1rem;
-        }
-        
-        .btn-submit {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(45deg, var(--gold), #ff8c00);
-            color: var(--dark);
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-submit:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
-        }
-        
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        /* Loading */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .loading.show {
-            display: block;
-        }
-        
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255,215,0,0.2);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Alert */
-        .alert {
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-        
-        .alert.show {
-            display: block;
-        }
-        
-        .alert-success {
-            background: rgba(0,208,132,0.1);
-            border: 1px solid #00d084;
-            color: #00d084;
-        }
-        
-        .alert-error {
-            background: rgba(255,71,87,0.1);
-            border: 1px solid #ff4757;
-            color: #ff4757;
-        }
-        
-        /* Content Ad */
-        .content-ad {
-            background: var(--card);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-            min-height: 100px;
-        }
-        
-        /* Footer */
-        .footer {
-            background: #050508;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-top: 2px solid var(--gold);
-            text-align: center;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: var(--muted);
-            text-decoration: none;
-        }
-        
-        .footer-links a:hover {
-            color: var(--gold);
-        }
-        
-        /* Cookie Banner */
-        .cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--card);
-            padding: 1.5rem;
-            border-top: 2px solid var(--gold);
-            display: none;
-            z-index: 9999;
-        }
-        
-        .cookie-banner.show {
-            display: block;
-        }
-        
-        .cookie-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .cookie-btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            font-weight: 600;
-        }
-        
-        .cookie-accept {
-            background: var(--gold);
-            color: var(--dark);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
-</head>
-<body>
+    # 2. إعدادات خادم ياندكس (Yandex):
+    # smtp_server = "smtp.yandex.com"
+    # smtp_port = 587 # أو 465 مع استخدام SMTP_SSL بدلاً من starttls()
 
-    <!-- Header Ad -->
-    <div class="ad-header">
-        <span class="ad-label">إعلان</span>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-             data-ad-slot="HEADER_AD_SLOT"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
+    # ==========================================
+    # بيانات الاعتماد (المرسل)
+    # ==========================================
+    # من الأفضل دائماً استخدام متغيرات البيئة (Environment Variables) لحماية كلمة المرور
+    sender_email = "your_email@hotmail.com" # ضع بريدك الإلكتروني هنا
+    sender_password = "your_app_password"   # ضع كلمة المرور (أو كلمة مرور التطبيق إذا كان لديك مصادقة ثنائية)
+    
+    # بيانات المستلم
+    receiver_email = "receiver@example.com"
+    
+    # ==========================================
+    # إنشاء محتوى الرسالة
+    # ==========================================
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = "رسالة تجريبية من تطبيق بايثون"
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">🎬 hd4kstudio</a>
-        </div>
-    </nav>
+    body = """
+    مرحباً،
+    
+    هذه رسالة بريد إلكتروني تم إرسالها برمجياً باستخدام لغة بايثون عبر خوادم SMTP.
+    
+    تحياتي!
+    """
+    msg.attach(MIMEText(body, 'plain', 'utf-8'))
 
-    <div class="container">
+    # ==========================================
+    # الاتصال بالخادم وإرسال الرسالة
+    # ==========================================
+    try:
+        # إنشاء الاتصال بالخادم
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.ehlo()
         
-        <!-- Hero -->
-        <section class="hero">
-            <h1>منصة الفيديو الإسلامي 4K</h1>
-            <p>أنشئ فيديوهات قرآنية احترافية واربح من AdSense</p>
-            
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-number" id="statVideos">15,420</div>
-                    <div class="stat-label">فيديو منشأ</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="statViews">892K</div>
-                    <div class="stat-label">مشاهدة</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="statUsers">5,230</div>
-                    <div class="stat-label">مستخدم</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="statRevenue">$12.5K</div>
-                    <div class="stat-label">أرباح</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Content Ad -->
-        <div class="content-ad">
-            <span class="ad-label">إعلان</span>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                 data-ad-slot="CONTENT_AD_SLOT"
-                 data-ad-format="auto"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-
-        <!-- Generator -->
-        <section class="generator">
-            <h2>🎬 مولد الفيديو</h2>
-            
-            <div class="alert alert-success" id="successAlert">
-                ✅ تم إرسال طلبك بنجاح! سيتم إرسال رابط الفيديو إلى بريدك.
-            </div>
-            
-            <div class="alert alert-error" id="errorAlert">
-                ❌ حدث خطأ. يرجى المحاولة مرة أخرى.
-            </div>
-            
-            <form id="videoForm">
-                <div class="form-group">
-                    <label for="surah">📖 اختر السورة</label>
-                    <select id="surah" name="surah" required>
-                        <option value="">اختر سورة...</option>
-                        <option value="fatiha">سورة الفاتحة</option>
-                        <option value="ikhlas">سورة الإخلاص</option>
-                        <option value="falaq">سورة الفلق</option>
-                        <option value="nas">سورة الناس</option>
-                        <option value="kawthar">سورة الكوثر</option>
-                        <option value="asr">سورة العصر</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="quality">🎥 الجودة</label>
-                    <select id="quality" name="quality">
-                        <option value="1080">Full HD (1080p)</option>
-                        <option value="4K">4K Ultra HD</option>
-                        <option value="720">HD (720p)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="duration">⏱️ المدة (دقائق)</label>
-                    <select id="duration" name="duration">
-                        <option value="5">5 دقائق</option>
-                        <option value="10" selected>10 دقائق</option>
-                        <option value="15">15 دقيقة</option>
-                        <option value="20">20 دقيقة</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">📧 البريد الإلكتروني</label>
-                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
-                </div>
-                
-                <button type="submit" class="btn-submit" id="submitBtn">
-                    ⚡ إنشاء الفيديو الآن
-                </button>
-            </form>
-            
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>جاري إرسال الطلب...</p>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="/privacy.html">سياسة الخصوصية</a>
-            <a href="/terms.html">شروط الاستخدام</a>
-            <a href="/cookies.html">سياسة الكوكيز</a>
-            <a href="mailto:support@hd4kstudio.com">الدعم</a>
-        </div>
-        <p style="color: var(--muted);">© 2025 hd4kstudio - جميع الحقوق محفوظة</p>
-    </footer>
-
-    <!-- Cookie Banner -->
-    <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-content">
-            <div>
-                <strong style="color: var(--gold);">🍪 نستخدم ملفات تعريف الارتباط</strong>
-                <p style="color: var(--muted); font-size: 0.9rem;">نستخدم Google AdSense لعرض إعلانات مخصصة</p>
-            </div>
-            <button class="cookie-btn cookie-accept" onclick="acceptCookies()">موافق</button>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
-    <script>
-        // Cookie consent
-        if (!localStorage.getItem('cookies')) {
-            document.getElementById('cookieBanner').classList.add('show');
-        }
+        # تشفير الاتصال
+        server.starttls()
         
-        function acceptCookies() {
-            localStorage.setItem('cookies', 'accepted');
-            document.getElementById('cookieBanner').classList.remove('show');
-        }
+        # تسجيل الدخول
+        server.login(sender_email, sender_password)
         
-        // Form submission
-        document.getElementById('videoForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const loading = document.getElementById('loading');
-            const form = document.getElementById('videoForm');
-            const successAlert = document.getElementById('successAlert');
-            const errorAlert = document.getElementById('errorAlert');
-            
-            // Hide alerts
-            successAlert.classList.remove('show');
-            errorAlert.classList.remove('show');
-            
-            // Show loading
-            submitBtn.disabled = true;
-            form.style.display = 'none';
-            loading.classList.add('show');
-            
-            try {
-                const formData = {
-                    surah: document.getElementById('surah').value,
-                    quality: document.getElementById('quality').value,
-                    duration: document.getElementById('duration').value,
-                    email: document.getElementById('email').value
-                };
-                
-                const response = await fetch('/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    successAlert.classList.add('show');
-                    form.reset();
-                } else {
-                    throw new Error(result.error || 'Unknown error');
-                }
-                
-            } catch (error) {
-                console.error('Error:', errorah').value,
-                    quality: document.getElementById('quality').value,
-                    duration: document.getElementById('duration').value,
-                    email: document.getElementById('email').value
-                };
-                
-                const response = await fetch('/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    successAlert.classList.add('show');
-                    form.reset();
-                } else {
-                    throw new Error(result.error || 'Unknown error');
-                }
-                
-            } catch (error) {
-                console.error('Error:', error);
-                errorAlert.classList.add('show');
-            } finally {
-                loading.classList.remove('show');
-                form.style.display = 'block';
-                submitBtn.disabled = false;
-            }
-        });
-    </script>
+        # إرسال الرسالة
+        text = msg.as_string()
+        server.sendmail(sender_email, receiver_email, text)
+        print("تم إرسال البريد الإلكتروني بنجاح!")
+        
+    except Exception as e:
+        print(f"حدث خطأ أثناء إرسال البريد: {e}")
+        
+    finally:
+        # إغلاق الاتصال بالخادم
+        server.quit()
 
-</body>
-</html>
+if __name__ == "__main__":
+    send_email()
