@@ -1,0 +1,4 @@
+/api
+├── generate.js   ← لتوليد المقالات AI
+├── publish.js    ← للنشر على Blogger
+└── index.js      ← لأرشفة URL على Google Indexing API
