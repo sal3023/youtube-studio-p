@@ -2,186 +2,198 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tosh5 Enterprise | Real Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tosh5 Enterprise | Mobile Ready</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #010409; color: #f0f6fc; overflow-x: hidden; }
-        .glass { background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; }
+        body { font-family: 'Cairo', sans-serif; background-color: #010409; color: #f0f6fc; overflow-x: hidden; margin: 0; }
+        .glass { background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; }
         .nav-item { transition: all 0.3s; border-radius: 16px; }
         .nav-item.active { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border-right: 4px solid #3b82f6; }
+        
+        /* Mobile Bottom Nav Active State */
+        .mobile-nav.active { color: #60a5fa; transform: translateY(-2px); }
+        .mobile-nav.active::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 20px; height: 3px; background: #3b82f6; border-radius: 10px; }
+        
         .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); transition: transform 0.2s; }
         .btn-primary:active { transform: scale(0.95); }
         .btn-disabled { opacity: 0.5; cursor: not-allowed; }
-        .loader { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block; }
+        .loader { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid #3b82f6; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
     </style>
 </head>
-<body class="custom-scrollbar flex min-h-screen">
+<body class="flex flex-col h-screen overflow-hidden">
 
-    <aside class="w-72 border-l border-white/5 bg-[#0d1117] hidden lg:flex flex-col shrink-0">
-        <div class="h-24 flex items-center px-8 border-b border-white/5">
-            <h2 class="text-xl font-black text-blue-400">Tosh5 <span class="text-white">OS</span></h2>
+    <header class="h-16 glass !rounded-none border-b border-white/5 flex items-center justify-between px-4 lg:px-8 shrink-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black text-white">T5</div>
+            <div class="text-[10px] font-bold text-emerald-400 flex items-center gap-1.5">
+                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div> متصل
+            </div>
         </div>
-        <nav class="flex-1 p-6 space-y-2">
-            <button onclick="switchTab('writer')" id="nav-writer" class="nav-item active w-full flex items-center gap-4 p-4 text-slate-400"><i data-lucide="pen-tool"></i> صناعة المحتوى</button>
-            <button onclick="switchTab('marketing')" id="nav-marketing" class="nav-item w-full flex items-center gap-4 p-4 text-slate-400"><i data-lucide="target"></i> التسويق الذكي</button>
-            <button onclick="switchTab('audit')" id="nav-audit" class="nav-item w-full flex items-center gap-4 p-4 text-slate-400"><i data-lucide="activity"></i> فحص الـ SEO الفعلي</button>
-            <button onclick="switchTab('settings')" id="nav-settings" class="nav-item w-full flex items-center gap-4 p-4 text-slate-400"><i data-lucide="settings"></i> الإعدادات</button>
-        </nav>
-    </aside>
+        <button onclick="window.open('https://indexing-api-bulk-tool.vercel.app/', '_blank')" class="btn-primary px-4 py-1.5 rounded-lg text-[11px] font-bold flex items-center gap-1.5">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i> أرشفة
+        </button>
+    </header>
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="h-20 glass !rounded-none border-b border-white/5 flex items-center justify-between px-8">
-            <div class="text-sm font-bold text-emerald-400 flex items-center gap-2">
-                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div> النظام متصل (Real-Time)
-            </div>
-            <button onclick="openIndexingTool()" class="btn-primary px-6 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
-                <i data-lucide="zap" class="w-4 h-4"></i> أرشفة فورية (Tool)
-            </button>
-        </header>
+    <main class="flex-1 overflow-y-auto pb-24 p-4 lg:p-8" id="main-scroll">
+        <div class="max-w-4xl mx-auto">
 
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
-            <div class="max-w-6xl mx-auto space-y-8">
-
-                <section id="tab-writer" class="tab-content space-y-6">
-                    <div class="glass p-8">
-                        <h2 class="text-2xl font-black mb-6 text-blue-400">توليد محتوى متوافق مع خوارزميات 2026</h2>
-                        <input type="text" id="topic-input" placeholder="اكتب الكلمة المفتاحية أو عنوان المقال..." class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-blue-500 mb-4">
-                        <button id="btn-generate" onclick="generateRealContent()" class="btn-primary w-full py-4 rounded-xl font-bold flex justify-center items-center gap-3">
-                            <span id="txt-generate">إنشاء مقال HTML احترافي (جاهز للنشر)</span>
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <textarea id="ai-code" class="glass w-full h-[400px] p-4 font-mono text-sm text-amber-400 outline-none custom-scrollbar" placeholder="كود HTML سيظهر هنا..." dir="ltr"></textarea>
-                        <div id="ai-preview" class="glass w-full h-[400px] p-6 overflow-y-auto custom-scrollbar bg-white/5 text-slate-200">
-                            المعاينة ستظهر هنا...
-                        </div>
-                    </div>
-                    <button onclick="sendToBlogger()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-4 rounded-xl font-bold flex justify-center items-center gap-2">
-                        <i data-lucide="send"></i> إرسال المقال إلى بلوجر (عبر الإيميل السري)
+            <section id="tab-writer" class="tab-content space-y-4">
+                <div class="glass p-5 lg:p-8">
+                    <h2 class="text-xl lg:text-2xl font-black mb-4 text-blue-400 flex items-center gap-2"><i data-lucide="pen-tool"></i> صانع المحتوى</h2>
+                    <input type="text" id="topic-input" placeholder="اكتب عنوان المقال هنا..." class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500 mb-4">
+                    <button id="btn-generate" onclick="generateRealContent()" class="btn-primary w-full py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2">
+                        <span id="txt-generate">توليد مقال احترافي HTML</span>
                     </button>
-                </section>
+                </div>
+                
+                <div class="glass p-4">
+                    <label class="text-xs text-slate-400 font-bold mb-2 block">كود المقال الجاهز:</label>
+                    <textarea id="ai-code" class="w-full h-48 bg-black/40 border border-white/5 rounded-xl p-3 font-mono text-xs text-amber-400 outline-none" placeholder="سيظهر الكود هنا..." dir="ltr"></textarea>
+                </div>
 
-                <section id="tab-marketing" class="tab-content hidden space-y-6">
-                    <div class="glass p-8">
-                        <h2 class="text-2xl font-black mb-6 text-violet-400">مستشار التسويق الرقمي</h2>
-                        <button id="btn-market" onclick="generateMarketing()" class="btn-primary w-full py-4 rounded-xl font-bold flex justify-center items-center gap-3 !from-violet-600 !to-indigo-800">
-                            <span id="txt-market">توليد خطة لزيادة الأرباح (AdSense CPC)</span>
-                        </button>
-                    </div>
-                    <div id="marketing-result" class="glass p-8 min-h-[300px] text-slate-300 leading-loose">
-                        اضغط على الزر لتحليل السوق وتوليد الخطة...
-                    </div>
-                </section>
+                <button onclick="sendToBlogger()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 shadow-lg">
+                    <i data-lucide="send" class="w-4 h-4"></i> إرسال المقال إلى بلوجر
+                </button>
+            </section>
 
-                <section id="tab-audit" class="tab-content hidden space-y-6">
-                    <div class="glass p-8">
-                        <h2 class="text-2xl font-black mb-6 text-rose-400">فحص الأداء الفعلي (Google PageSpeed API)</h2>
-                        <div class="flex gap-4 mb-8">
-                            <input type="url" id="blog-url" placeholder="https://www.tosh5.shop" class="flex-1 bg-black/50 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-rose-500" dir="ltr">
-                            <button id="btn-audit" onclick="runRealAudit()" class="bg-rose-600 hover:bg-rose-700 px-8 rounded-xl font-bold flex justify-center items-center gap-3">
-                                <span id="txt-audit">بدء الفحص الحقيقي</span>
-                            </button>
+            <section id="tab-marketing" class="tab-content hidden space-y-4">
+                <div class="glass p-5 lg:p-8">
+                    <h2 class="text-xl font-black mb-4 text-violet-400 flex items-center gap-2"><i data-lucide="target"></i> خطة زيادة الأرباح</h2>
+                    <button id="btn-market" onclick="generateMarketing()" class="w-full py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600">
+                        <span id="txt-market">توليد استراتيجية CPC الآن</span>
+                    </button>
+                </div>
+                <div id="marketing-result" class="glass p-5 min-h-[200px] text-sm text-slate-300 leading-relaxed">
+                    اضغط على الزر بالأعلى لتوليد الخطة...
+                </div>
+            </section>
+
+            <section id="tab-audit" class="tab-content hidden space-y-4">
+                <div class="glass p-5 lg:p-8">
+                    <h2 class="text-xl font-black mb-4 text-rose-400 flex items-center gap-2"><i data-lucide="activity"></i> فحص سرعة جوجل</h2>
+                    <input type="url" id="blog-url" placeholder="https://www.yourblog.com" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-white outline-none focus:border-rose-500 mb-4" dir="ltr">
+                    <button id="btn-audit" onclick="runRealAudit()" class="bg-rose-600 w-full py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 mb-6">
+                        <span id="txt-audit">بدء الفحص الحقيقي</span>
+                    </button>
+                    
+                    <div class="grid grid-cols-2 gap-3" id="audit-results" style="display: none;">
+                        <div class="bg-black/40 p-4 rounded-xl text-center border border-emerald-500/20">
+                            <div class="text-2xl font-black text-emerald-400" id="score-seo">0</div>
+                            <div class="text-[10px] text-slate-400 mt-1">SEO</div>
                         </div>
-                        
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="audit-results" style="display: none;">
-                            <div class="glass p-6 text-center border-emerald-500/30">
-                                <div class="text-4xl font-black text-emerald-400 mb-2" id="score-seo">0</div>
-                                <div class="text-xs text-slate-400 uppercase">SEO Score</div>
-                            </div>
-                            <div class="glass p-6 text-center border-blue-500/30">
-                                <div class="text-4xl font-black text-blue-400 mb-2" id="score-perf">0</div>
-                                <div class="text-xs text-slate-400 uppercase">Performance</div>
-                            </div>
-                            <div class="glass p-6 text-center border-amber-500/30">
-                                <div class="text-4xl font-black text-amber-400 mb-2" id="score-speed">0s</div>
-                                <div class="text-xs text-slate-400 uppercase">Load Time</div>
-                            </div>
-                            <div class="glass p-6 text-center border-violet-500/30">
-                                <div class="text-lg font-black text-violet-400 mb-2 mt-2" id="score-platform">Blogger</div>
-                                <div class="text-xs text-slate-400 uppercase">Platform Check</div>
-                            </div>
-                        </div>
-                        <div id="audit-logs" class="mt-6 font-mono text-xs text-slate-500 h-32 overflow-y-auto glass p-4 custom-scrollbar">
-                            > بانتظار إدخال الرابط للفحص الفعلي عبر خوادم جوجل...
+                        <div class="bg-black/40 p-4 rounded-xl text-center border border-blue-500/20">
+                            <div class="text-2xl font-black text-blue-400" id="score-perf">0</div>
+                            <div class="text-[10px] text-slate-400 mt-1">السرعة</div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section id="tab-settings" class="tab-content hidden space-y-6">
-                    <div class="glass p-8 max-w-2xl mx-auto space-y-6">
-                        <h2 class="text-2xl font-black text-white mb-6">المفاتيح المركزية (API)</h2>
-                        
-                        <div>
-                            <label class="text-xs font-bold text-slate-400 mb-2 block">Gemini API Key (مطلوب للذكاء الاصطناعي)</label>
-                            <input type="password" id="key-gemini" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white outline-none" dir="ltr">
-                        </div>
-                        
-                        <div>
-                            <label class="text-xs font-bold text-slate-400 mb-2 block">بريد النشر السري (Blogger Secret Email)</label>
-                            <input type="email" id="key-mail" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-blue-400 font-mono outline-none" dir="ltr" value="opnseeamo.opnseeamo@blogger.com">
-                        </div>
-
-                        <button onclick="saveSettings()" class="btn-primary w-full py-4 rounded-xl font-bold mt-4">حفظ الإعدادات بأمان في المتصفح</button>
+            <section id="tab-settings" class="tab-content hidden space-y-4">
+                <div class="glass p-5 lg:p-8 space-y-5">
+                    <h2 class="text-xl font-black text-white flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="settings"></i> الإعدادات والمفاتيح</h2>
+                    
+                    <div>
+                        <label class="text-xs font-bold text-slate-400 mb-2 block">1. مفتاح Gemini API</label>
+                        <input type="password" id="key-gemini" placeholder="AIzaSy..." class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500" dir="ltr">
+                        <p class="text-[10px] text-slate-500 mt-1">مطلوب لتشغيل المحرر والمسوق.</p>
                     </div>
-                </section>
+                    
+                    <div>
+                        <label class="text-xs font-bold text-slate-400 mb-2 block">2. إيميل النشر السري (Blogger)</label>
+                        <input type="email" id="key-mail" value="opnseeamo.opnseeamo@blogger.com" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-blue-400 outline-none font-mono" dir="ltr">
+                    </div>
 
-            </div>
+                    <button onclick="saveSettings()" class="btn-primary w-full py-4 rounded-xl font-bold text-sm mt-4 shadow-lg">حفظ الإعدادات</button>
+                </div>
+            </section>
+
         </div>
     </main>
 
-    <div id="toast-container" class="fixed bottom-10 left-10 z-50 flex flex-col gap-2"></div>
+    <nav class="fixed bottom-0 left-0 w-full glass !rounded-none border-t border-white/5 bg-[#0d1117]/95 backdrop-blur-xl z-[100] flex justify-around items-center p-3 pb-safe">
+        <button onclick="switchTab('writer', this)" class="mobile-nav active relative flex flex-col items-center gap-1 text-slate-500 w-16 transition-all">
+            <i data-lucide="pen-tool" class="w-5 h-5"></i>
+            <span class="text-[9px] font-bold">محتوى</span>
+        </button>
+        <button onclick="switchTab('marketing', this)" class="mobile-nav relative flex flex-col items-center gap-1 text-slate-500 w-16 transition-all">
+            <i data-lucide="target" class="w-5 h-5"></i>
+            <span class="text-[9px] font-bold">تسويق</span>
+        </button>
+        <button onclick="switchTab('audit', this)" class="mobile-nav relative flex flex-col items-center gap-1 text-slate-500 w-16 transition-all">
+            <i data-lucide="activity" class="w-5 h-5"></i>
+            <span class="text-[9px] font-bold">فحص</span>
+        </button>
+        <button onclick="switchTab('settings', this)" class="mobile-nav relative flex flex-col items-center gap-1 text-slate-500 w-16 transition-all">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+            <span class="text-[9px] font-bold">إعدادات</span>
+        </button>
+    </nav>
+
+    <div id="toast-container" class="fixed top-20 left-1/2 -translate-x-1/2 w-[90%] max-w-sm z-[200] flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
-        // Initialize Icons
         lucide.createIcons();
 
-        // Load Settings
+        // Load Settings on Start
         window.onload = () => {
-            const keys = JSON.parse(localStorage.getItem('tosh5_real_keys') || '{}');
+            const keys = JSON.parse(localStorage.getItem('tosh5_v3_keys') || '{}');
             if(keys.gemini) document.getElementById('key-gemini').value = keys.gemini;
             if(keys.mail) document.getElementById('key-mail').value = keys.mail;
             if(keys.url) document.getElementById('blog-url').value = keys.url;
         };
 
-        // UI Functions
-        function switchTab(tabId) {
+        // Switch Tabs (Works for Mobile Nav)
+        function switchTab(tabId, btnElement = null) {
+            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Show selected tab
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.getElementById(`nav-${tabId}`).classList.add('active');
+            
+            // Update Mobile Nav styling
+            if(btnElement) {
+                document.querySelectorAll('.mobile-nav').forEach(el => el.classList.remove('active', 'text-blue-400'));
+                btnElement.classList.add('active', 'text-blue-400');
+            } else {
+                // If called without element (e.g. from code), update the right icon manually
+                document.querySelectorAll('.mobile-nav').forEach(el => el.classList.remove('active', 'text-blue-400'));
+                document.querySelectorAll('.mobile-nav')[['writer','marketing','audit','settings'].indexOf(tabId)].classList.add('active', 'text-blue-400');
+            }
+            // Scroll to top
+            document.getElementById('main-scroll').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Show Notifications
         function showToast(msg, isError = false) {
             const toast = document.createElement('div');
-            toast.className = `glass p-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all transform translate-y-0 opacity-100 ${isError ? 'border-rose-500 text-rose-400' : 'border-emerald-500 text-emerald-400'}`;
-            toast.innerHTML = `<i data-lucide="${isError ? 'alert-circle' : 'check-circle'}"></i> <span>${msg}</span>`;
+            toast.className = `glass p-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm bg-[#0d1117] transition-all transform duration-300 ${isError ? 'border-rose-500/50 text-rose-400' : 'border-emerald-500/50 text-emerald-400'}`;
+            toast.innerHTML = `<i data-lucide="${isError ? 'alert-circle' : 'check-circle'}" class="w-5 h-5 shrink-0"></i> <span>${msg}</span>`;
             document.getElementById('toast-container').appendChild(toast);
             lucide.createIcons();
-            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
 
+        // Save Settings
         function saveSettings() {
             const keys = {
-                gemini: document.getElementById('key-gemini').value,
-                mail: document.getElementById('key-mail').value,
-                url: document.getElementById('blog-url').value
+                gemini: document.getElementById('key-gemini').value.trim(),
+                mail: document.getElementById('key-mail').value.trim(),
+                url: document.getElementById('blog-url').value.trim()
             };
-            localStorage.setItem('tosh5_real_keys', JSON.stringify(keys));
-            showToast('تم حفظ الإعدادات بنجاح!');
+            localStorage.setItem('tosh5_v3_keys', JSON.stringify(keys));
+            showToast('تم حفظ الإعدادات بأمان!');
         }
 
-        // REAL API CALLS
+        // REAL GEMINI API CALL (Updated to stable 1.5-flash)
         async function fetchGemini(prompt, systemMsg) {
-            const apiKey = document.getElementById('key-gemini').value;
-            if(!apiKey) throw new Error("يرجى إدخال مفتاح Gemini في الإعدادات!");
+            const apiKey = document.getElementById('key-gemini').value.trim();
+            if(!apiKey) throw new Error("يرجى الذهاب للإعدادات ووضع مفتاح Gemini أولاً.");
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -193,13 +205,13 @@
             
             if(!response.ok) {
                 const err = await response.json();
-                throw new Error(err.error?.message || "فشل الاتصال بـ Gemini API");
+                throw new Error(err.error?.message || "مفتاح API غير صحيح أو انتهت الحصة.");
             }
             const data = await response.json();
             return data.candidates[0].content.parts[0].text;
         }
 
-        // Feature 1: Real Content Generation
+        // Feature 1: AI Writer
         async function generateRealContent() {
             const topic = document.getElementById('topic-input').value;
             if(!topic) return showToast("أدخل عنوان المقال أولاً", true);
@@ -207,24 +219,21 @@
             const btn = document.getElementById('btn-generate');
             const txt = document.getElementById('txt-generate');
             btn.classList.add('btn-disabled');
-            txt.innerHTML = '<div class="loader"></div> جاري التوليد (قد يستغرق 10 ثوانٍ)...';
+            txt.innerHTML = '<div class="loader"></div> جارٍ الكتابة...';
 
             try {
                 const result = await fetchGemini(
-                    `قم بكتابة مقال حصري احترافي وشامل عن: "${topic}". المقال يجب أن يكون بتنسيق HTML نظيف، يحتوي على عناوين H2 و H3، وقوائم، وجاهز للنسخ واللصق في بلوجر. لا تكتب أي شيء سوى كود الـ HTML الداخلي للبودي (بدون وسوم html و body).`,
-                    "أنت خبير سيو ومطور محتوى محترف وتكتب مقالات تتصدر نتائج بحث جوجل."
+                    `اكتب مقال حصري بصيغة HTML عن: "${topic}". استخدم وسوم <h2> و <h3>. لا تكتب أي مقدمات، فقط كود الـ HTML الداخلي.`,
+                    "أنت خبير سيو ومطور ويب محترف."
                 );
-                
-                // Clean markdown artifacts if any
                 const cleanHTML = result.replace(/```html|```/g, '').trim();
                 document.getElementById('ai-code').value = cleanHTML;
-                document.getElementById('ai-preview').innerHTML = cleanHTML;
-                showToast("تم توليد المقال الحقيقي بنجاح!");
+                showToast("تم توليد المقال بنجاح!");
             } catch (error) {
                 showToast(error.message, true);
             } finally {
                 btn.classList.remove('btn-disabled');
-                txt.innerHTML = 'إنشاء مقال HTML احترافي (جاهز للنشر)';
+                txt.innerHTML = 'توليد مقال احترافي HTML';
             }
         }
 
@@ -237,89 +246,73 @@
             if(!content) return showToast("قم بتوليد مقال أولاً!", true);
             
             navigator.clipboard.writeText(content);
-            showToast("تم نسخ الكود! سيتم فتح الإيميل الآن، قم بلصقه هناك.");
+            showToast("تم نسخ الكود! سيفتح الإيميل الآن للصق الكود.");
             
-            const subject = encodeURIComponent(topic || "مقال جديد من Tosh5");
-            const body = encodeURIComponent("المقال موجود في الحافظة (Clipboard)، يرجى عمل 'لصق' (Paste) هنا ثم إرسال.");
-            window.location.href = `mailto:${mail}?subject=${subject}&body=${body}`;
+            setTimeout(() => {
+                const subject = encodeURIComponent(topic || "مقال جديد");
+                window.location.href = `mailto:${mail}?subject=${subject}&body=الرجاء لصق الكود المنسوخ هنا..`;
+            }, 1500);
         }
 
-        // Feature 3: Real Marketing Strategy
+        // Feature 3: Marketing
         async function generateMarketing() {
             const btn = document.getElementById('btn-market');
             const txt = document.getElementById('txt-market');
             const resultBox = document.getElementById('marketing-result');
             
             btn.classList.add('btn-disabled');
-            txt.innerHTML = '<div class="loader"></div> جاري تحليل بيانات السوق...';
+            txt.innerHTML = '<div class="loader"></div> جارٍ التحليل...';
             
             try {
                 const result = await fetchGemini(
-                    "أعطني خطة تسويقية لمدونة بلوجر من 3 نقاط عملية فقط لرفع سعر النقرة (CPC) في جوجل أدسنس بناءً على أحدث سياسات 2026. استخدم تنسيق HTML بسيط ومقروء.",
-                    "أنت خبير تسويق رقمي ومدير حسابات أدسنس معتمد."
+                    "أعطني خطة عملية من 3 خطوات سريعة لرفع أرباح جوجل أدسنس للمدونات. استخدم تنسيق بسيط وواضح.",
+                    "أنت خبير تسويق رقمي."
                 );
-                resultBox.innerHTML = result.replace(/```html|```/g, '');
-                showToast("تم رسم الخطة بنجاح!");
+                resultBox.innerHTML = result.replace(/\n/g, '<br>');
+                showToast("تم رسم الخطة!");
             } catch (error) {
                 showToast(error.message, true);
             } finally {
                 btn.classList.remove('btn-disabled');
-                txt.innerHTML = 'توليد خطة لزيادة الأرباح (AdSense CPC)';
+                txt.innerHTML = 'توليد استراتيجية CPC الآن';
             }
         }
 
-        // Feature 4: REAL Google PageSpeed Audit
+        // Feature 4: REAL PageSpeed Audit
         async function runRealAudit() {
             const url = document.getElementById('blog-url').value;
-            if(!url || !url.startsWith('http')) return showToast("أدخل رابط مدونة صحيح يبدأ بـ https://", true);
+            if(!url || !url.startsWith('http')) return showToast("أدخل رابط صحيح يبدأ بـ https", true);
 
             const btn = document.getElementById('btn-audit');
             const txt = document.getElementById('txt-audit');
-            const logs = document.getElementById('audit-logs');
             const resultsDiv = document.getElementById('audit-results');
             
             btn.classList.add('btn-disabled');
-            txt.innerHTML = '<div class="loader"></div> جاري تحليل خوادم جوجل...';
+            txt.innerHTML = '<div class="loader"></div> جارٍ فحص خوادم جوجل...';
             resultsDiv.style.display = 'none';
-            logs.innerHTML = `> جارٍ الاتصال بـ Google PageSpeed Insights API...<br>> فحص الرابط: ${url}<br>> يرجى الانتظار، الفحص الحقيقي يستغرق 10-20 ثانية...<br>`;
 
             try {
-                // Fetch from Google's official PageSpeed API
                 const apiURL = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&category=SEO&category=PERFORMANCE`;
                 const response = await fetch(apiURL);
                 const data = await response.json();
 
-                if(data.error) throw new Error("حدث خطأ في جلب البيانات من جوجل.");
+                if(data.error) throw new Error("فشل الفحص.");
 
                 const seoScore = Math.round(data.lighthouseResult.categories.seo.score * 100);
                 const perfScore = Math.round(data.lighthouseResult.categories.performance.score * 100);
-                // Get load time in seconds
-                const loadTimeMs = data.lighthouseResult.audits['interactive'].numericValue;
-                const loadTimeS = (loadTimeMs / 1000).toFixed(1);
 
                 document.getElementById('score-seo').innerText = seoScore + "%";
                 document.getElementById('score-perf').innerText = perfScore + "%";
-                document.getElementById('score-speed').innerText = loadTimeS + "s";
                 
                 resultsDiv.style.display = 'grid';
-                logs.innerHTML += `> اكتمل الفحص الحقيقي بنجاح! ✅<br>> تم تحليل الـ DOM وملفات CSS/JS.<br>`;
                 showToast("تم جلب البيانات الحقيقية من جوجل!");
-                saveSettings(); // Save the URL
+                saveSettings();
             } catch (error) {
-                logs.innerHTML += `> خطأ: ${error.message}<br>`;
-                showToast("فشل الفحص. تأكد من الرابط.", true);
+                showToast("حدث خطأ أثناء الفحص. تأكد من الرابط.", true);
             } finally {
                 btn.classList.remove('btn-disabled');
                 txt.innerHTML = 'بدء الفحص الحقيقي';
             }
-        }
-
-        // Feature 5: Indexing Redirection
-        function openIndexingTool() {
-            showToast("جاري توجيهك لأداة الأرشفة السحابية...", false);
-            setTimeout(() => {
-                window.open('https://indexing-api-bulk-tool.vercel.app/', '_blank');
-            }, 1000);
         }
     </script>
 </body>
