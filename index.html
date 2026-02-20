@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tosh5 Dashboard AI</title>
+<title>Tosh5 Dashboard AI + GitHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -32,120 +32,35 @@ textarea { font-family: 'JetBrains Mono', monospace; }
 <!-- صانع المحتوى -->
 <div class="glass p-5 space-y-4">
 <h2 class="text-xl font-black mb-4 text-blue-400 flex items-center gap-2"><i data-lucide="pen-tool"></i> صانع المحتوى</h2>
-<input type="text" id="topic-input" placeholder="اكتب عنوان المقال هنا..." class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500 mb-4">
-<button id="btn-generate" class="btn-primary w-full py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2">
-<span id="txt-generate">توليد مقال HTML</span>
-</button>
+<input type="text" id="topic-input" placeholder="اكتب عنوان المقال هنا..." class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-white outline-none mb-4">
+<button id="btn-generate" class="btn-primary w-full py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2">توليد مقال HTML</button>
 <textarea id="ai-code" class="w-full h-48 bg-black/40 border border-white/5 rounded-xl p-3 text-xs text-amber-400 outline-none" placeholder="سيظهر الكود هنا..." dir="ltr"></textarea>
-<button id="btn-publish" class="w-full bg-emerald-600 hover:bg-emerald-500 py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 shadow-lg">
-<i data-lucide="send" class="w-4 h-4"></i> نشر المقال على بلوجر
-</button>
 </div>
 
-<!-- التسويق -->
+<!-- إعدادات المفاتيح -->
 <div class="glass p-5 space-y-4">
-<h2 class="text-xl font-black mb-4 text-violet-400 flex items-center gap-2"><i data-lucide="target"></i> خطة زيادة الأرباح</h2>
-<button id="btn-market" class="w-full py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600">
-توليد استراتيجية CPC الآن
-</button>
-<div id="marketing-result" class="glass p-5 min-h-[100px] text-sm text-slate-300 leading-relaxed mt-2">
-اضغط الزر بالأعلى لتوليد الخطة...
-</div>
+<h2 class="text-xl font-black text-white flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="settings"></i> إعدادات المفاتيح</h2>
+<input type="text" id="gemini-key" placeholder="Gemini API Key" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+<input type="text" id="blog-id" placeholder="Blogger Blog ID" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+<input type="text" id="blogger-token" placeholder="Blogger OAuth2 Token" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+<input type="text" id="google-key" placeholder="Google Indexing API Key" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+<input type="text" id="github-token" placeholder="GitHub Personal Access Token" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+<button id="save-keys" class="w-full bg-blue-600 py-3 rounded-xl text-white font-bold">حفظ المفاتيح</button>
 </div>
 
-<!-- فحص السرعة -->
+<!-- رفع الملفات إلى GitHub -->
 <div class="glass p-5 space-y-4">
-<h2 class="text-xl font-black mb-4 text-rose-400 flex items-center gap-2"><i data-lucide="activity"></i> فحص سرعة جوجل</h2>
-<input type="url" id="blog-url" placeholder="https://www.yourblog.com" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-white outline-none focus:border-rose-500 mb-4" dir="ltr">
-<button id="btn-audit" class="bg-rose-600 w-full py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 mb-6">
-بدء الفحص الحقيقي
-</button>
-<div class="grid grid-cols-2 gap-3" id="audit-results" style="display:none;">
-<div class="bg-black/40 p-4 rounded-xl text-center border border-emerald-500/20">
-<div class="text-2xl font-black text-emerald-400" id="score-seo">0</div>
-<div class="text-[10px] text-slate-400 mt-1">SEO</div>
-</div>
-<div class="bg-black/40 p-4 rounded-xl text-center border border-blue-500/20">
-<div class="text-2xl font-black text-blue-400" id="score-perf">0</div>
-<div class="text-[10px] text-slate-400 mt-1">السرعة</div>
-</div>
-</div>
+<h2 class="text-xl font-black text-yellow-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="upload-cloud"></i> رفع الملفات إلى GitHub</h2>
+<input type="text" id="repo-name" placeholder="اسم المستودع" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+<textarea id="file-content" placeholder="ضع محتوى الملف هنا..." class="w-full h-32 bg-black/40 border border-white/5 rounded-xl p-3 text-xs text-amber-400 outline-none"></textarea>
+<input type="text" id="file-path" placeholder="مسار الملف في المستودع (example.txt)" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+<button id="upload-github" class="w-full bg-green-600 py-3 rounded-xl text-white font-bold">رفع الملف إلى GitHub</button>
 </div>
 
 </div>
 </main>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  // توليد المقال من Gemini API
-  document.getElementById("btn-generate").addEventListener("click", async () => {
-    const topic = document.getElementById("topic-input").value.trim();
-    if(!topic){ alert("اكتب عنوان المقال!"); return; }
-    document.getElementById("txt-generate").innerText="جارٍ التوليد...";
-    try{
-      const res = await fetch("/api/generate", {
-        method:"POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ topic })
-      });
-      const data = await res.json();
-      document.getElementById("ai-code").value = data.article || "<p>لا يوجد محتوى</p>";
-      document.getElementById("txt-generate").innerText="توليد مقال HTML";
-    }catch(e){
-      alert("حدث خطأ في التوليد");
-      document.getElementById("txt-generate").innerText="توليد مقال HTML";
-    }
-  });
-
-  // نشر المقال على Blogger API
-  document.getElementById("btn-publish").addEventListener("click", async () => {
-    const content = document.getElementById("ai-code").value.trim();
-    const title = document.getElementById("topic-input").value.trim();
-    if(!title || !content){ alert("العنوان والمحتوى مطلوبان للنشر"); return; }
-    try{
-      const res = await fetch("/api/publish", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ title, content })
-      });
-      const data = await res.json();
-      alert(data.success ? "تم نشر المقال بنجاح!" : "فشل النشر");
-    }catch(e){
-      alert("حدث خطأ أثناء النشر");
-    }
-  });
-
-  // توليد خطة تسويق وهمية
-  document.getElementById("btn-market").addEventListener("click", () => {
-    document.getElementById("marketing-result").innerText="جارٍ توليد الخطة...";
-    setTimeout(()=>{
-      document.getElementById("marketing-result").innerHTML="<ul><li>استراتيجية CPC رقم 1</li><li>استراتيجية CPC رقم 2</li></ul>";
-    },1000);
-  });
-
-  // أرشفة URL على Google Indexing API
-  document.getElementById("btn-audit").addEventListener("click", async () => {
-    const url = document.getElementById("blog-url").value.trim();
-    if(!url){ alert("أدخل رابط المدونة"); return; }
-    document.getElementById("audit-results").style.display="grid";
-    try{
-      const res = await fetch("/api/index", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ url })
-      });
-      const data = await res.json();
-      document.getElementById("score-seo").innerText = Math.floor(Math.random()*100);
-      document.getElementById("score-perf").innerText = Math.floor(Math.random()*100);
-    }catch(e){
-      alert("فشل الأرشفة");
-    }
-  });
-
-  lucide.replace();
-});
-</script>
-
+<script src="./app.js"></script>
+<script>lucide.replace();</script>
 </body>
 </html>
