@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tosh5 Dashboard AI + GitHub</title>
+<title>Tosh5 Dashboard - بدون مفاتيح</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -22,7 +22,7 @@ textarea { font-family: 'JetBrains Mono', monospace; }
     <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black text-white">T5</div>
     <div class="text-[10px] font-bold text-emerald-400 flex items-center gap-1.5">
       <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
-      متصل
+      بدون مفاتيح
     </div>
   </div>
 </header>
@@ -30,7 +30,7 @@ textarea { font-family: 'JetBrains Mono', monospace; }
 <main class="flex-1 overflow-y-auto p-4">
 <div class="max-w-4xl mx-auto space-y-6">
 
-<!-- صانع المحتوى -->
+<!-- صانع المحتوى (بدون مفاتيح) -->
 <div class="glass p-5 space-y-4">
 <h2 class="text-xl font-black mb-4 text-blue-400 flex items-center gap-2"><i data-lucide="pen-tool"></i> صانع المحتوى</h2>
 <input type="text" id="topic-input" placeholder="اكتب عنوان المقال هنا..." class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-white outline-none mb-4">
@@ -38,18 +38,19 @@ textarea { font-family: 'JetBrains Mono', monospace; }
 <textarea id="ai-code" class="w-full h-48 bg-black/40 border border-white/5 rounded-xl p-3 text-xs text-amber-400 outline-none" placeholder="سيظهر الكود هنا..." dir="ltr"></textarea>
 </div>
 
-<!-- إعدادات المفاتيح -->
-<div class="glass p-5 space-y-4">
-<h2 class="text-xl font-black text-white flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="settings"></i> إعدادات المفاتيح</h2>
-<input type="text" id="gemini-key" placeholder="Gemini API Key" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
-<input type="text" id="blog-id" placeholder="Blogger Blog ID" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
-<input type="text" id="blogger-token" placeholder="Blogger OAuth2 Token" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
-<input type="text" id="google-key" placeholder="Google Indexing API Key" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
-<input type="text" id="github-token" placeholder="GitHub Personal Access Token" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
-<button id="save-keys" class="w-full bg-blue-600 py-3 rounded-xl text-white font-bold">حفظ المفاتيح</button>
+<!-- إعدادات المفاتيح (معلومات فقط) -->
+<div class="glass p-5 space-y-4 border-2 border-dashed border-yellow-500/30">
+<h2 class="text-xl font-black text-yellow-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="lock"></i> إعدادات المفاتيح</h2>
+<p class="text-sm text-gray-400 mb-4">هذه نسخة تجريبية بدون مفاتيح API</p>
+<input type="text" id="gemini-key" placeholder="Gemini API Key" disabled class="w-full bg-black/30 border border-white/5 rounded-xl p-3 text-sm text-gray-500 outline-none">
+<input type="text" id="blog-id" placeholder="Blogger Blog ID (تجريبي)" disabled class="w-full bg-black/30 border border-white/5 rounded-xl p-3 text-sm text-gray-500 outline-none">
+<input type="text" id="blogger-token" placeholder="Blogger OAuth2 Token (تجريبي)" disabled class="w-full bg-black/30 border border-white/5 rounded-xl p-3 text-sm text-gray-500 outline-none">
+<input type="text" id="google-key" placeholder="Google Indexing API Key (تجريبي)" disabled class="w-full bg-black/30 border border-white/5 rounded-xl p-3 text-sm text-gray-500 outline-none">
+<input type="text" id="github-token" placeholder="GitHub Personal Access Token (تجريبي)" disabled class="w-full bg-black/30 border border-white/5 rounded-xl p-3 text-sm text-gray-500 outline-none">
+<button id="save-keys" class="w-full bg-gray-600 py-3 rounded-xl text-white font-bold cursor-not-allowed">الميزة غير متاحة</button>
 </div>
 
-<!-- أدوات SEO -->
+<!-- أدوات SEO (محاكاة) -->
 <div class="glass p-5 space-y-4">
 <h2 class="text-xl font-black text-purple-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="search"></i> أدوات SEO</h2>
 <div class="grid grid-cols-2 gap-4">
@@ -73,11 +74,11 @@ textarea { font-family: 'JetBrains Mono', monospace; }
 <textarea id="seo-output" class="w-full h-32 bg-black/40 border border-white/5 rounded-xl p-3 text-xs text-emerald-400 outline-none" placeholder="سيظهر كود SEO هنا..." dir="ltr"></textarea>
 </div>
 
-<!-- نشر على Blogger -->
+<!-- نشر على Blogger (محاكاة) -->
 <div class="glass p-5 space-y-4">
 <h2 class="text-xl font-black text-pink-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="globe"></i> نشر على Blogger</h2>
-<p class="text-sm text-gray-400">نشر المقال مباشرة على Blogger باستخدام Blogger API</p>
-<button id="publish-blogger" class="w-full bg-gradient-to-r from-pink-600 to-rose-600 py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 hover:opacity-90 transition"><i data-lucide="send"></i> نشر المقال الآن</button>
+<p class="text-sm text-gray-400">هذه نسخة تجريبية بدون Blogger API</p>
+<button id="publish-blogger" class="w-full bg-gradient-to-r from-pink-600 to-rose-600 py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 hover:opacity-90 transition">نشر المقال الآن (تجريبي)</button>
 </div>
 
 <!-- روابط أدوات جوجل -->
@@ -103,13 +104,13 @@ textarea { font-family: 'JetBrains Mono', monospace; }
 </div>
 </div>
 
-<!-- رفع الملفات إلى GitHub -->
+<!-- رفع الملفات إلى GitHub (محاكاة) -->
 <div class="glass p-5 space-y-4">
 <h2 class="text-xl font-black text-yellow-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="upload-cloud"></i> رفع الملفات إلى GitHub</h2>
 <input type="text" id="repo-name" placeholder="اسم المستودع" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
 <textarea id="file-content" placeholder="ضع محتوى الملف هنا..." class="w-full h-32 bg-black/40 border border-white/5 rounded-xl p-3 text-xs text-amber-400 outline-none"></textarea>
 <input type="text" id="file-path" placeholder="مسار الملف في المستودع (example.txt)" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
-<button id="upload-github" class="w-full bg-green-600 py-3 rounded-xl text-white font-bold">رفع الملف إلى GitHub</button>
+<button id="upload-github" class="w-full bg-green-600 py-3 rounded-xl text-white font-bold">رفع الملف إلى GitHub (تجريبي)</button>
 </div>
 
 </div>
