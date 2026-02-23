@@ -1,8 +1,34 @@
 {
   "name": "tosh5-dashboard",
-  "version": "1.0.0",
-  "main": "app.js",
+  "version": "2.0.0",
+  "description": "لوحة تحكم Tosh5 - نظام أتمتة ذكي لإدارة محتوى المدونة بدون مفاتيح API",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev",
+    "build": "echo 'No build step needed'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "tosh5",
+    "dashboard",
+    "automation",
+    "cloudflare",
+    "workers",
+    "seo",
+    "indexing"
+  ],
+  "author": "Tosh5",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
   "dependencies": {
     "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
