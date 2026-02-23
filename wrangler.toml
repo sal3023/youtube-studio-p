@@ -1,0 +1,19 @@
+name = "youtube-studio-p"
+main = "src/index.js"
+compatibility_date = "2024-02-23"
+
+# ضبط الجدولة الآلية (Cron Triggers)
+# هذا الكود يخبر Cloudflare بتشغيل التطبيق كل ساعة تلقائياً
+[triggers]
+crons = ["0 * * * *"] 
+
+# متغيرات البيئة (Environment Variables)
+# يمكنك وضع مفاتيح API الخاصة بك هنا أو عبر لوحة تحكم Cloudflare
+[vars]
+BLOG_URL = "https://www.tosh5.shop"
+INDEXING_API_KEY = "YOUR_SECRET_KEY_HERE"
+
+# مساحة تخزين للبيانات (اختياري إذا كنت تستخدم KV)
+# [[kv_namespaces]]
+# binding = "INDEX_STATS"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
