@@ -21,7 +21,8 @@ textarea { font-family: 'JetBrains Mono', monospace; }
   <div class="flex items-center gap-3">
     <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black text-white">T5</div>
     <div class="text-[10px] font-bold text-emerald-400 flex items-center gap-1.5">
-      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div> متصل
+      <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+      متصل
     </div>
   </div>
 </header>
@@ -48,6 +49,60 @@ textarea { font-family: 'JetBrains Mono', monospace; }
 <button id="save-keys" class="w-full bg-blue-600 py-3 rounded-xl text-white font-bold">حفظ المفاتيح</button>
 </div>
 
+<!-- أدوات SEO -->
+<div class="glass p-5 space-y-4">
+<h2 class="text-xl font-black text-purple-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="search"></i> أدوات SEO</h2>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-bold mb-2 text-gray-300">عنوان المقال</label>
+<input type="text" id="seo-title" placeholder="عنوان المقال" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2 text-gray-300">الوصف</label>
+<input type="text" id="seo-description" placeholder="وصف المقال" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+</div>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2 text-gray-300">الكلمات المفتاحية</label>
+<input type="text" id="seo-keywords" placeholder="كلمات مفتاحية مفصولة بفواصل" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-white outline-none">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button id="btn-generate-seo" class="bg-purple-600 py-3 rounded-xl text-white font-bold hover:bg-purple-700 transition">توليد SEO Tags</button>
+<button id="optimize-google" class="bg-orange-600 py-3 rounded-xl text-white font-bold hover:bg-orange-700 transition">تحسين في Google</button>
+</div>
+<textarea id="seo-output" class="w-full h-32 bg-black/40 border border-white/5 rounded-xl p-3 text-xs text-emerald-400 outline-none" placeholder="سيظهر كود SEO هنا..." dir="ltr"></textarea>
+</div>
+
+<!-- نشر على Blogger -->
+<div class="glass p-5 space-y-4">
+<h2 class="text-xl font-black text-pink-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="globe"></i> نشر على Blogger</h2>
+<p class="text-sm text-gray-400">نشر المقال مباشرة على Blogger باستخدام Blogger API</p>
+<button id="publish-blogger" class="w-full bg-gradient-to-r from-pink-600 to-rose-600 py-4 rounded-xl font-bold text-sm flex justify-center items-center gap-2 hover:opacity-90 transition"><i data-lucide="send"></i> نشر المقال الآن</button>
+</div>
+
+<!-- روابط أدوات جوجل -->
+<div class="glass p-5 space-y-4">
+<h2 class="text-xl font-black text-cyan-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="external-link"></i> أدوات Google</h2>
+<div class="grid grid-cols-2 gap-3">
+<a href="https://search.google.com/search-console" target="_blank" class="block bg-black/50 border border-cyan-500/30 rounded-xl p-3 hover:bg-cyan-500/10 transition">
+<div class="font-bold text-cyan-400 text-sm">Google Search Console</div>
+<div class="text-xs text-gray-400">تحليل SEO وموقعك</div>
+</a>
+<a href="https://developers.google.com/search/docs/appearance/structured-data/intro" target="_blank" class="block bg-black/50 border border-cyan-500/30 rounded-xl p-3 hover:bg-cyan-500/10 transition">
+<div class="font-bold text-cyan-400 text-sm">Structured Data</div>
+<div class="text-xs text-gray-400">بيانات منظمة للبحث</div>
+</a>
+<a href="https://search.google.com/test/rich-results" target="_blank" class="block bg-black/50 border border-cyan-500/30 rounded-xl p-3 hover:bg-cyan-500/10 transition">
+<div class="font-bold text-cyan-400 text-sm">Rich Results Test</div>
+<div class="text-xs text-gray-400">اختبار النتائج الغنية</div>
+</a>
+<a href="https://search.google.com/test/mobile-friendly" target="_blank" class="block bg-black/50 border border-cyan-500/30 rounded-xl p-3 hover:bg-cyan-500/10 transition">
+<div class="font-bold text-cyan-400 text-sm">Mobile-Friendly Test</div>
+<div class="text-xs text-gray-400">اختبار الموبايل</div>
+</a>
+</div>
+</div>
+
 <!-- رفع الملفات إلى GitHub -->
 <div class="glass p-5 space-y-4">
 <h2 class="text-xl font-black text-yellow-400 flex items-center gap-2 border-b border-white/5 pb-4"><i data-lucide="upload-cloud"></i> رفع الملفات إلى GitHub</h2>
@@ -60,6 +115,38 @@ textarea { font-family: 'JetBrains Mono', monospace; }
 </div>
 </main>
 
+<script>
+  // عناصر الإدخال
+  const geminiInput = document.getElementById('gemini-key');
+  const blogIdInput = document.getElementById('blog-id');
+  const bloggerTokenInput = document.getElementById('blogger-token');
+  const googleKeyInput = document.getElementById('google-key');
+  const githubTokenInput = document.getElementById('github-token');
+  
+  // تحميل المفاتيح تلقائياً عند فتح الصفحة
+  window.addEventListener('DOMContentLoaded', () => {
+    const keys = JSON.parse(localStorage.getItem('tosh5_keys') || '{}');
+    if (keys.GEMINI_KEY) geminiInput.value = keys.GEMINI_KEY;
+    if (keys.BLOG_ID) blogIdInput.value = keys.BLOG_ID;
+    if (keys.BLOGGER_TOKEN) bloggerTokenInput.value = keys.BLOGGER_TOKEN;
+    if (keys.GOOGLE_KEY) googleKeyInput.value = keys.GOOGLE_KEY;
+    if (keys.GITHUB_TOKEN) githubTokenInput.value = keys.GITHUB_TOKEN;
+  });
+  
+  // حفظ تلقائي عند الكتابة
+  [geminiInput, blogIdInput, bloggerTokenInput, googleKeyInput, githubTokenInput].forEach(input => {
+    input.addEventListener('input', () => {
+      const keys = {
+        GEMINI_KEY: geminiInput.value.trim(),
+        BLOG_ID: blogIdInput.value.trim(),
+        BLOGGER_TOKEN: bloggerTokenInput.value.trim(),
+        GOOGLE_KEY: googleKeyInput.value.trim(),
+        GITHUB_TOKEN: githubTokenInput.value.trim()
+      };
+      localStorage.setItem('tosh5_keys', JSON.stringify(keys));
+    });
+  });
+</script>
 <script src="./app.js"></script>
 <script>lucide.replace();</script>
 </body>
