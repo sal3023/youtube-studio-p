@@ -1,60 +1,47 @@
-// عناصر DOM
-const geminiInput = document.getElementById("gemini-key");
-const blogIdInput = document.getElementById("blog-id");
-const bloggerTokenInput = document.getElementById("blogger-token");
-const googleKeyInput = document.getElementById("google-key");
-const githubTokenInput = document.getElementById("github-token");
-const btnSaveKeys = document.getElementById("save-keys");
+// زر توليد مقال HTML
+const topicInput = document.getElementById('topic-input');
+const aiCodeTextarea = document.getElementById('ai-code');
+const btnGenerate = document.getElementById('btn-generate');
+const geminiKeyInput = document.getElementById('gemini-key');
 
-const repoNameInput = document.getElementById("repo-name");
-const fileContentInput = document.getElementById("file-content");
-const filePathInput = document.getElementById("file-path");
-const btnUploadGitHub = document.getElementById("upload-github");
-
-// حفظ المفاتيح في localStorage (لتجربة محلية)
-btnSaveKeys.addEventListener("click", () => {
-  const keys = {
-    GEMINI_KEY: geminiInput.value.trim(),
-    BLOG_ID: blogIdInput.value.trim(),
-    BLOGGER_TOKEN: bloggerTokenInput.value.trim(),
-    GOOGLE_KEY: googleKeyInput.value.trim(),
-    GITHUB_TOKEN: githubTokenInput.value.trim()
-  };
-  localStorage.setItem("tosh5_keys", JSON.stringify(keys));
-  alert("تم حفظ المفاتيح مؤقتًا ✅");
-});
-
-// رفع الملفات إلى GitHub
-btnUploadGitHub.addEventListener("click", async () => {
-  const keys = JSON.parse(localStorage.getItem("tosh5_keys") || "{}");
-  const token = keys.GITHUB_TOKEN;
-  const repo = repoNameInput.value.trim();
-  const path = filePathInput.value.trim();
-  const content = fileContentInput.value;
-
-  if (!token || !repo || !path || !content) return alert("الرجاء تعبئة جميع الحقول");
-
+btnGenerate.addEventListener('click', async () => {
+  const topic = topicInput.value.trim();
+  const apiKey = geminiKeyInput.value.trim();
+  
+  if (!topic || !apiKey) {
+    return alert('الرجاء إدخال عنوان المقال ومفتاح Gemini API');
+  }
+  
+  btnGenerate.disabled = true;
+  btnGenerate.textContent = 'جاري التوليد...';
+  
   try {
-    // التشفير Base64 لمحتوى الملف
-    const base64Content = btoa(unescape(encodeURIComponent(content)));
-
-    const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-      method: "PUT",
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+      method: 'POST',
       headers: {
-        Authorization: `token ${token}`,
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: `رفع الملف ${path} عبر Tosh5 Dashboard`,
-        content: base64Content
+        contents: [{
+          parts: [{
+            text: `اكتب مقال HTML كامل عن: ${topic}`
+          }]
+        }]
       })
     });
-
-    const data = await res.json();
-    if (data.content) alert("تم رفع الملف بنجاح ✅");
-    else alert("فشل رفع الملف ❌: " + (data.message || ""));
-  } catch (err) {
-    console.error(err);
-    alert("حدث خطأ أثناء رفع الملف");
+    
+    const data = await response.json();
+    
+    if (data.candidates && data.candidates[0]) {
+      aiCodeTextarea.value = data.candidates[0].content.parts[0].text;
+    } else {
+      throw new Error('فشل التوليد');
+    }
+  } catch (error) {
+    console.error(error);
+    alert('حدث خطأ: ' + error.message);
+  } finally {
+    btnGenerate.disabled = false;
+    btnGenerate.textContent = 'توليد مقال HTML';
   }
 });
