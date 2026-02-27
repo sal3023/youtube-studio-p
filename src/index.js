@@ -1,11 +1,6 @@
 /**
- * Tosh5 AI Automation Engine v3.0
+ * Tosh5 AI Automation Engine v3.1
  * محرك الأتمتة الذكي المدعوم بالذكاء الاصطناعي لمدونة Tosh5
- * 
- * الميزات المتقدمة:
- * 1. تحليل الروابط باستخدام OpenAI GPT لتحديد أهمية المحتوى.
- * 2. أرشفة ذكية تعتمد على جودة المقال المكتشف.
- * 3. إدارة تلقائية بالكامل للمفاتيح عبر متغيرات البيئة.
  */
 
 export default {
@@ -18,27 +13,30 @@ export default {
     const openaiKey = env.OPENAI_API_KEY;
 
     try {
-      // 1. جلب المحتوى
+      // جلب المحتوى
       const response = await fetch(feedUrl);
       const rssText = await response.text();
-      
-      // 2. استخراج الروابط والعناوين
-      const items = [...rssText.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(match => {
+
+      // استخراج العناوين والروابط
+      let items = [...rssText.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(match => {
         const content = match[1];
         const title = content.match(/<title>(.*?)<\/title>/)?.[1] || '';
         const link = content.match(/<link>(.*?)<\/link>/)?.[1] || '';
         return { title, link };
       }).filter(item => item.link.includes('tosh5.shop'));
 
-      if (items.length === 0) return;
+      if (items.length === 0) {
+        console.log('⚠️ [AI-ENGINE] لم يتم العثور على مقالات جديدة.');
+        return;
+      }
 
       console.log(`📝 [AI-ENGINE] تم العثور على ${items.length} مقال. جاري التحليل بالذكاء الاصطناعي...`);
 
-      // 3. التحليل بالذكاء الاصطناعي (OpenAI) إذا توفر المفتاح
+      // التحليل بالذكاء الاصطناعي
       let prioritizedItems = items;
       if (openaiKey) {
         try {
-          const aiAnalysis = await fetch('https://api.openai.com/v1/chat/completions', {
+          const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${openaiKey}`,
@@ -52,18 +50,25 @@ export default {
               ]
             })
           });
-          // في حال نجاح AI، نستخدم الترتيب المقترح، وإلا نعتمد الترتيب الزمني
+          const data = await aiResponse.json();
+          const sortedLinks = JSON.parse(data.choices[0].message.content);
+          prioritizedItems = sortedLinks;
           console.log('✅ [AI-ENGINE] اكتمل تحليل الذكاء الاصطناعي للمحتوى');
         } catch (aiErr) {
           console.error('⚠️ [AI-ENGINE] فشل استدعاء OpenAI، سيتم استخدام الترتيب التلقائي', aiErr);
         }
       }
 
-      // 4. الأرشفة الفورية
+      // الأرشفة الفورية مع Retry
       for (const item of prioritizedItems.slice(0, 5)) {
         const indexUrl = `https://www.bing.com/indexnow?url=${encodeURIComponent(item.link)}&key=${indexNowKey}`;
-        await fetch(indexUrl);
-        console.log(`🚀 [ARCHIVE] تم أرشفة: ${item.title}`);
+        try {
+          await fetch(indexUrl);
+          console.log(`🚀 [ARCHIVE] تم أرشفة: ${item.title}`);
+        } catch (archiveErr) {
+          console.warn(`⚠️ [ARCHIVE] فشل أرشفة: ${item.title}. إعادة المحاولة...`);
+          await fetch(indexUrl);
+        }
       }
 
     } catch (error) {
@@ -77,7 +82,7 @@ export default {
     <html lang="ar" dir="rtl">
     <head>
         <meta charset="UTF-8">
-        <title>Tosh5 AI Engine v3.0</title>
+        <title>Tosh5 AI Engine v3.1</title>
         <style>
             body { background: #020617; color: #f8fafc; font-family: system-ui; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
             .card { background: #1e293b; padding: 3rem; border-radius: 1.5rem; border: 1px solid #334155; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
@@ -92,7 +97,7 @@ export default {
             <div class="ai-badge">AI POWERED ENGINE</div>
             <h1>Tosh5 Smart Engine</h1>
             <p><span class="status-dot"></span> الذكاء الاصطناعي نشط الآن ويقوم بتحليل وأرشفة المحتوى تلقائياً 24/7.</p>
-            <div style="margin-top: 2rem; font-size: 0.9rem; color: #475569;">Version 3.0.0 | Stable</div>
+            <div style="margin-top: 2rem; font-size: 0.9rem; color: #475569;">Version 3.1.0 | Stable</div>
         </div>
     </body>
     </html>
