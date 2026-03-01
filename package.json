@@ -1,33 +1,29 @@
 {
-  "name": "tosh5-dashboard",
+  "name": "youtube-studio-pro",
   "version": "2.0.0",
-  "description": "لوحة تحكم Tosh5 - نظام أتمتة ذكي لإدارة محتوى المدونة بدون مفاتيح API",
-  "main": "src/index.js",
+  "description": "تطبيق احترافي لرفع وإدارة فيديوهات YouTube مع دعم الأتمتة والذكاء الاصطناعي",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "start": "wrangler dev",
-    "build": "echo 'No build step needed'",
+    "dev": "node app.js",
+    "start": "node app.js",
+    "build": "echo 'Build complete'",
     "test": "echo 'No tests configured'"
   },
   "keywords": [
-    "tosh5",
-    "dashboard",
+    "youtube",
+    "studio",
     "automation",
-    "cloudflare",
-    "workers",
-    "seo",
-    "indexing"
+    "video",
+    "upload",
+    "dashboard"
   ],
   "author": "Tosh5",
   "license": "MIT",
-  "devDependencies": {
-    "wrangler": "^3.0.0"
-  },
   "dependencies": {
     "node-fetch": "^3.3.2"
   },
+  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
   }

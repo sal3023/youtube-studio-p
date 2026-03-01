@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "public": true,
+  "env": {
+    "BLOG_URL": "@blog_url",
+    "INDEXNOW_KEY": "@indexnow_key",
+    "OPENAI_API_KEY": "@openai_api_key"
+  },
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
